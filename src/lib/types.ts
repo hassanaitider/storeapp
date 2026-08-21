@@ -1,0 +1,142 @@
+export type Locale = "ar" | "en";
+
+export type CountryCode =
+  | "MA"
+  | "SA"
+  | "AE"
+  | "OM"
+  | "IQ"
+  | "KW"
+  | "BH"
+  | "QA"
+  | "EG"
+  | "US";
+
+export type CurrencyCode =
+  | "SAR"
+  | "AED"
+  | "KWD"
+  | "BHD"
+  | "OMR"
+  | "QAR"
+  | "IQD"
+  | "EGP"
+  | "MAD"
+  | "USD";
+
+export interface Category {
+  id: string;
+  slug: string;
+  nameAr: string;
+  nameEn: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  image: string;
+  createdAt: string;
+  /** If set, this is a country-market category */
+  country?: CountryCode;
+  availableIn?: CountryCode[];
+}
+
+export interface ProductLandingSection {
+  titleAr: string;
+  titleEn: string;
+  bodyAr: string;
+  bodyEn: string;
+  image?: string;
+}
+
+export interface ProductLandingFaq {
+  questionAr: string;
+  questionEn: string;
+  answerAr: string;
+  answerEn: string;
+}
+
+export interface ProductLanding {
+  headlineAr: string;
+  headlineEn: string;
+  introAr: string;
+  introEn: string;
+  sections: ProductLandingSection[];
+  benefitsAr: string[];
+  benefitsEn: string[];
+  faq: ProductLandingFaq[];
+}
+
+/** Color option shown on the product page swatches */
+export interface ProductColor {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  /** CSS color value, e.g. #1f3d36 */
+  hex: string;
+}
+
+export interface Product {
+  id: string;
+  slug: string;
+  categoryId: string;
+  nameAr: string;
+  nameEn: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  detailsAr: string[];
+  detailsEn: string[];
+  /** Base catalog price in USD (fallback) */
+  priceUSD: number;
+  compareAtUSD?: number;
+  /**
+   * Local market prices keyed by country (in that country's currency).
+   * Example: { MA: 499, SA: 189, AE: 179 }
+   */
+  marketPrices?: Partial<Record<CountryCode, number>>;
+  marketComparePrices?: Partial<Record<CountryCode, number>>;
+  /** If set, product only appears in these markets */
+  availableIn?: CountryCode[];
+  images: string[];
+  /** @deprecated Preset swatches removed — kept optional for old data */
+  colors?: ProductColor[];
+  /** When true, customer can type their preferred color on the product page */
+  customColorEnabled?: boolean;
+  inStock: boolean;
+  featured: boolean;
+  rating: number;
+  reviewCount: number;
+  createdAt: string;
+  landing?: ProductLanding;
+}
+
+export interface CartItem {
+  productId: string;
+  quantity: number;
+}
+
+export interface Order {
+  id: string;
+  items: CartItem[];
+  customer: {
+    name: string;
+    phone: string;
+    city: string;
+    address: string;
+    notes?: string;
+  };
+  country: CountryCode;
+  currency: CurrencyCode;
+  locale: Locale;
+  paymentMethod: "cod";
+  totalUSD: number;
+  createdAt: string;
+  status: "pending" | "confirmed" | "shipped" | "delivered";
+}
+
+export interface CurrencyInfo {
+  code: CurrencyCode;
+  nameAr: string;
+  nameEn: string;
+  symbol: string;
+  /** Multiply USD price by this to get local amount */
+  rate: number;
+  region: "gulf" | "morocco" | "mena" | "usa";
+}

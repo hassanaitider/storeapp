@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>قالب وصف المنتج | Product Description Layout</title>
+
+  <!-- خطوط عربية: عرض / نص / تأكيد -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* =========================================================
+       1) إعدادات الجذر — الألوان + مقياس أحجام النصوص
+       غيّر القيم هنا ليتحكم الحجم في كل الصفحة دفعة واحدة
+       ========================================================= */
+    :root {
+      /* ألوان المتجر */
+      --bg: #faf8f5;
+      --fg: #121816;
+      --muted: #5a6b64;
+      --accent: #3f8b74;
+      --accent-dark: #27594b;
+      --sand: #e6ddd0;
+      --surface: #ffffff;
+      --line: rgba(18, 24, 22, 0.1);
+
+      /* عائلات الخطوط العربية */
+      --font-display: "Amiri", "Traditional Arabic", serif;       /* عناوين فاخرة */
+      --font-body: "IBM Plex Sans Arabic", "Tajawal", sans-serif; /* نص القراءة */
+      --font-ui: "Tajawal", "IBM Plex Sans Arabic", sans-serif;   /* أزرار وتسميات */
+
+      /* مقياس الكتابة (Type scale) — نسب ثابتة للتناسب */
+      --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.8125rem);   /* تعليقات الصور */
+      --text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 0.9375rem); /* مساعدة / تسميات */
+      --text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);     /* فقرات الجسم */
+      --text-md: clamp(1.125rem, 1.05rem + 0.4vw, 1.25rem);    /* مقدمة قصيرة */
+      --text-lg: clamp(1.35rem, 1.2rem + 0.7vw, 1.65rem);      /* عناوين أقسام */
+      --text-xl: clamp(1.75rem, 1.4rem + 1.2vw, 2.35rem);      /* عنوان المنتج */
+      --text-hero: clamp(2.1rem, 1.6rem + 1.8vw, 3rem);        /* بطولة الصفحة */
+
+      --leading-tight: 1.25;
+      --leading-snug: 1.45;
+      --leading-body: 1.85;
+      --tracking-display: 0.01em;
+
+      --radius: 1rem;
+      --space: clamp(1rem, 2vw, 1.75rem);
+      --max: 72rem;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(1200px 500px at 100% -10%, rgba(63, 139, 116, 0.12), transparent 55%),
+        radial-gradient(900px 400px at 0% 20%, rgba(230, 221, 208, 0.55), transparent 50%),
+        var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--leading-body);
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: var(--accent-dark);
+    }
+
+    /* =========================================================
+       2) أنماط الخطوط العربية — طبّق الصنف المناسب حسب الموضع
+       ========================================================= */
+    .t-hero {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      font-weight: 700;
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-display);
+    }
+
+    .t-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      line-height: var(--leading-tight);
+    }
+
+    .t-section {
+      font-family: var(--font-ui);
+      font-size: var(--text-lg);
+      font-weight: 800;
+      line-height: var(--leading-snug);
+    }
+
+    .t-lead {
+      font-family: var(--font-body);
+      font-size: var(--text-md);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: var(--leading-body);
+    }
+
+    .t-body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      font-weight: 400;
+      line-height: var(--leading-body);
+    }
+
+    .t-label {
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .t-caption {
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--muted);
+      line-height: var(--leading-snug);
+    }
+
+    /* تنسيقات خاصة اختيارية */
+    .t-emphasis {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-dark);
+    }
+
+    .t-strong {
+      font-family: var(--font-ui);
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+
+    .t-numeric {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      letter-spacing: 0.03em;
+    }
+
+    /* =========================================================
+       3) الهيكل العام
+       ========================================================= */
+    .page {
+      width: min(100% - 2rem, var(--max));
+      margin-inline: auto;
+      padding-block: clamp(1.5rem, 4vw, 3rem) 4rem;
+    }
+
+    .product-grid {
+      display: grid;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    @media (min-width: 900px) {
+      .product-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: start;
+      }
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 0.25rem);
+      padding: var(--space);
+    }
+
+    .stack > * + * {
+      margin-top: 1rem;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      align-items: center;
+    }
+
+    .price {
+      font-family: var(--font-ui);
+      font-size: var(--text-lg);
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(63, 139, 116, 0.12);
+      color: var(--accent-dark);
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      font-weight: 700;
+    }
+
+    /* =========================================================
+       4) حاويات الصور والـ GIF — ضع ملفاتك داخل .media-slot
+       ========================================================= */
+    .media-gallery {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .media-slot {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, #f3efe8 0%, #e8f3ee 100%);
+      border: 1px dashed rgba(39, 89, 75, 0.28);
+      min-height: 12rem;
+    }
+
+    .media-slot--hero {
+      min-height: clamp(16rem, 42vw, 28rem);
+      aspect-ratio: 4 / 5;
+    }
+
+    .media-slot--wide {
+      min-height: 11rem;
+      aspect-ratio: 16 / 9;
+    }
+
+    .media-slot--square {
+      aspect-ratio: 1 / 1;
+      min-height: 0;
+    }
+
+    .media-slot--gif {
+      aspect-ratio: 1 / 1;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          rgba(63, 139, 116, 0.06),
+          rgba(63, 139, 116, 0.06) 8px,
+          rgba(230, 221, 208, 0.35) 8px,
+          rgba(230, 221, 208, 0.35) 16px
+        );
+    }
+
+    .media-slot img,
+    .media-slot video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* طبقة إرشادية تظهر فقط عندما لا توجد صورة بعد */
+    .media-slot:not(:has(img)):not(:has(video))::before {
+      content: attr(data-placeholder);
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      text-align: center;
+      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: 500;
+    }
+
+    .media-caption {
+      margin-top: 0.45rem;
+    }
+
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+    }
+
+    @media (max-width: 520px) {
+      .thumbs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* =========================================================
+       5) قسم عينات الألوان
+       ========================================================= */
+    .swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    .swatch {
+      display: grid;
+      justify-items: center;
+      gap: 0.45rem;
+      width: 4.75rem;
+      cursor: pointer;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+    }
+
+    .swatch__chip {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 999px;
+      border: 2px solid #fff;
+      box-shadow:
+        0 0 0 1px rgba(18, 24, 22, 0.18),
+        0 8px 18px rgba(18, 24, 22, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .swatch:hover .swatch__chip,
+    .swatch[aria-pressed="true"] .swatch__chip {
+      transform: scale(1.08);
+      box-shadow:
+        0 0 0 2px var(--accent),
+        0 10px 22px rgba(63, 139, 116, 0.25);
+    }
+
+    .swatch__name {
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .swatch[aria-pressed="true"] .swatch__name {
+      color: var(--accent-dark);
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       6) أقسام المحتوى النصي
+       ========================================================= */
+    .section {
+      margin-top: 1.75rem;
+      padding-top: 1.35rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .section h2 {
+      margin: 0 0 0.75rem;
+    }
+
+    .bullets {
+      margin: 0;
+      padding-inline-start: 1.2rem;
+    }
+
+    .bullets li + li {
+      margin-top: 0.45rem;
+    }
+
+    .specs {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: 0.75rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 0.75rem;
+      background: rgba(230, 221, 208, 0.35);
+    }
+
+    @media (max-width: 520px) {
+      .spec-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 0.85rem;
+      padding: 0.85rem 1.25rem;
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary {
+      background: var(--accent-dark);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent-dark);
+      border: 1px solid rgba(39, 89, 75, 0.35);
+    }
+
+    /* دليل سريع للمطوّر داخل الصفحة */
+    .dev-note {
+      margin-top: 2.5rem;
+      padding: 1rem 1.15rem;
+      border-radius: var(--radius);
+      background: #12201c;
+      color: #d7ece4;
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      line-height: 1.7;
+    }
+
+    .dev-note code {
+      font-family: ui-monospace, monospace;
+      font-size: 0.85em;
+      color: #9fd9c4;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="product-grid">
+
+      <!-- ===================== العمود البصري ===================== -->
+      <section class="stack" aria-label="معرض المنتج">
+
+        <!--
+          [صورة رئيسية]
+          ضع صورة المنتج هنا:
+          <img src="/products/your-product.jpg" alt="وصف مختصر بالعربية" />
+        -->
+        <figure>
+          <div
+            class="media-slot media-slot--hero"
+            data-placeholder="مكان الصورة الرئيسية للمنتج&#10;(نسبة مقترحة 4:5)"
+          >
+            <!-- <img src="..." alt="..." /> -->
+          </div>
+          <figcaption class="media-caption t-caption">
+            تعليق توضيحي للصورة الرئيسية — يمكن حذفه أو استبداله.
+          </figcaption>
+        </figure>
+
+        <!--
+          [مصغّرات / صور إضافية]
+          كرّر .media-slot--square لكل صورة معرض
+        -->
+        <div class="thumbs" aria-label="صور إضافية">
+          <figure>
+            <div
+              class="media-slot media-slot--square"
+              data-placeholder="صورة 1"
+            >
+              <!-- <img src="..." alt="..." /> -->
+            </div>
+            <figcaption class="media-caption t-caption">زاوية أمامية</figcaption>
+          </figure>
+          <figure>
+            <div
+              class="media-slot media-slot--square"
+              data-placeholder="صورة 2"
+            >
+              <!-- <img src="..." alt="..." /> -->
+            </div>
+            <figcaption class="media-caption t-caption">تفاصيل الخامة</figcaption>
+          </figure>
+          <figure>
+            <div
+              class="media-slot media-slot--square"
+              data-placeholder="صورة 3"
+            >
+              <!-- <img src="..." alt="..." /> -->
+            </div>
+            <figcaption class="media-caption t-caption">الاستخدام</figcaption>
+          </figure>
+
+          <!--
+            [مقطع GIF / فيديو قصير]
+            للـ GIF: <img src="demo.gif" alt="معاينة الحركة" />
+            أو فيديو: <video autoplay muted loop playsinline src="demo.mp4"></video>
+          -->
+          <figure>
+            <div
+              class="media-slot media-slot--square media-slot--gif"
+              data-placeholder="مكان الـ GIF&#10;أو فيديو قصير"
+            >
+              <!-- <img src="demo.gif" alt="معاينة المنتج متحركًا" /> -->
+            </div>
+            <figcaption class="media-caption t-caption">معاينة متحركة (GIF)</figcaption>
+          </figure>
+        </div>
+
+        <!--
+          [شريط عرض عريض]
+          مناسب لمشهد استخدام أو بانر توضيحي
+        -->
+        <figure>
+          <div
+            class="media-slot media-slot--wide"
+            data-placeholder="بانر عريض (16:9) — مشهد استخدام أو مقارنة"
+          >
+            <!-- <img src="..." alt="..." /> -->
+          </div>
+          <figcaption class="media-caption t-caption">
+            تعليق للبانر العريض.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ===================== عمود النص والتفاصيل ===================== -->
+      <section class="panel stack" aria-label="تفاصيل المنتج">
+
+        <!-- عنوان البطولة: .t-hero أو .t-title -->
+        <p class="badge">متوفر · توصيل مجاني</p>
+        <h1 class="t-title">اسم المنتج بالعربية</h1>
+
+        <!-- مقدمة قصيرة: .t-lead -->
+        <p class="t-lead">
+          جملة تعريفية قصيرة توضّح فائدة المنتج للعميل. استخدم
+          <span class="t-emphasis">خط العرض المائل</span>
+          لإبراز عبارة مميزة، أو
+          <span class="t-strong">تأكيدًا قويًا</span>
+          للكلمة الأساسية.
+        </p>
+
+        <div class="meta-row">
+          <span class="price t-numeric">٢٤٩ ر.س</span>
+          <span class="t-caption">بدلًا من ٣١٩ ر.س</span>
+        </div>
+
+        <!-- قسم الألوان -->
+        <div class="section">
+          <h2 class="t-section">اختر اللون</h2>
+          <p class="t-caption" style="margin-bottom: 0.85rem">
+            عينات الألوان — حدّث <code>background</code> واسم كل زر.
+          </p>
+          <div class="swatches" role="listbox" aria-label="ألوان المنتج">
+            <!-- كرّر .swatch لكل لون متاح -->
+            <button class="swatch" type="button" role="option" aria-pressed="true">
+              <span class="swatch__chip" style="background: #1f3d36"></span>
+              <span class="swatch__name">أخضر غامق</span>
+            </button>
+            <button class="swatch" type="button" role="option" aria-pressed="false">
+              <span class="swatch__chip" style="background: #c4a484"></span>
+              <span class="swatch__name">بيج رملي</span>
+            </button>
+            <button class="swatch" type="button" role="option" aria-pressed="false">
+              <span class="swatch__chip" style="background: #2c2c2c"></span>
+              <span class="swatch__name">فحمي</span>
+            </button>
+            <button class="swatch" type="button" role="option" aria-pressed="false">
+              <span class="swatch__chip" style="background: #f4f1ea; border-color: #ddd"></span>
+              <span class="swatch__name">أبيض دافئ</span>
+            </button>
+            <button class="swatch" type="button" role="option" aria-pressed="false">
+              <span class="swatch__chip" style="background: #5b7c99"></span>
+              <span class="swatch__name">أزرق هادئ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- لماذا تشتريه -->
+        <div class="section">
+          <h2 class="t-section">لماذا تختاره؟</h2>
+          <ul class="bullets t-body">
+            <li>نقطة ميزة أولى — جملة واضحة ومباشرة.</li>
+            <li>نقطة ميزة ثانية — ركّز على النتيجة للعميل.</li>
+            <li>نقطة ميزة ثالثة — مادة، ضمان، أو سهولة استخدام.</li>
+          </ul>
+        </div>
+
+        <!-- المواصفات -->
+        <div class="section">
+          <h2 class="t-section">المواصفات</h2>
+          <div class="specs t-body">
+            <div class="spec-row">
+              <span class="t-label">الخامة</span>
+              <span><!-- ضع النص هنا -->—</span>
+            </div>
+            <div class="spec-row">
+              <span class="t-label">الأبعاد</span>
+              <span class="t-numeric"><!-- مثال: 12 × 8 سم -->—</span>
+            </div>
+            <div class="spec-row">
+              <span class="t-label">الوزن</span>
+              <span class="t-numeric"><!-- مثال: 320 جم -->—</span>
+            </div>
+            <div class="spec-row">
+              <span class="t-label">الضمان</span>
+              <span><!-- مثال: سنة واحدة -->—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- وصف مطوّل -->
+        <div class="section">
+          <h2 class="t-section">تفاصيل أكثر</h2>
+          <p class="t-body">
+            فقرة الوصف الطويلة توضع هنا. حافظ على جمل قصيرة، واستخدم
+            الأصناف <code class="t-label">.t-body</code> للنص،
+            و<code class="t-label">.t-section</code> للعناوين الفرعية.
+          </p>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#order">اطلب الآن</a>
+          <a class="btn btn-ghost" href="#gallery">عرض الصور</a>
+        </div>
+      </section>
+    </div>
+
+    <aside class="dev-note" aria-label="دليل الاستخدام">
+      <strong>دليل سريع:</strong><br />
+      • الصور/GIF: أزل التعليق عن وسم <code>&lt;img&gt;</code> داخل كل
+      <code>.media-slot</code> وضع المسار.<br />
+      • الألوان: عدّل <code>style="background: ..."</code> واسم
+      <code>.swatch__name</code>.<br />
+      • الخطوط: <code>.t-hero / .t-title / .t-section / .t-lead / .t-body / .t-caption</code>.<br />
+      • أحجام الكتابة كلها من متغيرات <code>:root</code>
+      (<code>--text-xs</code> … <code>--text-hero</code>).
+    </aside>
+  </main>
+
+  <script>
+    /* تفاعل بسيط لاختيار اللون — اختياري */
+    document.querySelectorAll(".swatch").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".swatch").forEach((b) => {
+          b.setAttribute("aria-pressed", "false");
+        });
+        btn.setAttribute("aria-pressed", "true");
+      });
+    });
+  </script>
+</body>
+</html>

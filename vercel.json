@@ -1,0 +1,17 @@
+{
+  "framework": "nextjs",
+  "functions": {
+    "src/app/api/upload/route.ts": {
+      "maxDuration": 60,
+      "memory": 1024
+    }
+  },
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "cargolf.net" }],
+      "destination": "https://www.cargolf.net/$1",
+      "permanent": true
+    }
+  ]
+}
