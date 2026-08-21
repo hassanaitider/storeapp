@@ -27,7 +27,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# env files
+# env files (keep example only)
 .env*.local
 .env*
 !.env.example
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# vercel local link metadata
+.vercel
