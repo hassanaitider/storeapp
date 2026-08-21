@@ -11,9 +11,10 @@ import { convertToUSD, formatLocalAmount, getCurrency } from "@/lib/currency";
 import { getProductLocalPrice } from "@/lib/pricing";
 import { htmlToPlain, toEditorHtml } from "@/lib/rich-html";
 import { slugify } from "@/lib/utils";
-import type { CountryCode } from "@/lib/types";
+import type { CountryCode, Product } from "@/lib/types";
 import { ProductRichEditor } from "@/components/admin/ProductRichEditor";
 import { ProductColorsEditor } from "@/components/admin/ProductColorsEditor";
+import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
 import { SITE_URL } from "@/lib/site";
 
 export default function EditProductPage() {
@@ -41,7 +42,8 @@ export default function EditProductPage() {
   const [descLang, setDescLang] = useState<"ar" | "en">("ar");
   const [categoryId, setCategoryId] = useState("");
   const [slug, setSlug] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [images, setImages] = useState<string[]>(["/products/car-vacuum.png"]);
+  const [activeImg, setActiveImg] = useState(0);
   const [localPrice, setLocalPrice] = useState("99");
   const [inStock, setInStock] = useState(true);
   const [featured, setFeatured] = useState(false);
@@ -75,7 +77,12 @@ export default function EditProductPage() {
     setDescriptionEn(toEditorHtml(existing.descriptionEn));
     setCategoryId(existing.categoryId || categories[0]?.id || "");
     setSlug(existing.slug);
-    setImageUrl(existing.images?.[0] ?? "");
+    setImages(
+      existing.images?.length
+        ? [...existing.images]
+        : ["/products/car-vacuum.png"]
+    );
+    setActiveImg(0);
     setLocalPrice(String(Math.round(local * 1000) / 1000));
     setInStock(existing.inStock !== false);
     setFeatured(Boolean(existing.featured));
@@ -118,10 +125,9 @@ export default function EditProductPage() {
       return;
     }
     const priceUSD = convertToUSD(priceLocal, cur);
-    const images = imageUrl.trim()
-      ? [imageUrl.trim()]
-      : existing?.images?.length
-        ? existing.images
+    const nextImages =
+      images.filter(Boolean).length > 0
+        ? images.filter(Boolean)
         : ["/products/car-vacuum.png"];
 
     const plainAr = htmlToPlain(descriptionAr) || nameAr.trim();
@@ -145,7 +151,7 @@ export default function EditProductPage() {
       colors: [],
       customColorEnabled,
       categoryId: categoryId || categories[0]?.id || "",
-      images,
+      images: nextImages,
       slug: (slug || slugify(nameEn || nameAr)).trim(),
       featured,
       inStock,
@@ -278,36 +284,84 @@ export default function EditProductPage() {
           </select>
         </label>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-bold text-ink-800">
-              {locale === "ar" ? `السعر (${cur})` : `Price (${cur})`}
-            </span>
-            <input
-              type="number"
-              step="any"
-              min="0"
-              required
-              className="w-full rounded-xl border border-sand-300 px-3 py-3"
-              value={localPrice}
-              onChange={(e) => setLocalPrice(e.target.value)}
-            />
-            <span className="mt-1 block text-xs text-[var(--muted)]">
-              {formatLocalAmount(Number(localPrice) || 0, cur, locale)} · ≈ $
-              {(Number(localPrice) / (rate || 1)).toFixed(2)}
-            </span>
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-bold text-ink-800">
-              {locale === "ar" ? "صورة الغلاف (رابط)" : "Cover image URL"}
-            </span>
-            <input
-              className="w-full rounded-xl border border-sand-300 px-3 py-3"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="https://... أو /products/..."
-            />
-          </label>
+        <label className="block">
+          <span className="mb-1.5 block text-sm font-bold text-ink-800">
+            {locale === "ar" ? `السعر (${cur})` : `Price (${cur})`}
+          </span>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            required
+            className="w-full rounded-xl border border-sand-300 px-3 py-3"
+            value={localPrice}
+            onChange={(e) => setLocalPrice(e.target.value)}
+          />
+          <span className="mt-1 block text-xs text-[var(--muted)]">
+            {formatLocalAmount(Number(localPrice) || 0, cur, locale)} · ≈ $
+            {(Number(localPrice) / (rate || 1)).toFixed(2)}
+          </span>
+        </label>
+
+        <div className="mt-6 rounded-2xl border border-sand-200 bg-sand-50/50 p-4 sm:p-5">
+          <h2 className="mb-4 text-lg font-bold text-ink-900">
+            {locale === "ar" ? "صور وفيديوهات المنتج (GIF)" : "Product media"}
+          </h2>
+          <ProductMediaGallery
+            product={
+              {
+                id: existing?.id ?? "draft",
+                slug: previewSlug || "draft",
+                categoryId: categoryId || "",
+                nameAr: nameAr || "منتج",
+                nameEn: nameEn || "Product",
+                descriptionAr: "",
+                descriptionEn: "",
+                detailsAr: [],
+                detailsEn: [],
+                priceUSD: 0,
+                images,
+                inStock: true,
+                featured: false,
+                rating: 5,
+                reviewCount: 0,
+                createdAt: new Date().toISOString(),
+              } satisfies Product
+            }
+            locale={locale}
+            activeImg={activeImg}
+            onSelect={setActiveImg}
+            editable
+            onUploaded={(url) => {
+              setImages((prev) => {
+                const next = [...prev, url];
+                setActiveImg(next.length - 1);
+                return next;
+              });
+            }}
+            onReplace={(index, url) => {
+              setImages((prev) =>
+                prev.map((u, i) => (i === index ? url : u))
+              );
+              setActiveImg(index);
+            }}
+            onDelete={(index) => {
+              if (images.length <= 1) {
+                window.alert(
+                  locale === "ar"
+                    ? "يجب الإبقاء على صورة واحدة على الأقل"
+                    : "Keep at least one image"
+                );
+                return;
+              }
+              setImages((prev) => prev.filter((_, i) => i !== index));
+              setActiveImg((cur) => {
+                if (cur === index) return Math.max(0, index - 1);
+                if (cur > index) return cur - 1;
+                return cur;
+              });
+            }}
+          />
         </div>
 
         <div className="flex flex-wrap gap-4 pt-1">

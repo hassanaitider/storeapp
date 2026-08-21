@@ -1,5 +1,7 @@
 import { put } from "@vercel/blob";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -153,6 +155,12 @@ async function toDurableDataUrl(
  */
 export async function POST(request: Request) {
   try {
+    const jar = await cookies();
+    const session = verifyAdminSessionToken(jar.get(ADMIN_COOKIE)?.value);
+    if (!session.ok) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const formData = await request.formData();
     const file = formData.get("file");
 

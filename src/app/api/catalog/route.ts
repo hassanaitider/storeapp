@@ -1,6 +1,8 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 import {
   catalogToJson,
   parseCatalogJson,
@@ -75,6 +77,12 @@ export async function GET() {
 
 export async function PUT(request: Request) {
   try {
+    const jar = await cookies();
+    const session = verifyAdminSessionToken(jar.get(ADMIN_COOKIE)?.value);
+    if (!session.ok) {
+      return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+    }
+
     const body = (await request.json()) as PersistedCatalog;
     const clean = parseCatalogJson(catalogToJson(body));
     if (!clean || (!clean.categories?.length && !clean.products?.length)) {

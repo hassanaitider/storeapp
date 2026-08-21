@@ -40,11 +40,6 @@ export function Footer() {
                 {t.nav.cart}
               </Link>
             </li>
-            <li>
-              <Link href="/admin" className="hover:text-white">
-                {t.nav.admin}
-              </Link>
-            </li>
           </ul>
         </div>
 

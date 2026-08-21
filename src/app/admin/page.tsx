@@ -172,6 +172,16 @@ function AdminDashboard() {
             <RotateCcw className="h-4 w-4" />
             {locale === "ar" ? "إعادة ضبط" : "Reset"}
           </button>
+          <button
+            type="button"
+            onClick={async () => {
+              await fetch("/api/admin/logout", { method: "POST" });
+              window.location.assign("/admin/login");
+            }}
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-600 bg-white px-3 py-2 text-sm font-semibold text-brand-800 hover:bg-brand-50"
+          >
+            {t.admin.logout}
+          </button>
           <A
             href="/"
             className="self-center text-sm font-medium text-brand-700 hover:underline"

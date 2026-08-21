@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, ShoppingBag, X, LayoutDashboard } from "lucide-react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { BrandLogo } from "@/components/layout/BrandLogo";
@@ -30,7 +30,6 @@ export function Header() {
     { href: "/", label: t.nav.home },
     { href: "/shop", label: t.nav.shop },
     { href: "/#categories", label: t.nav.categories },
-    { href: "/admin", label: t.nav.admin },
   ];
 
   return (
@@ -96,14 +95,6 @@ export function Header() {
               </option>
             ))}
           </select>
-
-          <Link
-            href="/admin"
-            className="hidden rounded-full p-2 text-brand-700 transition hover:bg-brand-50 sm:inline-flex"
-            aria-label={t.nav.admin}
-          >
-            <LayoutDashboard className="h-5 w-5" />
-          </Link>
 
           <Link
             href="/cart"
