@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { ProductCard } from "@/components/shop/ProductCard";
+import { ProductImage } from "@/components/shop/ProductImage";
 import { TrustBar } from "@/components/shop/TrustBar";
 import { currencyForCountry } from "@/lib/countries";
 
@@ -20,13 +20,12 @@ export default function HomePage() {
       <section className="relative min-h-[88vh] overflow-hidden bg-hero-mesh text-white">
         <div className="pointer-events-none absolute inset-0 bg-grain opacity-40" />
         <div className="absolute inset-0">
-          <Image
+          <ProductImage
             src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1800&q=80"
             alt=""
             fill
             priority
             className="object-cover opacity-35 mix-blend-luminosity"
-            sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-950 via-brand-950/55 to-transparent" />
         </div>
@@ -101,15 +100,13 @@ export default function HomePage() {
               className="group relative aspect-[3/4] overflow-hidden rounded-2xl animate-fade-up"
               style={{ animationDelay: `${i * 60}ms` }}
             >
-              <Image
+              <ProductImage
                 src={cat.image || "/products/car-vacuum.png"}
                 alt={locale === "ar" ? cat.nameAr : cat.nameEn}
                 fill
-                unoptimized
-                className="object-cover transition duration-500 group-hover:scale-105"
-                sizes="(max-width:768px) 100vw, 25vw"
+                className="object-contain bg-sand-100 p-2 transition duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/30 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                 <h3 className="font-display text-2xl font-semibold">
                   {locale === "ar" ? cat.nameAr : cat.nameEn}

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
@@ -11,6 +10,7 @@ import {
 } from "@/lib/pricing";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
 
 export function ProductCard({
   product,
@@ -19,7 +19,6 @@ export function ProductCard({
 }: {
   product: Product;
   className?: string;
-  /** Override market for price currency (e.g. category country) */
   marketCountry?: CountryCode;
 }) {
   const t = useT();
@@ -28,6 +27,7 @@ export function ProductCard({
   const name = locale === "ar" ? product.nameAr : product.nameEn;
   const discount = productDiscountPercent(product, priceCountry);
   const compareLabel = formatProductComparePrice(product, priceCountry, locale);
+  const cover = productCoverSrc(product.images);
 
   return (
     <article
@@ -40,22 +40,19 @@ export function ProductCard({
         href={`/product/${product.slug}`}
         className="relative aspect-[4/5] overflow-hidden bg-sand-100"
       >
-        <Image
-          src={product.images[0] || "/products/car-vacuum.png"}
+        <ProductImage
+          src={cover}
           alt={name}
           fill
-          unoptimized
-          quality={100}
           className="object-contain p-2 transition duration-500 group-hover:scale-[1.02]"
-          sizes="(max-width:768px) 100vw, 33vw"
         />
         {discount > 0 && (
-          <span className="absolute start-3 top-3 rounded-md bg-brand-700 px-2 py-1 text-xs font-semibold text-white">
+          <span className="absolute start-3 top-3 z-10 rounded-md bg-brand-700 px-2 py-1 text-xs font-semibold text-white">
             -{discount}%
           </span>
         )}
         {product.featured && (
-          <span className="absolute end-3 top-3 rounded-md bg-sand-100/95 px-2 py-1 text-xs font-medium text-brand-800">
+          <span className="absolute end-3 top-3 z-10 rounded-md bg-sand-100/95 px-2 py-1 text-xs font-medium text-brand-800">
             {t.shop.featured}
           </span>
         )}

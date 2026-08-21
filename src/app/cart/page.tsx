@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
@@ -10,6 +9,7 @@ import {
   formatProductPrice,
   getProductLocalPrice,
 } from "@/lib/pricing";
+import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
 
 export default function CartPage() {
   const t = useT();
@@ -70,13 +70,11 @@ export default function CartPage() {
                   href={`/product/${product.slug}`}
                   className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-sand-100 sm:h-28 sm:w-28"
                 >
-                  <Image
-                    src={product.images[0] || "/products/car-vacuum.png"}
+                  <ProductImage
+                    src={productCoverSrc(product.images)}
                     alt={name}
                     fill
-                    unoptimized
                     className="object-contain p-1"
-                    sizes="112px"
                   />
                 </Link>
                 <div className="flex min-w-0 flex-1 flex-col">

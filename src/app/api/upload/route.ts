@@ -3,11 +3,11 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-/** Allow larger uploads on Vercel Pro / configured plans */
 export const maxDuration = 60;
 
-/** Soft ceiling only to protect the server — no format whitelist */
-const ABSOLUTE_MAX_BYTES = 25 * 1024 * 1024; // 25MB
+const ABSOLUTE_MAX_BYTES = 25 * 1024 * 1024;
+/** Durable data-URL budget (fits localStorage catalog) */
+const DATA_URL_MAX = 1_400_000;
 
 type MediaStore = {
   __smartShopMedia?: Map<string, { buffer: Buffer; type: string }>;
@@ -87,7 +87,7 @@ async function saveToTmp(
     await mkdir(dir, { recursive: true });
     await writeFile(path.join(dir, filename), buffer);
   } catch {
-    /* memory map still works for this instance */
+    /* memory only */
   }
   return `/api/media/${filename}`;
 }
@@ -108,46 +108,48 @@ async function saveToPublic(
   }
 }
 
-async function maybeCompress(
+async function toDurableDataUrl(
   mime: string,
-  buffer: Buffer,
-  ext: string
-): Promise<{ buffer: Buffer; type: string; ext: string }> {
-  // Keep GIF / SVG / reasonable files untouched for maximum clarity
-  if (
-    mime.includes("gif") ||
-    mime.includes("svg") ||
-    mime.includes("png") ||
-    buffer.length < 5_000_000
-  ) {
-    return { buffer, type: mime, ext };
-  }
+  buffer: Buffer
+): Promise<string | null> {
+  const direct = `data:${mime};base64,${buffer.toString("base64")}`;
+  if (direct.length <= DATA_URL_MAX) return direct;
+
+  // GIF / SVG: cannot safely recompress here — skip
+  if (mime.includes("gif") || mime.includes("svg")) return null;
+
   try {
     const sharp = (await import("sharp")).default;
-    const out = await sharp(buffer)
-      .rotate()
-      .resize({
-        width: 3200,
-        height: 3200,
-        fit: "inside",
-        withoutEnlargement: true,
-        kernel: sharp.kernel.lanczos3,
-      })
-      .webp({ quality: 95, effort: 4 })
-      .toBuffer();
-    // Only use compressed if meaningfully smaller
-    if (out.length >= buffer.length * 0.95) {
-      return { buffer, type: mime, ext };
+    // Step down until it fits
+    for (const [size, q] of [
+      [1600, 88],
+      [1200, 82],
+      [900, 76],
+      [700, 70],
+    ] as const) {
+      const out = await sharp(buffer)
+        .rotate()
+        .resize({
+          width: size,
+          height: size,
+          fit: "inside",
+          withoutEnlargement: true,
+          kernel: sharp.kernel.lanczos3,
+        })
+        .webp({ quality: q, effort: 4 })
+        .toBuffer();
+      const url = `data:image/webp;base64,${out.toString("base64")}`;
+      if (url.length <= DATA_URL_MAX) return url;
     }
-    return { buffer: out, type: "image/webp", ext: ".webp" };
   } catch {
-    return { buffer, type: mime, ext };
+    /* ignore */
   }
+  return null;
 }
 
 /**
- * Accept any image/GIF (and common media files) of any practical size.
- * Storage order: Vercel Blob → public/uploads → /tmp API → data-URL.
+ * Upload product images with durable URLs.
+ * On Vercel without Blob, ephemeral /api/media is skipped — data-URLs persist in catalog.
  */
 export async function POST(request: Request) {
   try {
@@ -157,11 +159,9 @@ export async function POST(request: Request) {
     if (!(file instanceof File)) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
-
     if (file.size <= 0) {
       return NextResponse.json({ error: "Empty file" }, { status: 400 });
     }
-
     if (file.size > ABSOLUTE_MAX_BYTES) {
       return NextResponse.json(
         { error: "File exceeds 25MB hard limit" },
@@ -171,64 +171,52 @@ export async function POST(request: Request) {
 
     const mime = resolveMime(file);
     const raw = Buffer.from(await file.arrayBuffer());
-    const baseExt = extFor(file, mime);
-    const prepared = await maybeCompress(mime, raw, baseExt);
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${prepared.ext}`;
+    const ext = extFor(file, mime);
+    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
+    const onVercel = Boolean(process.env.VERCEL);
 
-    // 1) Vercel Blob
+    // 1) Vercel Blob — durable public URL
     if (process.env.BLOB_READ_WRITE_TOKEN) {
       try {
-        const blob = await put(`products/${filename}`, prepared.buffer, {
+        const blob = await put(`products/${filename}`, raw, {
           access: "public",
-          contentType: prepared.type,
+          contentType: mime,
           token: process.env.BLOB_READ_WRITE_TOKEN,
         });
-        return NextResponse.json({ url: blob.url });
+        return NextResponse.json({ url: blob.url, durable: true });
       } catch (err) {
         console.error("blob upload failed", err);
       }
     }
 
-    // 2) Local disk
-    const localUrl = await saveToPublic(filename, prepared.buffer);
+    // 2) Local public/uploads (dev / non-serverless)
+    const localUrl = await saveToPublic(filename, raw);
     if (localUrl) {
-      return NextResponse.json({ url: localUrl });
+      return NextResponse.json({ url: localUrl, durable: true });
     }
 
-    // 3) /tmp + /api/media
-    try {
-      const url = await saveToTmp(filename, prepared.buffer, prepared.type);
-      return NextResponse.json({ url });
-    } catch (err) {
-      console.error("tmp upload failed", err);
+    // 3) Durable data-URL (works on Vercel + localStorage catalog)
+    const dataUrl = await toDurableDataUrl(mime, raw);
+    if (dataUrl) {
+      return NextResponse.json({ url: dataUrl, durable: true });
     }
 
-    // 4) data-URL fallback (any size that fits catalog soft limit)
-    const dataUrl = `data:${prepared.type};base64,${prepared.buffer.toString("base64")}`;
-    if (dataUrl.length <= 900_000) {
-      return NextResponse.json({ url: dataUrl });
-    }
-
-    // Last attempt: harder compress then data-URL
-    try {
-      const sharp = (await import("sharp")).default;
-      const tiny = await sharp(raw)
-        .rotate()
-        .resize({ width: 1000, height: 1000, fit: "inside" })
-        .webp({ quality: 90 })
-        .toBuffer();
-      const tinyUrl = `data:image/webp;base64,${tiny.toString("base64")}`;
-      if (tinyUrl.length <= 900_000) {
-        return NextResponse.json({ url: tinyUrl });
+    // 4) Ephemeral tmp only off Vercel (or last resort with warning)
+    if (!onVercel) {
+      try {
+        const url = await saveToTmp(filename, raw, mime);
+        return NextResponse.json({ url, durable: false });
+      } catch (err) {
+        console.error("tmp upload failed", err);
       }
-    } catch {
-      /* ignore */
     }
 
     return NextResponse.json(
       {
         error:
-          "Could not store this file. Enable Vercel Blob (BLOB_READ_WRITE_TOKEN) for large media.",
+          mime.includes("gif")
+            ? "GIF كبير جدًا للحفظ الدائم. صغّره أو فعّل Vercel Blob."
+            : "تعذر حفظ الصورة بشكل دائم. صغّر الملف وحاول مجددًا.",
       },
       { status: 413 }
     );

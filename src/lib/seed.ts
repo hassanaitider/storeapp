@@ -2,12 +2,13 @@ import { STORE_MARKETS } from "./countries";
 import type { Category, Product } from "./types";
 
 const CATEGORY_IMAGES: Record<string, string> = {
+  MA: "/products/fashion-sling-1.png",
   SA: "/products/car-vacuum.png",
   AE: "/products/air-bed.png",
   OM: "/products/neck-massager.webp",
 };
 
-/** Only Saudi Arabia, UAE, and Oman */
+/** Morocco, Saudi Arabia, UAE, and Oman */
 export const SEED_CATEGORIES: Category[] = STORE_MARKETS.map((c) => ({
   id: `cat-${c.code}`,
   slug: `products-${c.code.toLowerCase()}`,
@@ -27,6 +28,319 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 export const SEED_PRODUCTS: Product[] = [
+  {
+    id: "prod-fashion-sling",
+    slug: "anti-theft-usb-sling-bag",
+    nameAr: "حقيبة كتف مضادة للسرقة بمنفذ USB",
+    nameEn: "Anti-Theft USB Sling Bag",
+    descriptionAr: `
+<h3>أناقتك… وحمايتك… في حقيبة واحدة</h3>
+<p>حقيبة صدر عصرية للمدينة والسفر: تصميم أنيق، قفل رقمي مضاد للسرقة، ومنفذ شحن USB خارجي لشحن هاتفك وأنت في الطريق. خفيفة، مقاومة للماء، وتسع تابلت 9.7 إنش.</p>
+<ul>
+<li>قفل تركيبة رقمي يحمي السحّابات</li>
+<li>منفذ USB خارجي لشحن الهاتف عبر باور بانك داخلي</li>
+<li>سعة منظمة: تابلت، سماعات، محفظة، باور بانك</li>
+<li>ألوان: أسود · رمادي · أسود/برونزي</li>
+<li>مقاس تقريبي: 32 × 16 × 9 سم</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Style and security — in one bag</h3>
+<p>A modern chest sling for city and travel: sleek design, anti-theft combination lock, and an external USB port to charge your phone on the go. Light, water-resistant, and fits a 9.7" tablet.</p>
+<ul>
+<li>Combination lock secures the zipper pulls</li>
+<li>External USB port for phone charging via an internal power bank</li>
+<li>Organized capacity: tablet, headphones, wallet, power bank</li>
+<li>Colors: Black · Grey · Black/Bronze</li>
+<li>Approx. size: 32 × 16 × 9 cm</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "قفل تركيبة رقمي مضاد للسرقة",
+      "منفذ شحن USB خارجي",
+      "مادة مقاومة للماء بلمسة فاخرة",
+      "تتسع لتابلت 9.7 إنش",
+      "حزام كتف مبطّن قابل للتعديل",
+      "مقاس: 32 × 16 × 9 سم",
+    ],
+    detailsEn: [
+      "Anti-theft combination lock",
+      "External USB charging port",
+      "Water-resistant premium finish",
+      "Fits a 9.7-inch tablet",
+      "Padded adjustable shoulder strap",
+      "Size: 32 × 16 × 9 cm",
+    ],
+    priceUSD: 39,
+    compareAtUSD: 59,
+    marketPrices: { MA: 249, SA: 149, AE: 145, OM: 14.9 },
+    marketComparePrices: { MA: 399, SA: 229, AE: 219, OM: 22.9 },
+    availableIn: ["MA"],
+    images: [
+      "/products/fashion-sling-1.png",
+      "/products/fashion-sling-2.png",
+      "/products/fashion-sling-3.png",
+      "/products/fashion-sling-4.png",
+      "/products/fashion-sling-5.png",
+    ],
+    colors: [],
+    customColorEnabled: true,
+    inStock: true,
+    featured: true,
+    rating: 4.8,
+    reviewCount: 186,
+    categoryId: "cat-MA",
+    createdAt: "2026-08-21T00:00:00.000Z",
+    landing: {
+      headlineAr: "حقيبة أنيقة… محمية… وجاهزة للشحن",
+      headlineEn: "Sleek, secure, and charge-ready",
+      introAr:
+        "صُممت لحياتك اليومية في المدينة والسفر: شكل عمودي أنيق، قفل رقمي يحمي أغراضك، ومنفذ USB يبقي هاتفك مشحونًا. اختر لونك المفضل واطلب الآن — توصيل مجاني والدفع عند الاستلام في المغرب.",
+      introEn:
+        "Built for daily city life and travel: a sleek vertical shape, a digital lock that protects your essentials, and a USB port that keeps your phone charged. Pick your color and order now — free delivery and cash on delivery in Morocco.",
+      sections: [
+        {
+          titleAr: "تصميم يلفت الأنظار",
+          titleEn: "A look that stands out",
+          bodyAr:
+            "واجهة سوداء أنيقة مع كلمة FASHION ولمسة برونزية عصرية. تظهر الحقيبة على الصدر بشكل عملي وأنيق — مثالية للعمل، الجولات، وركوب الدراجة النارية.",
+          bodyEn:
+            "A sleek black face with FASHION branding and a modern bronze accent. It sits cleanly across the chest — ideal for work, city walks, and motorcycle rides.",
+          image: "/products/fashion-sling-1.png",
+        },
+        {
+          titleAr: "جاهزة للطريق والمدينة",
+          titleEn: "Ready for the road and the city",
+          bodyAr:
+            "مقبض علوي وحزام كتف مبطّن لراحة طوال اليوم. احملها بثقة بجانب الدراجة أو في التنقل اليومي — خفيفة ومتينة في الوقت نفسه.",
+          bodyEn:
+            "A top handle and padded strap for all-day comfort. Carry it with confidence next to your bike or on your daily commute — light yet durable.",
+          image: "/products/fashion-sling-2.png",
+        },
+        {
+          titleAr: "اشحن هاتفك… وأنت تتحرك",
+          titleEn: "Charge while you move",
+          bodyAr:
+            "ضع باور بانك داخل الحقيبة وصِل هاتفك عبر منفذ USB الخارجي. شحن مستمر دون فتح الحقيبة — مثالي للرحلات والتنقل الطويل.",
+          bodyEn:
+            "Keep a power bank inside and plug your phone into the external USB port. Charge without opening the bag — perfect for trips and long days out.",
+          image: "/products/fashion-sling-3.png",
+        },
+        {
+          titleAr: "تنظيم ذكي لأجهزتك",
+          titleEn: "Smart organization for your gear",
+          bodyAr:
+            "حجرة رئيسية واسعة مع جيب داخلي: تناسب السماعات الكبيرة، التابلت، الهاتف، والباور بانك. كل شيء في مكانه… بدون فوضى.",
+          bodyEn:
+            "A roomy main compartment with an inner pocket fits large headphones, a tablet, phone, and power bank. Everything in place — no clutter.",
+          image: "/products/fashion-sling-4.png",
+        },
+        {
+          titleAr: "مقاس عملي يتسع للتابلت",
+          titleEn: "Practical size — fits your tablet",
+          bodyAr:
+            "الأبعاد التقريبية 32 × 16 × 9 سم تتسع لتابلت 9.7 إنش. قفل تركيبة رقمي يحمي السحّابات من الفتح غير المرغوب — أمان إضافي في الأماكن المزدحمة.",
+          bodyEn:
+            "Approx. 32 × 16 × 9 cm — fits a 9.7-inch tablet. A combination lock secures the zippers against unwanted opening — extra safety in crowded places.",
+          image: "/products/fashion-sling-5.png",
+        },
+      ],
+      benefitsAr: [
+        "قفل مضاد للسرقة",
+        "منفذ USB للشحن",
+        "مقاومة للماء",
+        "تتسع لتابلت 9.7″",
+        "ألوان متعددة — اكتب لونك",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "Anti-theft lock",
+        "USB charging port",
+        "Water-resistant",
+        "Fits 9.7″ tablet",
+        "Multiple colors — type yours",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "هل الشحن يحتاج باور بانك؟",
+          questionEn: "Does charging need a power bank?",
+          answerAr:
+            "نعم — المنفذ الخارجي يمرّر الشحن من باور بانك تضعه داخل الحقيبة إلى هاتفك. (الباور بانك غير مرفق عادةً).",
+          answerEn:
+            "Yes — the external port routes power from a bank you place inside the bag to your phone. (Power bank usually not included.)",
+        },
+        {
+          questionAr: "ما الألوان المتوفرة؟",
+          questionEn: "What colors are available?",
+          answerAr:
+            "أسود، رمادي، وأسود/برونزي. اكتب اللون المفضل في صفحة المنتج قبل الطلب.",
+          answerEn:
+            "Black, grey, and black/bronze. Type your preferred color on the product page before ordering.",
+        },
+        {
+          questionAr: "هل تناسب التابلت؟",
+          questionEn: "Will it fit a tablet?",
+          answerAr: "نعم، تتسع عادةً لتابلت بحجم 9.7 إنش حسب الغلاف.",
+          answerEn: "Yes — typically fits a 9.7-inch tablet depending on the case.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-rolling-cart",
+    slug: "3-tier-rolling-storage-cart",
+    nameAr: "عربة تخزين متنقلة 3 مستويات بسطح خشبي",
+    nameEn: "3-Tier Rolling Storage Cart",
+    descriptionAr: `
+<h3>تنظيم أنيق… يتحرك معك</h3>
+<p>طاولة جانبية وعربة تخزين في قطعة واحدة: سطح خشبي أنيق + سلتان معدنيتان عميقتان + عجلات 360° صامتة مع فرامل. مثالية للصالة، غرفة النوم، المكتب أو المطبخ.</p>
+<ul>
+<li>سطح خشبي سميك لوضع الإضاءة والكتب والمشروبات</li>
+<li>سلتان معدنيتان بسعة كبيرة وتثبيت آمن</li>
+<li>عجلات كونية 360° صامتة لا تخدش الأرضية</li>
+<li>نظام فرامل للتثبيت عند الحاجة</li>
+<li>هيكل أنابيب معدنية متين بلون أسود مطفي</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Stylish storage that moves with you</h3>
+<p>A side table and storage cart in one: elegant wood top + two deep metal baskets + silent 360° casters with brakes. Perfect for the living room, bedroom, office, or kitchen.</p>
+<ul>
+<li>Thick wood-grain top for lamps, books, and drinks</li>
+<li>Two deep metal baskets with secure capacity</li>
+<li>Silent 360° casters that won’t mark floors</li>
+<li>Brake system to lock when needed</li>
+<li>Sturdy matte-black tubular metal frame</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "3 مستويات: سطح خشبي + سلتان معدنيتان",
+      "عجلات 360° صامتة مع فرامل",
+      "هيكل معدني متين مقاوم للتشوه",
+      "مثالية كطاولة جانبية أو عربة تنظيم",
+      "سهلة التحريك بين الغرف",
+    ],
+    detailsEn: [
+      "3 tiers: wood top + two metal baskets",
+      "Silent 360° casters with brakes",
+      "Sturdy metal frame that resists bending",
+      "Ideal as a side table or organizer cart",
+      "Easy to move between rooms",
+    ],
+    priceUSD: 55,
+    compareAtUSD: 89,
+    marketPrices: { MA: 329, SA: 199, AE: 189, OM: 19.9 },
+    marketComparePrices: { MA: 499, SA: 299, AE: 289, OM: 29.9 },
+    availableIn: ["MA"],
+    images: [
+      "/products/rolling-cart-1.png",
+      "/products/rolling-cart-2.png",
+      "/products/rolling-cart-3.png",
+      "/products/rolling-cart-4.png",
+      "/products/rolling-cart-demo.gif",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.7,
+    reviewCount: 128,
+    categoryId: "cat-MA",
+    createdAt: "2026-08-21T12:00:00.000Z",
+    landing: {
+      headlineAr: "طاولة جانبية… وعربة تخزين… في قطعة واحدة",
+      headlineEn: "Side table and storage cart — in one piece",
+      introAr:
+        "رتّب كتبك وإضاءتك وأغراضك اليومية على تصميم عصري يتحرك بسهولة بين الغرف. سطح خشبي أنيق، سلتان عميقتان، وعجلات صامتة مع فرامل — حل عملي للمنازل المغربية الحديثة.",
+      introEn:
+        "Organize books, lighting, and daily essentials on a modern design that rolls easily between rooms. Elegant wood top, two deep baskets, and silent casters with brakes — practical for modern Moroccan homes.",
+      sections: [
+        {
+          titleAr: "عجلات صامتة مع فرامل أمان",
+          titleEn: "Silent wheels with safety brakes",
+          bodyAr:
+            "عجلات كونية 360° تتحرك بسلاسة دون إزعاج ودون خدش الأرضية. عند التثبيت، فعّل الفرامل لوضع أغراض أكبر بثبات وأمان.",
+          bodyEn:
+            "360° casters glide smoothly without noise or floor marks. When parked, engage the brakes to place larger items safely and securely.",
+          image: "/products/rolling-cart-1.png",
+        },
+        {
+          titleAr: "سعة كبيرة… وتنظيم مرتب",
+          titleEn: "Large capacity — tidy organization",
+          bodyAr:
+            "سلتان معدنيتان عميقتان تستوعبان الكتب والديكور والسلال. ضع ما تريد بثقة — الجوانب مرتفعة لتقليل السقوط.",
+          bodyEn:
+            "Two deep metal baskets hold books, décor, and organizers. Place items with confidence — high sides help keep everything in place.",
+          image: "/products/rolling-cart-2.png",
+        },
+        {
+          titleAr: "سطح خشبي أنيق للاستخدام اليومي",
+          titleEn: "Elegant wood top for daily use",
+          bodyAr:
+            "لوحة سميكة بحواف مستديرة تصلح كطاولة جانبية بجانب الكنبة أو السرير: إضاءة، مشروب، أو دفتر ملاحظات دائمًا في متناولك.",
+          bodyEn:
+            "A thick rounded-corner board works as a side table by the sofa or bed: lamp, drink, or notebook always within reach.",
+          image: "/products/rolling-cart-3.png",
+        },
+        {
+          titleAr: "هيكل متين بلمسة عصرية",
+          titleEn: "Sturdy frame with a modern look",
+          bodyAr:
+            "أنابيب معدنية سميكة بلون أسود مطفي تقاوم التشوه وتمنح مظهرًا صناعيًا أنيقًا يناسب الصالة والمكتب والمطبخ.",
+          bodyEn:
+            "Thick matte-black metal tubes resist bending and give a clean industrial look that fits living rooms, offices, and kitchens.",
+          image: "/products/rolling-cart-4.png",
+        },
+      ],
+      benefitsAr: [
+        "عجلات 360° صامتة",
+        "فرامل تثبيت",
+        "سطح خشبي عملي",
+        "سلتان بسعة كبيرة",
+        "تصميم عصري خفيف الحركة",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "Silent 360° casters",
+        "Locking brakes",
+        "Practical wood top",
+        "Two high-capacity baskets",
+        "Modern easy-roll design",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "هل العجلات تخدش الأرضية؟",
+          questionEn: "Will the wheels mark the floor?",
+          answerAr:
+            "العجلات مصممة للحركة السلسة والصامتة مع تقليل الضرر على الأرضيات عند الاستخدام العادي.",
+          answerEn:
+            "The casters are designed for smooth, quiet movement and to minimize floor marks in normal use.",
+        },
+        {
+          questionAr: "أين يمكن استخدامها؟",
+          questionEn: "Where can I use it?",
+          answerAr:
+            "كطاولة جانبية في الصالة، طاولة سرير، عربة تنظيم للمكتب، أو مساحة تخزين إضافية في المطبخ.",
+          answerEn:
+            "As a living-room side table, bedside table, office organizer cart, or extra kitchen storage.",
+        },
+        {
+          questionAr: "هل التركيب صعب؟",
+          questionEn: "Is assembly difficult?",
+          answerAr:
+            "عادةً تركيب بسيط بالأدوات المرفقة واتباع الخطوات — جاهزة للاستخدام خلال وقت قصير.",
+          answerEn:
+            "Usually simple assembly with the included hardware and steps — ready in a short time.",
+        },
+      ],
+    },
+  },
   {
     id: "prod-car-vacuum",
     slug: "cordless-car-vacuum",
@@ -70,9 +384,9 @@ ${COD_EN}
     ],
     priceUSD: 49,
     compareAtUSD: 69,
-    marketPrices: { SA: 189, AE: 179, OM: 19.5 },
-    marketComparePrices: { SA: 259, AE: 249, OM: 26.9 },
-    availableIn: ["SA", "AE", "OM"],
+    marketPrices: { MA: 199, SA: 189, AE: 179, OM: 19.5 },
+    marketComparePrices: { MA: 279, SA: 259, AE: 249, OM: 26.9 },
+    availableIn: ["MA", "SA", "AE", "OM"],
     images: [
       "/products/car-vacuum-demo.gif",
       "/products/car-vacuum.png",
@@ -196,9 +510,9 @@ ${COD_EN}
     ],
     priceUSD: 119,
     compareAtUSD: 149,
-    marketPrices: { SA: 449, AE: 439, OM: 45.9 },
-    marketComparePrices: { SA: 559, AE: 549, OM: 56.9 },
-    availableIn: ["SA", "AE", "OM"],
+    marketPrices: { MA: 469, SA: 449, AE: 439, OM: 45.9 },
+    marketComparePrices: { MA: 589, SA: 559, AE: 549, OM: 56.9 },
+    availableIn: ["MA", "SA", "AE", "OM"],
     images: [
       "/products/baby-washer-demo.gif",
       "/products/baby-washer.png",
@@ -322,9 +636,9 @@ ${COD_EN}
     ],
     priceUSD: 89,
     compareAtUSD: 119,
-    marketPrices: { SA: 339, AE: 329, OM: 34.5 },
-    marketComparePrices: { SA: 449, AE: 439, OM: 45.9 },
-    availableIn: ["SA", "AE", "OM"],
+    marketPrices: { MA: 359, SA: 339, AE: 329, OM: 34.5 },
+    marketComparePrices: { MA: 469, SA: 449, AE: 439, OM: 45.9 },
+    availableIn: ["MA", "SA", "AE", "OM"],
     images: [
       "/products/smart-sunglasses-demo.gif",
       "/products/smart-sunglasses.png",
@@ -448,9 +762,9 @@ ${COD_EN}
     ],
     priceUSD: 39,
     compareAtUSD: 55,
-    marketPrices: { SA: 149, AE: 145, OM: 14.9 },
-    marketComparePrices: { SA: 209, AE: 199, OM: 20.9 },
-    availableIn: ["SA", "AE", "OM"],
+    marketPrices: { MA: 159, SA: 149, AE: 145, OM: 14.9 },
+    marketComparePrices: { MA: 219, SA: 209, AE: 199, OM: 20.9 },
+    availableIn: ["MA", "SA", "AE", "OM"],
     images: [
       "/products/wireless-clock-demo.gif",
       "/products/wireless-clock-1.png",
@@ -578,9 +892,9 @@ ${COD_EN}
     ],
     priceUSD: 45,
     compareAtUSD: 65,
-    marketPrices: { SA: 169, AE: 159, OM: 17.5 },
-    marketComparePrices: { SA: 249, AE: 229, OM: 24.9 },
-    availableIn: ["SA", "AE", "OM"],
+    marketPrices: { MA: 179, SA: 169, AE: 159, OM: 17.5 },
+    marketComparePrices: { MA: 259, SA: 249, AE: 229, OM: 24.9 },
+    availableIn: ["MA", "SA", "AE", "OM"],
     images: [
       "/products/neck-massager-demo.gif",
       "/products/neck-massager.webp",
@@ -700,9 +1014,9 @@ ${COD_EN}
     ],
     priceUSD: 79,
     compareAtUSD: 119,
-    marketPrices: { SA: 299, AE: 289, OM: 31 },
-    marketComparePrices: { SA: 449, AE: 429, OM: 45 },
-    availableIn: ["SA", "AE", "OM"],
+    marketPrices: { MA: 319, SA: 299, AE: 289, OM: 31 },
+    marketComparePrices: { MA: 469, SA: 449, AE: 429, OM: 45 },
+    availableIn: ["MA", "SA", "AE", "OM"],
     images: [
       "/products/air-bed-demo.gif",
       "/products/air-bed.png",

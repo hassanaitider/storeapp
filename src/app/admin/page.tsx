@@ -498,7 +498,7 @@ function AdminDashboard() {
                           </p>
                           <p className="mt-1 text-xs text-[var(--muted)]">
                             {new Date(o.createdAt).toLocaleString(
-                              locale === "ar" ? "ar" : "en"
+                              locale === "ar" ? "fr-FR" : "en-US"
                             )}
                           </p>
                         </div>

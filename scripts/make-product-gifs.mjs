@@ -20,6 +20,7 @@ const JOBS = [
   { src: "wireless-clock-1.png", out: "wireless-clock-demo.gif" },
   { src: "neck-massager.webp", out: "neck-massager-demo.gif" },
   { src: "air-bed.png", out: "air-bed-demo.gif" },
+  { src: "rolling-cart-4.png", out: "rolling-cart-demo.gif" },
 ];
 
 async function frameBuffer(inputPath, t) {

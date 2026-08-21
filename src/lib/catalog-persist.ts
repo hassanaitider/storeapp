@@ -1,8 +1,12 @@
 import type { Category, Product, Order, CartItem, CurrencyCode, CountryCode, Locale } from "@/lib/types";
 
-export const CATALOG_STORAGE_KEY = "cargolf-v15";
+export const CATALOG_STORAGE_KEY = "cargolf-v19";
 
 export const LEGACY_STORAGE_KEYS = [
+  "cargolf-v18",
+  "cargolf-v17",
+  "cargolf-v16",
+  "cargolf-v15",
   "cargolf-v14",
   "cargolf-v13",
   "smart-shop-v12",
@@ -32,14 +36,14 @@ export type PersistedCatalog = {
   currencyRates: Record<CurrencyCode, number>;
 };
 
-const MAX_CHARS = 900_000;
+const MAX_CHARS = 4_000_000;
 
 /** Drop only enormous base64 blobs — allow large compressed uploads. */
 export function stripDataUrls(value: string | undefined | null): string {
   if (!value) return "";
   if (value.startsWith("data:")) {
     const ok =
-      value.length <= 900_000 &&
+      value.length <= 1_500_000 &&
       /^data:(image\/[a-z0-9.+-]+|application\/octet-stream);base64,/i.test(
         value
       );
@@ -89,14 +93,14 @@ export function catalogToJson(data: PersistedCatalog): string {
   let raw = JSON.stringify(clean);
   if (raw.length <= MAX_CHARS) return raw;
 
-  // Last resort: drop landing content & orders to fit
+  // Prefer keeping newest uploads (end of list) when space is tight
   clean = {
     ...clean,
     orders: [],
     products: clean.products.map((p) => ({
       ...p,
       landing: undefined,
-      images: p.images?.slice(0, 1) ?? [],
+      images: (p.images ?? []).slice(-3),
     })),
   };
   raw = JSON.stringify(clean);

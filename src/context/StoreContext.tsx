@@ -17,6 +17,7 @@ import {
   isStoreMarket,
   isValidCountry,
 } from "@/lib/countries";
+import { isDurableMediaUrl } from "@/lib/media-url";
 import {
   DEFAULT_CURRENCY_RATES,
   isCurrencyCode,
@@ -116,7 +117,7 @@ function cloneSeedCategories(): Category[] {
 function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
   const seed = cloneSeedCategories();
   if (!stored?.length) return seed;
-  // Keep only active markets (SA / AE / OM) — drop IQ, KW, EG, etc.
+  // Keep only active markets (MA / SA / AE / OM)
   return seed.map((s) => {
     const existing = stored.find((c) => c.id === s.id || c.slug === s.slug);
     if (!existing) return s;
@@ -129,7 +130,7 @@ function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
       availableIn: s.availableIn,
       nameAr: existing.nameAr || s.nameAr,
       nameEn: existing.nameEn || s.nameEn,
-      image: existing.image || s.image,
+      image: s.image,
       descriptionAr: existing.descriptionAr || s.descriptionAr,
       descriptionEn: existing.descriptionEn || s.descriptionEn,
     };
@@ -156,10 +157,23 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         detailsAr: seed.detailsAr,
         detailsEn: seed.detailsEn,
         landing: seed.landing,
-        images:
-          Array.isArray(p.images) && p.images.length > 0
-            ? p.images
-            : seed.images,
+        // Seed gallery always present; keep durable custom uploads in front
+        images: (() => {
+          const seedImgs = seed.images ?? [];
+          const durable = (p.images ?? []).filter(isDurableMediaUrl);
+          const customs = durable.filter(
+            (u) =>
+              u.startsWith("data:image/") ||
+              u.startsWith("https://") ||
+              u.startsWith("http://") ||
+              u.startsWith("/uploads/")
+          );
+          if (customs.length) {
+            const rest = seedImgs.filter((u) => !customs.includes(u));
+            return [...customs, ...rest];
+          }
+          return seedImgs.length ? seedImgs : durable;
+        })(),
         colors: [],
         customColorEnabled:
           typeof p.customColorEnabled === "boolean"
@@ -455,19 +469,34 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const setCurrency = useCallback(
     (currency: CurrencyCode, manual = true) =>
-      commit((s) => ({ ...s, currency, currencyManual: manual })),
+      commit((s) => {
+        if (s.currency === currency && s.currencyManual === manual) return s;
+        return { ...s, currency, currencyManual: manual };
+      }),
     [commit]
   );
 
   const setCountry = useCallback(
     (country: CountryCode, manual = true) => {
       const next = isStoreMarket(country) ? country : DEFAULT_COUNTRY;
-      commit((s) => ({
-        ...s,
-        country: next,
-        countryManual: manual,
-        currency: s.currencyManual ? s.currency : currencyForCountry(next),
-      }));
+      commit((s) => {
+        const nextCurrency = s.currencyManual
+          ? s.currency
+          : currencyForCountry(next);
+        if (
+          s.country === next &&
+          s.countryManual === manual &&
+          s.currency === nextCurrency
+        ) {
+          return s;
+        }
+        return {
+          ...s,
+          country: next,
+          countryManual: manual,
+          currency: nextCurrency,
+        };
+      });
     },
     [commit]
   );

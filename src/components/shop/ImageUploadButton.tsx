@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { ImagePlus, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { isDurableMediaUrl, needsUnoptimizedImage } from "@/lib/media-url";
 
 type Props = {
   onUploaded: (url: string) => void;
@@ -11,43 +12,51 @@ type Props = {
   size?: "sm" | "md" | "lg";
 };
 
-/** Soft client shrink only for huge stills — preserve clarity; never touch GIF. */
+function readAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("Could not read file"));
+    reader.readAsDataURL(file);
+  });
+}
+
+/** Shrink stills so a durable data-URL can be stored in the catalog. */
 async function prepareFile(file: File): Promise<File> {
   if (
     file.type === "image/gif" ||
     file.type === "image/svg+xml" ||
-    file.type === "image/png" ||
     file.type.startsWith("video/") ||
-    !file.type.startsWith("image/") ||
-    file.size < 5_000_000
+    !file.type.startsWith("image/")
   ) {
     return file;
   }
 
+  if (file.size < 400_000) return file;
+
   try {
     const bitmap = await createImageBitmap(file);
-    const max = 3200;
+    const max = file.size > 2_000_000 ? 1200 : 1600;
     const scale = Math.min(1, max / Math.max(bitmap.width, bitmap.height));
-    if (scale >= 0.98) {
-      bitmap.close();
-      return file;
-    }
     const w = Math.max(1, Math.round(bitmap.width * scale));
     const h = Math.max(1, Math.round(bitmap.height * scale));
     const canvas = document.createElement("canvas");
     canvas.width = w;
     canvas.height = h;
     const ctx = canvas.getContext("2d");
-    if (!ctx) return file;
+    if (!ctx) {
+      bitmap.close();
+      return file;
+    }
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
     ctx.drawImage(bitmap, 0, 0, w, h);
     bitmap.close();
 
     const blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob((b) => resolve(b), "image/webp", 0.95)
+      canvas.toBlob((b) => resolve(b), "image/webp", 0.85)
     );
-    if (!blob || blob.size >= file.size * 0.95) return file;
+    if (!blob) return file;
     const name = file.name.replace(/\.\w+$/, "") + ".webp";
     return new File([blob], name, { type: "image/webp" });
   } catch {
@@ -55,16 +64,39 @@ async function prepareFile(file: File): Promise<File> {
   }
 }
 
+function isEphemeralUrl(url: string) {
+  return url.startsWith("/api/media/");
+}
+
 export async function uploadMediaFile(file: File): Promise<string> {
   const prepared = await prepareFile(file);
+
+  let localDataUrl = "";
+  try {
+    localDataUrl = await readAsDataUrl(prepared);
+  } catch {
+    /* ignore */
+  }
+
   const body = new FormData();
   body.append("file", prepared);
   const res = await fetch("/api/upload", { method: "POST", body });
-  const data = (await res.json()) as { url?: string; error?: string };
-  if (!res.ok || !data.url) {
-    throw new Error(data.error || "Upload failed");
+  const data = (await res.json()) as {
+    url?: string;
+    durable?: boolean;
+    error?: string;
+  };
+
+  if (res.ok && data.url && !isEphemeralUrl(data.url)) {
+    return data.url;
   }
-  return data.url;
+
+  if (localDataUrl.startsWith("data:image/") && localDataUrl.length <= 1_500_000) {
+    return localDataUrl;
+  }
+
+  if (res.ok && data.url) return data.url;
+  throw new Error(data.error || "Upload failed");
 }
 
 export function ImageUploadButton({
@@ -134,14 +166,4 @@ export function ImageUploadButton({
   );
 }
 
-export function needsUnoptimizedImage(src: string) {
-  return (
-    src.startsWith("data:") ||
-    src.startsWith("blob:") ||
-    src.startsWith("/api/media/") ||
-    /\.gif($|\?)/i.test(src) ||
-    // Prefer original bytes for product clarity
-    src.startsWith("/products/") ||
-    src.startsWith("/uploads/")
-  );
-}
+export { isDurableMediaUrl, needsUnoptimizedImage };

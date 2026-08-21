@@ -15,7 +15,6 @@ export default function ShopClient() {
     locale,
     country,
     setCountry,
-    setCurrency,
     products,
     categories,
     marketProducts,
@@ -28,16 +27,14 @@ export default function ShopClient() {
     [categories, active]
   );
 
-  // Country category → switch market + that country's currency (not stuck on SAR)
+  // Country category → switch market (currency follows via setCountry)
   useEffect(() => {
     if (!activeCategory?.country) return;
     const code = activeCategory.country as CountryCode;
-    const nextCurrency = currencyForCountry(code);
     if (code !== country) {
       setCountry(code, true);
     }
-    setCurrency(nextCurrency, false);
-  }, [activeCategory, country, setCountry, setCurrency]);
+  }, [activeCategory, country, setCountry]);
 
   const priceCountry: CountryCode =
     activeCategory?.country ?? country;

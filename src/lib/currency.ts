@@ -144,7 +144,9 @@ export function formatLocalAmount(
       ? 0
       : 2;
 
-  const formatted = new Intl.NumberFormat(locale === "ar" ? "ar-SA" : "en-US", {
+  // Always Latin/French digits (0–9), never Eastern Arabic numerals
+  const numberLocale = locale === "ar" ? "fr-FR" : "en-US";
+  const formatted = new Intl.NumberFormat(numberLocale, {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   }).format(amount);

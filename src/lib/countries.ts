@@ -95,8 +95,8 @@ export const COUNTRIES: CountryInfo[] = [
 
 export const DEFAULT_COUNTRY: CountryCode = "SA";
 
-/** Active store markets — only these categories appear in the shop */
-export const STORE_MARKET_CODES: CountryCode[] = ["SA", "AE", "OM"];
+/** Active store markets — these categories appear in the shop */
+export const STORE_MARKET_CODES: CountryCode[] = ["MA", "SA", "AE", "OM"];
 
 export const STORE_MARKETS: CountryInfo[] = COUNTRIES.filter((c) =>
   STORE_MARKET_CODES.includes(c.code)
