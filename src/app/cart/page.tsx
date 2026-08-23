@@ -7,8 +7,8 @@ import { useT } from "@/hooks/useT";
 import { formatLocalAmount, formatPrice } from "@/lib/currency";
 import {
   formatProductPrice,
-  getProductLocalPrice,
 } from "@/lib/pricing";
+import { cartItemLineLocal } from "@/lib/qty-upsell";
 import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
 
 export default function CartPage() {
@@ -58,8 +58,9 @@ export default function CartPage() {
       </h1>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_360px]">
-        <ul className="space-y-4">
-          {lines.map(({ item, product }) => {
+        <div className="space-y-6">
+          <ul className="space-y-4">
+            {lines.map(({ item, product }) => {
             const name = locale === "ar" ? product.nameAr : product.nameEn;
             return (
               <li
@@ -124,7 +125,7 @@ export default function CartPage() {
                     <span className="text-sm text-[var(--muted)]">
                       ={" "}
                       {formatLocalAmount(
-                        getProductLocalPrice(product, country) * item.quantity,
+                        cartItemLineLocal(product, country, item),
                         currency,
                         locale
                       )}
@@ -134,7 +135,8 @@ export default function CartPage() {
               </li>
             );
           })}
-        </ul>
+          </ul>
+        </div>
 
         <aside className="h-fit rounded-2xl border border-sand-200 bg-white p-6 shadow-sm">
           <div className="space-y-3 text-sm">

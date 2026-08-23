@@ -2,30 +2,35 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import {
   Truck,
   HandCoins,
-  Minus,
-  Plus,
   Star,
   CheckCircle2,
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
-import { formatLocalAmount, formatPrice } from "@/lib/currency";
+import { currencyForCountry } from "@/lib/countries";
+import { convertFromUSD, formatLocalAmount, formatPrice } from "@/lib/currency";
 import {
   formatProductComparePrice,
   formatProductPrice,
-  getProductLocalPrice,
+  getProductPriceUSD,
   productDiscountPercent,
 } from "@/lib/pricing";
-import { ProductCard } from "@/components/shop/ProductCard";
+import { lineTotalUSDForQty } from "@/lib/qty-upsell";
+import { trackViewContent } from "@/lib/meta-pixel";
 import {
   ProductBriefDescription,
   ProductDetailSections,
 } from "@/components/shop/ProductLanding";
 import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
+import {
+  ProductQtyUpsell,
+  selectedQtyTotalLocal,
+} from "@/components/shop/ProductQtyUpsell";
+import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
 import type { Order } from "@/lib/types";
 
@@ -37,8 +42,8 @@ export default function ProductPage() {
     locale,
     currency,
     country,
+    upsellEnabled,
     getProduct,
-    marketProducts,
     placeOrder,
     categories,
   } = useStore();
@@ -55,12 +60,50 @@ export default function ProductPage() {
     address: "",
   });
 
-  const related = useMemo(() => {
-    if (!product) return [];
-    return marketProducts
-      .filter((p) => p.categoryId === product.categoryId && p.id !== product.id)
-      .slice(0, 4);
-  }, [product, marketProducts]);
+  const viewContentKey = useRef<string | null>(null);
+  useEffect(() => {
+    if (!product) return;
+    const key = `${product.id}:${country}:${currency}`;
+    if (viewContentKey.current === key) return;
+    viewContentKey.current = key;
+    const unitUSD = getProductPriceUSD(product, country);
+    const value = convertFromUSD(unitUSD, currency);
+    trackViewContent({
+      contentId: product.id,
+      contentName: product.nameEn || product.nameAr,
+      value: Math.round(value * 100) / 100,
+      currency,
+    });
+  }, [product, country, currency]);
+
+  useEffect(() => {
+    if (!product) return;
+    if (!upsellEnabled) {
+      setQty(1);
+      return;
+    }
+    setQty((prev) => {
+      const offers = getProductQtyOffers(product, country, locale);
+      if (offers.some((o) => o.quantity === prev)) return prev;
+      const popular = offers.find((o) => o.popular);
+      return popular?.quantity ?? offers[0]?.quantity ?? 1;
+    });
+  }, [product?.id, country, locale, upsellEnabled]);
+
+  const marketCurrency = currencyForCountry(country);
+  const qtyOffers = useMemo(
+    () => (product ? getProductQtyOffers(product, country, locale) : []),
+    [product, country, locale]
+  );
+  const orderTotalLocal = useMemo(
+    () =>
+      product ? selectedQtyTotalLocal(product, country, locale, qty) : 0,
+    [product, country, locale, qty]
+  );
+  const orderLineUSD = useMemo(
+    () => (product ? lineTotalUSDForQty(product, country, qty) : 0),
+    [product, country, qty]
+  );
 
   if (!product) {
     return (
@@ -101,8 +144,16 @@ export default function ProductPage() {
 
   const name = locale === "ar" ? product.nameAr : product.nameEn;
   const category = categories.find((c) => c.id === product.categoryId);
-  const unitLocal = getProductLocalPrice(product, country);
-  const lineLocal = unitLocal * qty;
+  const qtyLabel =
+    qty === 1
+      ? t.upsell.onePiece
+      : qty === 2
+        ? t.upsell.twoPieces
+        : qty === 3
+          ? t.upsell.threePieces
+          : qtyOffers.find((o) => o.quantity === qty)?.[
+              locale === "ar" ? "labelAr" : "labelEn"
+            ] ?? `${qty}`;
   const discount = productDiscountPercent(product, country);
   const compareLabel = formatProductComparePrice(product, country, locale);
 
@@ -126,7 +177,7 @@ export default function ProductPage() {
             : `Color: ${colorLabel}`
           : undefined,
       },
-      [{ productId: product.id, quantity: qty }]
+      [{ productId: product.id, quantity: qty, lineTotalUSD: orderLineUSD }]
     );
     setOrder(created);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -217,8 +268,7 @@ export default function ProductPage() {
       {/* Buy / COD block */}
       <div
         id="order"
-        className="mt-10 scroll-mt-28 animate-fade-up rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
-        style={{ animationDelay: "160ms" }}
+        className="mt-10 scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
       >
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-800">
           <span className="inline-flex items-center gap-1.5">
@@ -247,31 +297,20 @@ export default function ProductPage() {
           </label>
         ) : null}
 
+        {/* Volume discount — shown only when enabled in admin */}
+        {upsellEnabled ? (
+          <ProductQtyUpsell
+            product={product}
+            country={country}
+            locale={locale}
+            selectedQty={qty}
+            onSelect={setQty}
+            className="mt-5"
+          />
+        ) : null}
+
         <form ref={formRef} onSubmit={onSubmit} className="mt-5 space-y-4">
           <h2 className="product-section-title text-lg">{t.checkout.title}</h2>
-
-          <div>
-            <p className="product-label mb-2 text-ink-800">{t.product.quantity}</p>
-            <div className="inline-flex items-center rounded-xl border border-sand-300 bg-white">
-              <button
-                type="button"
-                className="p-3 text-ink-800 hover:bg-sand-50"
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                aria-label="Decrease"
-              >
-                <Minus className="h-4 w-4" />
-              </button>
-              <span className="min-w-12 text-center font-semibold">{qty}</span>
-              <button
-                type="button"
-                className="p-3 text-ink-800 hover:bg-sand-50"
-                onClick={() => setQty((q) => q + 1)}
-                aria-label="Increase"
-              >
-                <Plus className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
 
           <Field
             label={t.checkout.name}
@@ -300,9 +339,16 @@ export default function ProductPage() {
           />
 
           <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
-            <span className="font-semibold text-ink-800">{t.cart.total}</span>
+            <span className="font-semibold text-ink-800">
+              {t.cart.total}
+              {upsellEnabled ? (
+                <span className="ms-1 font-normal text-[var(--muted)]">
+                  · {qtyLabel}
+                </span>
+              ) : null}
+            </span>
             <span className="product-price text-base">
-              {formatLocalAmount(lineLocal, currency, locale)}
+              {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
             </span>
           </div>
 
@@ -319,23 +365,12 @@ export default function ProductPage() {
       {/* 4) Detailed description: image → text → image → text */}
       <ProductDetailSections product={product} locale={locale} />
 
-      {related.length > 0 && (
-        <section className="mt-20">
-          <h2 className="product-hero-title text-ink-900">{t.product.related}</h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            {related.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </section>
-      )}
-
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-sand-200/80 bg-white/95 shadow-[0_-8px_30px_rgba(14,34,29,0.08)] backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-ink-800">{name}</p>
             <p className="product-price text-lg">
-              {formatLocalAmount(lineLocal, currency, locale)}
+              {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
             </p>
           </div>
           <button

@@ -4,6 +4,11 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 import {
+  catalogBlobConfigured,
+  readCatalogBlobRaw,
+  writeCatalogBlobRaw,
+} from "@/lib/catalog-blob";
+import {
   catalogToJson,
   parseCatalogJson,
   type PersistedCatalog,
@@ -14,6 +19,7 @@ export const dynamic = "force-dynamic";
 
 type GlobalCatalog = {
   __smartShopCatalog?: PersistedCatalog;
+  __smartShopCatalogUpdatedAt?: number;
 };
 
 function mem(): GlobalCatalog {
@@ -28,18 +34,12 @@ function dataPath() {
   return path.join(process.cwd(), "data", "catalog.json");
 }
 
-async function readCatalog(): Promise<PersistedCatalog | null> {
-  const g = mem();
-  if (g.__smartShopCatalog) return g.__smartShopCatalog;
-
+async function readFromFiles(): Promise<PersistedCatalog | null> {
   for (const file of [tmpPath(), dataPath()]) {
     try {
       const raw = await readFile(file, "utf8");
       const parsed = parseCatalogJson(raw);
-      if (parsed) {
-        g.__smartShopCatalog = parsed;
-        return parsed;
-      }
+      if (parsed) return parsed;
     } catch {
       /* missing */
     }
@@ -47,23 +47,66 @@ async function readCatalog(): Promise<PersistedCatalog | null> {
   return null;
 }
 
-async function writeCatalog(data: PersistedCatalog): Promise<void> {
-  const clean = parseCatalogJson(catalogToJson(data));
-  if (!clean) throw new Error("Invalid catalog");
-  mem().__smartShopCatalog = clean;
-  const raw = catalogToJson(clean);
-
+async function writeToFiles(raw: string): Promise<void> {
   try {
     await writeFile(tmpPath(), raw, "utf8");
   } catch {
     /* /tmp may be unavailable */
   }
-
   try {
     await mkdir(path.dirname(dataPath()), { recursive: true });
     await writeFile(dataPath(), raw, "utf8");
   } catch {
-    /* Vercel read-only filesystem — memory + /tmp still help */
+    /* Vercel read-only filesystem */
+  }
+}
+
+async function readCatalog(): Promise<PersistedCatalog | null> {
+  const g = mem();
+  if (g.__smartShopCatalog) return g.__smartShopCatalog;
+
+  if (catalogBlobConfigured()) {
+    const raw = await readCatalogBlobRaw();
+    if (raw) {
+      const parsed = parseCatalogJson(raw);
+      if (parsed) {
+        g.__smartShopCatalog = parsed;
+        g.__smartShopCatalogUpdatedAt = parsed.updatedAt;
+        return parsed;
+      }
+    }
+  }
+
+  const fromFiles = await readFromFiles();
+  if (fromFiles) {
+    g.__smartShopCatalog = fromFiles;
+    g.__smartShopCatalogUpdatedAt = fromFiles.updatedAt;
+    return fromFiles;
+  }
+
+  return null;
+}
+
+async function writeCatalog(data: PersistedCatalog): Promise<void> {
+  const clean = parseCatalogJson(catalogToJson(data));
+  if (!clean) throw new Error("Invalid catalog");
+  const raw = catalogToJson(clean);
+
+  mem().__smartShopCatalog = clean;
+  mem().__smartShopCatalogUpdatedAt = clean.updatedAt;
+
+  let persisted = false;
+
+  if (catalogBlobConfigured()) {
+    const url = await writeCatalogBlobRaw(raw);
+    if (url) persisted = true;
+  } else {
+    await writeToFiles(raw);
+    persisted = true;
+  }
+
+  if (!persisted) {
+    throw new Error("Catalog write failed");
   }
 }
 
@@ -85,14 +128,16 @@ export async function PUT(request: Request) {
 
     const body = (await request.json()) as PersistedCatalog;
     const clean = parseCatalogJson(catalogToJson(body));
-    if (!clean || (!clean.categories?.length && !clean.products?.length)) {
-      // Allow empty after intentional wipe, but require shape
-      if (!clean) {
-        return NextResponse.json({ ok: false, error: "bad payload" }, { status: 400 });
-      }
+    if (!clean) {
+      return NextResponse.json({ ok: false, error: "bad payload" }, { status: 400 });
     }
-    await writeCatalog(clean!);
-    return NextResponse.json({ ok: true, updatedAt: clean!.updatedAt });
+
+    await writeCatalog(clean);
+    return NextResponse.json({
+      ok: true,
+      updatedAt: clean.updatedAt,
+      durable: catalogBlobConfigured(),
+    });
   } catch (err) {
     console.error("catalog PUT failed", err);
     return NextResponse.json({ ok: false, error: "save failed" }, { status: 500 });

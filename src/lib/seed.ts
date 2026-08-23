@@ -4,7 +4,7 @@ import type { Category, Product } from "./types";
 const CATEGORY_IMAGES: Record<string, string> = {
   MA: "/products/fashion-sling-1.png",
   SA: "/products/car-vacuum.png",
-  AE: "/products/air-bed.png",
+  AE: "/products/solar-camera-1.png",
   OM: "/products/neck-massager.webp",
 };
 
@@ -79,11 +79,12 @@ ${COD_EN}
     marketComparePrices: { MA: 399, SA: 229, AE: 219, OM: 22.9 },
     availableIn: ["MA"],
     images: [
+      "/products/fashion-sling-demo.gif",
+      "/products/fashion-sling-g1.png",
+      "/products/fashion-sling-g2.png",
+      "/products/fashion-sling-g3.png",
       "/products/fashion-sling-1.png",
       "/products/fashion-sling-2.png",
-      "/products/fashion-sling-3.png",
-      "/products/fashion-sling-4.png",
-      "/products/fashion-sling-5.png",
     ],
     colors: [],
     customColorEnabled: true,
@@ -1091,6 +1092,1315 @@ ${COD_EN}
             "مناسب للاستخدام المنتظم للضيوف أو النوم المؤقت مع العناية بعدم الثقوب والتخزين الجاف.",
           answerEn:
             "Suitable for regular guest or temporary sleep with care to avoid punctures and store dry.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-solar-camera-ae",
+    slug: "solar-4g-security-camera",
+    nameAr: "كاميرا مراقبة ذكية بالطاقة الشمسية 4G",
+    nameEn: "Solar 4G Smart Security Camera",
+    descriptionAr: `
+<h3>حماية ليك ولأسرتك… بدون أسلاك وبلا انقطاع</h3>
+<p>كاميرا خارجية متعددة العدسات مع لوحة طاقة شمسية وبطارية داخلية قوية. راقب منزلك من جوالك بثلاث شاشات، بدقة عالية واتصال 4G — مثالية للفلل والمستودعات والأماكن بدون واي فاي.</p>
+<ul>
+<li>شحن شمسي مستمر + بطارية 10800mAh</li>
+<li>اتصال 4G بدون الاعتماد على الواي فاي</li>
+<li>دقة حتى 12MP Ultra HD وعدسات متعددة مع دوران</li>
+<li>مراقبة من الموبايل بثلاث شاشات</li>
+<li>تركيب خارجي مقاوم للعوامل الجوية</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Protect your home — wireless and always on</h3>
+<p>Outdoor multi-lens camera with a solar panel and a strong built-in battery. Watch from your phone with three live views, high resolution, and 4G connectivity — ideal for villas, yards, and places without Wi‑Fi.</p>
+<ul>
+<li>Continuous solar charging + 10800mAh battery</li>
+<li>4G connectivity without relying on Wi‑Fi</li>
+<li>Up to 12MP Ultra HD with multi-lens PTZ coverage</li>
+<li>Phone monitoring with 3-screen view</li>
+<li>Outdoor weather-ready installation</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "لوحة شمسية للشحن المستمر",
+      "بطارية داخلية 10800mAh",
+      "اتصال 4G",
+      "دقة 12MP Ultra HD",
+      "عدسات متعددة مع دوران PTZ",
+      "مراقبة عبر تطبيق الموبايل",
+    ],
+    detailsEn: [
+      "Solar panel for continuous charging",
+      "Built-in 10800mAh battery",
+      "4G connectivity",
+      "12MP Ultra HD resolution",
+      "Multi-lens PTZ coverage",
+      "Mobile app monitoring",
+    ],
+    priceUSD: 42,
+    compareAtUSD: 62,
+    marketPrices: { AE: 154 },
+    marketComparePrices: { AE: 229 },
+    availableIn: ["AE"],
+    images: [
+      "/products/solar-camera-demo.gif",
+      "/products/solar-camera-g1.png",
+      "/products/solar-camera-g2.png",
+      "/products/solar-camera-g3.png",
+      "/products/solar-camera-2.png",
+      "/products/solar-camera-3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    qtyOffers: [
+      { quantity: 1, discountPercent: 0 },
+      { quantity: 2, discountPercent: 8, popular: true },
+      { quantity: 3, discountPercent: 12 },
+    ],
+    inStock: true,
+    featured: true,
+    rating: 4.8,
+    reviewCount: 214,
+    categoryId: "cat-AE",
+    createdAt: "2026-08-21T22:00:00.000Z",
+    landing: {
+      headlineAr: "حماية ليك ولأسرتك",
+      headlineEn: "Protection for you and your family",
+      introAr:
+        "كاميرا مراقبة ذكية بالطاقة الشمسية: شحن مستمر من الشمس، بطارية قوية، واتصال 4G لتشوف بيتك من جوالك في أي وقت — بدون أسلاك معقدة وبدون الاعتماد على الواي فاي.",
+      introEn:
+        "A smart solar security camera: continuous sun charging, a strong battery, and 4G so you can watch your home from your phone anytime — no complex wiring and no Wi‑Fi dependency.",
+      sections: [
+        {
+          titleAr: "طاقة شمسية بدون انقطاع",
+          titleEn: "Solar power without interruption",
+          bodyAr:
+            "اربط الكاميرا باللوحة الشمسية لتحصل على طاقة طوال اليوم. مثالية لمناخ الإمارات المشمس ولحماية الفلل والأسوار والمستودعات.",
+          bodyEn:
+            "Connect the camera to the solar panel for all-day power. Ideal for the UAE sun and for villas, fences, and warehouses.",
+          image: "/products/solar-camera-4.png",
+        },
+        {
+          titleAr: "بطارية 10800mAh واستعداد طويل",
+          titleEn: "10800mAh battery & long standby",
+          bodyAr:
+            "بطارية داخلية كبيرة باستهلاك منخفض تبقي الكاميرا جاهزة حتى مع الغيوم أو الليل — طمأنينة أكثر لأسرته.",
+          bodyEn:
+            "A large built-in battery with low power use keeps the camera ready even through clouds or night — more peace of mind for your family.",
+          image: "/products/solar-camera-5.png",
+        },
+        {
+          titleAr: "4G + ثلاث شاشات على جوالك",
+          titleEn: "4G + three screens on your phone",
+          bodyAr:
+            "راقب بعدسات متعددة ودقة عالية، وتابع ثلاث زوايا معًا من التطبيق. تغطية أوسع للحركة حول المنزل.",
+          bodyEn:
+            "Monitor with multi-lens high resolution and follow three angles together in the app. Wider coverage around the home.",
+          image: "/products/solar-camera-3.png",
+        },
+      ],
+      benefitsAr: [
+        "شحن شمسي مستمر",
+        "اتصال 4G بدون واي فاي",
+        "دقة عالية وعدسات متعددة",
+        "بطارية قوية للاستخدام الطويل",
+        "توصيل مجاني والدفع عند الاستلام في الإمارات",
+      ],
+      benefitsEn: [
+        "Continuous solar charging",
+        "4G without Wi‑Fi",
+        "High resolution multi-lens coverage",
+        "Strong battery for long use",
+        "Free delivery and COD in the UAE",
+      ],
+      faq: [
+        {
+          questionAr: "هل تحتاج واي فاي؟",
+          questionEn: "Does it need Wi‑Fi?",
+          answerAr:
+            "تعمل باتصال 4G، لذا تناسب الأماكن التي لا يتوفر فيها واي فاي مستقر (يلزم شريحة بيانات حسب الاستخدام).",
+          answerEn:
+            "It works over 4G, so it suits places without stable Wi‑Fi (a data SIM is required depending on use).",
+        },
+        {
+          questionAr: "هل تناسب التركيب الخارجي؟",
+          questionEn: "Is it for outdoor install?",
+          answerAr:
+            "نعم، مصممة للتركيب الخارجي مع لوحة شمسية وقاعدة تثبيت على الجدار.",
+          answerEn:
+            "Yes — designed for outdoor mounting with a solar panel and wall bracket.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-solar-powerbank-ae",
+    slug: "denx-dx421-solar-power-bank",
+    nameAr: "باور بانك شمسي DENX DX421",
+    nameEn: "DENX DX421 Solar Portable Power Bank",
+    descriptionAr: `
+<h3>اشحن في أي مكان… حتى تحت الشمس</h3>
+<p>باور بانك DENX DX421 بألواح شمسية قابلة للطي، شحن سريع، إضاءة LED قوية، وحماية ذكية للشريحة. مثالي للبر، السفر، والطوارئ في الإمارات.</p>
+<ul>
+<li>شحن شمسي بألواح قابلة للطي</li>
+<li>شحن سريع + مخرج لاسلكي 5V/1A</li>
+<li>كابل Lightning مدمج 5V/2.1A</li>
+<li>إضاءة LED قوية للطوارئ</li>
+<li>شريحة حماية ذكية — Original</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Charge anywhere — even under the sun</h3>
+<p>DENX DX421 power bank with foldable solar panels, fast charging, a strong LED lamp, and smart chip protection. Ideal for desert trips, travel, and emergencies in the UAE.</p>
+<ul>
+<li>Solar charging with foldable panels</li>
+<li>Fast charge + wireless output 5V/1A</li>
+<li>Built-in Lightning line 5V/2.1A</li>
+<li>Bright LED lamp for emergencies</li>
+<li>Smart chip protection — Original</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "موديل DENX DX421",
+      "ألواح شمسية قابلة للطي",
+      "شحن سريع",
+      "مخرج لاسلكي 5V/1A",
+      "إضاءة LED مزدوجة",
+      "حماية شريحة ذكية",
+    ],
+    detailsEn: [
+      "DENX DX421 model",
+      "Foldable solar panels",
+      "Quick high-speed charge",
+      "Wireless output 5V/1A",
+      "Dual LED lamp",
+      "Smart chip protection",
+    ],
+    priceUSD: 34,
+    compareAtUSD: 52,
+    marketPrices: { AE: 125 },
+    marketComparePrices: { AE: 189 },
+    availableIn: ["AE"],
+    images: [
+      "/products/solar-powerbank-demo.gif",
+      "/products/solar-powerbank-g1.png",
+      "/products/solar-powerbank-g2.png",
+      "/products/solar-powerbank-g3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.7,
+    reviewCount: 168,
+    categoryId: "cat-AE",
+    createdAt: "2026-08-21T22:05:00.000Z",
+    landing: {
+      headlineAr: "باور بانك يعمل بالطاقة الشمسية",
+      headlineEn: "Solar-powered portable power bank",
+      introAr:
+        "DENX DX421 جهاز واحد للشحن والطوارئ: ألواح شمسية، شحن سريع، إضاءة قوية، وحماية ذكية. اطلب الحين — توصيل مجاني والدفع عند الاستلام في الإمارات.",
+      introEn:
+        "DENX DX421 is one device for charging and emergencies: solar panels, fast charge, a bright lamp, and smart protection. Order now — free delivery and COD in the UAE.",
+      sections: [
+        {
+          titleAr: "شحن شمسي في البر والسفر",
+          titleEn: "Solar charge for desert & travel",
+          bodyAr:
+            "افتح الألواح تحت الشمس وأعد تعبئة الطاقة وأنت بعيد عن الكهرباء — تصميم متين يناسب الأجواء الخارجية.",
+          bodyEn:
+            "Open the panels under the sun and top up power away from the grid — a rugged design for outdoor conditions.",
+          image: "/products/solar-powerbank-3.png",
+        },
+        {
+          titleAr: "شحن سريع + لاسلكي + كابل مدمج",
+          titleEn: "Fast, wireless, and built-in cable",
+          bodyAr:
+            "مخرج لاسلكي 5V/1A وكابل Lightning 5V/2.1A مع شحن سريع — حلول متعددة في جهاز واحد بدون ما تحمل أسلاك كثيرة.",
+          bodyEn:
+            "Wireless 5V/1A output and a Lightning line at 5V/2.1A with fast charging — multiple options in one device without carrying many cables.",
+          image: "/products/solar-powerbank-2.png",
+        },
+        {
+          titleAr: "إضاءة LED للطوارئ",
+          titleEn: "LED lamp for emergencies",
+          bodyAr:
+            "مصباحان LED قويان يفيدانك في الليل أو انقطاع الكهرباء أو التخييم — أكثر من مجرد شاحن.",
+          bodyEn:
+            "Two strong LED lamps help at night, during outages, or camping — more than just a charger.",
+          image: "/products/solar-powerbank-1.png",
+        },
+      ],
+      benefitsAr: [
+        "شحن بالطاقة الشمسية",
+        "شحن سريع وحماية ذكية",
+        "إضاءة LED قوية",
+        "مناسب للبر والسفر",
+        "توصيل مجاني والدفع عند الاستلام في الإمارات",
+      ],
+      benefitsEn: [
+        "Solar charging",
+        "Fast charge with smart protection",
+        "Strong LED lighting",
+        "Great for desert trips and travel",
+        "Free delivery and COD in the UAE",
+      ],
+      faq: [
+        {
+          questionAr: "هل الشحن الشمسي يكفي وحده؟",
+          questionEn: "Is solar charging enough alone?",
+          answerAr:
+            "الشمس ممتازة للشحن التكميلي والطوارئ؛ للشحن الأسرع استخدم الشاحن الكهربائي المعتاد ثم اعتمد على الشمس في الطريق.",
+          answerEn:
+            "Solar is excellent for top-ups and emergencies; for the fastest charge use a normal wall charger, then rely on the sun on the go.",
+        },
+        {
+          questionAr: "هل الجهاز أصلي DENX؟",
+          questionEn: "Is it original DENX?",
+          answerAr: "نعم، موديل DENX DX421 مع شارة Original في العرض.",
+          answerEn: "Yes — DENX DX421 model with Original badging in the listing.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-iphone13-battery-case-sa",
+    slug: "iphone-13-pro-battery-case-6800",
+    nameAr: "كافر جوال وباوربانك — آيفون 13 برو",
+    nameEn: "iPhone 13 Pro Battery Case Power Bank",
+    descriptionAr: `
+<h3>كافر جوال وباوربانك</h3>
+<p>حماية الآيفون وحل مشكلة نفاذ البطارية في قطعة واحدة. كفر شحن لـ <strong>iPhone 13 Pro</strong> ببطارية مدمجة 6800mAh، مؤشرات LED، ومداخل شحن معتمدة.</p>
+<ul>
+<li>سعة بطارية 6800mAh (25.16Wh)</li>
+<li>حماية من الصدمات مع شحن إضافي</li>
+<li>مؤشرات LED لمستوى الشحن</li>
+<li>إدخال/إخراج DC5V 1–2.0A</li>
+<li>شهادات FCC · CE · RoHS</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Phone case + power bank</h3>
+<p>iPhone protection and a battery solution in one. A charging case for <strong>iPhone 13 Pro</strong> with a built-in 6800mAh battery, LED indicators, and certified charging ports.</p>
+<ul>
+<li>6800mAh battery capacity (25.16Wh)</li>
+<li>Shock protection plus extra charge</li>
+<li>LED charge level indicators</li>
+<li>Input/output DC5V 1–2.0A</li>
+<li>FCC · CE · RoHS certifications</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "متوافق مع iPhone 13 Pro",
+      "بطارية مدمجة 6800mAh",
+      "مؤشرات LED لمستوى الشحن",
+      "إدخال DC5V 1–2.0A",
+      "إخراج DC5V 1–2.0A",
+      "شهادات FCC / CE / RoHS",
+    ],
+    detailsEn: [
+      "Compatible with iPhone 13 Pro",
+      "Built-in 6800mAh battery",
+      "LED charge indicators",
+      "Input DC5V 1–2.0A",
+      "Output DC5V 1–2.0A",
+      "FCC / CE / RoHS certified",
+    ],
+    priceUSD: 33,
+    compareAtUSD: 49,
+    marketPrices: { SA: 125 },
+    marketComparePrices: { SA: 189 },
+    availableIn: ["SA"],
+    images: [
+      "/products/iphone13-battery-case-demo.gif",
+      "/products/iphone13-battery-case-g1.png",
+      "/products/iphone13-battery-case-g2.png",
+      "/products/iphone13-battery-case-g3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.6,
+    reviewCount: 128,
+    categoryId: "cat-SA",
+    createdAt: "2026-08-21T23:50:00.000Z",
+    landing: {
+      headlineAr: "حماية الآيفون وحل نفاذ البطارية",
+      headlineEn: "Protect the iPhone and fix battery drain",
+      introAr:
+        "كافر وباوربانك معًا لـ iPhone 13 Pro: حماية يومية + شحن إضافي 6800mAh بدون ما تحمل شاحن منفصل. اطلب الآن — توصيل مجاني والدفع عند الاستلام في السعودية.",
+      introEn:
+        "A case and power bank in one for iPhone 13 Pro: daily protection plus 6800mAh extra charge without carrying a separate charger. Order now — free delivery and COD in Saudi Arabia.",
+      sections: [
+        {
+          titleAr: "كافر + باوربانك في قطعة واحدة",
+          titleEn: "Case + power bank in one",
+          bodyAr:
+            "صُمم لآيفون 13 برو: يحمي الجهاز ويشحنّه في نفس الوقت مع مؤشرات LED واضحة لمستوى الطاقة.",
+          bodyEn:
+            "Built for iPhone 13 Pro: protects the phone and charges it at the same time with clear LED power indicators.",
+          image: "/products/iphone13-battery-case.png",
+        },
+        {
+          titleAr: "سعة 6800mAh لاستخدام أطول",
+          titleEn: "6800mAh for longer use",
+          bodyAr:
+            "بطارية مدمجة قوية تساعدك تكمّل يومك بدون البحث عن فيشة — مثالي للعمل والسفر والتنقل.",
+          bodyEn:
+            "A strong built-in battery helps you finish the day without hunting for an outlet — ideal for work, travel, and commuting.",
+        },
+        {
+          titleAr: "شحن آمن بمواصفات واضحة",
+          titleEn: "Safe charging with clear specs",
+          bodyAr:
+            "إدخال وإخراج DC5V مع شهادات FCC وCE وRoHS لطمأنينة أكبر أثناء الاستخدام اليومي.",
+          bodyEn:
+            "DC5V input/output with FCC, CE, and RoHS marks for more confidence in daily use.",
+        },
+      ],
+      benefitsAr: [
+        "حماية + شحن في كفر واحد",
+        "سعة 6800mAh",
+        "مؤشرات LED",
+        "مناسب لآيفون 13 برو",
+        "توصيل مجاني والدفع عند الاستلام في السعودية",
+      ],
+      benefitsEn: [
+        "Protection + charging in one case",
+        "6800mAh capacity",
+        "LED indicators",
+        "Made for iPhone 13 Pro",
+        "Free delivery and COD in Saudi Arabia",
+      ],
+      faq: [
+        {
+          questionAr: "هل يناسب آيفون 13 العادي؟",
+          questionEn: "Does it fit regular iPhone 13?",
+          answerAr:
+            "العرض مخصص لـ iPhone 13 Pro حسب فتحة الكاميرات الثلاث. تأكد من موديل جهازك قبل الطلب.",
+          answerEn:
+            "This listing is for iPhone 13 Pro based on the triple-camera cutout. Confirm your model before ordering.",
+        },
+        {
+          questionAr: "كيف أعرف مستوى الشحن؟",
+          questionEn: "How do I know the charge level?",
+          answerAr: "عبر مؤشرات LED الأربعة على واجهة الكفر.",
+          answerEn: "Via the four LED indicators on the front of the case.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-budi-powerbank-sa",
+    slug: "budi-power-bank-20000mah",
+    nameAr: "باور بانك budi 20000mAh — ضمان عامين",
+    nameEn: "budi Power Bank 20000mAh — 2 Year Warranty",
+    descriptionAr: `
+<h3>budi power bank 20000 mAh</h3>
+<p>باور بانك بسعة كبيرة يشحن جوالك أكثر من مرة، مع مؤشرات LED وتصميم متين للسفر والاستخدام اليومي. <strong>ضمان عامين</strong>.</p>
+<ul>
+<li>سعة 20000 مللي أمبير</li>
+<li>ضمان عامين من budi</li>
+<li>مؤشرات LED لمستوى الشحن</li>
+<li>تصميم مريح بمقبض لمسي</li>
+<li>مناسب للجوالات والأجهزة اللوحية</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>budi power bank 20000 mAh</h3>
+<p>A high-capacity power bank that can charge your phone multiple times, with LED indicators and a durable design for travel and daily use. <strong>2-year warranty</strong>.</p>
+<ul>
+<li>20000mAh capacity</li>
+<li>2-year budi warranty</li>
+<li>LED charge level indicators</li>
+<li>Comfortable textured grip design</li>
+<li>Suitable for phones and tablets</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "الماركة: budi",
+      "السعة: 20000mAh",
+      "ضمان عامين",
+      "مؤشرات LED",
+      "تصميم متين للاستخدام اليومي",
+    ],
+    detailsEn: [
+      "Brand: budi",
+      "Capacity: 20000mAh",
+      "2-year warranty",
+      "LED indicators",
+      "Durable design for daily use",
+    ],
+    priceUSD: 32,
+    compareAtUSD: 51,
+    marketPrices: { SA: 120 },
+    marketComparePrices: { SA: 190 },
+    availableIn: ["SA"],
+    images: [
+      "/products/budi-powerbank-20000-demo.gif",
+      "/products/budi-powerbank-20000-g1.png",
+      "/products/budi-powerbank-20000-g2.png",
+      "/products/budi-powerbank-20000-g3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.7,
+    reviewCount: 203,
+    categoryId: "cat-SA",
+    createdAt: "2026-08-21T23:54:00.000Z",
+    landing: {
+      headlineAr: "باوربانك budi 20000mAh بضمان عامين",
+      headlineEn: "budi 20000mAh power bank with 2-year warranty",
+      introAr:
+        "سعة كبيرة تكفيك تشحن جوالك أكثر من مرة، مع ضمان عامين واطلب الحين — توصيل مجاني والدفع عند الاستلام في السعودية.",
+      introEn:
+        "High capacity to charge your phone multiple times, with a 2-year warranty. Order now — free delivery and COD in Saudi Arabia.",
+      sections: [
+        {
+          titleAr: "سعة 20000mAh ليوم طويل",
+          titleEn: "20000mAh for a long day",
+          bodyAr:
+            "اشحن أكثر من مرة بدون ما تدور على فيشة — مثالي للعمل، السفر، والطوارئ.",
+          bodyEn:
+            "Charge more than once without hunting for an outlet — ideal for work, travel, and emergencies.",
+          image: "/products/budi-powerbank-20000.png",
+        },
+        {
+          titleAr: "ضمان عامين",
+          titleEn: "2-year warranty",
+          bodyAr:
+            "اطمئن على استثمارك مع ضمان عامين من budi — ثقة أعلى للعميل وتحويل أفضل في الإعلان.",
+          bodyEn:
+            "Shop with confidence with a 2-year budi warranty — more trust for the customer and better ad conversion.",
+        },
+        {
+          titleAr: "تصميم عملي ومؤشرات واضحة",
+          titleEn: "Practical design & clear indicators",
+          bodyAr:
+            "سطح ملمس مريح ومؤشرات LED لتعرف نسبة الشحن بسرعة قبل ما تطلع من البيت.",
+          bodyEn:
+            "A comfortable textured surface and LED indicators so you know the charge level before you leave home.",
+        },
+      ],
+      benefitsAr: [
+        "سعة 20000mAh",
+        "ضمان عامين",
+        "مؤشرات LED",
+        "ماركة budi",
+        "توصيل مجاني والدفع عند الاستلام في السعودية",
+      ],
+      benefitsEn: [
+        "20000mAh capacity",
+        "2-year warranty",
+        "LED indicators",
+        "budi brand",
+        "Free delivery and COD in Saudi Arabia",
+      ],
+      faq: [
+        {
+          questionAr: "كم مرة يشحن الجوال؟",
+          questionEn: "How many phone charges?",
+          answerAr:
+            "يعتمد على سعة بطارية جوالك واستهلاكك؛ عادة تكفي لشحنات متعددة خلال اليوم.",
+          answerEn:
+            "Depends on your phone battery and usage; typically enough for multiple charges through the day.",
+        },
+        {
+          questionAr: "هل الضمان حقيقي؟",
+          questionEn: "Is the warranty real?",
+          answerAr: "نعم، العرض يتضمن ضمان عامين حسب مواصفات منتج budi.",
+          answerEn: "Yes — the listing includes a 2-year warranty per budi product terms.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-denx-dx648-ae",
+    slug: "denx-dx648-bluetooth-earbuds",
+    nameAr: "سماعة بلوتوث DENX DX648 — ضمان سنة",
+    nameEn: "DENX DX648 Bluetooth Earbuds — 1 Year Warranty",
+    descriptionAr: `
+<h3>سماعة بلوتوث DENX DX648</h3>
+<p>سماعة لاسلكية أصلية بصوت ستيريو محيطي، بلوتوث 5.1، واستعداد طويل حتى 30 ساعة مع العلبة. <strong>ضمان سنة</strong>.</p>
+<ul>
+<li>موديل DENX DX648 Original</li>
+<li>بلوتوث متقدم 5.1</li>
+<li>صوت ستيريو محيطي</li>
+<li>استعداد طويل حتى 30 ساعة</li>
+<li>ضمان سنة كاملة</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>DENX DX648 Bluetooth earbuds</h3>
+<p>Original wireless earbuds with surround stereo sound, Bluetooth 5.1, and long standby up to 30 hours with the case. <strong>1-year warranty</strong>.</p>
+<ul>
+<li>DENX DX648 Original model</li>
+<li>Advanced Bluetooth 5.1</li>
+<li>Audio stereo surround sound</li>
+<li>Long standby up to 30 hours</li>
+<li>Full 1-year warranty</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "الماركة: DENX",
+      "الموديل: DX648",
+      "بلوتوث 5.1",
+      "استعداد حتى 30 ساعة",
+      "لون أبيض",
+      "ضمان سنة",
+    ],
+    detailsEn: [
+      "Brand: DENX",
+      "Model: DX648",
+      "Bluetooth 5.1",
+      "Standby up to 30 hours",
+      "White color",
+      "1-year warranty",
+    ],
+    priceUSD: 42,
+    compareAtUSD: 55,
+    marketPrices: { AE: 155 },
+    marketComparePrices: { AE: 200 },
+    availableIn: ["AE"],
+    images: [
+      "/products/denx-dx648-earbuds-demo.gif",
+      "/products/denx-dx648-earbuds-g1.png",
+      "/products/denx-dx648-earbuds-g2.png",
+      "/products/denx-dx648-earbuds-g3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.7,
+    reviewCount: 176,
+    categoryId: "cat-AE",
+    createdAt: "2026-08-22T00:00:00.000Z",
+    landing: {
+      headlineAr: "سماعة بلوتوث DENX DX648",
+      headlineEn: "DENX DX648 Bluetooth earbuds",
+      introAr:
+        "صوت نقي، توصيل سريع، وضمان سنة. اطلب الحين — توصيل مجاني والدفع عند الاستلام في الإمارات.",
+      introEn:
+        "Clear sound, fast pairing, and a 1-year warranty. Order now — free delivery and COD in the UAE.",
+      sections: [
+        {
+          titleAr: "صوت ستيريو محيطي",
+          titleEn: "Surround stereo sound",
+          bodyAr:
+            "استمتع بموسيقى ومكالمات أوضح مع تصميم In-Ear مريح للاستخدام اليومي.",
+          bodyEn:
+            "Enjoy clearer music and calls with a comfortable in-ear design for everyday use.",
+          image: "/products/denx-dx648-earbuds.png",
+        },
+        {
+          titleAr: "بلوتوث 5.1 واستعداد طويل",
+          titleEn: "Bluetooth 5.1 & long standby",
+          bodyAr:
+            "توصيل ثابت مع الجوال والتابلت، واستعداد طويل مع العلبة حتى لا ينقطع يومك.",
+          bodyEn:
+            "Stable pairing with phones and tablets, plus long case standby so your day stays connected.",
+        },
+        {
+          titleAr: "أصلية مع ضمان سنة",
+          titleEn: "Original with 1-year warranty",
+          bodyAr:
+            "شارة Original وضمان سنة كاملة تعطي العميل ثقة أعلى عند الطلب بالدفع عند الاستلام.",
+          bodyEn:
+            "Original badging and a full-year warranty build more trust for cash-on-delivery orders.",
+        },
+      ],
+      benefitsAr: [
+        "DENX DX648 أصلية",
+        "بلوتوث 5.1",
+        "ضمان سنة",
+        "لون أبيض أنيق",
+        "توصيل مجاني والدفع عند الاستلام في الإمارات",
+      ],
+      benefitsEn: [
+        "Original DENX DX648",
+        "Bluetooth 5.1",
+        "1-year warranty",
+        "Sleek white finish",
+        "Free delivery and COD in the UAE",
+      ],
+      faq: [
+        {
+          questionAr: "هل تناسب آيفون وأندرويد؟",
+          questionEn: "Do they work with iPhone and Android?",
+          answerAr: "نعم، عبر البلوتوث مع معظم الجوالات والأجهزة اللوحية.",
+          answerEn: "Yes — via Bluetooth with most phones and tablets.",
+        },
+        {
+          questionAr: "ما مدة الضمان؟",
+          questionEn: "How long is the warranty?",
+          answerAr: "ضمان سنة كاملة حسب عرض المنتج.",
+          answerEn: "A full 1-year warranty as listed.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-xiaomi-earbuds-sa",
+    slug: "xiaomi-wireless-earbuds-tws",
+    nameAr: "سماعة شاومي لاسلكية TWS — 5 ألوان",
+    nameEn: "Xiaomi Wireless TWS Earbuds — 5 Colors",
+    descriptionAr: `
+<h3>سماعة شاومي لاسلكية</h3>
+<p>سماعة بلوتوث بتصميم أنيق وعلبة شحن، تحكم باللمس، بلوتوث 5.0، ومتوافقة مع كل الجوالات الذكية. متوفرة بـ <strong>5 ألوان</strong>.</p>
+<ul>
+<li>ماركة Xiaomi / mi</li>
+<li>بلوتوث 5.0</li>
+<li>تحكم باللمس Touch control</li>
+<li>مناسبة لجميع الجوالات الذكية</li>
+<li>ألوان: أخضر · كحلي · ذهبي · أبيض · أسود</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Xiaomi wireless earbuds</h3>
+<p>Bluetooth earbuds with a sleek charging case, touch control, Bluetooth 5.0, and compatibility with all smartphones. Available in <strong>5 colors</strong>.</p>
+<ul>
+<li>Xiaomi / mi brand</li>
+<li>Bluetooth 5.0</li>
+<li>Touch control</li>
+<li>For all smartphones</li>
+<li>Colors: Green · Navy · Gold · White · Black</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "ماركة Xiaomi",
+      "بلوتوث 5.0",
+      "تحكم باللمس",
+      "علبة شحن مع مؤشر LED",
+      "5 ألوان متاحة",
+      "متوافقة مع كل الجوالات الذكية",
+    ],
+    detailsEn: [
+      "Xiaomi brand",
+      "Bluetooth 5.0",
+      "Touch control",
+      "Charging case with LED indicator",
+      "5 available colors",
+      "Compatible with all smartphones",
+    ],
+    priceUSD: 26,
+    compareAtUSD: 40,
+    marketPrices: { SA: 99 },
+    marketComparePrices: { SA: 149 },
+    availableIn: ["SA"],
+    images: [
+      "/products/xiaomi-earbuds-tws-demo.gif",
+      "/products/xiaomi-earbuds-tws-g1.png",
+      "/products/xiaomi-earbuds-tws-g2.png",
+      "/products/xiaomi-earbuds-tws-g3.png",
+    ],
+    colors: [
+      { id: "green", nameAr: "أخضر", nameEn: "Green", hex: "#1f4d3a" },
+      { id: "navy", nameAr: "كحلي", nameEn: "Navy", hex: "#1e3a5f" },
+      { id: "gold", nameAr: "ذهبي شمباني", nameEn: "Champagne Gold", hex: "#c9b896" },
+      { id: "white", nameAr: "أبيض", nameEn: "White", hex: "#f4f4f4" },
+      { id: "black", nameAr: "أسود", nameEn: "Black", hex: "#1a1a1a" },
+    ],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.6,
+    reviewCount: 241,
+    categoryId: "cat-SA",
+    createdAt: "2026-08-22T00:02:00.000Z",
+    landing: {
+      headlineAr: "سماعة شاومي لاسلكية بـ 5 ألوان",
+      headlineEn: "Xiaomi wireless earbuds in 5 colors",
+      introAr:
+        "صوت واضح، تحكم باللمس، وبلوتوث 5.0 لكل الجوالات. اختر لونك واطلب الآن — توصيل مجاني والدفع عند الاستلام في السعودية.",
+      introEn:
+        "Clear sound, touch control, and Bluetooth 5.0 for every phone. Pick your color and order now — free delivery and COD in Saudi Arabia.",
+      sections: [
+        {
+          titleAr: "تصميم Xiaomi أنيق",
+          titleEn: "Sleek Xiaomi design",
+          bodyAr:
+            "علبة شحن بشعار mi ولمسة معدنية ذهبية، مع مؤشر LED واضح ومظهر يناسب الاستخدام اليومي.",
+          bodyEn:
+            "A charging case with the mi logo and a gold trim, plus a clear LED indicator for everyday style.",
+          image: "/products/xiaomi-earbuds-tws.png",
+        },
+        {
+          titleAr: "بلوتوث 5.0 وتحكم باللمس",
+          titleEn: "Bluetooth 5.0 & touch control",
+          bodyAr:
+            "توصيل سريع ومستقر مع الجوال، وتحكم باللمس لتبديل الأغاني والرد على المكالمات بسهولة.",
+          bodyEn:
+            "Fast stable pairing with your phone, plus touch controls to skip tracks and answer calls easily.",
+        },
+        {
+          titleAr: "5 ألوان تناسب ذوقك",
+          titleEn: "5 colors to match your style",
+          bodyAr:
+            "أخضر، كحلي، ذهبي شمباني، أبيض، وأسود — اختر اللون المفضل عند الطلب.",
+          bodyEn:
+            "Green, navy, champagne gold, white, and black — pick your favorite color when ordering.",
+        },
+      ],
+      benefitsAr: [
+        "ماركة Xiaomi",
+        "بلوتوث 5.0",
+        "5 ألوان",
+        "تحكم باللمس",
+        "توصيل مجاني والدفع عند الاستلام في السعودية",
+      ],
+      benefitsEn: [
+        "Xiaomi brand",
+        "Bluetooth 5.0",
+        "5 colors",
+        "Touch control",
+        "Free delivery and COD in Saudi Arabia",
+      ],
+      faq: [
+        {
+          questionAr: "هل تعمل مع آيفون وأندرويد؟",
+          questionEn: "Do they work with iPhone and Android?",
+          answerAr: "نعم، متوافقة مع كل الجوالات الذكية عبر البلوتوث.",
+          answerEn: "Yes — compatible with all smartphones via Bluetooth.",
+        },
+        {
+          questionAr: "كيف أختار اللون؟",
+          questionEn: "How do I choose the color?",
+          answerAr: "اختر اللون من خيارات المنتج في صفحة الطلب قبل تأكيد الطلب.",
+          answerEn: "Select the color from the product options on the order page before confirming.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-car-windshield-umbrella-sa",
+    slug: "car-windshield-sunshade-umbrella",
+    nameAr: "مظلة زجاج للسيارة",
+    nameEn: "Car Windshield Sunshade Umbrella",
+    descriptionAr: `
+<h3>مظلة زجاج للسيارة</h3>
+<p>مظلة قابلة للطي تحمي زجاج السيارة الأمامي من الشمس والحرارة، حجمها مناسب ومعك في أي مكان داخل جراب أنيق. تفتح مثل المظلة وتغطي الزجاج بالكامل.</p>
+<ul>
+<li>تحجب أشعة الشمس وتقلل حرارة المقصورة</li>
+<li>قابلة للطي وحملها سهل مع الجراب</li>
+<li>تركيب سريع على الزجاج الأمامي</li>
+<li>تحمي الطبلون والأجهزة من التلف الحراري</li>
+<li>يمكن استخدامها كمظلة خارجية عند الحاجة</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Car windshield sunshade umbrella</h3>
+<p>A foldable umbrella-style sunshade that protects the front windshield from sun and heat. Compact size with a carrying sleeve — open it like an umbrella to cover the glass fully.</p>
+<ul>
+<li>Blocks sunlight and reduces cabin heat</li>
+<li>Folds down easily with a storage sleeve</li>
+<li>Quick install on the front windshield</li>
+<li>Helps protect the dash and electronics from heat damage</li>
+<li>Can also be used as an outdoor umbrella when needed</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "مظلة لزجاج السيارة الأمامي",
+      "قابلة للطي مع جراب حمل",
+      "عزل حراري من أشعة الشمس",
+      "تركيب سريع بدون تعقيد",
+      "مناسبة لمعظم السيارات",
+    ],
+    detailsEn: [
+      "Front windshield sunshade umbrella",
+      "Foldable with carrying sleeve",
+      "Thermal sun protection",
+      "Quick no-fuss install",
+      "Fits most cars",
+    ],
+    priceUSD: 21,
+    compareAtUSD: 32,
+    marketPrices: { SA: 79 },
+    marketComparePrices: { SA: 119 },
+    availableIn: ["SA"],
+    images: [
+      "/products/car-windshield-umbrella-demo.gif",
+      "/products/car-windshield-umbrella-g1.png",
+      "/products/car-windshield-umbrella-g2.png",
+      "/products/car-windshield-umbrella-g3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.7,
+    reviewCount: 312,
+    categoryId: "cat-SA",
+    createdAt: "2026-08-22T00:09:00.000Z",
+    landing: {
+      headlineAr: "مظلة زجاج للسيارة",
+      headlineEn: "Car windshield sunshade umbrella",
+      introAr:
+        "حجمها مناسب ومعك في أي مكان. افتحها على الزجاج الأمامي لتحافظ على برودة السيارة وتحمي الطبلون من الشمس — توصيل مجاني والدفع عند الاستلام في السعودية.",
+      introEn:
+        "A portable size that goes with you anywhere. Open it on the front glass to keep the cabin cooler and protect the dash from the sun — free delivery and COD in Saudi Arabia.",
+      sections: [
+        {
+          titleAr: "حماية من الشمس والحرارة",
+          titleEn: "Sun and heat protection",
+          bodyAr:
+            "تعكس أشعة الشمس عن الزجاج الأمامي وتساعد على خفض حرارة المقصورة عند الوقوف تحت الشمس.",
+          bodyEn:
+            "Reflects sunlight off the front windshield and helps lower cabin heat when parked in the sun.",
+          image: "/products/car-windshield-umbrella.png",
+        },
+        {
+          titleAr: "طي سهل وحمل خفيف",
+          titleEn: "Easy fold & light carry",
+          bodyAr:
+            "تُطوى داخل جراب أنيق وتبقى جاهزة في الصندوق أو المقعد — بدون شغل مساحة كبيرة.",
+          bodyEn:
+            "Folds into a neat sleeve and stays ready in the trunk or seat — without taking much space.",
+        },
+        {
+          titleAr: "تركيب في ثوانٍ",
+          titleEn: "Install in seconds",
+          bodyAr:
+            "افتحها مثل المظلة وثبتها على الزجاج من الداخل. سريعة قبل ما تترك السيارة في الحر.",
+          bodyEn:
+            "Open it like an umbrella and set it against the glass from inside. Fast before you leave the car in the heat.",
+        },
+      ],
+      benefitsAr: [
+        "تقليل حرارة السيارة",
+        "قابلة للطي مع جراب",
+        "تركيب سريع",
+        "مناسبة لمناخ السعودية",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "Reduces car heat",
+        "Foldable with sleeve",
+        "Quick install",
+        "Ideal for Saudi climate",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "هل تناسب كل السيارات؟",
+          questionEn: "Does it fit all cars?",
+          answerAr:
+            "مناسبة لمعظم السيارات الصغيرة والمتوسطة. تأكد من مقاس الزجاج الأمامي إن كانت سيارتك كبيرة جدًا.",
+          answerEn:
+            "Fits most small and mid-size cars. Check windshield size if your vehicle is very large.",
+        },
+        {
+          questionAr: "هل يمكن استخدامها كمظلة مطر؟",
+          questionEn: "Can it be used as a rain umbrella?",
+          answerAr: "نعم، يمكن استخدامها كمظلة خارجية عند الحاجة حسب العرض.",
+          answerEn: "Yes — it can also be used as an outdoor umbrella when needed.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-kitchen-3pcs-om",
+    slug: "kitchen-3pcs-blender-chopper-juicer",
+    nameAr: "عرض 3 قطع: خلاط + مفرمة + عصارة",
+    nameEn: "3-Piece Offer: Blender + Chopper + Juicer",
+    descriptionAr: `
+<h3>عرض 3 قطع بسعر أوفر</h3>
+<p>طقم مطبخ متكامل: خلاط قوي SC-1589 مع مطحنة، مفرمة Caseek، وعصارة فواكه — ثلاثة أجهزة أساسية في عرض واحد لتحضير العصائر والسموذي والتقطيع بسرعة.</p>
+<ul>
+<li>خلاط عالي القوة مع إناء شفاف وملحق طحن</li>
+<li>مفرمة Caseek للخضار والفواكه</li>
+<li>عصارة لاستخراج عصير فريش بسهولة</li>
+<li>تصميم عملي يناسب رخامة المطبخ</li>
+<li>عرض 3 قطع بسعر أوفر</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>3-piece offer at a better price</h3>
+<p>A complete kitchen set: powerful blender SC-1589 with grinder, Caseek chopper, and a fruit juicer — three essentials in one deal for juices, smoothies, and fast chopping.</p>
+<ul>
+<li>High-power blender with clear jar and grinder attachment</li>
+<li>Caseek chopper for veggies and fruit</li>
+<li>Juicer for fresh juice with less effort</li>
+<li>Practical design for kitchen counters</li>
+<li>3-piece bundle at a better price</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "خلاط SC-1589 مع مطحنة",
+      "مفرمة Caseek",
+      "عصارة فواكه",
+      "عرض 3 قطع",
+      "مثالي للاستخدام اليومي في المطبخ",
+    ],
+    detailsEn: [
+      "SC-1589 blender with grinder",
+      "Caseek food chopper",
+      "Fruit juicer",
+      "3-piece offer",
+      "Ideal for daily kitchen use",
+    ],
+    priceUSD: 57,
+    compareAtUSD: 83,
+    marketPrices: { OM: 22 },
+    marketComparePrices: { OM: 32 },
+    availableIn: ["OM"],
+    images: [
+      "/products/kitchen-3pcs-offer-demo.gif",
+      "/products/kitchen-3pcs-offer-g1.png",
+      "/products/kitchen-3pcs-offer-g2.png",
+      "/products/kitchen-3pcs-offer-g3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.6,
+    reviewCount: 154,
+    categoryId: "cat-OM",
+    createdAt: "2026-08-22T00:11:00.000Z",
+    landing: {
+      headlineAr: "عرض 3 قطع بسعر أوفر",
+      headlineEn: "3-piece offer at a better price",
+      introAr:
+        "خلاط + مفرمة + عصارة في طلب واحد لمطبخ أسرع وأوفر. احجز الآن — توصيل مجاني والدفع عند الاستلام في عُمان.",
+      introEn:
+        "Blender + chopper + juicer in one order for a faster, smarter kitchen. Book now — free delivery and COD in Oman.",
+      sections: [
+        {
+          titleAr: "ثلاثة أجهزة… عرض واحد",
+          titleEn: "Three appliances — one offer",
+          bodyAr:
+            "وفّر على شراء الأجهزة منفصلة واحصل على خلاط ومفرمة وعصارة معًا لتجهيز وصفاتك ومشروباتك يوميًا.",
+          bodyEn:
+            "Save versus buying separately and get a blender, chopper, and juicer together for daily recipes and drinks.",
+          image: "/products/kitchen-3pcs-offer.png",
+        },
+        {
+          titleAr: "خلاط قوي وعصير فريش",
+          titleEn: "Powerful blend & fresh juice",
+          bodyAr:
+            "حضّر السموذي والعصائر الطازجة بسرعة، مع ملحق طحن للتوابل والمكسرات.",
+          bodyEn:
+            "Make smoothies and fresh juices fast, with a grinder attachment for spices and nuts.",
+        },
+        {
+          titleAr: "مفرمة عملية للتقطيع",
+          titleEn: "Practical chopper for prep",
+          bodyAr:
+            "قطّع الخضار والفواكه في ثوانٍ بدون مجهود كبير — مثالية للتجهيز اليومي.",
+          bodyEn:
+            "Chop veggies and fruit in seconds with less effort — ideal for daily prep.",
+        },
+      ],
+      benefitsAr: [
+        "عرض 3 قطع أوفر",
+        "خلاط + مفرمة + عصارة",
+        "توفير وقت المطبخ",
+        "مناسب للعائلات",
+        "توصيل مجاني والدفع عند الاستلام في عُمان",
+      ],
+      benefitsEn: [
+        "Better-priced 3-piece offer",
+        "Blender + chopper + juicer",
+        "Saves kitchen time",
+        "Great for families",
+        "Free delivery and COD in Oman",
+      ],
+      faq: [
+        {
+          questionAr: "هل الأجهزة الثلاثة ضمن الطلب؟",
+          questionEn: "Are all three included?",
+          answerAr: "نعم، العرض يشمل الخلاط والمفرمة والعصارة كما في الصورة.",
+          answerEn: "Yes — the offer includes the blender, chopper, and juicer as shown.",
+        },
+        {
+          questionAr: "هل الجهد مناسب لعُمان؟",
+          questionEn: "Is the voltage suitable for Oman?",
+          answerAr:
+            "الأجهزة المنزلية المعتادة تعمل على 220–240 فولت. راجع الملصق عند الاستلام للتأكيد.",
+          answerEn:
+            "Typical home appliances run on 220–240V. Check the label on delivery to confirm.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-dish-rack-sink-om",
+    slug: "over-sink-dish-drying-rack",
+    nameAr: "رف تجفيف صحون فوق الحوض",
+    nameEn: "Over-Sink Dish Drying Rack",
+    descriptionAr: `
+<h3>رف تجفيف صحون فوق الحوض</h3>
+<p>رف معدني أسود أنيق يُثبَّت فوق الحوض بأذرع قابلة للتمديد، مع صينية تصريف تصب الماء مباشرة في المغسلة وحامل أدوات مدمج — مساحة أكبر على الرخامة وترتيب أسهل بعد الغسيل.</p>
+<ul>
+<li>تركيب فوق الحوض بأذرع قابلة للتمديد</li>
+<li>صينية تصريف بفوهة تصب في الحوض</li>
+<li>حامل معالق وسكاكين مدمج</li>
+<li>سعة لصحون وأكواب كبيرة</li>
+<li>لون أسود مطفي يناسب المطابخ العصرية</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Over-sink dish drying rack</h3>
+<p>A sleek matte-black metal rack that sits over the sink with extendable arms, a drain tray that pours water into the basin, and a built-in utensil caddy — more counter space and easier drying after washing.</p>
+<ul>
+<li>Over-sink install with extendable arms</li>
+<li>Drain tray with spout into the sink</li>
+<li>Built-in utensil holder</li>
+<li>Room for plates and cups</li>
+<li>Matte black finish for modern kitchens</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "رف فوق الحوض قابل للتمديد",
+      "صينية تصريف بفوهة",
+      "حامل أدوات مدمج",
+      "هيكل معدني متين",
+      "لون أسود مطفي",
+    ],
+    detailsEn: [
+      "Extendable over-sink rack",
+      "Drain tray with spout",
+      "Built-in utensil caddy",
+      "Sturdy metal frame",
+      "Matte black finish",
+    ],
+    priceUSD: 26,
+    compareAtUSD: 39,
+    marketPrices: { OM: 9.9 },
+    marketComparePrices: { OM: 14.9 },
+    availableIn: ["OM"],
+    images: [
+      "/products/dish-drying-rack-sink-demo.gif",
+      "/products/dish-drying-rack-sink-g1.png",
+      "/products/dish-drying-rack-sink-g2.png",
+      "/products/dish-drying-rack-sink-g3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.7,
+    reviewCount: 189,
+    categoryId: "cat-OM",
+    createdAt: "2026-08-22T00:13:00.000Z",
+    landing: {
+      headlineAr: "رف تجفيف فوق الحوض… بدون بلّ الرخامة",
+      headlineEn: "Over-sink drying — without wet counters",
+      introAr:
+        "ثبّته فوق المغسلة، خلّ الماء ينزل مباشرة للحوض، ورتّب الصحون والأكواب والأدوات في مكان واحد. اطلب الآن — توصيل مجاني والدفع عند الاستلام في عُمان.",
+      introEn:
+        "Set it over the sink, let water drain straight into the basin, and organize plates, cups, and utensils in one place. Order now — free delivery and COD in Oman.",
+      sections: [
+        {
+          titleAr: "تصريف مباشر إلى الحوض",
+          titleEn: "Direct drain into the sink",
+          bodyAr:
+            "صينية سفلية بفوهة تصريف توجّه الماء للحوض بدل ما يتجمع على الرخامة.",
+          bodyEn:
+            "A bottom tray with a spout directs water into the sink instead of pooling on the counter.",
+          image: "/products/dish-drying-rack-sink.png",
+        },
+        {
+          titleAr: "أذرع قابلة للتمديد",
+          titleEn: "Extendable support arms",
+          bodyAr:
+            "أذرع جانبية تتمدد لتناسب عرض الحوض مع أقدام مانعة للانزلاق لثبات أفضل.",
+          bodyEn:
+            "Side arms extend to fit the sink width, with non-slip feet for better stability.",
+        },
+        {
+          titleAr: "ترتيب كامل مع حامل الأدوات",
+          titleEn: "Full organize with utensil caddy",
+          bodyAr:
+            "مساحة للصحون والأكواب + حامل للمعالق والسكاكين — كل شيء يجف في مكان واحد.",
+          bodyEn:
+            "Space for plates and cups plus a holder for spoons and knives — everything dries in one place.",
+        },
+      ],
+      benefitsAr: [
+        "يوفر مساحة الرخامة",
+        "تصريف للحوض مباشرة",
+        "حامل أدوات مدمج",
+        "لون أسود أنيق",
+        "توصيل مجاني والدفع عند الاستلام في عُمان",
+      ],
+      benefitsEn: [
+        "Saves counter space",
+        "Drains into the sink",
+        "Built-in utensil holder",
+        "Sleek black look",
+        "Free delivery and COD in Oman",
+      ],
+      faq: [
+        {
+          questionAr: "هل يناسب كل الأحواض؟",
+          questionEn: "Does it fit every sink?",
+          answerAr:
+            "مناسب لمعظم الأحواض المنزلية بفضل الأذرع القابلة للتمديد. تأكد من عرض حوضك قبل الطلب إن كان ضيقًا جدًا أو واسعًا جدًا.",
+          answerEn:
+            "Fits most home sinks thanks to extendable arms. Check your sink width before ordering if it is unusually narrow or wide.",
+        },
+        {
+          questionAr: "هل يصدأ؟",
+          questionEn: "Will it rust?",
+          answerAr:
+            "الهيكل مطلي بلون أسود للاستخدام اليومي مع الماء؛ جفّفه بين الفترة والأخرى لعمر أطول.",
+          answerEn:
+            "The frame has a black finish for daily wet use; wipe it dry occasionally for longer life.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-konnect-kn101-sa",
+    slug: "konnect-kn101-power-bank-30000",
+    nameAr: "باور بانك KONNECT KN101 — 30000mAh",
+    nameEn: "KONNECT KN101 Power Bank — 30000mAh",
+    descriptionAr: `
+<h3>KONNECT POWER BANK 30000mAh</h3>
+<p>شاحن متنقل بسعة ضخمة 30000mAh مع كابلات مدمجة وشحن سريع QC 3.0، وشاشة نسبة الشحن — يشحن حتى 4 أجهزة بدون حمل أسلاك إضافية.</p>
+<ul>
+<li>سعة 30000mAh</li>
+<li>موديل KONNECT KN101</li>
+<li>كابلات مدمجة: USB-A · Micro · Lightning · USB-C</li>
+<li>شحن سريع QC 3.0 (حتى 4 أجهزة)</li>
+<li>مؤشر نسبة الشحن 25 / 50 / 75 / 100</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>KONNECT POWER BANK 30000mAh</h3>
+<p>A high-capacity 30000mAh portable charger with built-in cables and QC 3.0 fast charging, plus a charge-level display — power up to 4 devices without carrying extra cables.</p>
+<ul>
+<li>30000mAh capacity</li>
+<li>KONNECT KN101 model</li>
+<li>Built-in cables: USB-A · Micro · Lightning · USB-C</li>
+<li>QC 3.0 fast charge (up to 4 devices)</li>
+<li>Charge indicators 25 / 50 / 75 / 100</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "الماركة: KONNECT",
+      "الموديل: KN101",
+      "السعة: 30000mAh",
+      "كابلات مدمجة متعددة",
+      "شحن سريع QC 3.0",
+      "شاشة/مؤشر نسبة الشحن",
+    ],
+    detailsEn: [
+      "Brand: KONNECT",
+      "Model: KN101",
+      "Capacity: 30000mAh",
+      "Multiple built-in cables",
+      "QC 3.0 fast charging",
+      "Charge percentage indicators",
+    ],
+    priceUSD: 24,
+    compareAtUSD: 37,
+    marketPrices: { SA: 89 },
+    marketComparePrices: { SA: 139 },
+    availableIn: ["SA"],
+    images: [
+      "/products/konnect-kn101-powerbank-demo.gif",
+      "/products/konnect-kn101-powerbank-g1.png",
+      "/products/konnect-kn101-powerbank-g2.png",
+      "/products/konnect-kn101-powerbank-g3.png",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.7,
+    reviewCount: 198,
+    categoryId: "cat-SA",
+    createdAt: "2026-08-22T00:16:00.000Z",
+    landing: {
+      headlineAr: "باور بانك 30000mAh بكابلات مدمجة",
+      headlineEn: "30000mAh power bank with built-in cables",
+      introAr:
+        "سعة كبيرة + 4 كابلات مدمجة + شحن سريع. اطلب الآن — توصيل مجاني والدفع عند الاستلام في السعودية.",
+      introEn:
+        "Huge capacity + 4 built-in cables + fast charging. Order now — free delivery and COD in Saudi Arabia.",
+      sections: [
+        {
+          titleAr: "سعة 30000mAh ليوم طويل",
+          titleEn: "30000mAh for long days",
+          bodyAr:
+            "اشحن جوالك وأكثر من جهاز خلال السفر والعمل والطوارئ بدون ما تدور على فيشة.",
+          bodyEn:
+            "Charge your phone and more devices during travel, work, and emergencies without hunting for an outlet.",
+          image: "/products/konnect-kn101-powerbank.png",
+        },
+        {
+          titleAr: "كابلات مدمجة لكل الأجهزة",
+          titleEn: "Built-in cables for every device",
+          bodyAr:
+            "USB-A وMicro وLightning وUSB-C داخل الجهاز — أقل أسلاك في الحقيبة وأسرع استخدام.",
+          bodyEn:
+            "USB-A, Micro, Lightning, and USB-C built in — fewer cables in your bag and faster everyday use.",
+        },
+        {
+          titleAr: "شحن سريع QC 3.0",
+          titleEn: "QC 3.0 fast charging",
+          bodyAr:
+            "شحن أسرع مع إمكانية تشغيل عدة أجهزة معًا حسب العرض، ومؤشرات واضحة لنسبة الطاقة المتبقية.",
+          bodyEn:
+            "Faster charging with multi-device support as listed, plus clear indicators for remaining power.",
+        },
+      ],
+      benefitsAr: [
+        "سعة 30000mAh",
+        "4 كابلات مدمجة",
+        "شحن سريع QC 3.0",
+        "ماركة KONNECT KN101",
+        "توصيل مجاني والدفع عند الاستلام في السعودية",
+      ],
+      benefitsEn: [
+        "30000mAh capacity",
+        "4 built-in cables",
+        "QC 3.0 fast charge",
+        "KONNECT KN101 brand",
+        "Free delivery and COD in Saudi Arabia",
+      ],
+      faq: [
+        {
+          questionAr: "هل يناسب آيفون وأندرويد؟",
+          questionEn: "Does it work with iPhone and Android?",
+          answerAr: "نعم، بفضل الكابلات المدمجة Lightning وUSB-C وMicro.",
+          answerEn: "Yes — thanks to built-in Lightning, USB-C, and Micro cables.",
+        },
+        {
+          questionAr: "هل مسموح به في الطائرة؟",
+          questionEn: "Is it airline-safe?",
+          answerAr:
+            "عادة باور بانك بهذه السعة يُحمل في الأمتعة اليدوية حسب أنظمة الطيران. تأكد من سياسة خط الطيران قبل السفر.",
+          answerEn:
+            "Power banks of this capacity are usually carry-on only per airline rules. Confirm your airline policy before travel.",
         },
       ],
     },

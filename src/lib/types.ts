@@ -73,6 +73,19 @@ export interface ProductColor {
   hex: string;
 }
 
+/** Quantity-based upsell tiers on the same product page */
+export interface ProductQtyOffer {
+  quantity: number;
+  /** Total price for this quantity in local currency */
+  marketPrices?: Partial<Record<CountryCode, number>>;
+  /** Discount off qty × unit price when marketPrices not set */
+  discountPercent?: number;
+  labelAr?: string;
+  labelEn?: string;
+  /** Highlight as recommended tier */
+  popular?: boolean;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -105,11 +118,15 @@ export interface Product {
   reviewCount: number;
   createdAt: string;
   landing?: ProductLanding;
+  /** Same-product quantity upsell tiers (1 / 2 / 3 pcs…) */
+  qtyOffers?: ProductQtyOffer[];
 }
 
 export interface CartItem {
   productId: string;
   quantity: number;
+  /** Override line total in USD when qty-tier pricing applies */
+  lineTotalUSD?: number;
 }
 
 export interface Order {

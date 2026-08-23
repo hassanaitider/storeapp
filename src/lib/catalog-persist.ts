@@ -1,8 +1,22 @@
 import type { Category, Product, Order, CartItem, CurrencyCode, CountryCode, Locale } from "@/lib/types";
 
-export const CATALOG_STORAGE_KEY = "cargolf-v19";
+export const CATALOG_STORAGE_KEY = "cargolf-v35";
 
 export const LEGACY_STORAGE_KEYS = [
+  "cargolf-v34",
+  "cargolf-v33",
+  "cargolf-v30",
+  "cargolf-v29",
+  "cargolf-v28",
+  "cargolf-v27",
+  "cargolf-v26",
+  "cargolf-v25",
+  "cargolf-v24",
+  "cargolf-v23",
+  "cargolf-v22",
+  "cargolf-v21",
+  "cargolf-v20",
+  "cargolf-v19",
   "cargolf-v18",
   "cargolf-v17",
   "cargolf-v16",
@@ -34,6 +48,8 @@ export type PersistedCatalog = {
   countryManual: boolean;
   currencyManual: boolean;
   currencyRates: Record<CurrencyCode, number>;
+  /** When false, upsell blocks are hidden on the storefront */
+  upsellEnabled?: boolean;
 };
 
 const MAX_CHARS = 4_000_000;
@@ -133,6 +149,7 @@ export function parseCatalogJson(raw: string): PersistedCatalog | null {
       countryManual: Boolean(parsed.countryManual),
       currencyManual: Boolean(parsed.currencyManual),
       currencyRates: (parsed.currencyRates ?? {}) as Record<CurrencyCode, number>,
+      upsellEnabled: parsed.upsellEnabled !== false,
     });
   } catch {
     return null;

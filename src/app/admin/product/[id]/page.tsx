@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Eye, Save } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
@@ -11,14 +11,16 @@ import { convertToUSD, formatLocalAmount, getCurrency } from "@/lib/currency";
 import { getProductLocalPrice } from "@/lib/pricing";
 import { htmlToPlain, toEditorHtml } from "@/lib/rich-html";
 import { slugify } from "@/lib/utils";
-import type { CountryCode, Product } from "@/lib/types";
+import { ProductQtyOffersEditor } from "@/components/admin/ProductQtyOffersEditor";
 import { ProductRichEditor } from "@/components/admin/ProductRichEditor";
 import { ProductColorsEditor } from "@/components/admin/ProductColorsEditor";
+import type { CountryCode, Product, ProductQtyOffer } from "@/lib/types";
 import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
 import { SITE_URL } from "@/lib/site";
 
 export default function EditProductPage() {
   const params = useParams();
+  const router = useRouter();
   const id = String(params.id ?? "");
   const isNew = id === "new";
   const t = useT();
@@ -48,6 +50,9 @@ export default function EditProductPage() {
   const [inStock, setInStock] = useState(true);
   const [featured, setFeatured] = useState(false);
   const [customColorEnabled, setCustomColorEnabled] = useState(false);
+  const [qtyOffers, setQtyOffers] = useState<ProductQtyOffer[]>([]);
+  const [flash, setFlash] = useState("");
+  const [saving, setSaving] = useState(false);
   const [ready, setReady] = useState(isNew);
 
   const cat =
@@ -87,8 +92,35 @@ export default function EditProductPage() {
     setInStock(existing.inStock !== false);
     setFeatured(Boolean(existing.featured));
     setCustomColorEnabled(Boolean(existing.customColorEnabled));
+    setQtyOffers([...(existing.qtyOffers ?? [])]);
     setReady(true);
   }, [existing, isNew, categories]);
+
+  useEffect(() => {
+    const onLocalFail = () => {
+      window.alert(
+        locale === "ar"
+          ? "تعذّر الحفظ محلياً — أفرغ مساحة المتصفح"
+          : "Local save failed — free browser storage"
+      );
+    };
+    const onServerFail = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail;
+      if (detail === "unauthorized") {
+        window.alert(
+          locale === "ar"
+            ? "لم يُحفظ على السيرفر — سجّل دخول لوحة التحكم"
+            : "Not saved to server — log in to admin"
+        );
+      }
+    };
+    window.addEventListener("smart-shop-save-error", onLocalFail);
+    window.addEventListener("smart-shop-server-save-error", onServerFail);
+    return () => {
+      window.removeEventListener("smart-shop-save-error", onLocalFail);
+      window.removeEventListener("smart-shop-server-save-error", onServerFail);
+    };
+  }, [locale]);
 
   if (!isNew && ready && !existing) {
     return (
@@ -155,6 +187,7 @@ export default function EditProductPage() {
       slug: (slug || slugify(nameEn || nameAr)).trim(),
       featured,
       inStock,
+      qtyOffers: qtyOffers.length ? qtyOffers : undefined,
       rating: existing?.rating ?? 4.5,
       reviewCount: existing?.reviewCount ?? 0,
       landing: existing?.landing,
@@ -166,15 +199,41 @@ export default function EditProductPage() {
       );
       return;
     }
+    setSaving(true);
     try {
-      if (isNew) addProduct(data);
-      else updateProduct(id, data);
+      if (isNew) {
+        const newId = addProduct(data);
+        if (!newId) {
+          window.alert(
+            locale === "ar"
+              ? "تعذّر الحفظ في المتصفح — أفرغ مساحة التخزين أو أعد المحاولة"
+              : "Could not save in the browser — free storage space or retry"
+          );
+          return;
+        }
+        setFlash(locale === "ar" ? "تم الحفظ ✓" : "Saved ✓");
+        window.setTimeout(() => setFlash(""), 2500);
+        router.replace(`/admin/product/${newId}`);
+        return;
+      }
+      const ok = updateProduct(id, data);
+      if (!ok) {
+        window.alert(
+          locale === "ar"
+            ? "تعذّر الحفظ في المتصفح — أفرغ مساحة التخزين أو أعد المحاولة"
+            : "Could not save in the browser — free storage space or retry"
+        );
+        return;
+      }
     } catch (err) {
       console.error(err);
       window.alert(locale === "ar" ? "فشل الحفظ" : "Save failed");
       return;
+    } finally {
+      setSaving(false);
     }
-    window.location.assign("/admin?tab=products&saved=1");
+    setFlash(locale === "ar" ? "تم الحفظ ✓" : "Saved ✓");
+    window.setTimeout(() => setFlash(""), 2500);
   }
 
   const previewSlug = (slug || slugify(nameEn || nameAr || "product")).trim();
@@ -201,13 +260,19 @@ export default function EditProductPage() {
           <button
             type="button"
             onClick={saveNow}
-            className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-brand-600"
+            disabled={saving}
+            className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-brand-600 disabled:opacity-60"
           >
             <Save className="h-4 w-4" />
             {t.admin.save}
           </button>
         </div>
       </div>
+      {flash ? (
+        <p className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-800">
+          {flash}
+        </p>
+      ) : null}
 
       <h1 className="font-display text-3xl font-semibold text-ink-900">
         {isNew ? t.admin.addProduct : t.admin.editProduct}
@@ -390,6 +455,21 @@ export default function EditProductPage() {
         />
       </div>
 
+      {!isNew && existing ? (
+        <div
+          id="upsell"
+          className="mt-6 scroll-mt-24 rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50/60 to-white p-5 shadow-sm sm:p-6"
+        >
+          <ProductQtyOffersEditor
+            product={existing}
+            categories={categories}
+            locale={locale}
+            qtyOffers={qtyOffers}
+            onChange={setQtyOffers}
+          />
+        </div>
+      ) : null}
+
       {/* Rich description — YouCan editor */}
       <div className="mt-6">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
@@ -455,7 +535,8 @@ export default function EditProductPage() {
         <button
           type="button"
           onClick={saveNow}
-          className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-6 py-3 text-sm font-bold text-white hover:bg-brand-600"
+          disabled={saving}
+          className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-6 py-3 text-sm font-bold text-white hover:bg-brand-600 disabled:opacity-60"
         >
           <Save className="h-4 w-4" />
           {t.admin.save}

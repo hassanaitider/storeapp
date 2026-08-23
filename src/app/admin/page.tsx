@@ -13,6 +13,7 @@ import {
   ExternalLink,
   Coins,
   RotateCcw,
+  Gift,
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
@@ -24,14 +25,19 @@ import {
 import { STORE_MARKETS, currencyForCountry } from "@/lib/countries";
 import { getProductLocalPrice } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
-import type { CountryCode } from "@/lib/types";
+import type { CountryCode, ProductQtyOffer } from "@/lib/types";
+import {
+  ProductQtyOffersEditor,
+  qtyOfferSummary,
+} from "@/components/admin/ProductQtyOffersEditor";
 
-type Tab = "overview" | "categories" | "products" | "orders" | "currencies";
+type Tab = "overview" | "categories" | "products" | "orders" | "currencies" | "upsell";
 
 const TABS: Tab[] = [
   "overview",
   "categories",
   "products",
+  "upsell",
   "currencies",
   "orders",
 ];
@@ -70,11 +76,18 @@ function AdminDashboard() {
     resetCurrencyRates,
     deleteCategory,
     deleteProduct,
+    updateProduct,
     resetStore,
+    upsellEnabled,
+    setUpsellEnabled,
   } = useStore();
 
   const [flash, setFlash] = useState("");
   const [rateDraft, setRateDraft] = useState<Record<string, string>>({});
+  const [qtyOffersDraft, setQtyOffersDraft] = useState<
+    Record<string, ProductQtyOffer[]>
+  >({});
+  const [upsellFocus, setUpsellFocus] = useState<string | null>(null);
 
   useEffect(() => {
     document.body.style.overflow = "";
@@ -95,12 +108,66 @@ function AdminDashboard() {
   }, [searchParams, locale]);
 
   useEffect(() => {
+    const onLocalFail = () => {
+      setFlash(
+        locale === "ar"
+          ? "تعذّر الحفظ محلياً — أفرغ مساحة المتصفح وحاول مجدداً"
+          : "Local save failed — free browser storage and retry"
+      );
+      window.setTimeout(() => setFlash(""), 5000);
+    };
+    const onServerFail = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail;
+      if (detail === "unauthorized") {
+        setFlash(
+          locale === "ar"
+            ? "لم يُحفظ على السيرفر — سجّل دخول لوحة التحكم أولاً"
+            : "Server save skipped — log in to admin first"
+        );
+      } else {
+        setFlash(
+          locale === "ar"
+            ? "تعذّر الحفظ على السيرفر — أعد المحاولة"
+            : "Server save failed — retry"
+        );
+      }
+      window.setTimeout(() => setFlash(""), 5000);
+    };
+    window.addEventListener("smart-shop-save-error", onLocalFail);
+    window.addEventListener("smart-shop-server-save-error", onServerFail);
+    return () => {
+      window.removeEventListener("smart-shop-save-error", onLocalFail);
+      window.removeEventListener("smart-shop-server-save-error", onServerFail);
+    };
+  }, [locale]);
+
+  useEffect(() => {
     const draft: Record<string, string> = {};
     for (const c of CURRENCIES) {
       draft[c.code] = String(currencyRates?.[c.code] ?? c.rate);
     }
     setRateDraft(draft);
   }, [currencyRates]);
+
+  useEffect(() => {
+    const draft: Record<string, ProductQtyOffer[]> = {};
+    for (const p of products) {
+      draft[p.id] = [...(p.qtyOffers ?? [])];
+    }
+    setQtyOffersDraft(draft);
+  }, [products]);
+
+  useEffect(() => {
+    const focus = searchParams.get("focus");
+    if (focus && tab === "upsell") {
+      setUpsellFocus(focus);
+      window.setTimeout(() => {
+        document
+          .getElementById(`upsell-${focus}`)
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, [searchParams, tab]);
 
   const pending = useMemo(
     () => orders.filter((o) => o.status === "pending").length,
@@ -111,9 +178,25 @@ function AdminDashboard() {
     { id: "overview", label: t.admin.dashboard, icon: LayoutDashboard },
     { id: "categories", label: t.admin.categories, icon: Tags },
     { id: "products", label: t.admin.products, icon: Package },
+    { id: "upsell", label: t.admin.upsell, icon: Gift },
     { id: "currencies", label: t.admin.currencies, icon: Coins },
     { id: "orders", label: t.admin.orders, icon: ClipboardList },
   ];
+
+  function onSaveUpsell(productId: string) {
+    const offers = qtyOffersDraft[productId] ?? [];
+    const ok = updateProduct(productId, {
+      qtyOffers: offers.length ? offers : undefined,
+    });
+    if (!ok) {
+      window.alert(
+        locale === "ar" ? "تعذّر الحفظ" : "Could not save"
+      );
+      return;
+    }
+    setFlash(locale === "ar" ? "تم حفظ Upsell ✓" : "Upsell saved ✓");
+    window.setTimeout(() => setFlash(""), 2500);
+  }
 
   function onDeleteCategory(id: string, name: string) {
     const ok = window.confirm(
@@ -255,6 +338,12 @@ function AdminDashboard() {
                   {t.admin.products}
                 </A>
                 <A
+                  href="/admin?tab=upsell"
+                  className="rounded-xl bg-brand-700 px-4 py-3 text-sm font-bold text-white"
+                >
+                  {t.admin.upsell}
+                </A>
+                <A
                   href="/admin?tab=orders"
                   className="rounded-xl bg-brand-700 px-4 py-3 text-sm font-bold text-white"
                 >
@@ -374,7 +463,7 @@ function AdminDashboard() {
                                 : ""}
                             </p>
                           </div>
-                          <div className="grid grid-cols-3 gap-2">
+                          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                             <A
                               href={`/product/${encodeURIComponent(p.slug)}`}
                               className="inline-flex items-center justify-center gap-1 rounded-xl border border-sand-300 px-3 py-3 text-sm font-semibold hover:bg-sand-50"
@@ -388,6 +477,14 @@ function AdminDashboard() {
                             >
                               <Pencil className="h-4 w-4" />
                               {t.admin.edit}
+                            </A>
+                            <A
+                              href={`/admin?tab=upsell&focus=${encodeURIComponent(p.id)}`}
+                              className="inline-flex items-center justify-center gap-1 rounded-xl border border-brand-300 bg-brand-50 px-3 py-3 text-sm font-bold text-brand-800 hover:bg-brand-100"
+                              title={t.admin.upsellManage}
+                            >
+                              <Gift className="h-4 w-4" />
+                              Upsell
                             </A>
                             <button
                               type="button"
@@ -405,6 +502,129 @@ function AdminDashboard() {
                             </button>
                           </div>
                         </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {tab === "upsell" && (
+            <div>
+              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100">
+                    <Gift className="h-5 w-5 text-brand-700" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-semibold">{t.admin.upsell}</h2>
+                    <p className="text-sm text-[var(--muted)]">{t.admin.upsellHint}</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={upsellEnabled}
+                  aria-label={
+                    upsellEnabled ? t.admin.upsellActive : t.admin.upsellInactive
+                  }
+                  onClick={() => {
+                    const next = !upsellEnabled;
+                    setUpsellEnabled(next);
+                    setFlash(
+                      next ? t.admin.upsellEnabledFlash : t.admin.upsellDisabledFlash
+                    );
+                    window.setTimeout(() => setFlash(""), 2500);
+                  }}
+                  className={cn(
+                    "inline-flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-bold transition",
+                    upsellEnabled
+                      ? "border-brand-600 bg-brand-50 text-brand-900"
+                      : "border-sand-300 bg-white text-ink-800"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "relative h-7 w-12 rounded-full transition",
+                      upsellEnabled ? "bg-brand-700" : "bg-sand-300"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition",
+                        upsellEnabled ? "start-5" : "start-0.5"
+                      )}
+                    />
+                  </span>
+                  {upsellEnabled ? t.admin.upsellActive : t.admin.upsellInactive}
+                </button>
+              </div>
+              <p className="mb-6 rounded-xl border border-sand-200 bg-sand-50 px-4 py-3 text-sm text-[var(--muted)]">
+                {t.admin.upsellToggleHint}
+              </p>
+
+              {products.length === 0 ? (
+                <p className="text-center text-[var(--muted)]">
+                  {t.admin.emptyProducts}
+                </p>
+              ) : (
+                <div className="space-y-4">
+                  {products.map((p) => {
+                    const summary = qtyOfferSummary(p, locale);
+                    const draft = qtyOffersDraft[p.id] ?? p.qtyOffers ?? [];
+                    const dirty =
+                      JSON.stringify(draft) !==
+                      JSON.stringify(p.qtyOffers ?? []);
+                    return (
+                      <div
+                        key={p.id}
+                        id={`upsell-${p.id}`}
+                        className={cn(
+                          "rounded-2xl border bg-white p-4 shadow-sm sm:p-5",
+                          upsellFocus === p.id
+                            ? "border-brand-500 ring-2 ring-brand-500/20"
+                            : "border-sand-200"
+                        )}
+                      >
+                        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="text-lg font-semibold text-ink-900">
+                              {locale === "ar" ? p.nameAr : p.nameEn}
+                            </p>
+                            <p className="mt-1 text-sm text-[var(--muted)]">
+                              {summary || t.admin.upsellNone}
+                            </p>
+                          </div>
+                          <div className="flex gap-2">
+                            <A
+                              href={`/admin/product/${encodeURIComponent(p.id)}#upsell`}
+                              className="inline-flex items-center gap-1 rounded-xl border border-sand-300 px-3 py-2 text-sm font-semibold hover:bg-sand-50"
+                            >
+                              <Pencil className="h-4 w-4" />
+                              {t.admin.edit}
+                            </A>
+                            <button
+                              type="button"
+                              disabled={!dirty}
+                              onClick={() => onSaveUpsell(p.id)}
+                              className="inline-flex items-center gap-1 rounded-xl bg-brand-700 px-3 py-2 text-sm font-bold text-white hover:bg-brand-600 disabled:opacity-40"
+                            >
+                              <Gift className="h-4 w-4" />
+                              {t.admin.upsellSave}
+                            </button>
+                          </div>
+                        </div>
+                        <ProductQtyOffersEditor
+                          product={p}
+                          categories={categories}
+                          locale={locale}
+                          qtyOffers={draft}
+                          onChange={(offers) =>
+                            setQtyOffersDraft((d) => ({ ...d, [p.id]: offers }))
+                          }
+                          compact
+                        />
                       </div>
                     );
                   })}

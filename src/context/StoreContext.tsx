@@ -20,6 +20,7 @@ import {
 import { isDurableMediaUrl } from "@/lib/media-url";
 import {
   DEFAULT_CURRENCY_RATES,
+  convertFromUSD,
   isCurrencyCode,
   mergeCurrencyRates,
   setCurrencyRateOverrides,
@@ -28,6 +29,11 @@ import {
   filterProductsForCountry,
   getProductPriceUSD,
 } from "@/lib/pricing";
+import { cartItemLineUSD } from "@/lib/qty-upsell";
+import {
+  trackAddToCart,
+  trackPurchase,
+} from "@/lib/meta-pixel";
 import {
   CATALOG_STORAGE_KEY,
   LEGACY_STORAGE_KEYS,
@@ -57,6 +63,7 @@ interface StoreState {
   countryManual: boolean;
   currencyManual: boolean;
   currencyRates: Record<CurrencyCode, number>;
+  upsellEnabled: boolean;
 }
 
 interface StoreContextValue extends StoreState {
@@ -78,11 +85,11 @@ interface StoreContextValue extends StoreState {
   cartTotalUSD: number;
   getProduct: (idOrSlug: string) => Product | undefined;
   getCategory: (idOrSlug: string) => Category | undefined;
-  addCategory: (data: Omit<Category, "id" | "createdAt">) => void;
-  updateCategory: (id: string, data: Partial<Category>) => void;
+  addCategory: (data: Omit<Category, "id" | "createdAt">) => string | false;
+  updateCategory: (id: string, data: Partial<Category>) => boolean;
   deleteCategory: (id: string) => void;
-  addProduct: (data: Omit<Product, "id" | "createdAt">) => void;
-  updateProduct: (id: string, data: Partial<Product>) => void;
+  addProduct: (data: Omit<Product, "id" | "createdAt">) => string | false;
+  updateProduct: (id: string, data: Partial<Product>) => boolean;
   deleteProduct: (id: string) => void;
   placeOrder: (
     customer: Order["customer"],
@@ -90,6 +97,8 @@ interface StoreContextValue extends StoreState {
   ) => Order;
   /** Wipe local data and restore seed catalog */
   resetStore: () => void;
+  upsellEnabled: boolean;
+  setUpsellEnabled: (enabled: boolean) => void;
 }
 
 const StoreContext = createContext<StoreContextValue | null>(null);
@@ -130,7 +139,7 @@ function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
       availableIn: s.availableIn,
       nameAr: existing.nameAr || s.nameAr,
       nameEn: existing.nameEn || s.nameEn,
-      image: s.image,
+      image: existing.image || s.image,
       descriptionAr: existing.descriptionAr || s.descriptionAr,
       descriptionEn: existing.descriptionEn || s.descriptionEn,
     };
@@ -146,40 +155,30 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
     .map((p) => {
       const seed = seedById.get(p.id) ?? seedBySlug.get(p.slug);
       if (!seed) return p;
+      const durable = (p.images ?? []).filter(isDurableMediaUrl);
       return {
         ...seed,
         ...p,
-        // Always refresh marketing copy & media from seed for catalog products
-        nameAr: seed.nameAr,
-        nameEn: seed.nameEn,
-        descriptionAr: seed.descriptionAr,
-        descriptionEn: seed.descriptionEn,
-        detailsAr: seed.detailsAr,
-        detailsEn: seed.detailsEn,
-        landing: seed.landing,
-        // Seed gallery always present; keep durable custom uploads in front
-        images: (() => {
-          const seedImgs = seed.images ?? [];
-          const durable = (p.images ?? []).filter(isDurableMediaUrl);
-          const customs = durable.filter(
-            (u) =>
-              u.startsWith("data:image/") ||
-              u.startsWith("https://") ||
-              u.startsWith("http://") ||
-              u.startsWith("/uploads/")
-          );
-          if (customs.length) {
-            const rest = seedImgs.filter((u) => !customs.includes(u));
-            return [...customs, ...rest];
-          }
-          return seedImgs.length ? seedImgs : durable;
-        })(),
+        id: seed.id,
+        // Prefer admin / stored edits; seed only fills gaps
+        nameAr: p.nameAr?.trim() ? p.nameAr : seed.nameAr,
+        nameEn: p.nameEn?.trim() ? p.nameEn : seed.nameEn,
+        descriptionAr: p.descriptionAr?.trim()
+          ? p.descriptionAr
+          : seed.descriptionAr,
+        descriptionEn: p.descriptionEn?.trim()
+          ? p.descriptionEn
+          : seed.descriptionEn,
+        detailsAr: p.detailsAr?.length ? p.detailsAr : seed.detailsAr,
+        detailsEn: p.detailsEn?.length ? p.detailsEn : seed.detailsEn,
+        landing: p.landing ?? seed.landing,
+        images: durable.length ? durable : seed.images,
         colors: [],
         customColorEnabled:
           typeof p.customColorEnabled === "boolean"
             ? p.customColorEnabled
             : Boolean(seed.customColorEnabled),
-        categoryId: seed.categoryId,
+        categoryId: p.categoryId || seed.categoryId,
         marketPrices: {
           ...(seed.marketPrices ?? {}),
           ...(p.marketPrices ?? {}),
@@ -188,13 +187,19 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           ...(seed.marketComparePrices ?? {}),
           ...(p.marketComparePrices ?? {}),
         },
-        availableIn: seed.availableIn,
-        featured: seed.featured,
-        rating: seed.rating,
-        reviewCount: seed.reviewCount,
+        availableIn: p.availableIn?.length ? p.availableIn : seed.availableIn,
+        featured: typeof p.featured === "boolean" ? p.featured : seed.featured,
+        inStock: typeof p.inStock === "boolean" ? p.inStock : seed.inStock,
+        priceUSD: typeof p.priceUSD === "number" ? p.priceUSD : seed.priceUSD,
+        compareAtUSD: p.compareAtUSD ?? seed.compareAtUSD,
+        rating: typeof p.rating === "number" ? p.rating : seed.rating,
+        reviewCount:
+          typeof p.reviewCount === "number" ? p.reviewCount : seed.reviewCount,
+        slug: p.slug?.trim() ? p.slug : seed.slug,
+        qtyOffers: p.qtyOffers?.length ? p.qtyOffers : seed.qtyOffers,
       };
     })
-    .filter((p) => allowedCats.has(p.categoryId));
+    .filter((p) => !p.categoryId || allowedCats.has(p.categoryId));
   for (const seed of SEED_PRODUCTS) {
     if (!merged.some((p) => p.id === seed.id || p.slug === seed.slug)) {
       merged.push({ ...seed });
@@ -215,6 +220,7 @@ function buildDefaults(country: CountryCode = DEFAULT_COUNTRY): StoreState {
     countryManual: false,
     currencyManual: false,
     currencyRates: { ...DEFAULT_CURRENCY_RATES },
+    upsellEnabled: true,
   };
 }
 
@@ -237,7 +243,17 @@ function readLocalCatalog(): PersistedCatalog | null {
       const raw = window.localStorage.getItem(key);
       if (!raw) continue;
       const parsed = parseCatalogJson(raw);
-      if (parsed) return parsed;
+      if (parsed) {
+        try {
+          window.localStorage.setItem(
+            CATALOG_STORAGE_KEY,
+            catalogToJson(parsed)
+          );
+        } catch {
+          /* quota */
+        }
+        return parsed;
+      }
     }
   } catch (err) {
     console.error("Failed to read store", err);
@@ -258,6 +274,7 @@ function toPersisted(state: StoreState): PersistedCatalog {
     countryManual: state.countryManual,
     currencyManual: state.currencyManual,
     currencyRates: state.currencyRates,
+    upsellEnabled: state.upsellEnabled,
   });
 }
 
@@ -302,28 +319,46 @@ function applyPersisted(
     ),
     orders: Array.isArray(parsed.orders) ? parsed.orders : [],
     cart: Array.isArray(parsed.cart) ? parsed.cart : [],
+    upsellEnabled: parsed.upsellEnabled !== false,
   };
 }
 
-function flushToLocal(state: StoreState) {
+function flushToLocal(state: StoreState, persisted?: PersistedCatalog) {
   try {
-    const raw = catalogToJson(toPersisted(state));
+    const raw = catalogToJson(persisted ?? toPersisted(state));
     window.localStorage.setItem(CATALOG_STORAGE_KEY, raw);
+    return true;
   } catch {
     console.error("localStorage save failed");
     window.dispatchEvent(new CustomEvent("smart-shop-save-error"));
+    return false;
   }
 }
 
-function flushToServer(state: StoreState) {
-  const body = catalogToJson(toPersisted(state));
-  void fetch("/api/catalog", {
+function flushToServer(state: StoreState, persisted?: PersistedCatalog) {
+  const body = catalogToJson(persisted ?? toPersisted(state));
+  return fetch("/api/catalog", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
     body,
-  }).catch(() => {
-    /* best-effort */
-  });
+  })
+    .then(async (res) => {
+      if (!res.ok) {
+        const err = res.status === 401 ? "unauthorized" : "server";
+        window.dispatchEvent(
+          new CustomEvent("smart-shop-server-save-error", { detail: err })
+        );
+        return false;
+      }
+      return true;
+    })
+    .catch(() => {
+      window.dispatchEvent(
+        new CustomEvent("smart-shop-server-save-error", { detail: "network" })
+      );
+      return false;
+    });
 }
 
 export function StoreProvider({ children }: { children: ReactNode }) {
@@ -334,19 +369,27 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [storageReady, setStorageReady] = useState(false);
   const [geoReady, setGeoReady] = useState(false);
   const stateRef = useRef(state);
-  stateRef.current = state;
   const storageReadyRef = useRef(false);
 
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
   const commit = useCallback((updater: (s: StoreState) => StoreState) => {
-    setState((prev) => {
-      const next = updater(prev);
-      // Only flush after hydrate — otherwise defaults wipe real data
-      if (typeof window !== "undefined" && storageReadyRef.current) {
-        flushToLocal(next);
-        flushToServer(next);
+    // Apply + persist synchronously so Save + navigation cannot lose data
+    const prev = stateRef.current;
+    const next = updater(prev);
+    stateRef.current = next;
+    let saved = true;
+    if (typeof window !== "undefined") {
+      const persisted = toPersisted(next);
+      saved = flushToLocal(next, persisted);
+      if (storageReadyRef.current) {
+        void flushToServer(next, persisted);
       }
-      return next;
-    });
+    }
+    setState(next);
+    return saved;
   }, []);
 
   useEffect(() => {
@@ -384,6 +427,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
         if (cancelled) return;
         setCurrencyRateOverrides(next.currencyRates);
+        stateRef.current = next;
         setState(next);
         storageReadyRef.current = true;
         setStorageReady(true);
@@ -530,6 +574,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const addToCart = useCallback(
     (productId: string, quantity = 1) => {
+      const current = stateRef.current;
+      const product = current.products.find((p) => p.id === productId);
       commit((s) => {
         const existing = s.cart.find((c) => c.productId === productId);
         if (existing) {
@@ -544,6 +590,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         }
         return { ...s, cart: [...s.cart, { productId, quantity }] };
       });
+      if (product) {
+        const unitUSD = getProductPriceUSD(product, current.country);
+        const value = convertFromUSD(unitUSD * quantity, current.currency);
+        trackAddToCart({
+          contentId: product.id,
+          contentName: product.nameEn || product.nameAr,
+          value: Math.round(value * 100) / 100,
+          currency: current.currency,
+          quantity,
+        });
+      }
     },
     [commit]
   );
@@ -591,24 +648,26 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const addCategory = useCallback(
     (data: Omit<Category, "id" | "createdAt">) => {
-      commit((s) => ({
+      const newId = uid("cat");
+      const saved = commit((s) => ({
         ...s,
         categories: [
           {
             ...data,
-            id: uid("cat"),
+            id: newId,
             createdAt: new Date().toISOString(),
           },
           ...s.categories,
         ],
       }));
+      return saved ? newId : false;
     },
     [commit]
   );
 
   const updateCategory = useCallback(
     (id: string, data: Partial<Category>) => {
-      commit((s) => ({
+      return commit((s) => ({
         ...s,
         categories: s.categories.map((c) =>
           c.id === id ? { ...c, ...data } : c
@@ -633,24 +692,26 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const addProduct = useCallback(
     (data: Omit<Product, "id" | "createdAt">) => {
-      commit((s) => ({
+      const newId = uid("prod");
+      const saved = commit((s) => ({
         ...s,
         products: [
           {
             ...data,
-            id: uid("prod"),
+            id: newId,
             createdAt: new Date().toISOString(),
           },
           ...s.products,
         ],
       }));
+      return saved ? newId : false;
     },
     [commit]
   );
 
   const updateProduct = useCallback(
     (id: string, data: Partial<Product>) => {
-      commit((s) => ({
+      return commit((s) => ({
         ...s,
         products: s.products.map((p) => (p.id === id ? { ...p, ...data } : p)),
       }));
@@ -679,9 +740,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       /* ignore */
     }
     setCurrencyRateOverrides(next.currencyRates);
+    stateRef.current = next;
     setState(next);
-    flushToLocal(next);
-    flushToServer(next);
+    const persisted = toPersisted(next);
+    flushToLocal(next, persisted);
+    void flushToServer(next, persisted);
   }, []);
 
   const marketProducts = useMemo(
@@ -698,7 +761,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return state.cart.reduce((sum, item) => {
       const product = state.products.find((p) => p.id === item.productId);
       if (!product) return sum;
-      return sum + getProductPriceUSD(product, state.country) * item.quantity;
+      return sum + cartItemLineUSD(product, state.country, item);
     }, 0);
   }, [state.cart, state.products, state.country]);
 
@@ -709,7 +772,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const totalUSD = items.reduce((sum, item) => {
         const product = current.products.find((p) => p.id === item.productId);
         if (!product) return sum;
-        return sum + getProductPriceUSD(product, current.country) * item.quantity;
+        return sum + cartItemLineUSD(product, current.country, item);
       }, 0);
       const order: Order = {
         id: uid("ord"),
@@ -728,7 +791,39 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         orders: [order, ...s.orders],
         cart: itemsOverride ? s.cart : [],
       }));
+      const contents = items.map((item) => {
+        const product = current.products.find((p) => p.id === item.productId);
+        const unitUSD = product
+          ? getProductPriceUSD(product, current.country)
+          : 0;
+        return {
+          id: item.productId,
+          quantity: item.quantity,
+          item_price:
+            Math.round(convertFromUSD(unitUSD, current.currency) * 100) / 100,
+        };
+      });
+      trackPurchase({
+        orderId: order.id,
+        value: Math.round(convertFromUSD(totalUSD, current.currency) * 100) / 100,
+        currency: current.currency,
+        contents,
+      }, {
+        phone: customer.phone,
+        firstName: customer.name?.trim().split(/\s+/)[0],
+        lastName: customer.name?.trim().split(/\s+/).slice(1).join(" ") || undefined,
+        city: customer.city,
+        country: current.country,
+        externalId: order.id,
+      });
       return order;
+    },
+    [commit]
+  );
+
+  const setUpsellEnabled = useCallback(
+    (enabled: boolean) => {
+      commit((s) => ({ ...s, upsellEnabled: enabled }));
     },
     [commit]
   );
@@ -761,6 +856,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     deleteProduct,
     placeOrder,
     resetStore,
+    upsellEnabled: state.upsellEnabled,
+    setUpsellEnabled,
   };
 
   return (
