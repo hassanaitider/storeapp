@@ -11,7 +11,7 @@ import { currencyForCountry } from "@/lib/countries";
 
 export default function HomePage() {
   const t = useT();
-  const { locale, country, marketProducts, categories } = useStore();
+  const { locale, country, marketProducts, marketCategories } = useStore();
   const featured = marketProducts.filter((p) => p.featured).slice(0, 4);
   const Arrow = locale === "ar" ? ArrowLeft : ArrowRight;
 
@@ -80,8 +80,8 @@ export default function HomePage() {
             </h2>
             <p className="mt-2 text-[var(--muted)]">
               {locale === "ar"
-                ? "كل دولة تصنيف بعملتها — السعودية بالريال، الإمارات بالدرهم، المغرب بالدرهم…"
-                : "Each country category uses its own currency"}
+                ? "نعرض لك تصنيف سوق بلدك فقط حسب موقعك"
+                : "We show only your country’s market category based on your location"}
             </p>
           </div>
           <Link
@@ -92,8 +92,8 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {categories.map((cat, i) => (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {marketCategories.map((cat, i) => (
             <Link
               key={cat.id}
               href={`/shop?category=${cat.slug}`}

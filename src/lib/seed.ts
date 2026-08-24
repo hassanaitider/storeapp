@@ -1,5 +1,6 @@
 import { STORE_MARKETS } from "./countries";
 import type { Category, Product } from "./types";
+import { UNIVERSAL_MARKET_PRODUCTS } from "./seed-universal-products";
 
 const CATEGORY_IMAGES: Record<string, string> = {
   MA: "/products/fashion-sling-1.png",
@@ -1628,8 +1629,8 @@ ${COD_EN}
     },
   },
   {
-    id: "prod-denx-dx648-ae",
-    slug: "denx-dx648-bluetooth-earbuds",
+    id: "prod-denx-dx648-ae-legacy",
+    slug: "denx-dx648-bluetooth-earbuds-legacy",
     nameAr: "سماعة بلوتوث DENX DX648 — ضمان سنة",
     nameEn: "DENX DX648 Bluetooth Earbuds — 1 Year Warranty",
     descriptionAr: `
@@ -1676,7 +1677,7 @@ ${COD_EN}
     compareAtUSD: 55,
     marketPrices: { AE: 155 },
     marketComparePrices: { AE: 200 },
-    availableIn: ["AE"],
+    availableIn: [],
     images: [
       "/products/denx-dx648-earbuds-demo.gif",
       "/products/denx-dx648-earbuds-g1.png",
@@ -1890,8 +1891,8 @@ ${COD_EN}
     },
   },
   {
-    id: "prod-car-windshield-umbrella-sa",
-    slug: "car-windshield-sunshade-umbrella",
+    id: "prod-car-windshield-umbrella-sa-legacy",
+    slug: "car-windshield-sunshade-umbrella-legacy",
     nameAr: "مظلة زجاج للسيارة",
     nameEn: "Car Windshield Sunshade Umbrella",
     descriptionAr: `
@@ -1936,7 +1937,7 @@ ${COD_EN}
     compareAtUSD: 32,
     marketPrices: { SA: 79 },
     marketComparePrices: { SA: 119 },
-    availableIn: ["SA"],
+    availableIn: [],
     images: [
       "/products/car-windshield-umbrella-demo.gif",
       "/products/car-windshield-umbrella-g1.png",
@@ -2405,4 +2406,5 @@ ${COD_EN}
       ],
     },
   },
+  ...UNIVERSAL_MARKET_PRODUCTS,
 ];

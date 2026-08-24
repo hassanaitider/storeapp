@@ -1,6 +1,6 @@
 import { currencyForCountry, getCountry } from "./countries";
 import { convertFromUSD, formatLocalAmount, getCurrency } from "./currency";
-import type { CountryCode, Locale, Product } from "./types";
+import type { Category, CountryCode, Locale, Product } from "./types";
 
 /** Local-currency price for a product in a given market */
 export function getProductLocalPrice(
@@ -87,6 +87,32 @@ export function filterProductsForCountry(
   country: CountryCode
 ): Product[] {
   return products.filter((p) => isProductAvailableIn(p, country));
+}
+
+/**
+ * Storefront rule: visitors only see the regional category for their
+ * detected market (MA, SA, AE, OM). Untagged categories are hidden on
+ * the storefront so other regional markets never leak through.
+ */
+export function isCategoryVisibleIn(
+  category: Category,
+  country: CountryCode
+): boolean {
+  if (category.availableIn && category.availableIn.length > 0) {
+    return category.availableIn.includes(country);
+  }
+  if (category.country) {
+    return category.country === country;
+  }
+  // No country tag → not a regional market category; hide on storefront
+  return false;
+}
+
+export function filterCategoriesForCountry(
+  categories: Category[],
+  country: CountryCode
+): Category[] {
+  return categories.filter((c) => isCategoryVisibleIn(c, country));
 }
 
 export function countryLabel(country: CountryCode, locale: Locale): string {

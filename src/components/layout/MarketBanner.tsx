@@ -2,13 +2,11 @@
 
 import { MapPin } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
-import { STORE_MARKETS, getCountry } from "@/lib/countries";
+import { getCountry } from "@/lib/countries";
 import { getCurrency } from "@/lib/currency";
-import type { CountryCode } from "@/lib/types";
 
 export function MarketBanner() {
-  const { locale, country, currency, setCountry, geoReady, hydrated } =
-    useStore();
+  const { locale, country, currency, geoReady, hydrated } = useStore();
   const c = getCountry(country);
   const cur = getCurrency(currency);
 
@@ -21,11 +19,11 @@ export function MarketBanner() {
         <p className="text-sm">
           {locale === "ar" ? (
             <>
-              سوقك الحالي:{" "}
+              سوقك حسب موقعك:{" "}
               <strong>
                 {c.flag} {c.nameAr}
               </strong>{" "}
-              — العملة:{" "}
+              — نعرض تصنيف بلدك فقط — العملة:{" "}
               <strong>
                 {cur.nameAr} ({cur.symbol})
               </strong>
@@ -33,11 +31,11 @@ export function MarketBanner() {
             </>
           ) : (
             <>
-              Current market:{" "}
+              Market by location:{" "}
               <strong>
                 {c.flag} {c.nameEn}
               </strong>{" "}
-              — Currency:{" "}
+              — only your country’s category is shown — Currency:{" "}
               <strong>
                 {cur.nameEn} ({cur.symbol})
               </strong>
@@ -45,23 +43,6 @@ export function MarketBanner() {
             </>
           )}
         </p>
-        <label className="ms-auto flex items-center gap-2 text-sm">
-          <span className="hidden text-brand-100 sm:inline">
-            {locale === "ar" ? "غيّر الدولة" : "Change country"}
-          </span>
-          <select
-            value={country}
-            onChange={(e) => setCountry(e.target.value as CountryCode, true)}
-            className="rounded-md border-0 bg-white px-2 py-1.5 text-sm font-medium text-ink-900"
-          >
-            {STORE_MARKETS.map((item) => (
-              <option key={item.code} value={item.code}>
-                {item.flag} {locale === "ar" ? item.nameAr : item.nameEn} ·{" "}
-                {item.currency}
-              </option>
-            ))}
-          </select>
-        </label>
       </div>
     </div>
   );

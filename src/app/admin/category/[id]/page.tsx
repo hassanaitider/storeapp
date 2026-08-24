@@ -29,6 +29,8 @@ export default function EditCategoryPage() {
   const [image, setImage] = useState("");
   const [country, setCountry] = useState<"" | CountryCode>("");
   const [ready, setReady] = useState(isNew);
+  const [flash, setFlash] = useState("");
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (isNew) {
@@ -81,15 +83,41 @@ export default function EditCategoryPage() {
       window.alert(locale === "ar" ? "أدخل الاسم بالعربية والإنجليزية" : "Enter Arabic and English names");
       return;
     }
+    setSaving(true);
     try {
-      if (isNew) addCategory(data);
-      else updateCategory(id, data);
+      if (isNew) {
+        const newId = addCategory(data);
+        if (!newId) {
+          window.alert(
+            locale === "ar"
+              ? "تعذّر الحفظ في المتصفح — أفرغ مساحة التخزين أو أعد المحاولة"
+              : "Could not save in the browser — free storage space or retry"
+          );
+          return;
+        }
+        setFlash(locale === "ar" ? "تم الحفظ ✓" : "Saved ✓");
+        window.setTimeout(() => setFlash(""), 2500);
+        router.replace(`/admin/category/${newId}`);
+        return;
+      }
+      const ok = updateCategory(id, data);
+      if (!ok) {
+        window.alert(
+          locale === "ar"
+            ? "تعذّر الحفظ في المتصفح — أفرغ مساحة التخزين أو أعد المحاولة"
+            : "Could not save in the browser — free storage space or retry"
+        );
+        return;
+      }
     } catch (err) {
       console.error(err);
       window.alert(locale === "ar" ? "فشل الحفظ" : "Save failed");
       return;
+    } finally {
+      setSaving(false);
     }
-    window.location.assign("/admin?tab=categories&saved=1");
+    setFlash(locale === "ar" ? "تم الحفظ ✓" : "Saved ✓");
+    window.setTimeout(() => setFlash(""), 2500);
   }
 
   return (
@@ -100,6 +128,11 @@ export default function EditCategoryPage() {
       <h1 className="mt-4 font-display text-3xl font-semibold text-ink-900">
         {isNew ? t.admin.addCategory : t.admin.editCategory}
       </h1>
+      {flash ? (
+        <p className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-800">
+          {flash}
+        </p>
+      ) : null}
       <div className="mt-8 space-y-4 rounded-2xl border border-sand-200 bg-white p-6">
         <Field label={t.admin.nameAr} value={nameAr} onChange={setNameAr} required />
         <Field label={t.admin.nameEn} value={nameEn} onChange={setNameEn} required />
@@ -126,7 +159,8 @@ export default function EditCategoryPage() {
           <button
             type="button"
             onClick={saveNow}
-            className="rounded-xl bg-brand-700 px-6 py-3 text-sm font-bold text-white hover:bg-brand-600"
+            disabled={saving}
+            className="rounded-xl bg-brand-700 px-6 py-3 text-sm font-bold text-white hover:bg-brand-600 disabled:opacity-60"
           >
             {t.admin.save}
           </button>

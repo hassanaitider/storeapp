@@ -6,9 +6,9 @@ import { Menu, ShoppingBag, X } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { BrandLogo } from "@/components/layout/BrandLogo";
-import { STORE_MARKETS } from "@/lib/countries";
+import { getCountry } from "@/lib/countries";
 import { CURRENCIES, getCurrency } from "@/lib/currency";
-import type { CountryCode, CurrencyCode, Locale } from "@/lib/types";
+import type { CurrencyCode, Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -19,12 +19,12 @@ export function Header() {
     currency,
     setCurrency,
     country,
-    setCountry,
     cartCount,
     geoReady,
   } = useStore();
   const [open, setOpen] = useState(false);
   const currencyInfo = getCurrency(currency);
+  const market = getCountry(country);
 
   const links = [
     { href: "/", label: t.nav.home },
@@ -60,18 +60,19 @@ export function Header() {
             <option value="en">English</option>
           </select>
 
-          <select
-            aria-label={t.common.country}
-            value={country}
-            onChange={(e) => setCountry(e.target.value as CountryCode, true)}
-            className="max-w-[9.5rem] rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:max-w-[12rem] sm:text-sm"
+          <span
+            className={cn(
+              "max-w-[9.5rem] truncate rounded-md border border-sand-300 bg-sand-50 px-2 py-1.5 text-xs font-medium text-ink-800 sm:max-w-[12rem] sm:text-sm",
+              !geoReady && "opacity-60"
+            )}
+            title={
+              locale === "ar"
+                ? "سوقك حسب موقعك"
+                : "Your market by location"
+            }
           >
-            {STORE_MARKETS.map((c) => (
-              <option key={c.code} value={c.code}>
-                {c.flag} {locale === "ar" ? c.nameAr : c.nameEn}
-              </option>
-            ))}
-          </select>
+            {market.flag} {locale === "ar" ? market.nameAr : market.nameEn}
+          </span>
 
           <select
             aria-label={t.common.currency}
@@ -138,7 +139,9 @@ export function Header() {
             </Link>
           ))}
           <p className="px-3 pt-2 text-xs text-[var(--muted)]">
-            {t.common.currency}: {currency} ({currencyInfo.symbol})
+            {locale === "ar" ? "سوقك" : "Market"}: {market.flag}{" "}
+            {locale === "ar" ? market.nameAr : market.nameEn} · {currency} (
+            {currencyInfo.symbol})
           </p>
         </nav>
       </div>

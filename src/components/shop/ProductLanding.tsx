@@ -8,7 +8,46 @@ import { ProductHtmlBody } from "@/components/shop/ProductHtmlBody";
 import { htmlToPlain } from "@/lib/rich-html";
 import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
 
-/** Detailed story: image → text → image → text … */
+function mediaPack(images: string[] | undefined) {
+  const list = images?.filter(Boolean) ?? [];
+  const gif = list.find((u) => isGifUrl(u));
+  const stills = list.filter((u) => !isGifUrl(u)).slice(0, 3);
+  while (stills.length < 3 && list.length) {
+    const fill = list.find((u) => !isGifUrl(u)) ?? list[0];
+    if (!fill) break;
+    stills.push(fill);
+    if (stills.length >= 3) break;
+  }
+  return { gif, stills: stills.slice(0, 3) };
+}
+
+function StoryMedia({
+  src,
+  alt,
+  badge,
+}: {
+  src: string;
+  alt: string;
+  badge?: string;
+}) {
+  const gif = isGifUrl(src);
+  return (
+    <div className="relative overflow-hidden rounded-[1.25rem] border border-sand-200 bg-sand-50 shadow-[0_12px_40px_rgba(14,34,29,0.06)]">
+      <ProductImage
+        src={src}
+        alt={alt}
+        className="media-full max-h-[min(70vh,42rem)] w-full"
+      />
+      {(badge || gif) && (
+        <span className="absolute start-3 top-3 rounded bg-ink-900/80 px-2 py-0.5 text-[10px] font-bold tracking-wide text-white">
+          {badge ?? "GIF"}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/** Detailed story: GIF + image between each paragraph */
 export function ProductDetailSections({
   product,
   locale,
@@ -23,6 +62,7 @@ export function ProductDetailSections({
     ? landing?.benefitsAr ?? []
     : landing?.benefitsEn ?? [];
   const cover = productCoverSrc(product.images);
+  const { gif, stills } = mediaPack(product.images);
 
   if (!landing?.sections?.length) {
     if (!details.length) return null;
@@ -49,11 +89,32 @@ export function ProductDetailSections({
         {t.product.description}
       </h2>
 
+      {gif ? (
+        <section className="mx-auto max-w-3xl animate-fade-up space-y-4">
+          <StoryMedia
+            src={gif}
+            alt={locale === "ar" ? product.nameAr : product.nameEn}
+            badge="GIF"
+          />
+          <p className="px-1 text-center text-sm text-[var(--muted)] sm:text-start">
+            {locale === "ar"
+              ? "معاينة متحركة للمنتج"
+              : "Animated product preview"}
+          </p>
+        </section>
+      ) : null}
+
       {landing.sections.map((section, i) => {
         const title = locale === "ar" ? section.titleAr : section.titleEn;
         const body = locale === "ar" ? section.bodyAr : section.bodyEn;
-        const image = section.image ?? cover;
-        const gif = image ? isGifUrl(image) : false;
+        const image =
+          stills[i] ?? section.image ?? stills[i % Math.max(stills.length, 1)] ?? cover;
+        const paragraphs = body
+          .split(/(?<=[.!?؟。])\s+/)
+          .map((p) => p.trim())
+          .filter(Boolean);
+        const first = paragraphs[0] ?? body;
+        const rest = paragraphs.slice(1).join(" ");
 
         return (
           <section
@@ -61,24 +122,16 @@ export function ProductDetailSections({
             className="mx-auto max-w-3xl space-y-5 animate-fade-up"
             style={{ animationDelay: `${Math.min(i, 4) * 60}ms` }}
           >
-            {image ? (
-              <div className="relative overflow-hidden rounded-[1.25rem] border border-sand-200 bg-sand-50">
-                <ProductImage
-                  src={image}
-                  alt={title}
-                  className="media-full max-h-[min(70vh,42rem)] w-full"
-                />
-                {gif ? (
-                  <span className="absolute start-3 top-3 rounded bg-ink-900/80 px-2 py-0.5 text-[10px] font-bold text-white">
-                    GIF
-                  </span>
-                ) : null}
-              </div>
-            ) : null}
             <div className="px-1">
               <h3 className="product-section-title text-ink-900">{title}</h3>
-              <p className="product-body mt-3 text-[var(--muted)]">{body}</p>
+              <p className="product-body mt-3 text-[var(--muted)]">{first}</p>
             </div>
+            {image ? (
+              <StoryMedia src={image} alt={title} badge={`${i + 1}/3`} />
+            ) : null}
+            {rest ? (
+              <p className="product-body px-1 text-[var(--muted)]">{rest}</p>
+            ) : null}
           </section>
         );
       })}

@@ -1,16 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { HandCoins, CheckCircle2 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
-import { formatPrice } from "@/lib/currency";
+import { convertFromUSD, formatPrice } from "@/lib/currency";
+import { getProductPriceUSD } from "@/lib/pricing";
+import { trackInitiateCheckout } from "@/lib/meta-pixel";
 import type { Order } from "@/lib/types";
 
 export default function CheckoutPage() {
   const t = useT();
-  const { locale, currency, cart, cartTotalUSD, placeOrder } = useStore();
+  const {
+    locale,
+    currency,
+    country,
+    cart,
+    cartTotalUSD,
+    products,
+    placeOrder,
+  } = useStore();
   const [order, setOrder] = useState<Order | null>(null);
   const [form, setForm] = useState({
     name: "",
@@ -18,6 +28,26 @@ export default function CheckoutPage() {
     city: "",
     address: "",
   });
+
+  useEffect(() => {
+    if (order || cart.length === 0) return;
+    const contents = cart.map((item) => {
+      const product = products.find((p) => p.id === item.productId);
+      const unitUSD = product ? getProductPriceUSD(product, country) : 0;
+      return {
+        id: item.productId,
+        quantity: item.quantity,
+        item_price:
+          Math.round(convertFromUSD(unitUSD, currency) * 100) / 100,
+      };
+    });
+    trackInitiateCheckout({
+      value: Math.round(convertFromUSD(cartTotalUSD, currency) * 100) / 100,
+      currency,
+      numItems: cart.reduce((n, i) => n + i.quantity, 0),
+      contents,
+    });
+  }, [cart.length]);
 
   if (order) {
     return (

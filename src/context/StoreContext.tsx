@@ -14,6 +14,7 @@ import { SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed";
 import {
   currencyForCountry,
   DEFAULT_COUNTRY,
+  countryFromLocationSettings,
   isStoreMarket,
   isValidCountry,
 } from "@/lib/countries";
@@ -26,8 +27,10 @@ import {
   setCurrencyRateOverrides,
 } from "@/lib/currency";
 import {
+  filterCategoriesForCountry,
   filterProductsForCountry,
   getProductPriceUSD,
+  isProductAvailableIn,
 } from "@/lib/pricing";
 import { cartItemLineUSD } from "@/lib/qty-upsell";
 import {
@@ -70,7 +73,10 @@ interface StoreContextValue extends StoreState {
   hydrated: boolean;
   storageReady: boolean;
   geoReady: boolean;
+  /** Products visible in the visitor's market */
   marketProducts: Product[];
+  /** Only the visitor's regional category (MA / SA / AE / OM). */
+  marketCategories: Category[];
   setLocale: (locale: Locale) => void;
   setCurrency: (currency: CurrencyCode, manual?: boolean) => void;
   setCountry: (country: CountryCode, manual?: boolean) => void;
@@ -150,10 +156,9 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   if (!stored?.length) return cloneSeedProducts();
   const allowedCats = new Set(SEED_CATEGORIES.map((c) => c.id));
   const seedById = new Map(SEED_PRODUCTS.map((p) => [p.id, p]));
-  const seedBySlug = new Map(SEED_PRODUCTS.map((p) => [p.slug, p]));
   const merged = stored
     .map((p) => {
-      const seed = seedById.get(p.id) ?? seedBySlug.get(p.slug);
+      const seed = seedById.get(p.id);
       if (!seed) return p;
       const durable = (p.images ?? []).filter(isDurableMediaUrl);
       return {
@@ -201,7 +206,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
     })
     .filter((p) => !p.categoryId || allowedCats.has(p.categoryId));
   for (const seed of SEED_PRODUCTS) {
-    if (!merged.some((p) => p.id === seed.id || p.slug === seed.slug)) {
+    if (!merged.some((p) => p.id === seed.id)) {
       merged.push({ ...seed });
     }
   }
@@ -449,45 +454,113 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 2000);
+    const timeout = window.setTimeout(() => controller.abort(), 4000);
+
+    function applyDetected(detected: CountryCode) {
+      if (cancelled) return;
+      commit((s) => {
+        const nextCurrency = s.currencyManual
+          ? s.currency
+          : currencyForCountry(detected);
+        if (
+          s.country === detected &&
+          s.currency === nextCurrency &&
+          !s.countryManual
+        ) {
+          return s;
+        }
+        return {
+          ...s,
+          country: detected,
+          countryManual: false,
+          currency: nextCurrency,
+        };
+      });
+      try {
+        document.cookie = `geo-country=${detected}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
+      } catch {
+        /* ignore */
+      }
+    }
+
+    async function lookupClientIpCountry(): Promise<CountryCode | null> {
+      const abort = new AbortController();
+      const timer = window.setTimeout(() => abort.abort(), 2000);
+      try {
+        const res = await fetch("https://ipapi.co/json/", {
+          signal: abort.signal,
+          cache: "no-store",
+        });
+        if (!res.ok) return null;
+        const data = (await res.json()) as { country_code?: string };
+        const code = data.country_code?.toUpperCase();
+        if (code && isValidCountry(code) && isStoreMarket(code)) {
+          return code as CountryCode;
+        }
+        return null;
+      } catch {
+        return null;
+      } finally {
+        window.clearTimeout(timer);
+      }
+    }
 
     async function detect() {
+      let fromApi: CountryCode | null = null;
+      let source = "default";
+
       try {
         const res = await fetch("/api/geo", {
           cache: "no-store",
           signal: controller.signal,
         });
-        if (!res.ok) throw new Error("geo failed");
-        const data = (await res.json()) as { country?: string };
-        const raw =
-          data.country && isValidCountry(data.country)
-            ? (data.country.toUpperCase() as CountryCode)
-            : null;
-        const detected = raw && isStoreMarket(raw) ? raw : null;
-
-        if (!cancelled && detected) {
-          commit((s) => {
-            if (s.countryManual) return s;
-            const nextCurrency = s.currencyManual
-              ? s.currency
-              : currencyForCountry(detected);
-            if (s.country === detected && s.currency === nextCurrency) return s;
-            return {
-              ...s,
-              country: detected,
-              currency: nextCurrency,
-            };
-          });
+        if (res.ok) {
+          const data = (await res.json()) as {
+            country?: string;
+            detected?: string | null;
+            source?: string;
+          };
+          source = data.source || "default";
+          const raw =
+            data.country && isValidCountry(data.country)
+              ? (data.country.toUpperCase() as CountryCode)
+              : null;
+          if (raw && isStoreMarket(raw)) fromApi = raw;
         }
       } catch {
-        /* keep default */
-      } finally {
-        window.clearTimeout(timeout);
-        if (!cancelled) setGeoReady(true);
+        /* fall through */
       }
+
+      const strongIp =
+        source === "vercel" ||
+        source === "cloudflare" ||
+        source === "ip-api";
+
+      const fromClientIp = strongIp ? null : await lookupClientIpCountry();
+
+      const fromSettings = countryFromLocationSettings(
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
+        typeof navigator !== "undefined" ? navigator.languages : undefined
+      );
+
+      const detected =
+        strongIp && fromApi
+          ? fromApi
+          : fromClientIp
+            ? fromClientIp
+            : fromSettings && isStoreMarket(fromSettings)
+              ? fromSettings
+              : fromApi;
+
+      if (detected && isStoreMarket(detected)) {
+        applyDetected(detected);
+      }
+
+      window.clearTimeout(timeout);
+      if (!cancelled) setGeoReady(true);
     }
 
-    detect();
+    void detect();
     return () => {
       cancelled = true;
       controller.abort();
@@ -635,9 +708,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
 
   const getProduct = useCallback(
-    (idOrSlug: string) =>
-      state.products.find((p) => p.id === idOrSlug || p.slug === idOrSlug),
-    [state.products]
+    (idOrSlug: string) => {
+      const matches = state.products.filter(
+        (p) => p.id === idOrSlug || p.slug === idOrSlug
+      );
+      if (matches.length === 0) return undefined;
+      if (matches.length === 1) return matches[0];
+      return (
+        matches.find((p) => isProductAvailableIn(p, state.country)) ??
+        matches[0]
+      );
+    },
+    [state.products, state.country]
   );
 
   const getCategory = useCallback(
@@ -752,6 +834,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     [state.products, state.country]
   );
 
+  const marketCategories = useMemo(
+    () => filterCategoriesForCountry(state.categories, state.country),
+    [state.categories, state.country]
+  );
+
   const cartCount = useMemo(
     () => state.cart.reduce((n, i) => n + i.quantity, 0),
     [state.cart]
@@ -834,6 +921,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     storageReady,
     geoReady,
     marketProducts,
+    marketCategories,
     setLocale,
     setCurrency,
     setCountry,

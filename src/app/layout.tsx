@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans, Tajawal } from "next/font/google";
 import { StoreProvider } from "@/context/StoreContext";
 import { SiteShell } from "@/components/layout/SiteShell";
+import { MetaPixel } from "@/components/MetaPixel";
+import { MetaPixelHead } from "@/components/MetaPixelHead";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -57,10 +59,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <head>
+        <MetaPixelHead />
+      </head>
       <body
         className={`${display.variable} ${sans.variable} ${arabic.variable} font-sans antialiased`}
       >
         <StoreProvider>
+          <MetaPixel />
           <SiteShell>{children}</SiteShell>
         </StoreProvider>
       </body>

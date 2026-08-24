@@ -120,3 +120,37 @@ export function isValidCountry(code: string): code is CountryCode {
 export function isStoreMarket(code: string): boolean {
   return STORE_MARKET_CODES.includes(code.toUpperCase() as CountryCode);
 }
+
+/**
+ * Infer store market from browser timezone / locale when IP geo is unavailable
+ * (common on localhost / home networks).
+ */
+export function countryFromLocationSettings(
+  timeZone?: string,
+  languages?: readonly string[]
+): CountryCode | null {
+  const tz = (timeZone || "").toLowerCase();
+
+  if (
+    tz.includes("casablanca") ||
+    tz === "africa/casablanca" ||
+    tz.includes("el_aaiun")
+  ) {
+    return "MA";
+  }
+  if (tz.includes("riyadh") || tz === "asia/riyadh") return "SA";
+  if (tz.includes("dubai") || tz === "asia/dubai") return "AE";
+  if (tz.includes("muscat") || tz === "asia/muscat") return "OM";
+
+  const langs = languages ?? [];
+  for (const lang of langs) {
+    const l = lang.toLowerCase();
+    if (l === "ar-ma" || l.endsWith("-ma") || l.includes("ma-")) return "MA";
+    if (l === "ar-sa" || l.endsWith("-sa")) return "SA";
+    if (l === "ar-ae" || l.endsWith("-ae")) return "AE";
+    if (l === "ar-om" || l.endsWith("-om")) return "OM";
+  }
+
+  return null;
+}
+

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { isValidCountry } from "./lib/countries";
+import { DEFAULT_COUNTRY, isStoreMarket, isValidCountry } from "./lib/countries";
 import {
   ADMIN_COOKIE,
   verifyAdminSessionEdge,
@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
   const existing = request.cookies.get("geo-country")?.value;
-  if (existing && isValidCountry(existing)) {
+  if (existing && isValidCountry(existing) && isStoreMarket(existing)) {
     return response;
   }
 
@@ -46,7 +46,8 @@ export async function middleware(request: NextRequest) {
 
   const code = headerCountry.toUpperCase();
   if (isValidCountry(code)) {
-    response.cookies.set("geo-country", code, {
+    const market = isStoreMarket(code) ? code : DEFAULT_COUNTRY;
+    response.cookies.set("geo-country", market, {
       path: "/",
       maxAge: 60 * 60 * 24 * 30,
       sameSite: "lax",
