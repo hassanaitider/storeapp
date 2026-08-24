@@ -15,6 +15,7 @@ export default function ShopClient() {
   const {
     locale,
     country,
+    geoReady,
     marketCategories,
     marketProducts,
   } = useStore();
@@ -52,8 +53,8 @@ export default function ShopClient() {
       </h1>
       <p className="mt-2 text-[var(--muted)]">
         {locale === "ar"
-          ? `تصنيف سوقك فقط · ${marketLabel.flag} ${marketLabel.nameAr} · ${marketLabel.currency}`
-          : `Your market only · ${marketLabel.flag} ${marketLabel.nameEn} · ${marketLabel.currency}`}
+          ? `منتجات متاحة في ${marketLabel.nameAr} فقط حسب عنوان الـ IP · ${marketLabel.flag} · ${marketLabel.currency}`
+          : `Products available in ${marketLabel.nameEn} only (by IP) · ${marketLabel.flag} · ${marketLabel.currency}`}
       </p>
 
       <div className="mt-8 flex flex-wrap gap-2">
@@ -68,7 +69,13 @@ export default function ShopClient() {
         ))}
       </div>
 
-      {filtered.length === 0 ? (
+      {!geoReady ? (
+        <p className="mt-16 text-center text-[var(--muted)]">
+          {locale === "ar"
+            ? "جاري تحديد موقعك وعرض المنتجات المتاحة…"
+            : "Detecting your location and available products…"}
+        </p>
+      ) : filtered.length === 0 ? (
         <p className="mt-16 text-center text-[var(--muted)]">
           {t.shop.noProducts}
         </p>

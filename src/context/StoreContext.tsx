@@ -485,29 +485,67 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
     async function lookupClientIpCountry(): Promise<CountryCode | null> {
       const abort = new AbortController();
-      const timer = window.setTimeout(() => abort.abort(), 2000);
-      try {
-        const res = await fetch("https://ipapi.co/json/", {
-          signal: abort.signal,
-          cache: "no-store",
-        });
-        if (!res.ok) return null;
-        const data = (await res.json()) as { country_code?: string };
-        const code = data.country_code?.toUpperCase();
+      const timer = window.setTimeout(() => abort.abort(), 2500);
+
+      const readCode = (raw: string | undefined): CountryCode | null => {
+        const code = raw?.toUpperCase();
         if (code && isValidCountry(code) && isStoreMarket(code)) {
           return code as CountryCode;
         }
         return null;
+      };
+
+      try {
+        // Client-side IP geo (works even when server sees only a private LAN IP)
+        const res = await fetch("https://ipapi.co/json/", {
+          signal: abort.signal,
+          cache: "no-store",
+        });
+        if (res.ok) {
+          const data = (await res.json()) as { country_code?: string };
+          const code = readCode(data.country_code);
+          if (code) {
+            window.clearTimeout(timer);
+            return code;
+          }
+        }
       } catch {
-        return null;
-      } finally {
-        window.clearTimeout(timer);
+        /* try fallback */
       }
+
+      try {
+        const res = await fetch(
+          "https://ipwho.is/?fields=country_code,success",
+          {
+            signal: abort.signal,
+            cache: "no-store",
+          }
+        );
+        if (res.ok) {
+          const data = (await res.json()) as {
+            success?: boolean;
+            country_code?: string;
+          };
+          if (data.success !== false) {
+            const code = readCode(data.country_code);
+            window.clearTimeout(timer);
+            return code;
+          }
+        }
+      } catch {
+        /* ignore */
+      }
+
+      window.clearTimeout(timer);
+      return null;
     }
 
     async function detect() {
       let fromApi: CountryCode | null = null;
       let source = "default";
+
+      // Always ask client IP first — most accurate for home/office networks
+      const fromClientIp = await lookupClientIpCountry();
 
       try {
         const res = await fetch("/api/geo", {
@@ -536,21 +574,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         source === "cloudflare" ||
         source === "ip-api";
 
-      const fromClientIp = strongIp ? null : await lookupClientIpCountry();
-
       const fromSettings = countryFromLocationSettings(
         Intl.DateTimeFormat().resolvedOptions().timeZone,
         typeof navigator !== "undefined" ? navigator.languages : undefined
       );
 
+      // Priority: live client IP → strong server IP → timezone → server/cookie
       const detected =
-        strongIp && fromApi
-          ? fromApi
-          : fromClientIp
-            ? fromClientIp
-            : fromSettings && isStoreMarket(fromSettings)
-              ? fromSettings
-              : fromApi;
+        fromClientIp ??
+        (strongIp && fromApi ? fromApi : null) ??
+        (fromSettings && isStoreMarket(fromSettings) ? fromSettings : null) ??
+        fromApi;
 
       if (detected && isStoreMarket(detected)) {
         applyDetected(detected);
@@ -713,13 +747,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         (p) => p.id === idOrSlug || p.slug === idOrSlug
       );
       if (matches.length === 0) return undefined;
-      if (matches.length === 1) return matches[0];
-      return (
-        matches.find((p) => isProductAvailableIn(p, state.country)) ??
-        matches[0]
+      const inMarket = matches.filter((p) =>
+        isProductAvailableIn(p, state.country, state.categories)
       );
+      if (inMarket.length === 1) return inMarket[0];
+      if (inMarket.length > 1) return inMarket[0];
+      // Product exists but not for this country — hide it
+      return undefined;
     },
-    [state.products, state.country]
+    [state.products, state.country, state.categories]
   );
 
   const getCategory = useCallback(
@@ -830,8 +866,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const marketProducts = useMemo(
-    () => filterProductsForCountry(state.products, state.country),
-    [state.products, state.country]
+    () =>
+      filterProductsForCountry(
+        state.products,
+        state.country,
+        state.categories
+      ),
+    [state.products, state.country, state.categories]
   );
 
   const marketCategories = useMemo(

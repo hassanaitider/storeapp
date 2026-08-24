@@ -35,10 +35,7 @@ export async function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
   const existing = request.cookies.get("geo-country")?.value;
-  if (existing && isValidCountry(existing) && isStoreMarket(existing)) {
-    return response;
-  }
-
+  // Do not short-circuit on cookie alone — CDN headers can refresh market
   const headerCountry =
     request.headers.get("x-vercel-ip-country") ||
     request.headers.get("cf-ipcountry") ||
@@ -47,11 +44,15 @@ export async function middleware(request: NextRequest) {
   const code = headerCountry.toUpperCase();
   if (isValidCountry(code)) {
     const market = isStoreMarket(code) ? code : DEFAULT_COUNTRY;
-    response.cookies.set("geo-country", market, {
-      path: "/",
-      maxAge: 60 * 60 * 24 * 30,
-      sameSite: "lax",
-    });
+    if (existing !== market) {
+      response.cookies.set("geo-country", market, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 30,
+        sameSite: "lax",
+      });
+    }
+  } else if (!existing || !isValidCountry(existing) || !isStoreMarket(existing)) {
+    // Leave cookie unset; /api/geo + client IP will resolve on load
   }
 
   return response;

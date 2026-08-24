@@ -11,7 +11,8 @@ import { currencyForCountry } from "@/lib/countries";
 
 export default function HomePage() {
   const t = useT();
-  const { locale, country, marketProducts, marketCategories } = useStore();
+  const { locale, country, geoReady, marketProducts, marketCategories } =
+    useStore();
   const featured = marketProducts.filter((p) => p.featured).slice(0, 4);
   const Arrow = locale === "ar" ? ArrowLeft : ArrowRight;
 
@@ -80,8 +81,8 @@ export default function HomePage() {
             </h2>
             <p className="mt-2 text-[var(--muted)]">
               {locale === "ar"
-                ? "نعرض لك تصنيف سوق بلدك فقط حسب موقعك"
-                : "We show only your country’s market category based on your location"}
+                ? "نعرض منتجات وتصنيف بلدك فقط حسب عنوان الـ IP"
+                : "We show only products available in your country (by IP)"}
             </p>
           </div>
           <Link
@@ -131,9 +132,17 @@ export default function HomePage() {
             {t.shop.featured}
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" key={locale + country}>
-            {featured.map((p) => (
-              <ProductCard key={`${country}-${p.id}`} product={p} />
-            ))}
+            {!geoReady ? (
+              <p className="col-span-full text-center text-[var(--muted)]">
+                {locale === "ar"
+                  ? "جاري تحديد موقعك…"
+                  : "Detecting your location…"}
+              </p>
+            ) : (
+              featured.map((p) => (
+                <ProductCard key={`${country}-${p.id}`} product={p} />
+              ))
+            )}
           </div>
           <div className="mt-10 text-center">
             <Link

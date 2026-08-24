@@ -10,8 +10,8 @@ import type { CountryCode } from "@/lib/types";
 type GeoSource =
   | "vercel"
   | "cloudflare"
-  | "cookie"
   | "ip-api"
+  | "cookie"
   | "default";
 
 function normalizeCountry(raw: string | null | undefined): CountryCode | null {
@@ -35,13 +35,18 @@ function clientIp(headerStore: Headers): string | null {
   return (
     headerStore.get("x-real-ip") ||
     headerStore.get("cf-connecting-ip") ||
+    headerStore.get("true-client-ip") ||
     null
   );
 }
 
 function isPrivateIp(ip: string): boolean {
   if (ip === "127.0.0.1" || ip === "::1" || ip === "0.0.0.0") return true;
-  if (ip.startsWith("10.") || ip.startsWith("192.168.") || ip.startsWith("169.254.")) {
+  if (
+    ip.startsWith("10.") ||
+    ip.startsWith("192.168.") ||
+    ip.startsWith("169.254.")
+  ) {
     return true;
   }
   const m = /^172\.(\d+)\./.exec(ip);
@@ -56,26 +61,57 @@ async function lookupCountryByIp(ip: string): Promise<CountryCode | null> {
   if (isPrivateIp(ip)) return null;
 
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 1500);
+  const timer = setTimeout(() => controller.abort(), 2000);
   try {
+    // Primary: ipapi.co
     const res = await fetch(
       `https://ipapi.co/${encodeURIComponent(ip)}/country_code/`,
       {
         signal: controller.signal,
         headers: { Accept: "text/plain" },
-        next: { revalidate: 3600 },
+        cache: "no-store",
       }
     );
-    if (!res.ok) return null;
-    const text = (await res.text()).trim();
-    return normalizeCountry(text);
+    if (res.ok) {
+      const text = (await res.text()).trim();
+      const code = normalizeCountry(text);
+      if (code) return code;
+    }
+  } catch {
+    /* try fallback */
+  }
+
+  try {
+    // Fallback: ipwho.is
+    const res = await fetch(
+      `https://ipwho.is/${encodeURIComponent(ip)}?fields=country_code,success`,
+      {
+        signal: controller.signal,
+        cache: "no-store",
+      }
+    );
+    if (res.ok) {
+      const data = (await res.json()) as {
+        success?: boolean;
+        country_code?: string;
+      };
+      if (data.success !== false) {
+        return normalizeCountry(data.country_code);
+      }
+    }
   } catch {
     return null;
   } finally {
     clearTimeout(timer);
   }
+
+  return null;
 }
 
+/**
+ * Resolve visitor country from IP on every request.
+ * Priority: CDN geo headers → live IP lookup → cookie → default.
+ */
 export async function GET() {
   try {
     const headerStore = await headers();
@@ -88,14 +124,12 @@ export async function GET() {
       cookieStore.get("geo-country")?.value
     );
 
-    let detected: CountryCode | null = fromHeader;
+    let detected: CountryCode | null = null;
     let source: GeoSource = "default";
 
     if (fromHeader) {
+      detected = fromHeader;
       source = vercel ? "vercel" : "cloudflare";
-    } else if (fromCookie) {
-      detected = fromCookie;
-      source = "cookie";
     } else {
       const ip = clientIp(headerStore);
       if (ip) {
@@ -104,6 +138,12 @@ export async function GET() {
           detected = byIp;
           source = "ip-api";
         }
+      }
+
+      // Cookie only as last resort (may be stale from another network)
+      if (!detected && fromCookie) {
+        detected = fromCookie;
+        source = "cookie";
       }
     }
 

@@ -19,11 +19,11 @@ export function MarketBanner() {
         <p className="text-sm">
           {locale === "ar" ? (
             <>
-              سوقك حسب موقعك:{" "}
+              سوقك حسب عنوان الـ IP:{" "}
               <strong>
                 {c.flag} {c.nameAr}
               </strong>{" "}
-              — نعرض تصنيف بلدك فقط — العملة:{" "}
+              — نعرض فقط المنتجات المتاحة في دولتك — العملة:{" "}
               <strong>
                 {cur.nameAr} ({cur.symbol})
               </strong>
@@ -31,11 +31,11 @@ export function MarketBanner() {
             </>
           ) : (
             <>
-              Market by location:{" "}
+              Market by IP:{" "}
               <strong>
                 {c.flag} {c.nameEn}
               </strong>{" "}
-              — only your country’s category is shown — Currency:{" "}
+              — only products available in your country — Currency:{" "}
               <strong>
                 {cur.nameEn} ({cur.symbol})
               </strong>

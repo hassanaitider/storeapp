@@ -76,17 +76,41 @@ export function productDiscountPercent(
 
 export function isProductAvailableIn(
   product: Product,
-  country: CountryCode
+  country: CountryCode,
+  categories: Category[] = []
 ): boolean {
-  if (!product.availableIn || product.availableIn.length === 0) return true;
-  return product.availableIn.includes(country);
+  // Explicit market list on the product
+  if (product.availableIn && product.availableIn.length > 0) {
+    return product.availableIn.includes(country);
+  }
+
+  // Fall back to the product's regional category
+  const cat = categories.find((c) => c.id === product.categoryId);
+  if (cat?.availableIn && cat.availableIn.length > 0) {
+    return cat.availableIn.includes(country);
+  }
+  if (cat?.country) {
+    return cat.country === country;
+  }
+
+  // Infer from id pattern: cat-MA / cat-SA / …
+  const match = /^cat-([A-Za-z]{2})$/.exec(product.categoryId || "");
+  if (match) {
+    return match[1].toUpperCase() === country;
+  }
+
+  // No country signal → hide on geo-filtered storefront
+  return false;
 }
 
 export function filterProductsForCountry(
   products: Product[],
-  country: CountryCode
+  country: CountryCode,
+  categories: Category[] = []
 ): Product[] {
-  return products.filter((p) => isProductAvailableIn(p, country));
+  return products.filter((p) =>
+    isProductAvailableIn(p, country, categories)
+  );
 }
 
 /**
