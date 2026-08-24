@@ -79,11 +79,6 @@ export default function HomePage() {
             <h2 className="font-display text-4xl font-semibold text-ink-900 sm:text-5xl">
               {t.nav.categories}
             </h2>
-            <p className="mt-2 text-[var(--muted)]">
-              {locale === "ar"
-                ? "نعرض منتجات وتصنيف بلدك فقط حسب عنوان الـ IP"
-                : "We show only products available in your country (by IP)"}
-            </p>
           </div>
           <Link
             href="/shop"
@@ -134,9 +129,7 @@ export default function HomePage() {
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" key={locale + country}>
             {!geoReady ? (
               <p className="col-span-full text-center text-[var(--muted)]">
-                {locale === "ar"
-                  ? "جاري تحديد موقعك…"
-                  : "Detecting your location…"}
+                {t.common.loading}
               </p>
             ) : (
               featured.map((p) => (

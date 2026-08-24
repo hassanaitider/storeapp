@@ -67,8 +67,8 @@ export function Header() {
             )}
             title={
               locale === "ar"
-                ? "سوقك حسب موقعك"
-                : "Your market by location"
+                ? "سوقك الحالي"
+                : "Current market"
             }
           >
             {market.flag} {locale === "ar" ? market.nameAr : market.nameEn}

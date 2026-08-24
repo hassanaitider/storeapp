@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { ProductCard } from "@/components/shop/ProductCard";
-import { getCountry } from "@/lib/countries";
 import { cn } from "@/lib/utils";
 import type { CountryCode } from "@/lib/types";
 
@@ -44,18 +43,11 @@ export default function ShopClient() {
     return marketProducts.filter((p) => p.categoryId === activeCategory.id);
   }, [active, activeCategory, marketProducts]);
 
-  const marketLabel = getCountry(priceCountry);
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <h1 className="font-display text-4xl font-semibold text-ink-900 sm:text-5xl">
         {t.shop.title}
       </h1>
-      <p className="mt-2 text-[var(--muted)]">
-        {locale === "ar"
-          ? `منتجات متاحة في ${marketLabel.nameAr} فقط حسب عنوان الـ IP · ${marketLabel.flag} · ${marketLabel.currency}`
-          : `Products available in ${marketLabel.nameEn} only (by IP) · ${marketLabel.flag} · ${marketLabel.currency}`}
-      </p>
 
       <div className="mt-8 flex flex-wrap gap-2">
         <FilterChip href="/shop" active={active === "all"} label={t.shop.all} />
@@ -71,9 +63,7 @@ export default function ShopClient() {
 
       {!geoReady ? (
         <p className="mt-16 text-center text-[var(--muted)]">
-          {locale === "ar"
-            ? "جاري تحديد موقعك وعرض المنتجات المتاحة…"
-            : "Detecting your location and available products…"}
+          {t.common.loading}
         </p>
       ) : filtered.length === 0 ? (
         <p className="mt-16 text-center text-[var(--muted)]">
