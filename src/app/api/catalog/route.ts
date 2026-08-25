@@ -47,24 +47,28 @@ async function readFromFiles(): Promise<PersistedCatalog | null> {
   return null;
 }
 
-async function writeToFiles(raw: string): Promise<void> {
+async function writeToFiles(raw: string): Promise<boolean> {
+  let wrote = false;
   try {
     await writeFile(tmpPath(), raw, "utf8");
+    wrote = true;
   } catch {
     /* /tmp may be unavailable */
   }
   try {
     await mkdir(path.dirname(dataPath()), { recursive: true });
     await writeFile(dataPath(), raw, "utf8");
+    wrote = true;
   } catch {
     /* Vercel read-only filesystem */
   }
+  return wrote;
 }
 
 async function readCatalog(): Promise<PersistedCatalog | null> {
   const g = mem();
-  if (g.__smartShopCatalog) return g.__smartShopCatalog;
 
+  // Prefer durable blob first (source of truth on production)
   if (catalogBlobConfigured()) {
     const raw = await readCatalogBlobRaw();
     if (raw) {
@@ -77,6 +81,8 @@ async function readCatalog(): Promise<PersistedCatalog | null> {
     }
   }
 
+  if (g.__smartShopCatalog) return g.__smartShopCatalog;
+
   const fromFiles = await readFromFiles();
   if (fromFiles) {
     g.__smartShopCatalog = fromFiles;
@@ -87,7 +93,7 @@ async function readCatalog(): Promise<PersistedCatalog | null> {
   return null;
 }
 
-async function writeCatalog(data: PersistedCatalog): Promise<void> {
+async function writeCatalog(data: PersistedCatalog): Promise<{ durable: boolean }> {
   const clean = parseCatalogJson(catalogToJson(data));
   if (!clean) throw new Error("Invalid catalog");
   const raw = catalogToJson(clean);
@@ -95,19 +101,26 @@ async function writeCatalog(data: PersistedCatalog): Promise<void> {
   mem().__smartShopCatalog = clean;
   mem().__smartShopCatalogUpdatedAt = clean.updatedAt;
 
-  let persisted = false;
-
   if (catalogBlobConfigured()) {
     const url = await writeCatalogBlobRaw(raw);
-    if (url) persisted = true;
-  } else {
+    if (!url) throw new Error("Blob write failed");
+    // Mirror to files when possible (local/dev)
     await writeToFiles(raw);
-    persisted = true;
+    return { durable: true };
   }
 
-  if (!persisted) {
-    throw new Error("Catalog write failed");
+  const onVercel = Boolean(process.env.VERCEL);
+  const wrote = await writeToFiles(raw);
+
+  if (onVercel) {
+    // /tmp is ephemeral on Vercel — refuse silent "success"
+    throw new Error(
+      "BLOB_READ_WRITE_TOKEN missing — catalog cannot persist on Vercel"
+    );
   }
+
+  if (!wrote) throw new Error("Catalog write failed");
+  return { durable: false };
 }
 
 export async function GET() {
@@ -139,7 +152,16 @@ export async function PUT(request: Request) {
       durable: catalogBlobConfigured(),
     });
   } catch (err) {
+    const message = err instanceof Error ? err.message : "save failed";
     console.error("catalog PUT failed", err);
-    return NextResponse.json({ ok: false, error: "save failed" }, { status: 500 });
+    const needsBlob = message.includes("BLOB_READ_WRITE_TOKEN");
+    return NextResponse.json(
+      {
+        ok: false,
+        error: needsBlob ? "missing_blob_token" : "save failed",
+        message,
+      },
+      { status: needsBlob ? 503 : 500 }
+    );
   }
 }

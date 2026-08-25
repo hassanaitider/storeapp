@@ -103,6 +103,8 @@ interface StoreContextValue extends StoreState {
   ) => Order;
   /** Wipe local data and restore seed catalog */
   resetStore: () => void;
+  /** Force push current catalog to server (admin saves) */
+  persistCatalog: () => Promise<{ ok: boolean; durable?: boolean; error?: string }>;
   upsellEnabled: boolean;
   setUpsellEnabled: (enabled: boolean) => void;
 }
@@ -328,9 +330,28 @@ function applyPersisted(
   };
 }
 
+function pickNewestCatalog(
+  a: PersistedCatalog | null,
+  b: PersistedCatalog | null
+): PersistedCatalog | null {
+  if (a && b) {
+    return (a.updatedAt || 0) >= (b.updatedAt || 0) ? a : b;
+  }
+  return a || b;
+}
+
 function flushToLocal(state: StoreState, persisted?: PersistedCatalog) {
   try {
-    const raw = catalogToJson(persisted ?? toPersisted(state));
+    const data = persisted ?? toPersisted(state);
+    // Never overwrite a newer catalog already in localStorage
+    const existing = readLocalCatalog();
+    if (
+      existing &&
+      (existing.updatedAt || 0) > (data.updatedAt || 0)
+    ) {
+      return true;
+    }
+    const raw = catalogToJson(data);
     window.localStorage.setItem(CATALOG_STORAGE_KEY, raw);
     return true;
   } catch {
@@ -340,7 +361,16 @@ function flushToLocal(state: StoreState, persisted?: PersistedCatalog) {
   }
 }
 
-function flushToServer(state: StoreState, persisted?: PersistedCatalog) {
+type ServerSaveResult = {
+  ok: boolean;
+  durable?: boolean;
+  error?: string;
+};
+
+function flushToServer(
+  state: StoreState,
+  persisted?: PersistedCatalog
+): Promise<ServerSaveResult> {
   const body = catalogToJson(persisted ?? toPersisted(state));
   return fetch("/api/catalog", {
     method: "PUT",
@@ -349,20 +379,30 @@ function flushToServer(state: StoreState, persisted?: PersistedCatalog) {
     body,
   })
     .then(async (res) => {
+      const json = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        durable?: boolean;
+        error?: string;
+      };
       if (!res.ok) {
-        const err = res.status === 401 ? "unauthorized" : "server";
+        const err =
+          res.status === 401
+            ? "unauthorized"
+            : json.error === "missing_blob_token"
+              ? "missing_blob_token"
+              : "server";
         window.dispatchEvent(
           new CustomEvent("smart-shop-server-save-error", { detail: err })
         );
-        return false;
+        return { ok: false, error: err };
       }
-      return true;
+      return { ok: true, durable: Boolean(json.durable) };
     })
     .catch(() => {
       window.dispatchEvent(
         new CustomEvent("smart-shop-server-save-error", { detail: "network" })
       );
-      return false;
+      return { ok: false, error: "network" };
     });
 }
 
@@ -375,6 +415,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [geoReady, setGeoReady] = useState(false);
   const stateRef = useRef(state);
   const storageReadyRef = useRef(false);
+  /** Bumps on every user commit so hydrate cannot clobber fresher edits */
+  const mutateGenRef = useRef(0);
 
   useEffect(() => {
     stateRef.current = state;
@@ -384,16 +426,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     // Apply + persist synchronously so Save + navigation cannot lose data
     const prev = stateRef.current;
     const next = updater(prev);
-    stateRef.current = next;
+    if (next === prev) return true;
+    mutateGenRef.current += 1;
+    // Stamp a fresh updatedAt so this beat any in-flight hydrate
+    const stamped: StoreState = { ...next };
+    stateRef.current = stamped;
     let saved = true;
     if (typeof window !== "undefined") {
-      const persisted = toPersisted(next);
-      saved = flushToLocal(next, persisted);
-      if (storageReadyRef.current) {
-        void flushToServer(next, persisted);
-      }
+      const persisted = { ...toPersisted(stamped), updatedAt: Date.now() };
+      saved = flushToLocal(stamped, persisted);
+      // Always try server — do not wait for hydrate (avoids lost admin saves)
+      void flushToServer(stamped, persisted);
     }
-    setState(next);
+    setState(stamped);
     return saved;
   }, []);
 
@@ -401,11 +446,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
 
     async function restore() {
+      const genAtStart = mutateGenRef.current;
       try {
         const cookieCountry = readCookieCountry();
         let next = buildDefaults(cookieCountry ?? DEFAULT_COUNTRY);
 
-        const local = readLocalCatalog();
+        const localAtStart = readLocalCatalog();
         let remote: PersistedCatalog | null = null;
         try {
           const res = await fetch("/api/catalog", { cache: "no-store" });
@@ -419,23 +465,49 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           /* offline / cold */
         }
 
-        const best =
-          local && remote
-            ? (remote.updatedAt || 0) > (local.updatedAt || 0)
-              ? remote
-              : local
-            : local || remote;
+        // Re-read local after await — admin may have saved during fetch
+        const localNow = readLocalCatalog();
+        const best = pickNewestCatalog(
+          pickNewestCatalog(localAtStart, localNow),
+          remote
+        );
+
+        if (cancelled) return;
+
+        // User edited while we were loading — keep their in-memory state
+        if (mutateGenRef.current !== genAtStart) {
+          storageReadyRef.current = true;
+          setStorageReady(true);
+          void flushToServer(stateRef.current);
+          return;
+        }
 
         if (best) {
           next = applyPersisted(best, cookieCountry);
         }
 
-        if (cancelled) return;
+        // If local is newer than what we applied, prefer local again
+        const localFinal = readLocalCatalog();
+        if (
+          localFinal &&
+          (localFinal.updatedAt || 0) > (best?.updatedAt || 0)
+        ) {
+          next = applyPersisted(localFinal, cookieCountry);
+        }
+
+        if (mutateGenRef.current !== genAtStart) {
+          storageReadyRef.current = true;
+          setStorageReady(true);
+          void flushToServer(stateRef.current);
+          return;
+        }
+
         setCurrencyRateOverrides(next.currencyRates);
         stateRef.current = next;
         setState(next);
         storageReadyRef.current = true;
         setStorageReady(true);
+        // Only mirror to local if we are not older than what's already stored
         flushToLocal(next);
       } catch (err) {
         console.error("Store hydrate failed", err);
@@ -857,12 +929,21 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
+    mutateGenRef.current += 1;
     setCurrencyRateOverrides(next.currencyRates);
     stateRef.current = next;
     setState(next);
     const persisted = toPersisted(next);
     flushToLocal(next, persisted);
     void flushToServer(next, persisted);
+  }, []);
+
+  const persistCatalog = useCallback(async () => {
+    const current = stateRef.current;
+    const persisted = { ...toPersisted(current), updatedAt: Date.now() };
+    const localOk = flushToLocal(current, persisted);
+    if (!localOk) return { ok: false, error: "local" };
+    return flushToServer(current, persisted);
   }, []);
 
   const marketProducts = useMemo(
@@ -985,6 +1066,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     deleteProduct,
     placeOrder,
     resetStore,
+    persistCatalog,
     upsellEnabled: state.upsellEnabled,
     setUpsellEnabled,
   };

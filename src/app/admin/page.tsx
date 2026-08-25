@@ -124,6 +124,12 @@ function AdminDashboard() {
             ? "لم يُحفظ على السيرفر — سجّل دخول لوحة التحكم أولاً"
             : "Server save skipped — log in to admin first"
         );
+      } else if (detail === "missing_blob_token") {
+        setFlash(
+          locale === "ar"
+            ? "أضف BLOB_READ_WRITE_TOKEN في Vercel باش الحفظ يبقى دائم"
+            : "Add BLOB_READ_WRITE_TOKEN on Vercel for durable saves"
+        );
       } else {
         setFlash(
           locale === "ar"
@@ -131,7 +137,7 @@ function AdminDashboard() {
             : "Server save failed — retry"
         );
       }
-      window.setTimeout(() => setFlash(""), 5000);
+      window.setTimeout(() => setFlash(""), 6000);
     };
     window.addEventListener("smart-shop-save-error", onLocalFail);
     window.addEventListener("smart-shop-server-save-error", onServerFail);

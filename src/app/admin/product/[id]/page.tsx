@@ -30,6 +30,7 @@ export default function EditProductPage() {
     categories,
     addProduct,
     updateProduct,
+    persistCatalog,
     storageReady,
   } = useStore();
   const existing = useMemo(
@@ -112,6 +113,12 @@ export default function EditProductPage() {
             ? "لم يُحفظ على السيرفر — سجّل دخول لوحة التحكم"
             : "Not saved to server — log in to admin"
         );
+      } else if (detail === "missing_blob_token") {
+        window.alert(
+          locale === "ar"
+            ? "الحفظ على السيرفر غير مفعّل: أضف BLOB_READ_WRITE_TOKEN في Vercel (Storage → Blob)"
+            : "Server save disabled: add BLOB_READ_WRITE_TOKEN in Vercel (Storage → Blob)"
+        );
       }
     };
     window.addEventListener("smart-shop-save-error", onLocalFail);
@@ -142,7 +149,7 @@ export default function EditProductPage() {
     );
   }
 
-  function saveNow() {
+  async function saveNow() {
     if (!storageReady) {
       window.alert(
         locale === "ar"
@@ -211,7 +218,27 @@ export default function EditProductPage() {
           );
           return;
         }
-        setFlash(locale === "ar" ? "تم الحفظ ✓" : "Saved ✓");
+        const server = await persistCatalog();
+        if (!server.ok) {
+          window.alert(
+            locale === "ar"
+              ? server.error === "missing_blob_token"
+                ? "حُفظ في المتصفح فقط — أضف BLOB_READ_WRITE_TOKEN في Vercel للحفظ الدائم"
+                : "حُفظ محلياً لكن فشل الحفظ على السيرفر — أعد المحاولة"
+              : server.error === "missing_blob_token"
+                ? "Saved in browser only — add BLOB_READ_WRITE_TOKEN on Vercel for durable saves"
+                : "Saved locally but server save failed — retry"
+          );
+        }
+        setFlash(
+          locale === "ar"
+            ? server.ok
+              ? "تم الحفظ ✓"
+              : "حُفظ محلياً ⚠"
+            : server.ok
+              ? "Saved ✓"
+              : "Saved locally ⚠"
+        );
         window.setTimeout(() => setFlash(""), 2500);
         router.replace(`/admin/product/${newId}`);
         return;
@@ -225,15 +252,34 @@ export default function EditProductPage() {
         );
         return;
       }
+      const server = await persistCatalog();
+      if (!server.ok) {
+        window.alert(
+          locale === "ar"
+            ? server.error === "missing_blob_token"
+              ? "حُفظ في المتصفح فقط — أضف BLOB_READ_WRITE_TOKEN في Vercel (Storage → Blob) باش الثمن يبقا ثابت للجميع"
+              : "حُفظ محلياً لكن فشل الحفظ على السيرفر — أعد المحاولة"
+            : server.error === "missing_blob_token"
+              ? "Saved in browser only — add BLOB_READ_WRITE_TOKEN on Vercel so prices persist for everyone"
+              : "Saved locally but server save failed — retry"
+        );
+      }
+      setFlash(
+        locale === "ar"
+          ? server.ok
+            ? "تم الحفظ ✓"
+            : "حُفظ محلياً ⚠"
+          : server.ok
+            ? "Saved ✓"
+            : "Saved locally ⚠"
+      );
+      window.setTimeout(() => setFlash(""), 2500);
     } catch (err) {
       console.error(err);
       window.alert(locale === "ar" ? "فشل الحفظ" : "Save failed");
-      return;
     } finally {
       setSaving(false);
     }
-    setFlash(locale === "ar" ? "تم الحفظ ✓" : "Saved ✓");
-    window.setTimeout(() => setFlash(""), 2500);
   }
 
   const previewSlug = (slug || slugify(nameEn || nameAr || "product")).trim();
