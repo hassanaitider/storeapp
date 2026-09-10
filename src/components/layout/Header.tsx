@@ -6,9 +6,9 @@ import { Menu, ShoppingBag, X } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { BrandLogo } from "@/components/layout/BrandLogo";
-import { getCountry } from "@/lib/countries";
+import { STORE_MARKETS, getCountry } from "@/lib/countries";
 import { CURRENCIES, getCurrency } from "@/lib/currency";
-import type { CurrencyCode, Locale } from "@/lib/types";
+import type { CountryCode, CurrencyCode, Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -19,6 +19,7 @@ export function Header() {
     currency,
     setCurrency,
     country,
+    setCountry,
     cartCount,
     geoReady,
   } = useStore();
@@ -60,19 +61,26 @@ export function Header() {
             <option value="en">English</option>
           </select>
 
-          <span
+          <select
+            aria-label={t.common.country}
+            value={country}
+            onChange={(e) => setCountry(e.target.value as CountryCode, true)}
             className={cn(
-              "max-w-[9.5rem] truncate rounded-md border border-sand-300 bg-sand-50 px-2 py-1.5 text-xs font-medium text-ink-800 sm:max-w-[12rem] sm:text-sm",
+              "max-w-[9.5rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:max-w-[12rem] sm:text-sm",
               !geoReady && "opacity-60"
             )}
             title={
               locale === "ar"
-                ? "سوقك الحالي"
-                : "Current market"
+                ? "اختر سوقك (الدولة)"
+                : "Choose your market (country)"
             }
           >
-            {market.flag} {locale === "ar" ? market.nameAr : market.nameEn}
-          </span>
+            {STORE_MARKETS.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.flag} {locale === "ar" ? c.nameAr : c.nameEn}
+              </option>
+            ))}
+          </select>
 
           <select
             aria-label={t.common.currency}

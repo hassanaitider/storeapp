@@ -533,24 +533,22 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
     function applyDetected(detected: CountryCode) {
       if (cancelled) return;
+      let applied = false;
       commit((s) => {
+        // A market picked in the header outranks IP geo, including after reload
+        if (s.countryManual) return s;
         const nextCurrency = s.currencyManual
           ? s.currency
           : currencyForCountry(detected);
-        if (
-          s.country === detected &&
-          s.currency === nextCurrency &&
-          !s.countryManual
-        ) {
-          return s;
-        }
+        if (s.country === detected && s.currency === nextCurrency) return s;
+        applied = true;
         return {
           ...s,
           country: detected,
-          countryManual: false,
           currency: nextCurrency,
         };
       });
+      if (!applied) return;
       try {
         document.cookie = `geo-country=${detected}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
       } catch {
