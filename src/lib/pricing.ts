@@ -115,7 +115,7 @@ export function filterProductsForCountry(
 
 /**
  * Storefront rule: visitors only see the regional category for their
- * detected market (MA, SA, AE, OM). Untagged categories are hidden on
+ * detected market (MA, SA, AE, OM, IQ, LY). Untagged categories are hidden on
  * the storefront so other regional markets never leak through.
  */
 export function isCategoryVisibleIn(

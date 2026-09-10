@@ -59,6 +59,8 @@ const WINDSHIELD_PRICES: MarketPrices = {
   SA: { price: 79, compare: 119, priceUSD: 21, compareAtUSD: 32 },
   AE: { price: 69, compare: 99, priceUSD: 19, compareAtUSD: 27 },
   OM: { price: 7.9, compare: 12.9, priceUSD: 21, compareAtUSD: 32 },
+  IQ: { price: 20000, compare: 30000, priceUSD: 15, compareAtUSD: 23 },
+  LY: { price: 85, compare: 129, priceUSD: 15, compareAtUSD: 23 },
 };
 
 const NECK_FAN_PRICES: MarketPrices = {
@@ -66,6 +68,8 @@ const NECK_FAN_PRICES: MarketPrices = {
   SA: { price: 89, compare: 129, priceUSD: 24, compareAtUSD: 35 },
   AE: { price: 85, compare: 119, priceUSD: 23, compareAtUSD: 32 },
   OM: { price: 8.9, compare: 13.9, priceUSD: 24, compareAtUSD: 37 },
+  IQ: { price: 26000, compare: 39000, priceUSD: 20, compareAtUSD: 30 },
+  LY: { price: 110, compare: 165, priceUSD: 20, compareAtUSD: 30 },
 };
 
 export const UNIVERSAL_MARKET_PRODUCTS: Product[] = [

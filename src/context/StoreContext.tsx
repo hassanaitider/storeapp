@@ -75,7 +75,7 @@ interface StoreContextValue extends StoreState {
   geoReady: boolean;
   /** Products visible in the visitor's market */
   marketProducts: Product[];
-  /** Only the visitor's regional category (MA / SA / AE / OM). */
+  /** Only the visitor's regional category (MA / SA / AE / OM / IQ / LY). */
   marketCategories: Category[];
   setLocale: (locale: Locale) => void;
   setCurrency: (currency: CurrencyCode, manual?: boolean) => void;
@@ -134,7 +134,7 @@ function cloneSeedCategories(): Category[] {
 function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
   const seed = cloneSeedCategories();
   if (!stored?.length) return seed;
-  // Keep only active markets (MA / SA / AE / OM)
+  // Keep only active markets (MA / SA / AE / OM / IQ / LY)
   return seed.map((s) => {
     const existing = stored.find((c) => c.id === s.id || c.slug === s.slug);
     if (!existing) return s;
@@ -194,7 +194,10 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           ...(seed.marketComparePrices ?? {}),
           ...(p.marketComparePrices ?? {}),
         },
-        availableIn: p.availableIn?.length ? p.availableIn : seed.availableIn,
+        // Union so newly opened markets reach catalogs saved before the launch
+        availableIn: Array.from(
+          new Set([...(seed.availableIn ?? []), ...(p.availableIn ?? [])])
+        ),
         featured: typeof p.featured === "boolean" ? p.featured : seed.featured,
         inStock: typeof p.inStock === "boolean" ? p.inStock : seed.inStock,
         priceUSD: typeof p.priceUSD === "number" ? p.priceUSD : seed.priceUSD,

@@ -9,6 +9,7 @@ export const DEFAULT_CURRENCY_RATES: Record<CurrencyCode, number> = {
   OMR: 0.38,
   QAR: 3.64,
   IQD: 1310,
+  LYD: 5.5,
   EGP: 49.5,
   MAD: 10.0,
   USD: 1,
@@ -70,6 +71,14 @@ export const CURRENCIES: CurrencyInfo[] = [
     nameEn: "Iraqi Dinar",
     symbol: "د.ع",
     rate: DEFAULT_CURRENCY_RATES.IQD,
+    region: "mena",
+  },
+  {
+    code: "LYD",
+    nameAr: "دينار ليبي",
+    nameEn: "Libyan Dinar",
+    symbol: "د.ل",
+    rate: DEFAULT_CURRENCY_RATES.LYD,
     region: "mena",
   },
   {

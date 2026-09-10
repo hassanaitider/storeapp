@@ -216,6 +216,12 @@ export const translations = {
       localPrices: "أسعار حسب الدولة (بعملة كل دولة)",
       localPriceHint: "اتركه فارغاً لاستخدام التحويل التلقائي من الدولار",
       priceLocal: "السعر بعملة التصنيف",
+      markets: "الأسواق",
+      marketsHint:
+        "الدول المفتوحة في المتجر. كل دولة لها تصنيف خاص وأسعار بعملتها.",
+      marketProducts: "المنتجات",
+      marketMissingCategory: "لا يوجد تصنيف — أضفه",
+      marketOpenCategory: "فتح التصنيف",
     },
     common: {
       language: "اللغة",
@@ -440,6 +446,12 @@ export const translations = {
       localPrices: "Prices by country (local currency)",
       localPriceHint: "Leave empty to auto-convert from USD",
       priceLocal: "Price in category currency",
+      markets: "Markets",
+      marketsHint:
+        "Countries open in the store. Each has its own category and local pricing.",
+      marketProducts: "Products",
+      marketMissingCategory: "No category — add one",
+      marketOpenCategory: "Open category",
     },
     common: {
       language: "Language",

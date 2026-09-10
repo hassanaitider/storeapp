@@ -52,6 +52,14 @@ export const COUNTRIES: CountryInfo[] = [
     dial: "+964",
   },
   {
+    code: "LY",
+    nameAr: "ليبيا",
+    nameEn: "Libya",
+    currency: "LYD",
+    flag: "🇱🇾",
+    dial: "+218",
+  },
+  {
     code: "KW",
     nameAr: "الكويت",
     nameEn: "Kuwait",
@@ -96,7 +104,14 @@ export const COUNTRIES: CountryInfo[] = [
 export const DEFAULT_COUNTRY: CountryCode = "SA";
 
 /** Active store markets — these categories appear in the shop */
-export const STORE_MARKET_CODES: CountryCode[] = ["MA", "SA", "AE", "OM"];
+export const STORE_MARKET_CODES: CountryCode[] = [
+  "MA",
+  "SA",
+  "AE",
+  "OM",
+  "IQ",
+  "LY",
+];
 
 export const STORE_MARKETS: CountryInfo[] = COUNTRIES.filter((c) =>
   STORE_MARKET_CODES.includes(c.code)
@@ -138,9 +153,11 @@ export function countryFromLocationSettings(
   ) {
     return "MA";
   }
+  if (tz.includes("tripoli") || tz === "africa/tripoli") return "LY";
   if (tz.includes("riyadh") || tz === "asia/riyadh") return "SA";
   if (tz.includes("dubai") || tz === "asia/dubai") return "AE";
   if (tz.includes("muscat") || tz === "asia/muscat") return "OM";
+  if (tz.includes("baghdad") || tz === "asia/baghdad") return "IQ";
 
   const langs = languages ?? [];
   for (const lang of langs) {
@@ -149,6 +166,8 @@ export function countryFromLocationSettings(
     if (l === "ar-sa" || l.endsWith("-sa")) return "SA";
     if (l === "ar-ae" || l.endsWith("-ae")) return "AE";
     if (l === "ar-om" || l.endsWith("-om")) return "OM";
+    if (l === "ar-iq" || l.endsWith("-iq")) return "IQ";
+    if (l === "ar-ly" || l.endsWith("-ly")) return "LY";
   }
 
   return null;

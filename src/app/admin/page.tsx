@@ -14,6 +14,7 @@ import {
   Coins,
   RotateCcw,
   Gift,
+  Globe,
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
@@ -23,7 +24,7 @@ import {
   formatPrice,
 } from "@/lib/currency";
 import { STORE_MARKETS, currencyForCountry } from "@/lib/countries";
-import { getProductLocalPrice } from "@/lib/pricing";
+import { getProductLocalPrice, isProductAvailableIn } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 import type { CountryCode, ProductQtyOffer } from "@/lib/types";
 import {
@@ -31,10 +32,18 @@ import {
   qtyOfferSummary,
 } from "@/components/admin/ProductQtyOffersEditor";
 
-type Tab = "overview" | "categories" | "products" | "orders" | "currencies" | "upsell";
+type Tab =
+  | "overview"
+  | "categories"
+  | "products"
+  | "orders"
+  | "currencies"
+  | "upsell"
+  | "markets";
 
 const TABS: Tab[] = [
   "overview",
+  "markets",
   "categories",
   "products",
   "upsell",
@@ -182,6 +191,7 @@ function AdminDashboard() {
 
   const nav: { id: Tab; label: string; icon: typeof Tags }[] = [
     { id: "overview", label: t.admin.dashboard, icon: LayoutDashboard },
+    { id: "markets", label: t.admin.markets, icon: Globe },
     { id: "categories", label: t.admin.categories, icon: Tags },
     { id: "products", label: t.admin.products, icon: Package },
     { id: "upsell", label: t.admin.upsell, icon: Gift },
@@ -332,6 +342,12 @@ function AdminDashboard() {
               ))}
               <div className="sm:col-span-2 lg:col-span-4 flex flex-wrap gap-3">
                 <A
+                  href="/admin?tab=markets"
+                  className="rounded-xl bg-brand-700 px-4 py-3 text-sm font-bold text-white"
+                >
+                  {t.admin.markets}
+                </A>
+                <A
                   href="/admin?tab=categories"
                   className="rounded-xl bg-brand-700 px-4 py-3 text-sm font-bold text-white"
                 >
@@ -355,6 +371,79 @@ function AdminDashboard() {
                 >
                   {t.admin.orders}
                 </A>
+              </div>
+            </div>
+          )}
+
+          {tab === "markets" && (
+            <div>
+              <h2 className="mb-2 text-xl font-semibold">{t.admin.markets}</h2>
+              <p className="mb-6 text-sm text-[var(--muted)]">
+                {t.admin.marketsHint}
+              </p>
+              <div className="space-y-3">
+                {STORE_MARKETS.map((m) => {
+                  const cur = currencyForCountry(m.code);
+                  const cat = categories.find((c) => c.country === m.code);
+                  const count = products.filter((p) =>
+                    isProductAvailableIn(p, m.code, categories)
+                  ).length;
+                  return (
+                    <div
+                      key={m.code}
+                      className="flex flex-wrap items-center gap-x-6 gap-y-3 rounded-2xl border border-sand-200 bg-white p-4 sm:p-5"
+                    >
+                      <div className="flex min-w-[11rem] items-center gap-3">
+                        <span className="text-2xl">{m.flag}</span>
+                        <div>
+                          <p className="font-semibold text-ink-900">
+                            {locale === "ar" ? m.nameAr : m.nameEn}
+                          </p>
+                          <p className="text-xs text-[var(--muted)]">
+                            {m.code} · {m.dial}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="min-w-[10rem]">
+                        <p className="text-xs text-[var(--muted)]">
+                          {t.common.currency}
+                        </p>
+                        <p className="font-semibold">{cur}</p>
+                        <p className="text-xs text-[var(--muted)]">
+                          $1 = {currencyRates[cur]} {cur}
+                        </p>
+                      </div>
+
+                      <div className="min-w-[7rem]">
+                        <p className="text-xs text-[var(--muted)]">
+                          {t.admin.marketProducts}
+                        </p>
+                        <p className="font-semibold">{count}</p>
+                      </div>
+
+                      <div className="ms-auto flex flex-wrap gap-2">
+                        {cat ? (
+                          <A
+                            href={`/admin/category/${cat.id}`}
+                            className="inline-flex items-center gap-2 rounded-xl border border-sand-300 px-3 py-2 text-sm font-semibold hover:border-brand-400"
+                          >
+                            <Pencil className="h-4 w-4" />
+                            {t.admin.marketOpenCategory}
+                          </A>
+                        ) : (
+                          <A
+                            href="/admin/category/new"
+                            className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-3 py-2 text-sm font-semibold text-white hover:bg-brand-600"
+                          >
+                            <Plus className="h-4 w-4" />
+                            {t.admin.marketMissingCategory}
+                          </A>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

@@ -6,6 +6,7 @@ export type CountryCode =
   | "AE"
   | "OM"
   | "IQ"
+  | "LY"
   | "KW"
   | "BH"
   | "QA"
@@ -20,6 +21,7 @@ export type CurrencyCode =
   | "OMR"
   | "QAR"
   | "IQD"
+  | "LYD"
   | "EGP"
   | "MAD"
   | "USD";
