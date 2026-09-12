@@ -1,5 +1,6 @@
 import { STORE_MARKETS } from "./countries";
 import type { Category, Product } from "./types";
+import { withSpanishCopy } from "./seed-es";
 import { UNIVERSAL_MARKET_PRODUCTS } from "./seed-universal-products";
 
 const CATEGORY_IMAGES: Record<string, string> = {
@@ -9,16 +10,27 @@ const CATEGORY_IMAGES: Record<string, string> = {
   OM: "/products/neck-massager.webp",
   IQ: "/products/car-windshield-umbrella.png",
   LY: "/products/fashion-sling-g1.png",
+  MX: "/products/wireless-clock-1.png",
+  AR: "/products/neck-massager.webp",
+  CR: "/products/air-bed.png",
+  EC: "/products/baby-washer.png",
+  GT: "/products/smart-sunglasses.png",
+  HN: "/products/xiaomi-earbuds-tws.png",
+  SV: "/products/konnect-kn101-powerbank.png",
+  NI: "/products/dish-drying-rack-sink.png",
+  DO: "/products/rolling-cart-1.png",
 };
 
-/** Morocco, Saudi Arabia, UAE, Oman, Iraq, and Libya */
+/** One category per open market, generated from STORE_MARKETS */
 export const SEED_CATEGORIES: Category[] = STORE_MARKETS.map((c) => ({
   id: `cat-${c.code}`,
   slug: `products-${c.code.toLowerCase()}`,
   nameAr: `منتجات ${c.nameAr}`,
   nameEn: `${c.nameEn} Products`,
+  nameEs: `Productos de ${c.nameEs ?? c.nameEn}`,
   descriptionAr: `تشكيلة مختارة لسوق ${c.nameAr} بأسعار ${c.currency}`,
   descriptionEn: `Curated picks for ${c.nameEn} priced in ${c.currency}`,
+  descriptionEs: `Selección para ${c.nameEs ?? c.nameEn} con precios en ${c.currency}`,
   image: CATEGORY_IMAGES[c.code] ?? "/products/car-vacuum.png",
   createdAt: "2026-03-01T00:00:00.000Z",
   country: c.code,
@@ -30,7 +42,7 @@ const COD_AR =
 const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
-export const SEED_PRODUCTS: Product[] = [
+const BASE_PRODUCTS: Product[] = [
   {
     id: "prod-fashion-sling",
     slug: "anti-theft-usb-sling-bag",
@@ -397,7 +409,23 @@ ${COD_EN}
       IQ: 39000,
       LY: 165,
     },
-    availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
+    availableIn: [
+      "MA",
+      "SA",
+      "AE",
+      "OM",
+      "IQ",
+      "LY",
+      "MX",
+      "AR",
+      "CR",
+      "EC",
+      "GT",
+      "HN",
+      "SV",
+      "NI",
+      "DO",
+    ],
     images: [
       "/products/car-vacuum-demo.gif",
       "/products/car-vacuum.png",
@@ -530,7 +558,23 @@ ${COD_EN}
       IQ: 78000,
       LY: 330,
     },
-    availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
+    availableIn: [
+      "MA",
+      "SA",
+      "AE",
+      "OM",
+      "IQ",
+      "LY",
+      "MX",
+      "AR",
+      "CR",
+      "EC",
+      "GT",
+      "HN",
+      "SV",
+      "NI",
+      "DO",
+    ],
     images: [
       "/products/baby-washer-demo.gif",
       "/products/baby-washer.png",
@@ -663,7 +707,23 @@ ${COD_EN}
       IQ: 62000,
       LY: 260,
     },
-    availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
+    availableIn: [
+      "MA",
+      "SA",
+      "AE",
+      "OM",
+      "IQ",
+      "LY",
+      "MX",
+      "AR",
+      "CR",
+      "EC",
+      "GT",
+      "HN",
+      "SV",
+      "NI",
+      "DO",
+    ],
     images: [
       "/products/smart-sunglasses-demo.gif",
       "/products/smart-sunglasses.png",
@@ -796,7 +856,23 @@ ${COD_EN}
       IQ: 29000,
       LY: 125,
     },
-    availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
+    availableIn: [
+      "MA",
+      "SA",
+      "AE",
+      "OM",
+      "IQ",
+      "LY",
+      "MX",
+      "AR",
+      "CR",
+      "EC",
+      "GT",
+      "HN",
+      "SV",
+      "NI",
+      "DO",
+    ],
     images: [
       "/products/wireless-clock-demo.gif",
       "/products/wireless-clock-1.png",
@@ -933,7 +1009,23 @@ ${COD_EN}
       IQ: 34000,
       LY: 145,
     },
-    availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
+    availableIn: [
+      "MA",
+      "SA",
+      "AE",
+      "OM",
+      "IQ",
+      "LY",
+      "MX",
+      "AR",
+      "CR",
+      "EC",
+      "GT",
+      "HN",
+      "SV",
+      "NI",
+      "DO",
+    ],
     images: [
       "/products/neck-massager-demo.gif",
       "/products/neck-massager.webp",
@@ -1062,7 +1154,23 @@ ${COD_EN}
       IQ: 62000,
       LY: 260,
     },
-    availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
+    availableIn: [
+      "MA",
+      "SA",
+      "AE",
+      "OM",
+      "IQ",
+      "LY",
+      "MX",
+      "AR",
+      "CR",
+      "EC",
+      "GT",
+      "HN",
+      "SV",
+      "NI",
+      "DO",
+    ],
     images: [
       "/products/air-bed-demo.gif",
       "/products/air-bed.png",
@@ -2452,3 +2560,5 @@ ${COD_EN}
   },
   ...UNIVERSAL_MARKET_PRODUCTS,
 ];
+
+export const SEED_PRODUCTS: Product[] = BASE_PRODUCTS.map(withSpanishCopy);

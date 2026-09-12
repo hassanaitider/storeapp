@@ -8,6 +8,7 @@ import { formatLocalAmount, formatPrice } from "@/lib/currency";
 import {
   formatProductPrice,
 } from "@/lib/pricing";
+import { pickText } from "@/lib/localized";
 import { cartItemLineLocal } from "@/lib/qty-upsell";
 import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
 
@@ -61,7 +62,7 @@ export default function CartPage() {
         <div className="space-y-6">
           <ul className="space-y-4">
             {lines.map(({ item, product }) => {
-            const name = locale === "ar" ? product.nameAr : product.nameEn;
+            const name = pickText(product, "name", locale);
             return (
               <li
                 key={product.id}

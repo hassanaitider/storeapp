@@ -9,6 +9,7 @@ import {
   needsUnoptimizedImage,
   uploadMediaFile,
 } from "@/components/shop/ImageUploadButton";
+import { pickText } from "@/lib/localized";
 import { cn } from "@/lib/utils";
 import type { Locale, Product } from "@/lib/types";
 
@@ -158,7 +159,7 @@ export function ProductMediaGallery({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={activeUrl}
-            alt={locale === "ar" ? product.nameAr : product.nameEn}
+            alt={pickText(product, "name", locale)}
             className={activeIsGif ? "media-full--gif" : undefined}
             onClick={(e) => e.stopPropagation()}
           />
@@ -182,13 +183,17 @@ export function ProductMediaGallery({
                 className="block w-full cursor-zoom-in border-0 bg-transparent p-0"
                 onClick={() => setLightboxOpen(true)}
                 aria-label={
-                  locale === "ar" ? "عرض بالحجم الكامل" : "View full size"
+                  locale === "ar"
+                    ? "عرض بالحجم الكامل"
+                    : locale === "es"
+                      ? "Ver a tamaño completo"
+                      : "View full size"
                 }
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={activeUrl}
-                  alt={locale === "ar" ? product.nameAr : product.nameEn}
+                  alt={pickText(product, "name", locale)}
                   className={cn(
                     "media-full max-h-[min(90vh,56rem)] w-full",
                     activeIsGif && "media-full--gif"

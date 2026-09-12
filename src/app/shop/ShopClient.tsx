@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { ProductCard } from "@/components/shop/ProductCard";
+import { pickText } from "@/lib/localized";
 import { cn } from "@/lib/utils";
 import type { CountryCode } from "@/lib/types";
 
@@ -56,7 +57,7 @@ export default function ShopClient() {
             key={c.id}
             href={`/shop?category=${c.slug}`}
             active={active === c.slug}
-            label={locale === "ar" ? c.nameAr : c.nameEn}
+            label={pickText(c, "name", locale)}
           />
         ))}
       </div>

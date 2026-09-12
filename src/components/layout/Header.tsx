@@ -59,6 +59,7 @@ export function Header() {
           >
             <option value="ar">العربية</option>
             <option value="en">English</option>
+            <option value="es">Español</option>
           </select>
 
           <select

@@ -2,6 +2,7 @@
 
 import { Check, ChevronDown } from "lucide-react";
 import { useT } from "@/hooks/useT";
+import { pickList, pickText } from "@/lib/localized";
 import type { Locale, Product } from "@/lib/types";
 import { isGifUrl } from "@/components/shop/ProductMediaGallery";
 import { ProductHtmlBody } from "@/components/shop/ProductHtmlBody";
@@ -57,10 +58,8 @@ export function ProductDetailSections({
 }) {
   const t = useT();
   const landing = product.landing;
-  const details = locale === "ar" ? product.detailsAr : product.detailsEn;
-  const benefits = locale === "ar"
-    ? landing?.benefitsAr ?? []
-    : landing?.benefitsEn ?? [];
+  const details = pickList(product, "details", locale);
+  const benefits = pickList(landing, "benefits", locale);
   const cover = productCoverSrc(product.images);
   const { gif, stills } = mediaPack(product.images);
 
@@ -93,20 +92,22 @@ export function ProductDetailSections({
         <section className="mx-auto max-w-3xl animate-fade-up space-y-4">
           <StoryMedia
             src={gif}
-            alt={locale === "ar" ? product.nameAr : product.nameEn}
+            alt={pickText(product, "name", locale)}
             badge="GIF"
           />
           <p className="px-1 text-center text-sm text-[var(--muted)] sm:text-start">
             {locale === "ar"
               ? "معاينة متحركة للمنتج"
-              : "Animated product preview"}
+              : locale === "es"
+                ? "Vista previa animada del producto"
+                : "Animated product preview"}
           </p>
         </section>
       ) : null}
 
       {landing.sections.map((section, i) => {
-        const title = locale === "ar" ? section.titleAr : section.titleEn;
-        const body = locale === "ar" ? section.bodyAr : section.bodyEn;
+        const title = pickText(section, "title", locale);
+        const body = pickText(section, "body", locale);
         const image =
           stills[i] ?? section.image ?? stills[i % Math.max(stills.length, 1)] ?? cover;
         const paragraphs = body
@@ -182,8 +183,8 @@ export function ProductDetailSections({
           <h3 className="product-section-title">{t.product.faq}</h3>
           <div className="mt-5 divide-y divide-sand-200 border-y border-sand-200">
             {landing.faq.map((item) => {
-              const q = locale === "ar" ? item.questionAr : item.questionEn;
-              const a = locale === "ar" ? item.answerAr : item.answerEn;
+              const q = pickText(item, "question", locale);
+              const a = pickText(item, "answer", locale);
               return (
                 <details key={q} className="group py-4">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-[length:var(--text-base)] font-bold text-ink-900">
@@ -211,9 +212,8 @@ export function ProductBriefDescription({
 }) {
   const landing = product.landing;
   if (landing) {
-    const headline =
-      locale === "ar" ? landing.headlineAr : landing.headlineEn;
-    const intro = locale === "ar" ? landing.introAr : landing.introEn;
+    const headline = pickText(landing, "headline", locale);
+    const intro = pickText(landing, "intro", locale);
     return (
       <section className="mx-auto max-w-3xl space-y-3">
         <h2 className="product-section-title text-ink-900">{headline}</h2>
@@ -222,8 +222,7 @@ export function ProductBriefDescription({
     );
   }
 
-  const desc =
-    locale === "ar" ? product.descriptionAr : product.descriptionEn;
+  const desc = pickText(product, "description", locale);
   return (
     <section className="mx-auto max-w-3xl">
       <ProductHtmlBody html={desc} fallback={htmlToPlain(desc)} />

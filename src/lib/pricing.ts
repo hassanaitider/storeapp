@@ -1,5 +1,10 @@
 import { currencyForCountry, getCountry } from "./countries";
-import { convertFromUSD, formatLocalAmount, getCurrency } from "./currency";
+import {
+  convertFromUSD,
+  formatLocalAmount,
+  getCurrency,
+  retailRound,
+} from "./currency";
 import type { Category, CountryCode, Locale, Product } from "./types";
 
 /** Local-currency price for a product in a given market */
@@ -11,7 +16,7 @@ export function getProductLocalPrice(
   if (typeof market === "number" && market >= 0) return market;
 
   const currency = currencyForCountry(country);
-  return convertFromUSD(product.priceUSD, currency);
+  return retailRound(convertFromUSD(product.priceUSD, currency), currency);
 }
 
 export function getProductCompareLocalPrice(
@@ -24,7 +29,7 @@ export function getProductCompareLocalPrice(
   }
   if (!product.compareAtUSD) return undefined;
   const currency = currencyForCountry(country);
-  return convertFromUSD(product.compareAtUSD, currency);
+  return retailRound(convertFromUSD(product.compareAtUSD, currency), currency);
 }
 
 /** Normalize to USD for cart/order totals */

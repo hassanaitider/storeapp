@@ -1,4 +1,4 @@
-import type { CurrencyCode, CurrencyInfo } from "./types";
+import type { CurrencyCode, CurrencyInfo, Locale } from "./types";
 
 /** Default retail FX rates relative to USD (admin can override) */
 export const DEFAULT_CURRENCY_RATES: Record<CurrencyCode, number> = {
@@ -13,6 +13,13 @@ export const DEFAULT_CURRENCY_RATES: Record<CurrencyCode, number> = {
   EGP: 49.5,
   MAD: 10.0,
   USD: 1,
+  MXN: 18.5,
+  ARS: 1050,
+  CRC: 510,
+  GTQ: 7.75,
+  HNL: 25.5,
+  NIO: 36.8,
+  DOP: 60.5,
 };
 
 /** Approximate retail FX rates relative to USD (display) */
@@ -101,9 +108,74 @@ export const CURRENCIES: CurrencyInfo[] = [
     code: "USD",
     nameAr: "دولار أمريكي",
     nameEn: "US Dollar",
+    nameEs: "Dólar estadounidense",
     symbol: "$",
     rate: DEFAULT_CURRENCY_RATES.USD,
     region: "usa",
+  },
+  {
+    code: "MXN",
+    nameAr: "بيزو مكسيكي",
+    nameEn: "Mexican Peso",
+    nameEs: "Peso mexicano",
+    // "MX$" rather than "$" so it never reads as USD in a multi-market store
+    symbol: "MX$",
+    rate: DEFAULT_CURRENCY_RATES.MXN,
+    region: "latam",
+  },
+  {
+    code: "ARS",
+    nameAr: "بيزو أرجنتيني",
+    nameEn: "Argentine Peso",
+    nameEs: "Peso argentino",
+    symbol: "AR$",
+    rate: DEFAULT_CURRENCY_RATES.ARS,
+    region: "latam",
+  },
+  {
+    code: "CRC",
+    nameAr: "كولون كوستاريكي",
+    nameEn: "Costa Rican Colón",
+    nameEs: "Colón costarricense",
+    symbol: "₡",
+    rate: DEFAULT_CURRENCY_RATES.CRC,
+    region: "latam",
+  },
+  {
+    code: "GTQ",
+    nameAr: "كيتزال غواتيمالي",
+    nameEn: "Guatemalan Quetzal",
+    nameEs: "Quetzal guatemalteco",
+    symbol: "Q",
+    rate: DEFAULT_CURRENCY_RATES.GTQ,
+    region: "latam",
+  },
+  {
+    code: "HNL",
+    nameAr: "لمبيرة هندوراسية",
+    nameEn: "Honduran Lempira",
+    nameEs: "Lempira hondureño",
+    symbol: "L",
+    rate: DEFAULT_CURRENCY_RATES.HNL,
+    region: "latam",
+  },
+  {
+    code: "NIO",
+    nameAr: "كوردوبا نيكاراغوية",
+    nameEn: "Nicaraguan Córdoba",
+    nameEs: "Córdoba nicaragüense",
+    symbol: "C$",
+    rate: DEFAULT_CURRENCY_RATES.NIO,
+    region: "latam",
+  },
+  {
+    code: "DOP",
+    nameAr: "بيزو دومينيكاني",
+    nameEn: "Dominican Peso",
+    nameEs: "Peso dominicano",
+    symbol: "RD$",
+    rate: DEFAULT_CURRENCY_RATES.DOP,
+    region: "latam",
   },
 ];
 
@@ -141,20 +213,35 @@ export function convertToUSD(localAmount: number, code: string): number {
   return localAmount / rate;
 }
 
+/**
+ * Rounds an FX-converted amount to a figure that reads like a shelf price.
+ * Only for prices with no hand-set market value — USD is already retail.
+ */
+export function retailRound(amount: number, code: string): number {
+  if (code === "USD" || !(amount > 0)) return amount;
+  if (amount >= 10000) return Math.round(amount / 1000) * 1000;
+  if (amount >= 1000) return Math.round(amount / 100) * 100;
+  if (amount >= 100) return Math.round(amount / 10) * 10 - 1;
+  if (amount >= 20) return Math.round(amount) - 0.1;
+  return Math.round(amount * 10) / 10;
+}
+
 export function formatLocalAmount(
   amount: number,
   code: string,
-  locale: "ar" | "en" = "ar"
+  locale: Locale = "ar"
 ): string {
   const currency = getCurrency(code);
+  // Gulf dinars quote 3 decimals; IQD, ARS and CRC are never quoted in cents
   const decimals = ["KWD", "BHD", "OMR"].includes(code)
     ? 3
-    : code === "IQD"
+    : ["IQD", "ARS", "CRC"].includes(code)
       ? 0
       : 2;
 
   // Always Latin/French digits (0–9), never Eastern Arabic numerals
-  const numberLocale = locale === "ar" ? "fr-FR" : "en-US";
+  const numberLocale =
+    locale === "ar" ? "fr-FR" : locale === "es" ? "es-MX" : "en-US";
   const formatted = new Intl.NumberFormat(numberLocale, {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
@@ -172,7 +259,7 @@ export function formatLocalAmount(
 export function formatPrice(
   amountUSD: number,
   code: string,
-  locale: "ar" | "en" = "ar"
+  locale: Locale = "ar"
 ): string {
   return formatLocalAmount(convertFromUSD(amountUSD, code), code, locale);
 }

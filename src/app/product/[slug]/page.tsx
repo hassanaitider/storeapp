@@ -19,6 +19,7 @@ import {
   getProductPriceUSD,
   productDiscountPercent,
 } from "@/lib/pricing";
+import { pickText } from "@/lib/localized";
 import { lineTotalUSDForQty } from "@/lib/qty-upsell";
 import { trackViewContent } from "@/lib/meta-pixel";
 import {
@@ -109,7 +110,11 @@ export default function ProductPage() {
     return (
       <div className="mx-auto max-w-7xl px-4 py-24 text-center">
         <p className="text-[var(--muted)]">
-          {locale === "ar" ? "المنتج غير موجود" : "Product not found"}
+          {locale === "ar"
+            ? "المنتج غير موجود"
+            : locale === "es"
+              ? "Producto no encontrado"
+              : "Product not found"}
         </p>
         <Link href="/shop" className="mt-4 inline-block text-brand-700 underline">
           {t.nav.shop}
@@ -142,7 +147,7 @@ export default function ProductPage() {
     );
   }
 
-  const name = locale === "ar" ? product.nameAr : product.nameEn;
+  const name = pickText(product, "name", locale);
   const category = categories.find((c) => c.id === product.categoryId);
   const qtyLabel =
     qty === 1
@@ -151,9 +156,11 @@ export default function ProductPage() {
         ? t.upsell.twoPieces
         : qty === 3
           ? t.upsell.threePieces
-          : qtyOffers.find((o) => o.quantity === qty)?.[
-              locale === "ar" ? "labelAr" : "labelEn"
-            ] ?? `${qty}`;
+          : pickText(
+              qtyOffers.find((o) => o.quantity === qty),
+              "label",
+              locale
+            ) || `${qty}`;
   const discount = productDiscountPercent(product, country);
   const compareLabel = formatProductComparePrice(product, country, locale);
 
@@ -200,7 +207,7 @@ export default function ProductPage() {
               href={`/shop?category=${category.slug}`}
               className="hover:text-brand-700"
             >
-              {locale === "ar" ? category.nameAr : category.nameEn}
+              {pickText(category, "name", locale)}
             </Link>
           </>
         )}
@@ -210,7 +217,7 @@ export default function ProductPage() {
       <header className="animate-fade-up text-center sm:text-start">
         {category ? (
           <p className="product-label">
-            {locale === "ar" ? category.nameAr : category.nameEn}
+            {pickText(category, "name", locale)}
           </p>
         ) : null}
         <h1 className="product-hero-title mt-2 text-balance text-ink-900">

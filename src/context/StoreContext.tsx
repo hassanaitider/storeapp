@@ -17,6 +17,7 @@ import {
   countryFromLocationSettings,
   isStoreMarket,
   isValidCountry,
+  localeForCountry,
 } from "@/lib/countries";
 import { isDurableMediaUrl } from "@/lib/media-url";
 import {
@@ -45,6 +46,7 @@ import {
   sanitizeCatalog,
   type PersistedCatalog,
 } from "@/lib/catalog-persist";
+import { isLocale } from "@/lib/i18n";
 import type {
   CartItem,
   Category,
@@ -53,6 +55,7 @@ import type {
   Locale,
   Order,
   Product,
+  ProductLanding,
 } from "@/lib/types";
 
 interface StoreState {
@@ -65,6 +68,7 @@ interface StoreState {
   country: CountryCode;
   countryManual: boolean;
   currencyManual: boolean;
+  localeManual: boolean;
   currencyRates: Record<CurrencyCode, number>;
   upsellEnabled: boolean;
 }
@@ -75,7 +79,7 @@ interface StoreContextValue extends StoreState {
   geoReady: boolean;
   /** Products visible in the visitor's market */
   marketProducts: Product[];
-  /** Only the visitor's regional category (MA / SA / AE / OM / IQ / LY). */
+  /** Only the visitor's own regional category */
   marketCategories: Category[];
   setLocale: (locale: Locale) => void;
   setCurrency: (currency: CurrencyCode, manual?: boolean) => void;
@@ -134,7 +138,7 @@ function cloneSeedCategories(): Category[] {
 function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
   const seed = cloneSeedCategories();
   if (!stored?.length) return seed;
-  // Keep only active markets (MA / SA / AE / OM / IQ / LY)
+  // Keep only the markets that are currently open
   return seed.map((s) => {
     const existing = stored.find((c) => c.id === s.id || c.slug === s.slug);
     if (!existing) return s;
@@ -147,11 +151,44 @@ function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
       availableIn: s.availableIn,
       nameAr: existing.nameAr || s.nameAr,
       nameEn: existing.nameEn || s.nameEn,
+      nameEs: existing.nameEs || s.nameEs,
       image: existing.image || s.image,
       descriptionAr: existing.descriptionAr || s.descriptionAr,
       descriptionEn: existing.descriptionEn || s.descriptionEn,
+      descriptionEs: existing.descriptionEs || s.descriptionEs,
     };
   });
+}
+
+/**
+ * Catalogs saved before Spanish shipped have a landing object with no *Es
+ * fields; keeping the seed's Spanish copy stops it from being lost on hydrate.
+ */
+function mergeLanding(
+  seed: ProductLanding | undefined,
+  stored: ProductLanding | undefined
+): ProductLanding | undefined {
+  if (!stored) return seed;
+  if (!seed) return stored;
+  return {
+    ...seed,
+    ...stored,
+    headlineEs: stored.headlineEs || seed.headlineEs,
+    introEs: stored.introEs || seed.introEs,
+    benefitsEs: stored.benefitsEs?.length
+      ? stored.benefitsEs
+      : seed.benefitsEs,
+    sections: stored.sections.map((section, i) => ({
+      ...section,
+      titleEs: section.titleEs || seed.sections[i]?.titleEs,
+      bodyEs: section.bodyEs || seed.sections[i]?.bodyEs,
+    })),
+    faq: stored.faq.map((item, i) => ({
+      ...item,
+      questionEs: item.questionEs || seed.faq[i]?.questionEs,
+      answerEs: item.answerEs || seed.faq[i]?.answerEs,
+    })),
+  };
 }
 
 function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
@@ -176,9 +213,14 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         descriptionEn: p.descriptionEn?.trim()
           ? p.descriptionEn
           : seed.descriptionEn,
+        nameEs: p.nameEs?.trim() ? p.nameEs : seed.nameEs,
+        descriptionEs: p.descriptionEs?.trim()
+          ? p.descriptionEs
+          : seed.descriptionEs,
         detailsAr: p.detailsAr?.length ? p.detailsAr : seed.detailsAr,
         detailsEn: p.detailsEn?.length ? p.detailsEn : seed.detailsEn,
-        landing: p.landing ?? seed.landing,
+        detailsEs: p.detailsEs?.length ? p.detailsEs : seed.detailsEs,
+        landing: mergeLanding(seed.landing, p.landing),
         images: durable.length ? durable : seed.images,
         colors: [],
         customColorEnabled:
@@ -224,11 +266,12 @@ function buildDefaults(country: CountryCode = DEFAULT_COUNTRY): StoreState {
     products: cloneSeedProducts(),
     orders: [],
     cart: [],
-    locale: "ar",
+    locale: localeForCountry(country),
     currency: currencyForCountry(country),
     country,
     countryManual: false,
     currencyManual: false,
+    localeManual: false,
     currencyRates: { ...DEFAULT_CURRENCY_RATES },
     upsellEnabled: true,
   };
@@ -283,6 +326,7 @@ function toPersisted(state: StoreState): PersistedCatalog {
     country: state.country,
     countryManual: state.countryManual,
     currencyManual: state.currencyManual,
+    localeManual: state.localeManual,
     currencyRates: state.currencyRates,
     upsellEnabled: state.upsellEnabled,
   });
@@ -294,6 +338,7 @@ function applyPersisted(
 ): StoreState {
   const manual = Boolean(parsed.countryManual);
   const currencyManual = Boolean(parsed.currencyManual);
+  const localeManual = Boolean(parsed.localeManual);
   const storedCountry =
     parsed.country && isValidCountry(parsed.country) && isStoreMarket(parsed.country)
       ? parsed.country
@@ -315,11 +360,15 @@ function applyPersisted(
       : currencyForCountry(country);
 
   return {
-    locale: parsed.locale === "en" || parsed.locale === "ar" ? parsed.locale : "ar",
+    locale:
+      localeManual && isLocale(parsed.locale)
+        ? parsed.locale
+        : localeForCountry(country),
     country,
     currency: currencyManual ? storedCurrency : currencyForCountry(country),
     countryManual: manual,
     currencyManual,
+    localeManual,
     currencyRates,
     products: mergeProductsWithSeed(
       parsed.products?.length ? parsed.products : undefined
@@ -540,12 +589,22 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const nextCurrency = s.currencyManual
           ? s.currency
           : currencyForCountry(detected);
-        if (s.country === detected && s.currency === nextCurrency) return s;
+        const nextLocale = s.localeManual
+          ? s.locale
+          : localeForCountry(detected);
+        if (
+          s.country === detected &&
+          s.currency === nextCurrency &&
+          s.locale === nextLocale
+        ) {
+          return s;
+        }
         applied = true;
         return {
           ...s,
           country: detected,
           currency: nextCurrency,
+          locale: nextLocale,
         };
       });
       if (!applied) return;
@@ -687,7 +746,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, [state.locale, state.country, storageReady]);
 
   const setLocale = useCallback(
-    (locale: Locale) => commit((s) => ({ ...s, locale })),
+    (locale: Locale) =>
+      commit((s) =>
+        s.locale === locale && s.localeManual
+          ? s
+          : { ...s, locale, localeManual: true }
+      ),
     [commit]
   );
 
@@ -707,10 +771,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const nextCurrency = s.currencyManual
           ? s.currency
           : currencyForCountry(next);
+        // Switching market also switches language, unless one was chosen by hand
+        const nextLocale = s.localeManual ? s.locale : localeForCountry(next);
         if (
           s.country === next &&
           s.countryManual === manual &&
-          s.currency === nextCurrency
+          s.currency === nextCurrency &&
+          s.locale === nextLocale
         ) {
           return s;
         }
@@ -719,6 +786,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           country: next,
           countryManual: manual,
           currency: nextCurrency,
+          locale: nextLocale,
         };
       });
     },

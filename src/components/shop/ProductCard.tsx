@@ -8,6 +8,7 @@ import {
   formatProductPrice,
   productDiscountPercent,
 } from "@/lib/pricing";
+import { pickText } from "@/lib/localized";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
@@ -24,7 +25,7 @@ export function ProductCard({
   const t = useT();
   const { locale, country, addToCart } = useStore();
   const priceCountry = marketCountry ?? country;
-  const name = locale === "ar" ? product.nameAr : product.nameEn;
+  const name = pickText(product, "name", locale);
   const discount = productDiscountPercent(product, priceCountry);
   const compareLabel = formatProductComparePrice(product, priceCountry, locale);
   const cover = productCoverSrc(product.images);

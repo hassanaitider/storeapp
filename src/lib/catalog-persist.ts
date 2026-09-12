@@ -50,6 +50,7 @@ export type PersistedCatalog = {
   country: CountryCode;
   countryManual: boolean;
   currencyManual: boolean;
+  localeManual: boolean;
   currencyRates: Record<CurrencyCode, number>;
   /** When false, upsell blocks are hidden on the storefront */
   upsellEnabled?: boolean;
@@ -129,8 +130,10 @@ export function catalogToJson(data: PersistedCatalog): string {
       ...p,
       descriptionAr: (p.descriptionAr ?? "").slice(0, 200),
       descriptionEn: (p.descriptionEn ?? "").slice(0, 200),
+      descriptionEs: (p.descriptionEs ?? "").slice(0, 200),
       detailsAr: [],
       detailsEn: [],
+      detailsEs: [],
     })),
   });
 }
@@ -146,11 +149,15 @@ export function parseCatalogJson(raw: string): PersistedCatalog | null {
       products: Array.isArray(parsed.products) ? parsed.products : [],
       orders: Array.isArray(parsed.orders) ? parsed.orders : [],
       cart: Array.isArray(parsed.cart) ? parsed.cart : [],
-      locale: parsed.locale === "en" ? "en" : "ar",
+      locale:
+        parsed.locale === "en" || parsed.locale === "es"
+          ? parsed.locale
+          : "ar",
       currency: (parsed.currency as CurrencyCode) || "USD",
       country: (parsed.country as CountryCode) || "MA",
       countryManual: Boolean(parsed.countryManual),
       currencyManual: Boolean(parsed.currencyManual),
+      localeManual: Boolean(parsed.localeManual),
       currencyRates: (parsed.currencyRates ?? {}) as Record<CurrencyCode, number>,
       upsellEnabled: parsed.upsellEnabled !== false,
     });

@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/shop/ProductCard";
 import { ProductImage } from "@/components/shop/ProductImage";
 import { TrustBar } from "@/components/shop/TrustBar";
 import { currencyForCountry } from "@/lib/countries";
+import { pickText } from "@/lib/localized";
 
 export default function HomePage() {
   const t = useT();
@@ -98,17 +99,17 @@ export default function HomePage() {
             >
               <ProductImage
                 src={cat.image || "/products/car-vacuum.png"}
-                alt={locale === "ar" ? cat.nameAr : cat.nameEn}
+                alt={pickText(cat, "name", locale)}
                 fill
                 className="object-contain bg-sand-100 p-2 transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/30 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                 <h3 className="font-display text-2xl font-semibold">
-                  {locale === "ar" ? cat.nameAr : cat.nameEn}
+                  {pickText(cat, "name", locale)}
                 </h3>
                 <p className="mt-1 line-clamp-2 text-sm text-brand-100/90">
-                  {locale === "ar" ? cat.descriptionAr : cat.descriptionEn}
+                  {pickText(cat, "description", locale)}
                 </p>
                 {cat.country ? (
                   <p className="mt-2 text-xs font-semibold text-brand-200">

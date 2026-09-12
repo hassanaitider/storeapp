@@ -6,6 +6,7 @@ import { currencyForCountry } from "@/lib/countries";
 import { formatLocalAmount } from "@/lib/currency";
 import { getProductLocalPrice } from "@/lib/pricing";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
+import { pickText } from "@/lib/localized";
 import type { CountryCode, Locale, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -61,9 +62,7 @@ export function ProductQtyUpsell({
                 ? t.upsell.twoPieces
                 : offer.quantity === 3
                   ? t.upsell.threePieces
-                  : locale === "ar"
-                    ? offer.labelAr
-                    : offer.labelEn;
+                  : pickText(offer, "label", locale) || `${offer.quantity}`;
 
           return (
             <li key={offer.quantity}>

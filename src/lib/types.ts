@@ -1,4 +1,4 @@
-export type Locale = "ar" | "en";
+export type Locale = "ar" | "en" | "es";
 
 export type CountryCode =
   | "MA"
@@ -11,7 +11,16 @@ export type CountryCode =
   | "BH"
   | "QA"
   | "EG"
-  | "US";
+  | "US"
+  | "MX"
+  | "AR"
+  | "CR"
+  | "EC"
+  | "GT"
+  | "HN"
+  | "SV"
+  | "NI"
+  | "DO";
 
 export type CurrencyCode =
   | "SAR"
@@ -24,15 +33,24 @@ export type CurrencyCode =
   | "LYD"
   | "EGP"
   | "MAD"
-  | "USD";
+  | "USD"
+  | "MXN"
+  | "ARS"
+  | "CRC"
+  | "GTQ"
+  | "HNL"
+  | "NIO"
+  | "DOP";
 
 export interface Category {
   id: string;
   slug: string;
   nameAr: string;
   nameEn: string;
+  nameEs?: string;
   descriptionAr: string;
   descriptionEn: string;
+  descriptionEs?: string;
   image: string;
   createdAt: string;
   /** If set, this is a country-market category */
@@ -43,26 +61,33 @@ export interface Category {
 export interface ProductLandingSection {
   titleAr: string;
   titleEn: string;
+  titleEs?: string;
   bodyAr: string;
   bodyEn: string;
+  bodyEs?: string;
   image?: string;
 }
 
 export interface ProductLandingFaq {
   questionAr: string;
   questionEn: string;
+  questionEs?: string;
   answerAr: string;
   answerEn: string;
+  answerEs?: string;
 }
 
 export interface ProductLanding {
   headlineAr: string;
   headlineEn: string;
+  headlineEs?: string;
   introAr: string;
   introEn: string;
+  introEs?: string;
   sections: ProductLandingSection[];
   benefitsAr: string[];
   benefitsEn: string[];
+  benefitsEs?: string[];
   faq: ProductLandingFaq[];
 }
 
@@ -84,6 +109,7 @@ export interface ProductQtyOffer {
   discountPercent?: number;
   labelAr?: string;
   labelEn?: string;
+  labelEs?: string;
   /** Highlight as recommended tier */
   popular?: boolean;
 }
@@ -94,10 +120,13 @@ export interface Product {
   categoryId: string;
   nameAr: string;
   nameEn: string;
+  nameEs?: string;
   descriptionAr: string;
   descriptionEn: string;
+  descriptionEs?: string;
   detailsAr: string[];
   detailsEn: string[];
+  detailsEs?: string[];
   /** Base catalog price in USD (fallback) */
   priceUSD: number;
   compareAtUSD?: number;
@@ -154,8 +183,9 @@ export interface CurrencyInfo {
   code: CurrencyCode;
   nameAr: string;
   nameEn: string;
+  nameEs?: string;
   symbol: string;
   /** Multiply USD price by this to get local amount */
   rate: number;
-  region: "gulf" | "morocco" | "mena" | "usa";
+  region: "gulf" | "morocco" | "mena" | "usa" | "latam";
 }
