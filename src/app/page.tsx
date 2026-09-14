@@ -111,11 +111,6 @@ export default function HomePage() {
                 <p className="mt-1 line-clamp-2 text-sm text-brand-100/90">
                   {pickText(cat, "description", locale)}
                 </p>
-                {cat.country ? (
-                  <p className="mt-2 text-xs font-semibold text-brand-200">
-                    {currencyForCountry(cat.country)}
-                  </p>
-                ) : null}
               </div>
             </Link>
           ))}
