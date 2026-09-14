@@ -7,7 +7,6 @@ import { useT } from "@/hooks/useT";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { ProductImage } from "@/components/shop/ProductImage";
 import { TrustBar } from "@/components/shop/TrustBar";
-import { currencyForCountry } from "@/lib/countries";
 import { pickText } from "@/lib/localized";
 
 export default function HomePage() {
