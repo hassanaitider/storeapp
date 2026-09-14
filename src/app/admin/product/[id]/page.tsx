@@ -14,7 +14,7 @@ import { slugify } from "@/lib/utils";
 import { ProductQtyOffersEditor } from "@/components/admin/ProductQtyOffersEditor";
 import { ProductRichEditor } from "@/components/admin/ProductRichEditor";
 import { ProductColorsEditor } from "@/components/admin/ProductColorsEditor";
-import type { CountryCode, ProductQtyOffer } from "@/lib/types";
+import type { CountryCode, Product, ProductQtyOffer } from "@/lib/types";
 import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
 import { SITE_URL } from "@/lib/site";
 import {
