@@ -494,7 +494,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     stateRef.current = stamped;
     let saved = true;
     if (typeof window !== "undefined") {
-      const persisted = { ...toPersisted(stamped), updatedAt: Date.now() };
+      const localNow = readLocalCatalog();
+      const persisted = {
+        ...toPersisted(stamped),
+        updatedAt: Math.max(Date.now(), (localNow?.updatedAt || 0) + 1),
+      };
       saved = flushToLocal(stamped, persisted);
       // Always try server — do not wait for hydrate (avoids lost admin saves)
       void flushToServer(stamped, persisted);
@@ -568,8 +572,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setState(next);
         storageReadyRef.current = true;
         setStorageReady(true);
-        // Only mirror to local if we are not older than what's already stored
-        flushToLocal(next);
+        // Mirror hydrate result WITHOUT bumping updatedAt. Stamping Date.now()
+        // here made stale remote seed prices look "newer" than a concurrent
+        // admin save and caused Save → price reverts for the merchant.
+        const appliedUpdatedAt =
+          localFinal &&
+          (localFinal.updatedAt || 0) > (best?.updatedAt || 0)
+            ? localFinal.updatedAt
+            : best?.updatedAt;
+        if (typeof appliedUpdatedAt === "number") {
+          flushToLocal(next, {
+            ...toPersisted(next),
+            updatedAt: appliedUpdatedAt,
+          });
+        }
       } catch (err) {
         console.error("Store hydrate failed", err);
         setCurrencyRateOverrides(DEFAULT_CURRENCY_RATES);
@@ -1018,7 +1034,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const persistCatalog = useCallback(async () => {
     const current = stateRef.current;
-    const persisted = { ...toPersisted(current), updatedAt: Date.now() };
+    const localNow = readLocalCatalog();
+    const persisted = {
+      ...toPersisted(current),
+      // Always beat whatever is already in localStorage (avoids silent skip)
+      updatedAt: Math.max(Date.now(), (localNow?.updatedAt || 0) + 1),
+    };
     const localOk = flushToLocal(current, persisted);
     if (!localOk) return { ok: false, error: "local" };
     return flushToServer(current, persisted);

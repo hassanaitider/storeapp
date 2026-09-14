@@ -1,8 +1,10 @@
 import type { Category, Product, Order, CartItem, CurrencyCode, CountryCode, Locale } from "@/lib/types";
 
-export const CATALOG_STORAGE_KEY = "cargolf-v40";
+export const CATALOG_STORAGE_KEY = "cargolf-v41";
 
 export const LEGACY_STORAGE_KEYS = [
+  // Skip v40: hydrate used to stamp Date.now() onto stale seed prices, so
+  // migrating that key would keep overwriting admin price saves.
   "cargolf-v39",
   "cargolf-v38",
   "cargolf-v37",

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Eye, Save } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
@@ -14,9 +14,13 @@ import { slugify } from "@/lib/utils";
 import { ProductQtyOffersEditor } from "@/components/admin/ProductQtyOffersEditor";
 import { ProductRichEditor } from "@/components/admin/ProductRichEditor";
 import { ProductColorsEditor } from "@/components/admin/ProductColorsEditor";
-import type { CountryCode, Product, ProductQtyOffer } from "@/lib/types";
+import type { CountryCode, ProductQtyOffer } from "@/lib/types";
 import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
 import { SITE_URL } from "@/lib/site";
+import {
+  parseAdminPrice,
+  scaleQtyOfferMarketPrices,
+} from "@/lib/admin-price";
 
 export default function EditProductPage() {
   const params = useParams();
@@ -55,6 +59,8 @@ export default function EditProductPage() {
   const [flash, setFlash] = useState("");
   const [saving, setSaving] = useState(false);
   const [ready, setReady] = useState(isNew);
+  /** Only load form fields when switching products — never wipe mid-edit on hydrate. */
+  const loadedForIdRef = useRef<string | null>(null);
 
   const cat =
     categories.find((c) => c.id === categoryId) ?? categories[0] ?? null;
@@ -65,6 +71,8 @@ export default function EditProductPage() {
 
   useEffect(() => {
     if (isNew) {
+      if (loadedForIdRef.current === "new") return;
+      loadedForIdRef.current = "new";
       setCategoryId(categories[0]?.id ?? "");
       setDescriptionAr("");
       setDescriptionEn("");
@@ -73,6 +81,8 @@ export default function EditProductPage() {
       return;
     }
     if (!existing) return;
+    if (loadedForIdRef.current === existing.id) return;
+    loadedForIdRef.current = existing.id;
     const c =
       categories.find((x) => x.id === existing.categoryId) ?? categories[0];
     const m = (c?.country ?? "US") as CountryCode;
@@ -154,13 +164,21 @@ export default function EditProductPage() {
       window.alert(
         locale === "ar"
           ? "انتظر لحظة… جاري تجهيز الحفظ"
-          : "Please wait… preparing save"
+          : locale === "es"
+            ? "Espera un momento… preparando guardado"
+            : "Please wait… preparing save"
       );
       return;
     }
-    const priceLocal = Number(localPrice);
-    if (!(priceLocal > 0)) {
-      window.alert(locale === "ar" ? "أدخل سعراً صحيحاً" : "Enter a valid price");
+    const priceLocal = parseAdminPrice(localPrice);
+    if (priceLocal == null) {
+      window.alert(
+        locale === "ar"
+          ? "أدخل سعراً صحيحاً"
+          : locale === "es"
+            ? "Introduce un precio válido"
+            : "Enter a valid price"
+      );
       return;
     }
     const priceUSD = convertToUSD(priceLocal, cur);
@@ -172,6 +190,20 @@ export default function EditProductPage() {
     const plainAr = htmlToPlain(descriptionAr) || nameAr.trim();
     const plainEn = htmlToPlain(descriptionEn) || nameEn.trim();
 
+    const oldUnit = existing ? getProductLocalPrice(existing, market) : priceLocal;
+    const nextQtyOffers = scaleQtyOfferMarketPrices(
+      qtyOffers,
+      market,
+      oldUnit,
+      priceLocal
+    );
+
+    // Pin local shelf price for this product's market
+    const marketPriceMap: Partial<Record<CountryCode, number>> = {
+      ...(existing?.marketPrices ?? {}),
+      [market]: priceLocal,
+    };
+
     const data = {
       nameAr: nameAr.trim(),
       nameEn: nameEn.trim(),
@@ -181,10 +213,7 @@ export default function EditProductPage() {
       detailsEn: existing?.detailsEn ?? [],
       priceUSD,
       compareAtUSD: existing?.compareAtUSD,
-      marketPrices: {
-        ...(existing?.marketPrices ?? {}),
-        [market]: priceLocal,
-      },
+      marketPrices: marketPriceMap,
       marketComparePrices: existing?.marketComparePrices,
       availableIn: existing?.availableIn,
       colors: [],
@@ -194,7 +223,7 @@ export default function EditProductPage() {
       slug: (slug || slugify(nameEn || nameAr)).trim(),
       featured,
       inStock,
-      qtyOffers: qtyOffers.length ? qtyOffers : undefined,
+      qtyOffers: nextQtyOffers.length ? nextQtyOffers : undefined,
       rating: existing?.rating ?? 4.5,
       reviewCount: existing?.reviewCount ?? 0,
       landing: existing?.landing,
@@ -202,7 +231,11 @@ export default function EditProductPage() {
 
     if (!data.nameAr || !data.nameEn || !data.categoryId) {
       window.alert(
-        locale === "ar" ? "أكمل الاسم والتصنيف" : "Fill name and category"
+        locale === "ar"
+          ? "أكمل الاسم والتصنيف"
+          : locale === "es"
+            ? "Completa nombre y categoría"
+            : "Fill name and category"
       );
       return;
     }
@@ -218,6 +251,8 @@ export default function EditProductPage() {
           );
           return;
         }
+        setQtyOffers(nextQtyOffers);
+        setLocalPrice(String(Math.round(priceLocal * 1000) / 1000));
         const server = await persistCatalog();
         if (!server.ok) {
           window.alert(
@@ -233,13 +268,18 @@ export default function EditProductPage() {
         setFlash(
           locale === "ar"
             ? server.ok
-              ? "تم الحفظ ✓"
-              : "حُفظ محلياً ⚠"
-            : server.ok
-              ? "Saved ✓"
-              : "Saved locally ⚠"
+              ? "تم الحفظ ✓ الثمن محفوظ"
+              : "حُفظ محلياً فقط ⚠ — الزوار ما غايشوفو الثمن الجديد"
+            : locale === "es"
+              ? server.ok
+                ? "Guardado ✓ precio fijado"
+                : "Solo en este navegador ⚠ — los visitantes no verán el precio"
+              : server.ok
+                ? "Saved ✓ price locked in"
+                : "Saved locally only ⚠ — visitors will not see the new price"
         );
-        window.setTimeout(() => setFlash(""), 2500);
+        window.setTimeout(() => setFlash(""), 4000);
+        loadedForIdRef.current = newId;
         router.replace(`/admin/product/${newId}`);
         return;
       }
@@ -252,31 +292,47 @@ export default function EditProductPage() {
         );
         return;
       }
+      setQtyOffers(nextQtyOffers);
+      setLocalPrice(String(Math.round(priceLocal * 1000) / 1000));
       const server = await persistCatalog();
       if (!server.ok) {
         window.alert(
           locale === "ar"
             ? server.error === "missing_blob_token"
               ? "حُفظ في المتصفح فقط — أضف BLOB_READ_WRITE_TOKEN في Vercel (Storage → Blob) باش الثمن يبقا ثابت للجميع"
-              : "حُفظ محلياً لكن فشل الحفظ على السيرفر — أعد المحاولة"
+              : server.error === "unauthorized"
+                ? "سجّل دخول لوحة التحكم من جديد — الثمن ما تحفظش على السيرفر"
+                : "حُفظ محلياً لكن فشل الحفظ على السيرفر — أعد المحاولة"
             : server.error === "missing_blob_token"
               ? "Saved in browser only — add BLOB_READ_WRITE_TOKEN on Vercel so prices persist for everyone"
-              : "Saved locally but server save failed — retry"
+              : server.error === "unauthorized"
+                ? "Log in to admin again — price was not saved to the server"
+                : "Saved locally but server save failed — retry"
         );
       }
       setFlash(
         locale === "ar"
           ? server.ok
-            ? "تم الحفظ ✓"
-            : "حُفظ محلياً ⚠"
-          : server.ok
-            ? "Saved ✓"
-            : "Saved locally ⚠"
+            ? "تم الحفظ ✓ الثمن محفوظ للجميع"
+            : "حُفظ محلياً فقط ⚠ — الزوار ما غايشوفو الثمن الجديد"
+          : locale === "es"
+            ? server.ok
+              ? "Guardado ✓ precio visible para todos"
+              : "Solo en este navegador ⚠ — los visitantes no verán el precio"
+            : server.ok
+              ? "Saved ✓ price visible for everyone"
+              : "Saved locally only ⚠ — visitors will not see the new price"
       );
-      window.setTimeout(() => setFlash(""), 2500);
+      window.setTimeout(() => setFlash(""), 4000);
     } catch (err) {
       console.error(err);
-      window.alert(locale === "ar" ? "فشل الحفظ" : "Save failed");
+      window.alert(
+        locale === "ar"
+          ? "فشل الحفظ"
+          : locale === "es"
+            ? "Error al guardar"
+            : "Save failed"
+      );
     } finally {
       setSaving(false);
     }
