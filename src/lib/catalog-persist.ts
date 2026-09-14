@@ -1,9 +1,9 @@
 import type { Category, Product, Order, CartItem, CurrencyCode, CountryCode, Locale } from "@/lib/types";
 
-export const CATALOG_STORAGE_KEY = "cargolf-v42";
+export const CATALOG_STORAGE_KEY = "cargolf-v43";
 
 export const LEGACY_STORAGE_KEYS = [
-  // Skip v40/v41 poisoned by wrong-market elevador rows + hydrate stamps
+  // Skip older keys poisoned by hydrate races / wrong-market elevador rows
   "cargolf-v39",
   "cargolf-v38",
   "cargolf-v37",

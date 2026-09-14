@@ -511,8 +511,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [geoReady, setGeoReady] = useState(false);
   const stateRef = useRef(state);
   const storageReadyRef = useRef(false);
-  /** Bumps on every user commit so hydrate cannot clobber fresher edits */
-  const mutateGenRef = useRef(0);
+  /** Bumps only on catalog mutations so geo/pref commits cannot abort hydrate */
+  const catalogGenRef = useRef(0);
 
   useEffect(() => {
     stateRef.current = state;
@@ -523,7 +523,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const prev = stateRef.current;
     const next = updater(prev);
     if (next === prev) return true;
-    mutateGenRef.current += 1;
     const stamped: StoreState = { ...next };
     stateRef.current = stamped;
 
@@ -536,6 +535,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       prev.orders !== stamped.orders ||
       prev.currencyRates !== stamped.currencyRates ||
       prev.upsellEnabled !== stamped.upsellEnabled;
+
+    if (catalogChanged) {
+      catalogGenRef.current += 1;
+    }
 
     let saved = true;
     if (typeof window !== "undefined") {
@@ -582,7 +585,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
 
     async function restore() {
-      const genAtStart = mutateGenRef.current;
+      const genAtStart = catalogGenRef.current;
       try {
         const cookieCountry = readCookieCountry();
         let next = buildDefaults(cookieCountry ?? DEFAULT_COUNTRY);
@@ -610,17 +613,41 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
         if (cancelled) return;
 
-        // User edited while we were loading — keep their in-memory state
-        if (mutateGenRef.current !== genAtStart) {
+        // Catalog was edited while loading — keep in-memory products, but still
+        // mark ready. (Geo/locale commits no longer bump catalogGenRef.)
+        if (catalogGenRef.current !== genAtStart) {
           storageReadyRef.current = true;
           setStorageReady(true);
-          // Do not PUT here: a geo/pref commit during hydrate would upload seed
-          // products and wipe admin prices on the shared catalog.
           return;
         }
 
         if (best) {
           next = applyPersisted(best, cookieCountry);
+          // Keep country/locale/currency already chosen this session (preview URL / geo)
+          const current = stateRef.current;
+          if (current.countryManual) {
+            next = {
+              ...next,
+              country: current.country,
+              countryManual: true,
+              currency: current.currencyManual
+                ? current.currency
+                : currencyForCountry(current.country),
+              locale: current.localeManual
+                ? current.locale
+                : localeForCountry(current.country),
+            };
+          }
+          if (current.localeManual) {
+            next = { ...next, locale: current.locale, localeManual: true };
+          }
+          if (current.currencyManual) {
+            next = {
+              ...next,
+              currency: current.currency,
+              currencyManual: true,
+            };
+          }
         }
 
         // If local is newer than what we applied, prefer local again
@@ -632,7 +659,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           next = applyPersisted(localFinal, cookieCountry);
         }
 
-        if (mutateGenRef.current !== genAtStart) {
+        if (catalogGenRef.current !== genAtStart) {
           storageReadyRef.current = true;
           setStorageReady(true);
           return;
@@ -1105,10 +1132,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
-    mutateGenRef.current += 1;
+    catalogGenRef.current += 1;
     setCurrencyRateOverrides(next.currencyRates);
     stateRef.current = next;
     setState(next);
+    storageReadyRef.current = true;
+    setStorageReady(true);
     const persisted = toPersisted(next);
     flushToLocal(next, persisted);
     void flushToServer(next, persisted);
