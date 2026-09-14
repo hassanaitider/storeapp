@@ -349,118 +349,120 @@ function ProductPageInner() {
         <ProductBriefDescription product={product} locale={locale} />
       </div>
 
-      {/* Buy / COD block */}
-      {latamCod ? (
-        <LatamCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-        />
-      ) : (
-      <div
-        id="order"
-        className="mt-10 scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
-      >
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-800">
-          <span className="inline-flex items-center gap-1.5">
-            <Truck className="h-4 w-4 text-brand-600" />
-            {t.trust.freeShipping}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <HandCoins className="h-4 w-4 text-brand-600" />
-            {t.trust.cod}
-          </span>
-        </div>
-
-        {product.customColorEnabled ? (
-          <label className="mt-5 block">
-            <span className="product-section-title text-lg sm:text-xl">
-              {t.product.writeYourColor}
-            </span>
-            <input
-              type="text"
-              value={customColor}
-              onChange={(e) => setCustomColor(e.target.value)}
-              placeholder={t.product.writeYourColorHint}
-              required
-              className="mt-3 w-full rounded-xl border border-sand-300 bg-white px-4 py-3 text-sm font-medium text-ink-900 outline-none ring-brand-600/30 placeholder:text-[var(--muted)] focus:border-brand-500 focus:ring-2"
+      {/* 4) Story / details → checkout → shipping & returns → FAQ */}
+      <ProductDetailSections
+        product={product}
+        locale={locale}
+        beforeShipping={
+          latamCod ? (
+            <LatamCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
             />
-          </label>
-        ) : null}
-
-        {/* Volume discount — shown only when enabled in admin */}
-        {upsellEnabled ? (
-          <ProductQtyUpsell
-            product={product}
-            country={country}
-            locale={locale}
-            selectedQty={qty}
-            onSelect={setQty}
-            className="mt-5"
-          />
-        ) : null}
-
-        <form ref={formRef} onSubmit={onSubmit} className="mt-5 space-y-4">
-          <h2 className="product-section-title text-lg">{t.checkout.title}</h2>
-
-          <Field
-            label={t.checkout.name}
-            required
-            value={form.name}
-            onChange={(v) => setForm((f) => ({ ...f, name: v }))}
-          />
-          <Field
-            label={t.checkout.phone}
-            required
-            type="tel"
-            value={form.phone}
-            onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
-          />
-          <Field
-            label={t.checkout.city}
-            required
-            value={form.city}
-            onChange={(v) => setForm((f) => ({ ...f, city: v }))}
-          />
-          <Field
-            label={t.checkout.address}
-            required
-            value={form.address}
-            onChange={(v) => setForm((f) => ({ ...f, address: v }))}
-          />
-
-          <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
-            <span className="font-semibold text-ink-800">
-              {t.cart.total}
-              {upsellEnabled ? (
-                <span className="ms-1 font-normal text-[var(--muted)]">
-                  · {qtyLabel}
+          ) : (
+            <div
+              id="order"
+              className="mx-auto mt-10 max-w-3xl scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
+            >
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-800">
+                <span className="inline-flex items-center gap-1.5">
+                  <Truck className="h-4 w-4 text-brand-600" />
+                  {t.trust.freeShipping}
                 </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <HandCoins className="h-4 w-4 text-brand-600" />
+                  {t.trust.cod}
+                </span>
+              </div>
+
+              {product.customColorEnabled ? (
+                <label className="mt-5 block">
+                  <span className="product-section-title text-lg sm:text-xl">
+                    {t.product.writeYourColor}
+                  </span>
+                  <input
+                    type="text"
+                    value={customColor}
+                    onChange={(e) => setCustomColor(e.target.value)}
+                    placeholder={t.product.writeYourColorHint}
+                    required
+                    className="mt-3 w-full rounded-xl border border-sand-300 bg-white px-4 py-3 text-sm font-medium text-ink-900 outline-none ring-brand-600/30 placeholder:text-[var(--muted)] focus:border-brand-500 focus:ring-2"
+                  />
+                </label>
               ) : null}
-            </span>
-            <span className="product-price text-base">
-              {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
-            </span>
-          </div>
 
-          <button
-            type="submit"
-            disabled={!product.inStock}
-            className="inline-flex w-full items-center justify-center rounded-2xl bg-brand-700 px-6 py-4 text-sm font-bold text-white transition hover:bg-brand-600 disabled:opacity-50"
-          >
-            {product.inStock ? t.checkout.placeOrder : t.shop.outOfStock}
-          </button>
-        </form>
-      </div>
-      )}
+              {upsellEnabled ? (
+                <ProductQtyUpsell
+                  product={product}
+                  country={country}
+                  locale={locale}
+                  selectedQty={qty}
+                  onSelect={setQty}
+                  className="mt-5"
+                />
+              ) : null}
 
-      {/* 4) Detailed description: image → text → image → text */}
-      <ProductDetailSections product={product} locale={locale} />
+              <form ref={formRef} onSubmit={onSubmit} className="mt-5 space-y-4">
+                <h2 className="product-section-title text-lg">{t.checkout.title}</h2>
+
+                <Field
+                  label={t.checkout.name}
+                  required
+                  value={form.name}
+                  onChange={(v) => setForm((f) => ({ ...f, name: v }))}
+                />
+                <Field
+                  label={t.checkout.phone}
+                  required
+                  type="tel"
+                  value={form.phone}
+                  onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
+                />
+                <Field
+                  label={t.checkout.city}
+                  required
+                  value={form.city}
+                  onChange={(v) => setForm((f) => ({ ...f, city: v }))}
+                />
+                <Field
+                  label={t.checkout.address}
+                  required
+                  value={form.address}
+                  onChange={(v) => setForm((f) => ({ ...f, address: v }))}
+                />
+
+                <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
+                  <span className="font-semibold text-ink-800">
+                    {t.cart.total}
+                    {upsellEnabled ? (
+                      <span className="ms-1 font-normal text-[var(--muted)]">
+                        · {qtyLabel}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="product-price text-base">
+                    {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
+                  </span>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={!product.inStock}
+                  className="inline-flex w-full items-center justify-center rounded-2xl bg-brand-700 px-6 py-4 text-sm font-bold text-white transition hover:bg-brand-600 disabled:opacity-50"
+                >
+                  {product.inStock ? t.checkout.placeOrder : t.shop.outOfStock}
+                </button>
+              </form>
+            </div>
+          )
+        }
+      />
 
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-sand-200/80 bg-white/95 shadow-[0_-8px_30px_rgba(14,34,29,0.08)] backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
