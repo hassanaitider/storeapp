@@ -489,19 +489,55 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const next = updater(prev);
     if (next === prev) return true;
     mutateGenRef.current += 1;
-    // Stamp a fresh updatedAt so this beat any in-flight hydrate
     const stamped: StoreState = { ...next };
     stateRef.current = stamped;
+
+    // Only product/catalog edits may rewrite the shared catalog. Country/locale
+    // geo commits must NOT stamp seed products over a merchant's saved prices
+    // (and must not PUT to the server while an admin session cookie is present).
+    const catalogChanged =
+      prev.products !== stamped.products ||
+      prev.categories !== stamped.categories ||
+      prev.orders !== stamped.orders ||
+      prev.currencyRates !== stamped.currencyRates ||
+      prev.upsellEnabled !== stamped.upsellEnabled;
+
     let saved = true;
     if (typeof window !== "undefined") {
-      const localNow = readLocalCatalog();
-      const persisted = {
-        ...toPersisted(stamped),
-        updatedAt: Math.max(Date.now(), (localNow?.updatedAt || 0) + 1),
-      };
-      saved = flushToLocal(stamped, persisted);
-      // Always try server — do not wait for hydrate (avoids lost admin saves)
-      void flushToServer(stamped, persisted);
+      if (catalogChanged) {
+        const localNow = readLocalCatalog();
+        const persisted = {
+          ...toPersisted(stamped),
+          updatedAt: Math.max(Date.now(), (localNow?.updatedAt || 0) + 1),
+        };
+        saved = flushToLocal(stamped, persisted);
+        if (storageReadyRef.current) {
+          void flushToServer(stamped, persisted);
+        }
+      } else if (storageReadyRef.current) {
+        // Patch prefs only — keep persisted products/categories/updatedAt intact
+        const existing = readLocalCatalog();
+        if (existing) {
+          try {
+            const patched: PersistedCatalog = {
+              ...existing,
+              locale: stamped.locale,
+              currency: stamped.currency,
+              country: stamped.country,
+              countryManual: stamped.countryManual,
+              currencyManual: stamped.currencyManual,
+              localeManual: stamped.localeManual,
+              cart: stamped.cart,
+            };
+            window.localStorage.setItem(
+              CATALOG_STORAGE_KEY,
+              catalogToJson(patched)
+            );
+          } catch {
+            /* quota */
+          }
+        }
+      }
     }
     setState(stamped);
     return saved;
@@ -543,7 +579,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         if (mutateGenRef.current !== genAtStart) {
           storageReadyRef.current = true;
           setStorageReady(true);
-          void flushToServer(stateRef.current);
+          // Do not PUT here: a geo/pref commit during hydrate would upload seed
+          // products and wipe admin prices on the shared catalog.
           return;
         }
 
@@ -563,7 +600,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         if (mutateGenRef.current !== genAtStart) {
           storageReadyRef.current = true;
           setStorageReady(true);
-          void flushToServer(stateRef.current);
           return;
         }
 

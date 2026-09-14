@@ -58,8 +58,8 @@ export default function EditProductPage() {
   const [qtyOffers, setQtyOffers] = useState<ProductQtyOffer[]>([]);
   const [flash, setFlash] = useState("");
   const [saving, setSaving] = useState(false);
-  const [ready, setReady] = useState(isNew);
-  /** Only load form fields when switching products — never wipe mid-edit on hydrate. */
+  const [ready, setReady] = useState(false);
+  /** Load form only after catalog hydrate, and only when the product id changes. */
   const loadedForIdRef = useRef<string | null>(null);
 
   const cat =
@@ -69,7 +69,17 @@ export default function EditProductPage() {
   const rate = getCurrency(cur).rate;
   const title = locale === "ar" ? nameAr || nameEn : nameEn || nameAr;
 
+  // Switching products must allow a fresh load
   useEffect(() => {
+    loadedForIdRef.current = null;
+    setReady(false);
+  }, [id, isNew]);
+
+  useEffect(() => {
+    // Wait for local/remote catalog merge — otherwise we lock in seed prices
+    // and ignore the merchant's saved shelf price after reload.
+    if (!storageReady) return;
+
     if (isNew) {
       if (loadedForIdRef.current === "new") return;
       loadedForIdRef.current = "new";
@@ -80,7 +90,10 @@ export default function EditProductPage() {
       setReady(true);
       return;
     }
-    if (!existing) return;
+    if (!existing) {
+      setReady(true);
+      return;
+    }
     if (loadedForIdRef.current === existing.id) return;
     loadedForIdRef.current = existing.id;
     const c =
@@ -105,7 +118,7 @@ export default function EditProductPage() {
     setCustomColorEnabled(Boolean(existing.customColorEnabled));
     setQtyOffers([...(existing.qtyOffers ?? [])]);
     setReady(true);
-  }, [existing, isNew, categories]);
+  }, [existing, isNew, categories, storageReady]);
 
   useEffect(() => {
     const onLocalFail = () => {
