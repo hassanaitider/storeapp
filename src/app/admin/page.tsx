@@ -560,7 +560,7 @@ function AdminDashboard() {
                           </div>
                           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                             <A
-                              href={`/product/${encodeURIComponent(p.slug)}`}
+                              href={`/product/${encodeURIComponent(p.slug)}?country=${encodeURIComponent(market)}`}
                               className="inline-flex items-center justify-center gap-1 rounded-xl border border-sand-300 px-3 py-3 text-sm font-semibold hover:bg-sand-50"
                             >
                               <ExternalLink className="h-4 w-4" />

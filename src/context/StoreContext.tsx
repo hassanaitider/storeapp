@@ -93,7 +93,7 @@ interface StoreContextValue extends StoreState {
   clearCart: () => void;
   cartCount: number;
   cartTotalUSD: number;
-  getProduct: (idOrSlug: string) => Product | undefined;
+  getProduct: (idOrSlug: string, forCountry?: CountryCode) => Product | undefined;
   getCategory: (idOrSlug: string) => Category | undefined;
   addCategory: (data: Omit<Category, "id" | "createdAt">) => string | false;
   updateCategory: (id: string, data: Partial<Category>) => boolean;
@@ -892,17 +892,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
 
   const getProduct = useCallback(
-    (idOrSlug: string) => {
+    (idOrSlug: string, forCountry?: CountryCode) => {
+      const market = forCountry ?? state.country;
       const matches = state.products.filter(
         (p) => p.id === idOrSlug || p.slug === idOrSlug
       );
       if (matches.length === 0) return undefined;
       const inMarket = matches.filter((p) =>
-        isProductAvailableIn(p, state.country, state.categories)
+        isProductAvailableIn(p, market, state.categories)
       );
-      if (inMarket.length === 1) return inMarket[0];
-      if (inMarket.length > 1) return inMarket[0];
-      // Product exists but not for this country — hide it
+      if (inMarket.length >= 1) return inMarket[0];
+      // Product exists but not for this country — hide on the public storefront
       return undefined;
     },
     [state.products, state.country, state.categories]

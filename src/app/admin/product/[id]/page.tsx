@@ -295,7 +295,7 @@ export default function EditProductPage() {
         </Link>
         <div className="flex flex-wrap gap-2">
           <a
-            href={`/product/${encodeURIComponent(previewSlug)}`}
+            href={`/product/${encodeURIComponent(previewSlug)}?country=${encodeURIComponent(market)}`}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-xl border border-brand-600 bg-white px-4 py-2.5 text-sm font-bold text-brand-800 hover:bg-brand-50"
@@ -569,7 +569,7 @@ export default function EditProductPage() {
 
       <div className="mt-6 flex flex-wrap justify-end gap-3 border-t border-sand-200 pt-6">
         <a
-          href={`/product/${encodeURIComponent(previewSlug)}`}
+          href={`/product/${encodeURIComponent(previewSlug)}?country=${encodeURIComponent(market)}`}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-2 rounded-xl border border-brand-600 bg-white px-5 py-3 text-sm font-bold text-brand-800 hover:bg-brand-50"

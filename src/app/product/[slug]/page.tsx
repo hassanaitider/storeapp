@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useParams, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import {
   Truck,
   HandCoins,
@@ -11,12 +11,13 @@ import {
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
-import { currencyForCountry } from "@/lib/countries";
+import { currencyForCountry, isStoreMarket } from "@/lib/countries";
 import { convertFromUSD, formatLocalAmount, formatPrice } from "@/lib/currency";
 import {
   formatProductComparePrice,
   formatProductPrice,
   getProductPriceUSD,
+  isProductAvailableIn,
   productDiscountPercent,
 } from "@/lib/pricing";
 import { pickText } from "@/lib/localized";
@@ -33,10 +34,25 @@ import {
 } from "@/components/shop/ProductQtyUpsell";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
-import type { Order } from "@/lib/types";
+import type { CountryCode, Order } from "@/lib/types";
 
 export default function ProductPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="mx-auto max-w-7xl px-4 py-24 text-center text-[var(--muted)]">
+          …
+        </div>
+      }
+    >
+      <ProductPageInner />
+    </Suspense>
+  );
+}
+
+function ProductPageInner() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const slug = String(params.slug);
   const t = useT();
   const {
@@ -45,10 +61,46 @@ export default function ProductPage() {
     country,
     upsellEnabled,
     getProduct,
+    setCountry,
     placeOrder,
     categories,
+    products,
   } = useStore();
-  const product = getProduct(slug);
+
+  const countryQuery = searchParams.get("country")?.toUpperCase() ?? "";
+  const previewCountry: CountryCode | null =
+    countryQuery && isStoreMarket(countryQuery)
+      ? (countryQuery as CountryCode)
+      : null;
+
+  const product = useMemo(() => {
+    const preferred = previewCountry ?? country;
+    const inPreferred = getProduct(slug, preferred);
+    if (inPreferred) return inPreferred;
+    const inCurrent = getProduct(slug);
+    if (inCurrent) return inCurrent;
+    // Admin preview / deep link: product exists in another market only
+    return (
+      products.find((p) => p.id === slug || p.slug === slug) ?? undefined
+    );
+  }, [getProduct, slug, previewCountry, country, products]);
+
+  // Switch storefront to the product's market so preview/pricing work
+  useEffect(() => {
+    if (!product) return;
+    if (isProductAvailableIn(product, country, categories)) return;
+    const fromCategory = categories.find((c) => c.id === product.categoryId)
+      ?.country;
+    const target =
+      previewCountry ??
+      product.availableIn?.[0] ??
+      fromCategory ??
+      null;
+    if (target && isStoreMarket(target) && target !== country) {
+      setCountry(target, true);
+    }
+  }, [product, country, categories, previewCountry, setCountry]);
+
   const formRef = useRef<HTMLFormElement>(null);
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
