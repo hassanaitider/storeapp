@@ -390,6 +390,76 @@ ${COD_ES}`.trim(),
       },
     ],
   },
+
+  "prod-mattress-lifter": {
+    nameEs: "Elevador de Colchón",
+    descriptionEs: `
+<h3>Haz la cama sin levantar el colchón a mano</h3>
+<p>Herramienta ergonómica en forma de cuña que se desliza entre el colchón y la base, lo eleva con suavidad y te deja meter las sábanas fácil — <strong>sin forzar la espalda ni el cuello</strong>.</p>
+<ul>
+<li>Asa cómoda que reduce el esfuerzo</li>
+<li>Superficie lisa: no engancha ni daña las telas</li>
+<li>Compatible con la mayoría de camas y colchones</li>
+<li>Colores elegantes: morado · verde · rosa</li>
+</ul>
+${COD_ES}`.trim(),
+    detailsEs: [
+      "Diseño en cuña con asa ergonómica ovalada",
+      "Plástico resistente y liso para deslizar fácil",
+      "Eleva el colchón para meter las sábanas rápido",
+      "Ayuda a evitar tension lumbar y cervical",
+      "Colores: morado, verde y rosa",
+    ],
+    headlineEs: "Cama perfecta… sin dolor de espalda",
+    introEs:
+      "En lugar de levantar el colchón con una sola mano, desliza el elevador debajo y crea el espacio para meter las sábanas rápido, con acabado tipo hotel. Ideal para adultos mayores y para quien sufre de espalda o cuello.",
+    benefitsEs: [
+      "Meter sábanas más rápido",
+      "Protege espalda y cuello",
+      "Asa cómoda y construcción resistente",
+      "Compatible con la mayoría de camas",
+      "Envío gratis y pago contra entrega",
+    ],
+    sections: [
+      {
+        titleEs: "Eleva el colchón en segundos",
+        bodyEs:
+          "La punta delgada se desliza entre el colchón y la base. Al apoyar el asa, el colchón sube unos centímetros: espacio suficiente para meter la sábana sin esfuerzo.",
+      },
+      {
+        titleEs: "Cuida tu zona lumbar y cervical",
+        bodyEs:
+          "Levantar a mano una y otra vez carga la columna. Esta herramienta traslada el esfuerzo a la cuña: menos tensión y más comodidad en la rutina diaria de hacer la cama.",
+      },
+      {
+        titleEs: "Sirve para casi todo tipo de cama",
+        bodyEs:
+          "Bases de madera, camas tapizadas, colchones gruesos o estándar: el diseño universal se desliza con suavidad sin rayar el mueble ni dañar las telas.",
+      },
+      {
+        titleEs: "Bonito y práctico en tu habitación",
+        bodyEs:
+          "Plástico translúcido en colores modernos con detalle dorado en el asa. Se ve como un accesorio elegante del hogar, no como una herramienta tosca.",
+      },
+    ],
+    faq: [
+      {
+        questionEs: "¿Basta con una sola pieza?",
+        answerEs:
+          "Una pieza alcanza para una esquina. Muchos piden dos para sujetar dos esquinas a la vez y terminar más rápido.",
+      },
+      {
+        questionEs: "¿Rayará la base o romperá las sábanas?",
+        answerEs:
+          "La superficie lisa y los bordes redondeados están pensados para un uso seguro sobre madera, tela y colchones.",
+      },
+      {
+        questionEs: "¿Qué colores hay?",
+        answerEs:
+          "Morado, verde y rosa. Escribe el color que prefieres en la página del producto antes de pedir.",
+      },
+    ],
+  },
 };
 
 /** Adds Spanish fields to a seed product when copy exists for its id. */
