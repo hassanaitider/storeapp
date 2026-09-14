@@ -355,20 +355,47 @@ export default function EditProductPage() {
                 : "Saved locally but server save failed — retry"
         );
       }
+
+      // Confirm durable catalog actually has this shelf price
+      let confirmed = server.ok;
+      if (server.ok) {
+        try {
+          const res = await fetch(`/api/catalog?t=${Date.now()}`, {
+            cache: "no-store",
+            credentials: "same-origin",
+          });
+          const json = (await res.json()) as {
+            data?: { products?: Product[] };
+          };
+          const row = json.data?.products?.find((p) => p.id === id);
+          const savedLocal = row?.marketPrices?.[saveMarket];
+          confirmed = savedLocal === priceLocal;
+          if (!confirmed) {
+            window.alert(
+              locale === "ar"
+                ? `الحفظ رجع ثمن مختلف على السيرفر (${savedLocal ?? "—"}). أعد المحاولة.`
+                : `Server returned a different price (${savedLocal ?? "—"}). Retry save.`
+            );
+          }
+        } catch {
+          /* network — keep server.ok flash */
+        }
+      }
+
       setFlash(
         locale === "ar"
-          ? server.ok
-            ? "تم الحفظ ✓ الثمن محفوظ للجميع"
+          ? confirmed
+            ? `تم الحفظ ✓ ${priceLocal} ${cur} · ${saveMarket}`
             : "حُفظ محلياً فقط ⚠ — الزوار ما غايشوفو الثمن الجديد"
           : locale === "es"
-            ? server.ok
-              ? "Guardado ✓ precio visible para todos"
+            ? confirmed
+              ? `Guardado ✓ ${priceLocal} ${cur} · ${saveMarket}`
               : "Solo en este navegador ⚠ — los visitantes no verán el precio"
-            : server.ok
-              ? "Saved ✓ price visible for everyone"
+            : confirmed
+              ? `Saved ✓ ${priceLocal} ${cur} · ${saveMarket}`
               : "Saved locally only ⚠ — visitors will not see the new price"
       );
-      window.setTimeout(() => setFlash(""), 4000);
+      window.setTimeout(() => setFlash(""), 5000);
     } catch (err) {
       console.error(err);
       window.alert(
@@ -424,6 +451,17 @@ export default function EditProductPage() {
       <h1 className="font-display text-3xl font-semibold text-ink-900">
         {isNew ? t.admin.addProduct : t.admin.editProduct}
       </h1>
+      {!isNew && existing ? (
+        <p className="mt-2 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-sm font-bold text-brand-900">
+          {locale === "ar" ? "السوق" : locale === "es" ? "Mercado" : "Market"}:{" "}
+          {market} · {cur}
+          {existing.id.startsWith("prod-mattress-lifter-")
+            ? locale === "ar"
+              ? " · Elevador (مثبت)"
+              : " · Elevador (locked)"
+            : ""}
+        </p>
+      ) : null}
       <p className="mt-1 text-sm text-[var(--muted)]">
         {locale === "ar"
           ? "محرر مرئي مثل يوكان — غامق، لون، محاذاة، صور وGIF داخل الوصف"
@@ -483,9 +521,12 @@ export default function EditProductPage() {
             {t.admin.category}
           </span>
           <select
-            className="w-full rounded-xl border border-sand-300 px-3 py-3"
+            className="w-full rounded-xl border border-sand-300 px-3 py-3 disabled:bg-sand-100"
             value={categoryId}
             required
+            disabled={Boolean(
+              existing?.id && /^prod-mattress-lifter-[a-z]{2}$/i.test(existing.id)
+            )}
             onChange={(e) => setCategoryId(e.target.value)}
           >
             {categories.map((c) => (
@@ -494,6 +535,14 @@ export default function EditProductPage() {
               </option>
             ))}
           </select>
+          {existing?.id &&
+          /^prod-mattress-lifter-[a-z]{2}$/i.test(existing.id) ? (
+            <span className="mt-1 block text-xs text-[var(--muted)]">
+              {locale === "ar"
+                ? "تصنيف Elevador مثبت على سوق المنتج — ما كيتبدّلش"
+                : "Elevador category is locked to this market"}
+            </span>
+          ) : null}
         </label>
 
         <label className="block">
