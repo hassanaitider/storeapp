@@ -158,7 +158,8 @@ function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
       nameAr: existing.nameAr || s.nameAr,
       nameEn: existing.nameEn || s.nameEn,
       nameEs: existing.nameEs || s.nameEs,
-      image: existing.image || s.image,
+      // Always use seed category art so market tiles stay consistent
+      image: s.image,
       descriptionAr: existing.descriptionAr || s.descriptionAr,
       descriptionEn: existing.descriptionEn || s.descriptionEn,
       descriptionEs: existing.descriptionEs || s.descriptionEs,

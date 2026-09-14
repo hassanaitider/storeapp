@@ -4,22 +4,23 @@ import { withSpanishCopy } from "./seed-es";
 import { LATAM_ELEVADOR_PRODUCTS } from "./seed-latam-elevador";
 import { UNIVERSAL_MARKET_PRODUCTS } from "./seed-universal-products";
 
+/** Consistent per-market category art: air bed + country flag */
 const CATEGORY_IMAGES: Record<string, string> = {
-  MA: "/products/fashion-sling-1.png",
-  SA: "/products/car-vacuum.png",
-  AE: "/products/solar-camera-1.png",
-  OM: "/products/neck-massager.webp",
-  IQ: "/products/car-windshield-umbrella.png",
-  LY: "/products/fashion-sling-g1.png",
-  MX: "/products/mattress-lifter-1.png",
-  AR: "/products/neck-massager.webp",
-  CR: "/products/air-bed.png",
-  EC: "/products/baby-washer.png",
-  GT: "/products/smart-sunglasses.png",
-  HN: "/products/xiaomi-earbuds-tws.png",
-  SV: "/products/konnect-kn101-powerbank.png",
-  NI: "/products/dish-drying-rack-sink.png",
-  DO: "/products/rolling-cart-1.png",
+  MA: "/categories/air-bed-ma.png",
+  SA: "/categories/air-bed-sa.png",
+  AE: "/categories/air-bed-ae.png",
+  OM: "/categories/air-bed-om.png",
+  IQ: "/categories/air-bed-iq.png",
+  LY: "/categories/air-bed-ly.png",
+  MX: "/categories/air-bed-mx.png",
+  AR: "/categories/air-bed-ar.png",
+  CR: "/categories/air-bed-cr.png",
+  EC: "/categories/air-bed-ec.png",
+  GT: "/categories/air-bed-gt.png",
+  HN: "/categories/air-bed-hn.png",
+  SV: "/categories/air-bed-sv.png",
+  NI: "/categories/air-bed-ni.png",
+  DO: "/categories/air-bed-do.png",
 };
 
 /** One category per open market, generated from STORE_MARKETS */
@@ -32,7 +33,7 @@ export const SEED_CATEGORIES: Category[] = STORE_MARKETS.map((c) => ({
   descriptionAr: `تشكيلة مختارة لسوق ${c.nameAr} بأسعار ${c.currency}`,
   descriptionEn: `Curated picks for ${c.nameEn} priced in ${c.currency}`,
   descriptionEs: `Selección para ${c.nameEs ?? c.nameEn} con precios en ${c.currency}`,
-  image: CATEGORY_IMAGES[c.code] ?? "/products/car-vacuum.png",
+  image: CATEGORY_IMAGES[c.code] ?? "/categories/air-bed-ma.png",
   createdAt: "2026-03-01T00:00:00.000Z",
   country: c.code,
   availableIn: [c.code],
