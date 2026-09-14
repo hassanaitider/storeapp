@@ -195,9 +195,10 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   if (!stored?.length) return cloneSeedProducts();
   const allowedCats = new Set(SEED_CATEGORIES.map((c) => c.id));
   const seedById = new Map(SEED_PRODUCTS.map((p) => [p.id, p]));
-  /** Old LATAM clones of MENA-only tools — drop so Honduras/etc. only keep Elevador from this launch. */
+  /** Old LATAM clones of MENA-only tools + legacy single Elevador id (replaced by per-country rows). */
   const dropLatamUniversalClone =
     /^prod-(car-windshield-umbrella|neck-fan)-(mx|ar|cr|ec|gt|hn|sv|ni|do)$/i;
+  const dropLegacyElevador = /^prod-mattress-lifter$/i;
   const merged = stored
     .map((p) => {
       const seed = seedById.get(p.id);
@@ -257,7 +258,8 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
     .filter(
       (p) =>
         (!p.categoryId || allowedCats.has(p.categoryId)) &&
-        !dropLatamUniversalClone.test(p.id)
+        !dropLatamUniversalClone.test(p.id) &&
+        !dropLegacyElevador.test(p.id)
     );
   for (const seed of SEED_PRODUCTS) {
     if (!merged.some((p) => p.id === seed.id)) {

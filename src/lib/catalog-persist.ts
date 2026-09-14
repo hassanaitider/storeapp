@@ -1,8 +1,9 @@
 import type { Category, Product, Order, CartItem, CurrencyCode, CountryCode, Locale } from "@/lib/types";
 
-export const CATALOG_STORAGE_KEY = "cargolf-v39";
+export const CATALOG_STORAGE_KEY = "cargolf-v40";
 
 export const LEGACY_STORAGE_KEYS = [
+  "cargolf-v39",
   "cargolf-v38",
   "cargolf-v37",
   "cargolf-v36",
