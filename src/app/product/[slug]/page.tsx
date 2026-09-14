@@ -32,6 +32,8 @@ import {
   ProductQtyUpsell,
   selectedQtyTotalLocal,
 } from "@/components/shop/ProductQtyUpsell";
+import { LatamCodCheckout } from "@/components/shop/LatamCodCheckout";
+import { usesLatamCodCheckout } from "@/lib/latam-geo";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order } from "@/lib/types";
@@ -242,6 +244,23 @@ function ProductPageInner() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const submitLatamCod = (payload: {
+    name: string;
+    phone: string;
+    city: string;
+    address: string;
+    notes?: string;
+  }) => {
+    if (!product.inStock) return;
+    const created = placeOrder(payload, [
+      { productId: product.id, quantity: qty, lineTotalUSD: orderLineUSD },
+    ]);
+    setOrder(created);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const latamCod = usesLatamCodCheckout(country);
+
   return (
     <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 sm:px-6 lg:px-8">
       <nav className="mb-6 text-sm text-[var(--muted)]">
@@ -325,6 +344,18 @@ function ProductPageInner() {
       </div>
 
       {/* Buy / COD block */}
+      {latamCod ? (
+        <LatamCodCheckout
+          product={product}
+          country={country}
+          qty={qty}
+          onQtyChange={setQty}
+          customColor={customColor}
+          onCustomColorChange={setCustomColor}
+          formRef={formRef}
+          onPlaceOrder={submitLatamCod}
+        />
+      ) : (
       <div
         id="order"
         className="mt-10 scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
@@ -420,6 +451,7 @@ function ProductPageInner() {
           </button>
         </form>
       </div>
+      )}
 
       {/* 4) Detailed description: image → text → image → text */}
       <ProductDetailSections product={product} locale={locale} />
@@ -428,7 +460,12 @@ function ProductPageInner() {
         <div className="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-ink-800">{name}</p>
-            <p className="product-price text-lg">
+            <p
+              className={cn(
+                "text-lg font-bold",
+                latamCod ? "text-[#ff7a00]" : "product-price"
+              )}
+            >
               {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
             </p>
           </div>
@@ -436,9 +473,18 @@ function ProductPageInner() {
             type="button"
             disabled={!product.inStock}
             onClick={() => formRef.current?.requestSubmit()}
-            className="shrink-0 rounded-2xl bg-brand-700 px-6 py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-brand-600 disabled:opacity-50 sm:px-8"
+            className={cn(
+              "shrink-0 rounded-2xl px-6 py-3.5 text-sm font-bold text-white shadow-lg transition disabled:opacity-50 sm:px-8",
+              latamCod
+                ? "bg-gradient-to-b from-[#ff9a3d] to-[#ff6a00] hover:brightness-105"
+                : "bg-brand-700 hover:bg-brand-600"
+            )}
           >
-            {product.inStock ? t.checkout.placeOrder : t.shop.outOfStock}
+            {product.inStock
+              ? latamCod
+                ? "Comprar ahora"
+                : t.checkout.placeOrder
+              : t.shop.outOfStock}
           </button>
         </div>
       </div>
