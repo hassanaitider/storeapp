@@ -13,6 +13,7 @@ import {
   parseCatalogJson,
   type PersistedCatalog,
 } from "@/lib/catalog-persist";
+import { mergeCatalogOnPut } from "@/lib/catalog-repair";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -128,7 +129,9 @@ export async function GET() {
   if (!data) {
     return NextResponse.json({ ok: true, data: null });
   }
-  return NextResponse.json({ ok: true, data });
+  // Repair elevador identity drift on read so storefront never sees wrong market
+  const repaired = mergeCatalogOnPut(data, data);
+  return NextResponse.json({ ok: true, data: repaired });
 }
 
 export async function PUT(request: Request) {
@@ -145,10 +148,17 @@ export async function PUT(request: Request) {
       return NextResponse.json({ ok: false, error: "bad payload" }, { status: 400 });
     }
 
-    await writeCatalog(clean);
+    const existing = await readCatalog();
+    const merged = mergeCatalogOnPut(clean, existing);
+    merged.updatedAt = Math.max(
+      merged.updatedAt || 0,
+      clean.updatedAt || 0,
+      Date.now()
+    );
+    await writeCatalog(merged);
     return NextResponse.json({
       ok: true,
-      updatedAt: clean.updatedAt,
+      updatedAt: merged.updatedAt,
       durable: catalogBlobConfigured(),
     });
   } catch (err) {
