@@ -63,7 +63,7 @@ function ProductPageInner() {
     country,
     upsellEnabled,
     getProduct,
-    setCountry,
+    setViewCountry,
     placeOrder,
     categories,
     products,
@@ -87,15 +87,14 @@ function ProductPageInner() {
     );
   }, [getProduct, slug, previewCountry, country, products]);
 
-  // Always honor ?country= from admin preview / deep links (beats hydrate prefs)
+  // Ephemeral preview market — does not lock IP geo for the rest of the site
   useEffect(() => {
-    if (!previewCountry) return;
-    if (previewCountry !== country) {
-      setCountry(previewCountry, true);
-    }
-  }, [previewCountry, country, setCountry]);
+    setViewCountry(previewCountry);
+    return () => setViewCountry(null);
+  }, [previewCountry, setViewCountry]);
 
   // If there is no country query, switch storefront to the product's market
+  // without a permanent manual lock (IP geo still wins on the next visit).
   useEffect(() => {
     if (!product || previewCountry) return;
     if (isProductAvailableIn(product, country, categories)) return;
@@ -106,9 +105,9 @@ function ProductPageInner() {
       fromCategory ??
       null;
     if (target && isStoreMarket(target) && target !== country) {
-      setCountry(target, true);
+      setViewCountry(target);
     }
-  }, [product, country, categories, previewCountry, setCountry]);
+  }, [product, country, categories, previewCountry, setViewCountry]);
 
   const formRef = useRef<HTMLFormElement>(null);
   const [qty, setQty] = useState(1);
