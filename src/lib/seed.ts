@@ -4,23 +4,23 @@ import { withSpanishCopy } from "./seed-es";
 import { LATAM_ELEVADOR_PRODUCTS } from "./seed-latam-elevador";
 import { UNIVERSAL_MARKET_PRODUCTS } from "./seed-universal-products";
 
-/** Consistent per-market category art: air bed + country flag */
+/** Consistent per-market category art: country flag only (no product lifestyle) */
 const CATEGORY_IMAGES: Record<string, string> = {
-  MA: "/categories/air-bed-ma.png",
-  SA: "/categories/air-bed-sa.png",
-  AE: "/categories/air-bed-ae.png",
-  OM: "/categories/air-bed-om.png",
-  IQ: "/categories/air-bed-iq.png",
-  LY: "/categories/air-bed-ly.png",
-  MX: "/categories/air-bed-mx.png",
-  AR: "/categories/air-bed-ar.png",
-  CR: "/categories/air-bed-cr.png",
-  EC: "/categories/air-bed-ec.png",
-  GT: "/categories/air-bed-gt.png",
-  HN: "/categories/air-bed-hn.png",
-  SV: "/categories/air-bed-sv.png",
-  NI: "/categories/air-bed-ni.png",
-  DO: "/categories/air-bed-do.png",
+  MA: "/categories/flag-ma.png",
+  SA: "/categories/flag-sa.png",
+  AE: "/categories/flag-ae.png",
+  OM: "/categories/flag-om.png",
+  IQ: "/categories/flag-iq.png",
+  LY: "/categories/flag-ly.png",
+  MX: "/categories/flag-mx.png",
+  AR: "/categories/flag-ar.png",
+  CR: "/categories/flag-cr.png",
+  EC: "/categories/flag-ec.png",
+  GT: "/categories/flag-gt.png",
+  HN: "/categories/flag-hn.png",
+  SV: "/categories/flag-sv.png",
+  NI: "/categories/flag-ni.png",
+  DO: "/categories/flag-do.png",
 };
 
 /** One category per open market, generated from STORE_MARKETS */
@@ -33,7 +33,7 @@ export const SEED_CATEGORIES: Category[] = STORE_MARKETS.map((c) => ({
   descriptionAr: `تشكيلة مختارة لسوق ${c.nameAr} بأسعار ${c.currency}`,
   descriptionEn: `Curated picks for ${c.nameEn} priced in ${c.currency}`,
   descriptionEs: `Selección para ${c.nameEs ?? c.nameEn} con precios en ${c.currency}`,
-  image: CATEGORY_IMAGES[c.code] ?? "/categories/air-bed-ma.png",
+  image: CATEGORY_IMAGES[c.code] ?? "/categories/flag-ma.png",
   createdAt: "2026-03-01T00:00:00.000Z",
   country: c.code,
   availableIn: [c.code],
