@@ -199,12 +199,18 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   const dropLatamUniversalClone =
     /^prod-(car-windshield-umbrella|neck-fan)-(mx|ar|cr|ec|gt|hn|sv|ni|do)$/i;
   const dropLegacyElevador = /^prod-mattress-lifter$/i;
+  const elevadorPerMarket = /^prod-mattress-lifter-([a-z]{2})$/i;
   const merged = stored
     .map((p) => {
       const seed = seedById.get(p.id);
       if (!seed) return p;
       const durable = (p.images ?? []).filter(isDurableMediaUrl);
-      return {
+      const elevadorMatch = elevadorPerMarket.exec(seed.id);
+      const lockedMarket = elevadorMatch
+        ? (elevadorMatch[1].toUpperCase() as CountryCode)
+        : null;
+
+      const base = {
         ...seed,
         ...p,
         id: seed.id,
@@ -254,6 +260,35 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         slug: p.slug?.trim() ? p.slug : seed.slug,
         qtyOffers: p.qtyOffers?.length ? p.qtyOffers : seed.qtyOffers,
       };
+
+      // Per-country Elevador rows must stay pinned to their market — a wrong
+      // category dropdown was making Costa Rica preview open another listing.
+      if (lockedMarket && seed.availableIn?.length) {
+        const adminLocal =
+          typeof p.marketPrices?.[lockedMarket] === "number"
+            ? p.marketPrices![lockedMarket]
+            : seed.marketPrices?.[lockedMarket];
+        const adminCompare =
+          typeof p.marketComparePrices?.[lockedMarket] === "number"
+            ? p.marketComparePrices![lockedMarket]
+            : seed.marketComparePrices?.[lockedMarket];
+        return {
+          ...base,
+          categoryId: seed.categoryId,
+          availableIn: [...seed.availableIn],
+          slug: seed.slug,
+          marketPrices:
+            typeof adminLocal === "number"
+              ? { [lockedMarket]: adminLocal }
+              : { ...(seed.marketPrices ?? {}) },
+          marketComparePrices:
+            typeof adminCompare === "number"
+              ? { [lockedMarket]: adminCompare }
+              : { ...(seed.marketComparePrices ?? {}) },
+        };
+      }
+
+      return base;
     })
     .filter(
       (p) =>
@@ -950,10 +985,21 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         (p) => p.id === idOrSlug || p.slug === idOrSlug
       );
       if (matches.length === 0) return undefined;
+      // Exact id always wins (admin preview links use product id)
+      const byId = matches.find((p) => p.id === idOrSlug);
+      if (byId) {
+        if (isProductAvailableIn(byId, market, state.categories)) return byId;
+        // Still return the exact product for admin preview of that listing
+        if (idOrSlug === byId.id) return byId;
+      }
       const inMarket = matches.filter((p) =>
         isProductAvailableIn(p, market, state.categories)
       );
-      if (inMarket.length >= 1) return inMarket[0];
+      if (inMarket.length >= 1) {
+        return (
+          inMarket.find((p) => p.availableIn?.includes(market)) ?? inMarket[0]
+        );
+      }
       // Product exists but not for this country — hide on the public storefront
       return undefined;
     },

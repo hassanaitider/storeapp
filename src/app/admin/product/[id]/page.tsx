@@ -8,7 +8,7 @@ import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { currencyForCountry } from "@/lib/countries";
 import { convertToUSD, formatLocalAmount, getCurrency } from "@/lib/currency";
-import { getProductLocalPrice } from "@/lib/pricing";
+import { getProductLocalPrice, resolveProductMarket } from "@/lib/pricing";
 import { htmlToPlain, toEditorHtml } from "@/lib/rich-html";
 import { slugify } from "@/lib/utils";
 import { ProductQtyOffersEditor } from "@/components/admin/ProductQtyOffersEditor";
@@ -21,6 +21,7 @@ import {
   parseAdminPrice,
   scaleQtyOfferMarketPrices,
 } from "@/lib/admin-price";
+import { isStoreMarket } from "@/lib/countries";
 
 export default function EditProductPage() {
   const params = useParams();
@@ -64,10 +65,19 @@ export default function EditProductPage() {
 
   const cat =
     categories.find((c) => c.id === categoryId) ?? categories[0] ?? null;
-  const market = (cat?.country ?? "US") as CountryCode;
+  const market = ((): CountryCode => {
+    if (existing) {
+      const resolved = resolveProductMarket(existing, categories);
+      if (resolved) return resolved;
+    }
+    if (cat?.country && isStoreMarket(cat.country)) return cat.country;
+    return "US";
+  })();
   const cur = currencyForCountry(market);
   const rate = getCurrency(cur).rate;
   const title = locale === "ar" ? nameAr || nameEn : nameEn || nameAr;
+  const previewPathId = existing?.id || (slug || slugify(nameEn || nameAr || "product")).trim();
+  const previewHref = `/product/${encodeURIComponent(previewPathId)}?country=${encodeURIComponent(market)}`;
 
   // Switching products must allow a fresh load
   useEffect(() => {
@@ -212,10 +222,24 @@ export default function EditProductPage() {
     );
 
     // Pin local shelf price for this product's market
-    const marketPriceMap: Partial<Record<CountryCode, number>> = {
-      ...(existing?.marketPrices ?? {}),
-      [market]: priceLocal,
-    };
+    const elevadorLock = /^prod-mattress-lifter-([a-z]{2})$/i.exec(
+      existing?.id || ""
+    );
+    const lockedMarket = elevadorLock
+      ? (elevadorLock[1].toUpperCase() as CountryCode)
+      : null;
+    const saveMarket =
+      lockedMarket && isStoreMarket(lockedMarket) ? lockedMarket : market;
+    const marketPriceMap: Partial<Record<CountryCode, number>> = lockedMarket
+      ? { [saveMarket]: priceLocal }
+      : {
+          ...(existing?.marketPrices ?? {}),
+          [saveMarket]: priceLocal,
+        };
+
+    const lockedCategoryId = lockedMarket
+      ? `cat-${lockedMarket}`
+      : categoryId || categories[0]?.id || "";
 
     const data = {
       nameAr: nameAr.trim(),
@@ -227,13 +251,21 @@ export default function EditProductPage() {
       priceUSD,
       compareAtUSD: existing?.compareAtUSD,
       marketPrices: marketPriceMap,
-      marketComparePrices: existing?.marketComparePrices,
-      availableIn: existing?.availableIn,
+      marketComparePrices: lockedMarket
+        ? existing?.marketComparePrices?.[saveMarket] != null
+          ? { [saveMarket]: existing.marketComparePrices[saveMarket] }
+          : existing?.marketComparePrices
+        : existing?.marketComparePrices,
+      availableIn: lockedMarket
+        ? [saveMarket]
+        : existing?.availableIn,
       colors: [],
       customColorEnabled,
-      categoryId: categoryId || categories[0]?.id || "",
+      categoryId: lockedCategoryId,
       images: nextImages,
-      slug: (slug || slugify(nameEn || nameAr)).trim(),
+      slug: lockedMarket
+        ? existing?.slug || "elevador-de-colchon"
+        : (slug || slugify(nameEn || nameAr)).trim(),
       featured,
       inStock,
       qtyOffers: nextQtyOffers.length ? nextQtyOffers : undefined,
@@ -364,7 +396,7 @@ export default function EditProductPage() {
         </Link>
         <div className="flex flex-wrap gap-2">
           <a
-            href={`/product/${encodeURIComponent(previewSlug)}?country=${encodeURIComponent(market)}`}
+            href={previewHref}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-xl border border-brand-600 bg-white px-4 py-2.5 text-sm font-bold text-brand-800 hover:bg-brand-50"
@@ -638,7 +670,7 @@ export default function EditProductPage() {
 
       <div className="mt-6 flex flex-wrap justify-end gap-3 border-t border-sand-200 pt-6">
         <a
-          href={`/product/${encodeURIComponent(previewSlug)}?country=${encodeURIComponent(market)}`}
+          href={previewHref}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-2 rounded-xl border border-brand-600 bg-white px-5 py-3 text-sm font-bold text-brand-800 hover:bg-brand-50"

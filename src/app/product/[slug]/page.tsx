@@ -87,14 +87,21 @@ function ProductPageInner() {
     );
   }, [getProduct, slug, previewCountry, country, products]);
 
-  // Switch storefront to the product's market so preview/pricing work
+  // Always honor ?country= from admin preview / deep links (beats hydrate prefs)
   useEffect(() => {
-    if (!product) return;
+    if (!previewCountry) return;
+    if (previewCountry !== country) {
+      setCountry(previewCountry, true);
+    }
+  }, [previewCountry, country, setCountry]);
+
+  // If there is no country query, switch storefront to the product's market
+  useEffect(() => {
+    if (!product || previewCountry) return;
     if (isProductAvailableIn(product, country, categories)) return;
     const fromCategory = categories.find((c) => c.id === product.categoryId)
       ?.country;
     const target =
-      previewCountry ??
       product.availableIn?.[0] ??
       fromCategory ??
       null;
