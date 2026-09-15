@@ -284,6 +284,7 @@ export function formatCodStylePrice(amount: number): string {
 
 export const formatArgentinaCodPrice = formatCodStylePrice;
 export const formatMexicoCodPrice = formatCodStylePrice;
+export const formatDominicanCodPrice = formatCodStylePrice;
 
 export function isCurrencyCode(code: string): code is CurrencyCode {
   return CURRENCIES.some((c) => c.code === code);

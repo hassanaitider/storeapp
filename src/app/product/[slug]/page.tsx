@@ -17,6 +17,7 @@ import {
   formatArgentinaCodPrice,
   formatLocalAmount,
   formatMexicoCodPrice,
+  formatDominicanCodPrice,
   formatPrice,
 } from "@/lib/currency";
 import {
@@ -41,8 +42,10 @@ import {
 import { LatamCodCheckout } from "@/components/shop/LatamCodCheckout";
 import { ArgentinaCodCheckout } from "@/components/shop/ArgentinaCodCheckout";
 import { MexicoCodCheckout } from "@/components/shop/MexicoCodCheckout";
+import { DominicanCodCheckout } from "@/components/shop/DominicanCodCheckout";
 import { usesLatamCodCheckout } from "@/lib/latam-geo";
 import { usesMexicoCodCheckout } from "@/lib/mexico-geo";
+import { usesDominicanCodCheckout } from "@/lib/dominican-geo";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order } from "@/lib/types";
@@ -276,9 +279,15 @@ function ProductPageInner() {
 
   const argentinaCod = country === "AR";
   const mexicoCod = !argentinaCod && usesMexicoCodCheckout(country);
+  const dominicanCod =
+    !argentinaCod && !mexicoCod && usesDominicanCodCheckout(country);
   const latamCod =
-    !argentinaCod && !mexicoCod && usesLatamCodCheckout(country);
-  const fufillsSticky = argentinaCod || mexicoCod || latamCod;
+    !argentinaCod &&
+    !mexicoCod &&
+    !dominicanCod &&
+    usesLatamCodCheckout(country);
+  const fufillsSticky =
+    argentinaCod || mexicoCod || dominicanCod || latamCod;
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 sm:px-6 lg:px-8">
@@ -362,7 +371,7 @@ function ProductPageInner() {
         <ProductBriefDescription product={product} locale={locale} />
       </div>
 
-      {/* Buy / COD blocks — AR and MX modules are market-exclusive */}
+      {/* Buy / COD blocks — AR, MX, DO modules are market-exclusive */}
       {argentinaCod ? (
         <ArgentinaCodCheckout
           product={product}
@@ -376,6 +385,17 @@ function ProductPageInner() {
         />
       ) : mexicoCod ? (
         <MexicoCodCheckout
+          product={product}
+          country={country}
+          qty={qty}
+          onQtyChange={setQty}
+          customColor={customColor}
+          onCustomColorChange={setCustomColor}
+          formRef={formRef}
+          onPlaceOrder={submitLatamCod}
+        />
+      ) : dominicanCod ? (
+        <DominicanCodCheckout
           product={product}
           country={country}
           qty={qty}
@@ -511,7 +531,9 @@ function ProductPageInner() {
                 ? formatArgentinaCodPrice(orderTotalLocal)
                 : mexicoCod
                   ? formatMexicoCodPrice(orderTotalLocal)
-                  : formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
+                  : dominicanCod
+                    ? formatDominicanCodPrice(orderTotalLocal)
+                    : formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
             </p>
           </div>
           <button

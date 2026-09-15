@@ -5,7 +5,7 @@ export type LatamGeoTree = Record<string, Record<string, string[]>>;
 
 /**
  * Markets that use the shared Latam COD checkout (GT/CR).
- * Mexico and Argentina each have their own exclusive COD modules.
+ * MX, AR, and DO each have their own exclusive COD modules.
  */
 export const LATAM_COD_CHECKOUT_MARKETS: CountryCode[] = ["GT", "CR"];
 
