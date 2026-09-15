@@ -160,9 +160,9 @@ function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
       nameEs: existing.nameEs || s.nameEs,
       // Always use seed category art so market tiles stay consistent
       image: s.image,
-      descriptionAr: existing.descriptionAr || s.descriptionAr,
-      descriptionEn: existing.descriptionEn || s.descriptionEn,
-      descriptionEs: existing.descriptionEs || s.descriptionEs,
+      descriptionAr: s.descriptionAr,
+      descriptionEn: s.descriptionEn,
+      descriptionEs: s.descriptionEs,
     };
   });
 }
