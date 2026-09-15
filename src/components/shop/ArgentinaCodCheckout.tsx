@@ -10,8 +10,7 @@ import {
 } from "react";
 import { MapPin, User, ChevronDown, Zap } from "lucide-react";
 import { selectedQtyTotalLocal } from "@/components/shop/ProductQtyUpsell";
-import { currencyForCountry } from "@/lib/countries";
-import { formatLocalAmount } from "@/lib/currency";
+import { formatArgentinaCodPrice } from "@/lib/currency";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
 import {
   argentinaLocalidades,
@@ -94,7 +93,6 @@ export function ArgentinaCodCheckout({
   formRef,
   onPlaceOrder,
 }: Props) {
-  const currency = currencyForCountry(country);
   const countdown = useOfferCountdown(`${country}:${product.id}`);
   const offers = getProductQtyOffers(product, country, "es");
   const packs = useMemo(() => {
@@ -122,7 +120,7 @@ export function ArgentinaCodCheckout({
   }, [provincia]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
-  const totalLabel = formatLocalAmount(totalLocal, currency, "es");
+  const totalLabel = formatArgentinaCodPrice(totalLocal);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -160,7 +158,7 @@ export function ArgentinaCodCheckout({
     >
       {/* Dark header — Argentina COD */}
       <div className="bg-[#121c2d] px-4 pb-5 pt-5 sm:px-5">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0a101a] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/35 bg-[#0a101a] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white">
           <Zap className="h-3.5 w-3.5 fill-[#ffd54a] text-[#ffd54a]" />
           <span aria-hidden>💵</span>
           Contra entrega
@@ -176,7 +174,7 @@ export function ArgentinaCodCheckout({
       {/* Offer timer */}
       <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#ff8a1f] to-[#ff6a00] px-3 py-2.5 text-center text-[13px] font-bold tracking-wide text-white sm:text-sm">
         <span>🔥 OFERTA ESPECIAL — TERMINA EN</span>
-        <span className="rounded-md bg-[#c44a00] px-2.5 py-0.5 font-mono text-sm tabular-nums">
+        <span className="rounded-md bg-[#1a2333] px-2.5 py-0.5 font-mono text-sm tabular-nums">
           {countdown}
         </span>
       </div>
@@ -189,7 +187,7 @@ export function ArgentinaCodCheckout({
             const label =
               offer.quantity === 1
                 ? "Compra 1 unidad"
-                : `Compra ${offer.quantity} · ahorra ${disc || 10}%`;
+                : `Compra ${offer.quantity} - ahorra ${disc || 10}%`;
 
             return (
               <button
@@ -227,11 +225,11 @@ export function ArgentinaCodCheckout({
                 </span>
                 <span className="shrink-0 text-end">
                   <span className="block text-base font-extrabold text-[#ff7a00] sm:text-lg">
-                    {formatLocalAmount(offer.totalLocal, currency, "es")}
+                    {formatArgentinaCodPrice(offer.totalLocal)}
                   </span>
                   {offer.fullPriceLocal > offer.totalLocal ? (
                     <span className="text-xs text-[#999] line-through">
-                      {formatLocalAmount(offer.fullPriceLocal, currency, "es")}
+                      {formatArgentinaCodPrice(offer.fullPriceLocal)}
                     </span>
                   ) : null}
                 </span>
@@ -323,7 +321,7 @@ export function ArgentinaCodCheckout({
             </p>
             <p className="text-2xl font-extrabold tracking-tight">{totalLabel}</p>
           </div>
-          <span className="rounded-full border border-white/70 px-3 py-1 text-xs font-bold text-white">
+          <span className="rounded-full border border-[#ff7a00] px-3 py-1 text-xs font-bold text-[#ff7a00]">
             Envío gratis
           </span>
         </div>
@@ -355,7 +353,7 @@ export function ArgentinaCodCheckout({
           <span>COD FORM ARGENTINA</span>
           <span className="inline-flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-[#e53935]" />
-            Powered by Fufills
+            POWERED BY FUFILLS
           </span>
         </div>
       </form>

@@ -12,7 +12,12 @@ import {
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { currencyForCountry, isStoreMarket } from "@/lib/countries";
-import { convertFromUSD, formatLocalAmount, formatPrice } from "@/lib/currency";
+import {
+  convertFromUSD,
+  formatArgentinaCodPrice,
+  formatLocalAmount,
+  formatPrice,
+} from "@/lib/currency";
 import {
   formatProductComparePrice,
   formatProductPrice,
@@ -485,7 +490,9 @@ function ProductPageInner() {
                 argentinaCod || latamCod ? "text-[#ff7a00]" : "product-price"
               )}
             >
-              {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
+              {argentinaCod
+                ? formatArgentinaCodPrice(orderTotalLocal)
+                : formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
             </p>
           </div>
           <button
