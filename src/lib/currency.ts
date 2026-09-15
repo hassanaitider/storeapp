@@ -273,14 +273,17 @@ export function formatPrice(
   return formatLocalAmount(convertFromUSD(amountUSD, code), code, locale);
 }
 
-/** Fufills-style Argentina COD prices: `$349.00` (always 2 decimals). */
-export function formatArgentinaCodPrice(amount: number): string {
+/** Fufills-style COD prices: `$349.00` (always 2 decimals). */
+export function formatCodStylePrice(amount: number): string {
   const formatted = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);
   return `$${formatted}`;
 }
+
+export const formatArgentinaCodPrice = formatCodStylePrice;
+export const formatMexicoCodPrice = formatCodStylePrice;
 
 export function isCurrencyCode(code: string): code is CurrencyCode {
   return CURRENCIES.some((c) => c.code === code);

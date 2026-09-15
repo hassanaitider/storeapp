@@ -3,7 +3,10 @@ import type { CountryCode } from "./types";
 /** Cascading location tree: Departamento → Municipio → Poblado[] */
 export type LatamGeoTree = Record<string, Record<string, string[]>>;
 
-/** Markets that use the Fufills-style COD checkout form (not Argentina). */
+/**
+ * Markets that use the shared Latam COD checkout (GT/CR).
+ * Mexico and Argentina each have their own exclusive COD modules.
+ */
 export const LATAM_COD_CHECKOUT_MARKETS: CountryCode[] = ["GT", "CR"];
 
 export function usesLatamCodCheckout(country: string): boolean {

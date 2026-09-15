@@ -16,6 +16,7 @@ import {
   convertFromUSD,
   formatArgentinaCodPrice,
   formatLocalAmount,
+  formatMexicoCodPrice,
   formatPrice,
 } from "@/lib/currency";
 import {
@@ -39,7 +40,9 @@ import {
 } from "@/components/shop/ProductQtyUpsell";
 import { LatamCodCheckout } from "@/components/shop/LatamCodCheckout";
 import { ArgentinaCodCheckout } from "@/components/shop/ArgentinaCodCheckout";
+import { MexicoCodCheckout } from "@/components/shop/MexicoCodCheckout";
 import { usesLatamCodCheckout } from "@/lib/latam-geo";
+import { usesMexicoCodCheckout } from "@/lib/mexico-geo";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order } from "@/lib/types";
@@ -272,7 +275,10 @@ function ProductPageInner() {
   };
 
   const argentinaCod = country === "AR";
-  const latamCod = !argentinaCod && usesLatamCodCheckout(country);
+  const mexicoCod = !argentinaCod && usesMexicoCodCheckout(country);
+  const latamCod =
+    !argentinaCod && !mexicoCod && usesLatamCodCheckout(country);
+  const fufillsSticky = argentinaCod || mexicoCod || latamCod;
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 sm:px-6 lg:px-8">
@@ -356,9 +362,20 @@ function ProductPageInner() {
         <ProductBriefDescription product={product} locale={locale} />
       </div>
 
-      {/* Buy / COD block — Argentina COD module is market-exclusive */}
+      {/* Buy / COD blocks — AR and MX modules are market-exclusive */}
       {argentinaCod ? (
         <ArgentinaCodCheckout
+          product={product}
+          country={country}
+          qty={qty}
+          onQtyChange={setQty}
+          customColor={customColor}
+          onCustomColorChange={setCustomColor}
+          formRef={formRef}
+          onPlaceOrder={submitLatamCod}
+        />
+      ) : mexicoCod ? (
+        <MexicoCodCheckout
           product={product}
           country={country}
           qty={qty}
@@ -487,12 +504,14 @@ function ProductPageInner() {
             <p
               className={cn(
                 "text-lg font-bold",
-                argentinaCod || latamCod ? "text-[#ff7a00]" : "product-price"
+                fufillsSticky ? "text-[#ff7a00]" : "product-price"
               )}
             >
               {argentinaCod
                 ? formatArgentinaCodPrice(orderTotalLocal)
-                : formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
+                : mexicoCod
+                  ? formatMexicoCodPrice(orderTotalLocal)
+                  : formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
             </p>
           </div>
           <button
@@ -501,13 +520,13 @@ function ProductPageInner() {
             onClick={() => formRef.current?.requestSubmit()}
             className={cn(
               "shrink-0 rounded-2xl px-6 py-3.5 text-sm font-bold text-white shadow-lg transition disabled:opacity-50 sm:px-8",
-              argentinaCod || latamCod
+              fufillsSticky
                 ? "bg-gradient-to-b from-[#ff9a3d] to-[#ff6a00] hover:brightness-105"
                 : "bg-brand-700 hover:bg-brand-600"
             )}
           >
             {product.inStock
-              ? argentinaCod || latamCod
+              ? fufillsSticky
                 ? "Comprar ahora"
                 : t.checkout.placeOrder
               : t.shop.outOfStock}
