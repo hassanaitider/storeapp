@@ -10,6 +10,7 @@ export const DEFAULT_CURRENCY_RATES: Record<CurrencyCode, number> = {
   QAR: 3.64,
   IQD: 1310,
   LYD: 5.5,
+  LBP: 89500,
   EGP: 49.5,
   MAD: 10.0,
   USD: 1,
@@ -86,6 +87,14 @@ export const CURRENCIES: CurrencyInfo[] = [
     nameEn: "Libyan Dinar",
     symbol: "د.ل",
     rate: DEFAULT_CURRENCY_RATES.LYD,
+    region: "mena",
+  },
+  {
+    code: "LBP",
+    nameAr: "ليرة لبنانية",
+    nameEn: "Lebanese Pound",
+    symbol: "ل.ل",
+    rate: DEFAULT_CURRENCY_RATES.LBP,
     region: "mena",
   },
   {
@@ -235,7 +244,7 @@ export function formatLocalAmount(
   // Gulf dinars quote 3 decimals; IQD, ARS and CRC are never quoted in cents
   const decimals = ["KWD", "BHD", "OMR"].includes(code)
     ? 3
-    : ["IQD", "ARS", "CRC"].includes(code)
+    : ["IQD", "ARS", "CRC", "LBP"].includes(code)
       ? 0
       : 2;
 

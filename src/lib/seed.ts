@@ -12,6 +12,7 @@ const CATEGORY_IMAGES: Record<string, string> = {
   OM: "/categories/flag-om.png",
   IQ: "/categories/flag-iq.png",
   LY: "/categories/flag-ly.png",
+  LB: "/categories/flag-lb.png",
   MX: "/categories/flag-mx.png",
   AR: "/categories/flag-ar.png",
   CR: "/categories/flag-cr.png",
