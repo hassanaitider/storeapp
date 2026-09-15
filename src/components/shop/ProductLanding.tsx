@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, ChevronDown } from "lucide-react";
+import type { ReactNode } from "react";
 import { useT } from "@/hooks/useT";
 import { pickList, pickText } from "@/lib/localized";
 import type { Locale, Product } from "@/lib/types";
@@ -52,9 +53,12 @@ function StoryMedia({
 export function ProductDetailSections({
   product,
   locale,
+  beforeShipping,
 }: {
   product: Product;
   locale: Locale;
+  /** Checkout / order form — rendered just before shipping & returns */
+  beforeShipping?: ReactNode;
 }) {
   const t = useT();
   const landing = product.landing;
@@ -64,21 +68,34 @@ export function ProductDetailSections({
   const { gif, stills } = mediaPack(product.images);
 
   if (!landing?.sections?.length) {
-    if (!details.length) return null;
+    if (!details.length && !beforeShipping) return null;
     return (
-      <section className="mt-12 space-y-6">
-        <h2 className="product-section-title text-ink-900">
-          {t.product.details}
-        </h2>
-        <ul className="space-y-3">
-          {details.map((d) => (
-            <li key={d} className="flex items-start gap-3 text-ink-800">
-              <Check className="mt-1 h-5 w-5 shrink-0 text-brand-600" />
-              <span className="product-body">{d}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <>
+        {details.length > 0 ? (
+          <section className="mt-12 space-y-6">
+            <h2 className="product-section-title text-ink-900">
+              {t.product.details}
+            </h2>
+            <ul className="space-y-3">
+              {details.map((d) => (
+                <li key={d} className="flex items-start gap-3 text-ink-800">
+                  <Check className="mt-1 h-5 w-5 shrink-0 text-brand-600" />
+                  <span className="product-body">{d}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+        {beforeShipping}
+        <section className="mx-auto mt-12 max-w-3xl rounded-[1.25rem] bg-sand-100/90 px-5 py-8 sm:px-7">
+          <h3 className="product-section-title">{t.product.shipping}</h3>
+          <div className="product-body mt-4 space-y-3 text-[var(--muted)]">
+            <p>{t.product.freeDelivery}</p>
+            <p>{t.product.codAvailable}</p>
+            <p>{t.product.returnPolicy}</p>
+          </div>
+        </section>
+      </>
     );
   }
 
@@ -168,6 +185,8 @@ export function ProductDetailSections({
           </ul>
         </section>
       )}
+
+      {beforeShipping}
 
       <section className="mx-auto max-w-3xl rounded-[1.25rem] bg-sand-100/90 px-5 py-8 sm:px-7">
         <h3 className="product-section-title">{t.product.shipping}</h3>
