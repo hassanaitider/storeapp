@@ -33,6 +33,7 @@ import {
   selectedQtyTotalLocal,
 } from "@/components/shop/ProductQtyUpsell";
 import { LatamCodCheckout } from "@/components/shop/LatamCodCheckout";
+import { ArgentinaCodCheckout } from "@/components/shop/ArgentinaCodCheckout";
 import { usesLatamCodCheckout } from "@/lib/latam-geo";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
@@ -265,7 +266,8 @@ function ProductPageInner() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const latamCod = usesLatamCodCheckout(country);
+  const argentinaCod = country === "AR";
+  const latamCod = !argentinaCod && usesLatamCodCheckout(country);
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 sm:px-6 lg:px-8">
@@ -349,8 +351,19 @@ function ProductPageInner() {
         <ProductBriefDescription product={product} locale={locale} />
       </div>
 
-      {/* Buy / COD block */}
-      {latamCod ? (
+      {/* Buy / COD block — Argentina COD module is market-exclusive */}
+      {argentinaCod ? (
+        <ArgentinaCodCheckout
+          product={product}
+          country={country}
+          qty={qty}
+          onQtyChange={setQty}
+          customColor={customColor}
+          onCustomColorChange={setCustomColor}
+          formRef={formRef}
+          onPlaceOrder={submitLatamCod}
+        />
+      ) : latamCod ? (
         <LatamCodCheckout
           product={product}
           country={country}
@@ -469,7 +482,7 @@ function ProductPageInner() {
             <p
               className={cn(
                 "text-lg font-bold",
-                latamCod ? "text-[#ff7a00]" : "product-price"
+                argentinaCod || latamCod ? "text-[#ff7a00]" : "product-price"
               )}
             >
               {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
@@ -481,13 +494,13 @@ function ProductPageInner() {
             onClick={() => formRef.current?.requestSubmit()}
             className={cn(
               "shrink-0 rounded-2xl px-6 py-3.5 text-sm font-bold text-white shadow-lg transition disabled:opacity-50 sm:px-8",
-              latamCod
+              argentinaCod || latamCod
                 ? "bg-gradient-to-b from-[#ff9a3d] to-[#ff6a00] hover:brightness-105"
                 : "bg-brand-700 hover:bg-brand-600"
             )}
           >
             {product.inStock
-              ? latamCod
+              ? argentinaCod || latamCod
                 ? "Comprar ahora"
                 : t.checkout.placeOrder
               : t.shop.outOfStock}

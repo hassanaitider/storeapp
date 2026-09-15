@@ -3,13 +3,18 @@ import type { CountryCode } from "./types";
 /** Cascading location tree: Departamento → Municipio → Poblado[] */
 export type LatamGeoTree = Record<string, Record<string, string[]>>;
 
-/** Markets that use the Fufills-style COD checkout form */
+/** Markets that use the Fufills-style COD checkout form (not Argentina). */
 export const LATAM_COD_CHECKOUT_MARKETS: CountryCode[] = ["GT", "CR"];
 
 export function usesLatamCodCheckout(country: string): boolean {
   return LATAM_COD_CHECKOUT_MARKETS.includes(
     country.toUpperCase() as CountryCode
   );
+}
+
+/** Argentina uses its own COD module — never share with other markets. */
+export function usesArgentinaCodCheckout(country: string): boolean {
+  return country.toUpperCase() === "AR";
 }
 
 /** Guatemala — departamentos / municipios / poblados (núcleos principales). */
@@ -194,5 +199,6 @@ export function geoTreeForCountry(country: CountryCode): LatamGeoTree | null {
 export function codFormLabel(country: CountryCode): string {
   if (country === "GT") return "COD FORM GUATEMALA";
   if (country === "CR") return "COD FORM COSTA RICA";
+  if (country === "AR") return "COD FORM ARGENTINA";
   return "COD FORM";
 }
