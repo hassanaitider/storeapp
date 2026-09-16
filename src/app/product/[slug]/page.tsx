@@ -21,6 +21,7 @@ import {
   formatEcuadorCodPrice,
   formatSalvadorCodPrice,
   formatHondurasCodPrice,
+  formatNicaraguaCodPrice,
   formatPrice,
 } from "@/lib/currency";
 import {
@@ -49,12 +50,14 @@ import { DominicanCodCheckout } from "@/components/shop/DominicanCodCheckout";
 import { EcuadorCodCheckout } from "@/components/shop/EcuadorCodCheckout";
 import { SalvadorCodCheckout } from "@/components/shop/SalvadorCodCheckout";
 import { HondurasCodCheckout } from "@/components/shop/HondurasCodCheckout";
+import { NicaraguaCodCheckout } from "@/components/shop/NicaraguaCodCheckout";
 import { usesLatamCodCheckout } from "@/lib/latam-geo";
 import { usesMexicoCodCheckout } from "@/lib/mexico-geo";
 import { usesDominicanCodCheckout } from "@/lib/dominican-geo";
 import { usesEcuadorCodCheckout } from "@/lib/ecuador-geo";
 import { usesSalvadorCodCheckout } from "@/lib/salvador-geo";
 import { usesHondurasCodCheckout } from "@/lib/honduras-geo";
+import { usesNicaraguaCodCheckout } from "@/lib/nicaragua-geo";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order } from "@/lib/types";
@@ -309,6 +312,14 @@ function ProductPageInner() {
     !ecuadorCod &&
     !salvadorCod &&
     usesHondurasCodCheckout(country);
+  const nicaraguaCod =
+    !argentinaCod &&
+    !mexicoCod &&
+    !dominicanCod &&
+    !ecuadorCod &&
+    !salvadorCod &&
+    !hondurasCod &&
+    usesNicaraguaCodCheckout(country);
   const latamCod =
     !argentinaCod &&
     !mexicoCod &&
@@ -316,6 +327,7 @@ function ProductPageInner() {
     !ecuadorCod &&
     !salvadorCod &&
     !hondurasCod &&
+    !nicaraguaCod &&
     usesLatamCodCheckout(country);
   const fufillsSticky =
     argentinaCod ||
@@ -324,6 +336,7 @@ function ProductPageInner() {
     ecuadorCod ||
     salvadorCod ||
     hondurasCod ||
+    nicaraguaCod ||
     latamCod;
   const moroccoSimpleCheckout = country === "MA";
 
@@ -409,7 +422,7 @@ function ProductPageInner() {
         <ProductBriefDescription product={product} locale={locale} />
       </div>
 
-      {/* Buy / COD blocks — AR, MX, DO, EC, SV, HN modules are market-exclusive */}
+      {/* Buy / COD blocks — AR, MX, DO, EC, SV, HN, NI modules are market-exclusive */}
       {argentinaCod ? (
         <ArgentinaCodCheckout
           product={product}
@@ -467,6 +480,17 @@ function ProductPageInner() {
         />
       ) : hondurasCod ? (
         <HondurasCodCheckout
+          product={product}
+          country={country}
+          qty={qty}
+          onQtyChange={setQty}
+          customColor={customColor}
+          onCustomColorChange={setCustomColor}
+          formRef={formRef}
+          onPlaceOrder={submitLatamCod}
+        />
+      ) : nicaraguaCod ? (
+        <NicaraguaCodCheckout
           product={product}
           country={country}
           qty={qty}
@@ -612,11 +636,13 @@ function ProductPageInner() {
                         ? formatSalvadorCodPrice(orderTotalLocal)
                         : hondurasCod
                           ? formatHondurasCodPrice(orderTotalLocal)
-                          : formatLocalAmount(
-                              orderTotalLocal,
-                              marketCurrency,
-                              locale
-                            )}
+                          : nicaraguaCod
+                            ? formatNicaraguaCodPrice(orderTotalLocal)
+                            : formatLocalAmount(
+                                orderTotalLocal,
+                                marketCurrency,
+                                locale
+                              )}
             </p>
           </div>
           <button
