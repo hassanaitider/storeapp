@@ -288,6 +288,11 @@ export const formatDominicanCodPrice = formatCodStylePrice;
 export const formatEcuadorCodPrice = formatCodStylePrice;
 export const formatSalvadorCodPrice = formatCodStylePrice;
 
+/** Honduras COD: Lempira amounts with Fufills-style 2 decimals (`L 349.00`). */
+export function formatHondurasCodPrice(amount: number): string {
+  return formatLocalAmount(amount, "HNL", "es");
+}
+
 export function isCurrencyCode(code: string): code is CurrencyCode {
   return CURRENCIES.some((c) => c.code === code);
 }
