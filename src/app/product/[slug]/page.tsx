@@ -19,6 +19,9 @@ import {
   formatMexicoCodPrice,
   formatDominicanCodPrice,
   formatEcuadorCodPrice,
+  formatSalvadorCodPrice,
+  formatHondurasCodPrice,
+  formatNicaraguaCodPrice,
   formatPrice,
 } from "@/lib/currency";
 import {
@@ -45,10 +48,16 @@ import { ArgentinaCodCheckout } from "@/components/shop/ArgentinaCodCheckout";
 import { MexicoCodCheckout } from "@/components/shop/MexicoCodCheckout";
 import { DominicanCodCheckout } from "@/components/shop/DominicanCodCheckout";
 import { EcuadorCodCheckout } from "@/components/shop/EcuadorCodCheckout";
+import { SalvadorCodCheckout } from "@/components/shop/SalvadorCodCheckout";
+import { HondurasCodCheckout } from "@/components/shop/HondurasCodCheckout";
+import { NicaraguaCodCheckout } from "@/components/shop/NicaraguaCodCheckout";
 import { usesLatamCodCheckout } from "@/lib/latam-geo";
 import { usesMexicoCodCheckout } from "@/lib/mexico-geo";
 import { usesDominicanCodCheckout } from "@/lib/dominican-geo";
 import { usesEcuadorCodCheckout } from "@/lib/ecuador-geo";
+import { usesSalvadorCodCheckout } from "@/lib/salvador-geo";
+import { usesHondurasCodCheckout } from "@/lib/honduras-geo";
+import { usesNicaraguaCodCheckout } from "@/lib/nicaragua-geo";
 import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order } from "@/lib/types";
@@ -290,14 +299,45 @@ function ProductPageInner() {
     !mexicoCod &&
     !dominicanCod &&
     usesEcuadorCodCheckout(country);
+  const salvadorCod =
+    !argentinaCod &&
+    !mexicoCod &&
+    !dominicanCod &&
+    !ecuadorCod &&
+    usesSalvadorCodCheckout(country);
+  const hondurasCod =
+    !argentinaCod &&
+    !mexicoCod &&
+    !dominicanCod &&
+    !ecuadorCod &&
+    !salvadorCod &&
+    usesHondurasCodCheckout(country);
+  const nicaraguaCod =
+    !argentinaCod &&
+    !mexicoCod &&
+    !dominicanCod &&
+    !ecuadorCod &&
+    !salvadorCod &&
+    !hondurasCod &&
+    usesNicaraguaCodCheckout(country);
   const latamCod =
     !argentinaCod &&
     !mexicoCod &&
     !dominicanCod &&
     !ecuadorCod &&
+    !salvadorCod &&
+    !hondurasCod &&
+    !nicaraguaCod &&
     usesLatamCodCheckout(country);
   const fufillsSticky =
-    argentinaCod || mexicoCod || dominicanCod || ecuadorCod || latamCod;
+    argentinaCod ||
+    mexicoCod ||
+    dominicanCod ||
+    ecuadorCod ||
+    salvadorCod ||
+    hondurasCod ||
+    nicaraguaCod ||
+    latamCod;
   const moroccoSimpleCheckout = country === "MA";
 
   return (
@@ -382,7 +422,7 @@ function ProductPageInner() {
         <ProductBriefDescription product={product} locale={locale} />
       </div>
 
-      {/* Buy / COD blocks — AR, MX, DO, EC modules are market-exclusive */}
+      {/* Buy / COD blocks — AR, MX, DO, EC, SV, HN, NI modules are market-exclusive */}
       {argentinaCod ? (
         <ArgentinaCodCheckout
           product={product}
@@ -418,6 +458,39 @@ function ProductPageInner() {
         />
       ) : ecuadorCod ? (
         <EcuadorCodCheckout
+          product={product}
+          country={country}
+          qty={qty}
+          onQtyChange={setQty}
+          customColor={customColor}
+          onCustomColorChange={setCustomColor}
+          formRef={formRef}
+          onPlaceOrder={submitLatamCod}
+        />
+      ) : salvadorCod ? (
+        <SalvadorCodCheckout
+          product={product}
+          country={country}
+          qty={qty}
+          onQtyChange={setQty}
+          customColor={customColor}
+          onCustomColorChange={setCustomColor}
+          formRef={formRef}
+          onPlaceOrder={submitLatamCod}
+        />
+      ) : hondurasCod ? (
+        <HondurasCodCheckout
+          product={product}
+          country={country}
+          qty={qty}
+          onQtyChange={setQty}
+          customColor={customColor}
+          onCustomColorChange={setCustomColor}
+          formRef={formRef}
+          onPlaceOrder={submitLatamCod}
+        />
+      ) : nicaraguaCod ? (
+        <NicaraguaCodCheckout
           product={product}
           country={country}
           qty={qty}
@@ -559,11 +632,17 @@ function ProductPageInner() {
                     ? formatDominicanCodPrice(orderTotalLocal)
                     : ecuadorCod
                       ? formatEcuadorCodPrice(orderTotalLocal)
-                      : formatLocalAmount(
-                          orderTotalLocal,
-                          marketCurrency,
-                          locale
-                        )}
+                      : salvadorCod
+                        ? formatSalvadorCodPrice(orderTotalLocal)
+                        : hondurasCod
+                          ? formatHondurasCodPrice(orderTotalLocal)
+                          : nicaraguaCod
+                            ? formatNicaraguaCodPrice(orderTotalLocal)
+                            : formatLocalAmount(
+                                orderTotalLocal,
+                                marketCurrency,
+                                locale
+                              )}
             </p>
           </div>
           <button
