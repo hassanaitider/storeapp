@@ -1,61 +1,240 @@
-/** Dominican Republic — Provincia → Ciudad/Municipio[] for COD checkout */
+/** Dominican Republic — Provincia → Municipio/Ciudad[] for COD checkout */
 export type DominicanGeoTree = Record<string, string[]>;
 
 export const GEO_DO: DominicanGeoTree = {
+  "Azua": [
+    "Azua de Compostela",
+    "Estebanía",
+    "Guayabal",
+    "Las Charcas",
+    "Las Yayas de Viajama",
+    "Padre Las Casas",
+    "Peralta",
+    "Pueblo Viejo",
+    "Sabana Yegua",
+    "Tábara Arriba"
+  ],
+  "Baoruco": [
+    "Galván",
+    "Los Ríos",
+    "Neiba",
+    "Tamayo",
+    "Villa Jaragua"
+  ],
+  "Barahona": [
+    "Cabral",
+    "El Peñón",
+    "Enriquillo",
+    "Fundación",
+    "Jaquimeyes",
+    "La Ciénaga",
+    "Las Salinas",
+    "Paraíso",
+    "Polo",
+    "Santa Cruz de Barahona",
+    "Vicente Noble"
+  ],
+  "Dajabón": [
+    "Dajabón",
+    "El Pino",
+    "Loma de Cabrera",
+    "Partido",
+    "Restauración"
+  ],
   "Distrito Nacional": [
-    "Santo Domingo de Guzmán",
+    "Bella Vista",
+    "Ensanche Naco",
     "Gazcue",
+    "La Esperilla",
+    "Los Prados",
+    "Mirador Sur",
     "Naco",
     "Piantini",
-    "Zona Colonial",
+    "Santo Domingo de Guzmán",
+    "Zona Colonial"
   ],
-  "Santo Domingo": [
-    "Santo Domingo Este",
-    "Santo Domingo Norte",
-    "Santo Domingo Oeste",
-    "Los Alcarrizos",
-    "Boca Chica",
-    "Pedro Brand",
+  "Duarte": [
+    "Arenoso",
+    "Castillo",
+    "Eugenio María de Hostos",
+    "Las Guáranas",
+    "Pimentel",
+    "San Francisco de Macorís",
+    "Villa Riva"
   ],
-  Santiago: [
-    "Santiago de los Caballeros",
-    "Villa González",
-    "Licey al Medio",
-    "Tamboril",
+  "El Seibo": [
+    "Miches",
+    "Santa Cruz del Seibo"
   ],
-  "La Vega": ["Concepción de La Vega", "Constanza", "Jarabacoa"],
+  "Elías Piña": [
+    "Bánica",
+    "Comendador",
+    "El Llano",
+    "Hondo Valle",
+    "Juan Santiago",
+    "Pedro Santana"
+  ],
+  "Espaillat": [
+    "Cayetano Germosén",
+    "Gaspar Hernández",
+    "Jamao al Norte",
+    "Moca"
+  ],
+  "Hato Mayor": [
+    "El Valle",
+    "Hato Mayor del Rey",
+    "Sabana de la Mar"
+  ],
+  "Hermanas Mirabal": [
+    "Salcedo",
+    "Tenares",
+    "Villa Tapia"
+  ],
+  "Independencia": [
+    "Cristóbal",
+    "Duvergé",
+    "Jimaní",
+    "La Descubierta",
+    "Mella",
+    "Postrer Río"
+  ],
+  "La Altagracia": [
+    "Bávaro",
+    "Punta Cana",
+    "Salvaleón de Higüey",
+    "San Rafael del Yuma",
+    "Verón"
+  ],
+  "La Romana": [
+    "Guaymate",
+    "La Romana",
+    "Villa Hermosa"
+  ],
+  "La Vega": [
+    "Concepción de La Vega",
+    "Constanza",
+    "Jarabacoa",
+    "Jima Abajo"
+  ],
+  "María Trinidad Sánchez": [
+    "Cabrera",
+    "El Factor",
+    "Nagua",
+    "Río San Juan"
+  ],
+  "Monseñor Nouel": [
+    "Bonao",
+    "Maimón",
+    "Piedra Blanca"
+  ],
+  "Monte Cristi": [
+    "Castañuelas",
+    "Guayubín",
+    "Las Matas de Santa Cruz",
+    "Pepillo Salcedo",
+    "San Fernando de Monte Cristi",
+    "Villa Vásquez"
+  ],
+  "Monte Plata": [
+    "Bayaguana",
+    "Monte Plata",
+    "Peralvillo",
+    "Sabana Grande de Boyá",
+    "Yamasá"
+  ],
+  "Pedernales": [
+    "Oviedo",
+    "Pedernales"
+  ],
+  "Peravia": [
+    "Baní",
+    "Nizao"
+  ],
   "Puerto Plata": [
+    "Altamira",
+    "Cabarete",
+    "Guananico",
+    "Imbert",
+    "Los Hidalgos",
+    "Luperón",
     "San Felipe de Puerto Plata",
     "Sosúa",
-    "Cabarete",
-    "Imbert",
+    "Villa Isabela",
+    "Villa Montellano"
   ],
-  "San Cristóbal": ["San Cristóbal", "Bajos de Haina", "Villa Altagracia"],
-  "La Altagracia": ["Higüey", "Punta Cana", "Bávaro", "Verón"],
-  Duarte: ["San Francisco de Macorís", "Pimentel", "Castillo"],
-  Espaillat: ["Moca", "Gaspar Hernández", "Jamao al Norte"],
-  "San Pedro de Macorís": ["San Pedro de Macorís", "Consuelo", "Quisqueya"],
-  "La Romana": ["La Romana", "Guaymate", "Villa Hermosa"],
-  Barahona: ["Santa Cruz de Barahona", "Cabral", "Enriquillo"],
-  Azua: ["Azua de Compostela", "Padre Las Casas", "Peralta"],
-  "San Juan": ["San Juan de la Maguana", "Las Matas de Farfán", "El Cercado"],
-  Valverde: ["Mao", "Esperanza", "Laguna Salada"],
-  "María Trinidad Sánchez": ["Nagua", "Cabrera", "Río San Juan"],
-  "Monte Plata": ["Monte Plata", "Bayaguana", "Yamasá"],
-  Peravia: ["Baní", "Nizao"],
-  "Hermanas Mirabal": ["Salcedo", "Tenares", "Villa Tapia"],
-  "Sánchez Ramírez": ["Cotuí", "Cevicos", "Fantino"],
-  "Monseñor Nouel": ["Bonao", "Maimón", "Piedra Blanca"],
-  "El Seibo": ["Santa Cruz del Seibo", "Miches"],
-  "Hato Mayor": ["Hato Mayor del Rey", "Sabana de la Mar"],
-  Samaná: ["Santa Bárbara de Samaná", "Las Terrenas", "Sánchez"],
-  "Monte Cristi": ["San Fernando de Monte Cristi", "Pepillo Salcedo"],
-  Dajabón: ["Dajabón", "Loma de Cabrera"],
-  "Elías Piña": ["Comendador", "Banica"],
-  Independencia: ["Jimaní", "Duvergé"],
-  Pedernales: ["Pedernales", "Oviedo"],
-  Baoruco: ["Neiba", "Galván"],
-  "Santiago Rodríguez": ["San Ignacio de Sabaneta", "Villa Los Almácigos"],
+  "Samaná": [
+    "Las Terrenas",
+    "Sánchez",
+    "Santa Bárbara de Samaná"
+  ],
+  "San Cristóbal": [
+    "Bajos de Haina",
+    "Cambita Garabitos",
+    "Los Cacaos",
+    "Sabana Grande de Palenque",
+    "San Cristóbal",
+    "San Gregorio de Nigua",
+    "Villa Altagracia",
+    "Yaguate"
+  ],
+  "San José de Ocoa": [
+    "Rancho Arriba",
+    "Sabana Larga",
+    "San José de Ocoa"
+  ],
+  "San Juan": [
+    "Bohechío",
+    "El Cercado",
+    "Juan de Herrera",
+    "Las Matas de Farfán",
+    "San Juan de la Maguana",
+    "Vallejuelo"
+  ],
+  "San Pedro de Macorís": [
+    "Consuelo",
+    "Guayacanes",
+    "Quisqueya",
+    "Ramón Santana",
+    "San Pedro de Macorís"
+  ],
+  "Sánchez Ramírez": [
+    "Cevicos",
+    "Cotuí",
+    "Fantino",
+    "La Mata"
+  ],
+  "Santiago": [
+    "Bisonó",
+    "Jánico",
+    "Licey al Medio",
+    "Puñal",
+    "Sabana Iglesia",
+    "San José de las Matas",
+    "Santiago de los Caballeros",
+    "Tamboril",
+    "Villa Bisonó",
+    "Villa González"
+  ],
+  "Santiago Rodríguez": [
+    "Monción",
+    "San Ignacio de Sabaneta",
+    "Villa Los Almácigos"
+  ],
+  "Santo Domingo": [
+    "Boca Chica",
+    "Los Alcarrizos",
+    "Pedro Brand",
+    "San Antonio de Guerra",
+    "San Luis",
+    "Santo Domingo Este",
+    "Santo Domingo Norte",
+    "Santo Domingo Oeste"
+  ],
+  "Valverde": [
+    "Esperanza",
+    "Laguna Salada",
+    "Mao"
+  ]
 };
 
 export function usesDominicanCodCheckout(country: string): boolean {
