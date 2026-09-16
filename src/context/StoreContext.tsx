@@ -77,6 +77,12 @@ interface StoreContextValue extends StoreState {
   hydrated: boolean;
   storageReady: boolean;
   geoReady: boolean;
+  /**
+   * Ephemeral market override (e.g. admin ?country= preview). Does not lock
+   * IP geo — cleared when leaving the preview URL.
+   */
+  viewCountry: CountryCode | null;
+  setViewCountry: (country: CountryCode | null) => void;
   /** Products visible in the visitor's market */
   marketProducts: Product[];
   /** Only the visitor's own regional category */
@@ -93,7 +99,7 @@ interface StoreContextValue extends StoreState {
   clearCart: () => void;
   cartCount: number;
   cartTotalUSD: number;
-  getProduct: (idOrSlug: string) => Product | undefined;
+  getProduct: (idOrSlug: string, forCountry?: CountryCode) => Product | undefined;
   getCategory: (idOrSlug: string) => Category | undefined;
   addCategory: (data: Omit<Category, "id" | "createdAt">) => string | false;
   updateCategory: (id: string, data: Partial<Category>) => boolean;
@@ -152,10 +158,11 @@ function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
       nameAr: existing.nameAr || s.nameAr,
       nameEn: existing.nameEn || s.nameEn,
       nameEs: existing.nameEs || s.nameEs,
-      image: existing.image || s.image,
-      descriptionAr: existing.descriptionAr || s.descriptionAr,
-      descriptionEn: existing.descriptionEn || s.descriptionEn,
-      descriptionEs: existing.descriptionEs || s.descriptionEs,
+      // Always use seed category art so market tiles stay consistent
+      image: s.image,
+      descriptionAr: s.descriptionAr,
+      descriptionEn: s.descriptionEn,
+      descriptionEs: s.descriptionEs,
     };
   });
 }
@@ -195,12 +202,22 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   if (!stored?.length) return cloneSeedProducts();
   const allowedCats = new Set(SEED_CATEGORIES.map((c) => c.id));
   const seedById = new Map(SEED_PRODUCTS.map((p) => [p.id, p]));
+  /** Old LATAM clones of MENA-only tools + legacy single Elevador id (replaced by per-country rows). */
+  const dropLatamUniversalClone =
+    /^prod-(car-windshield-umbrella|neck-fan)-(mx|ar|cr|ec|gt|hn|sv|ni|do)$/i;
+  const dropLegacyElevador = /^prod-mattress-lifter$/i;
+  const elevadorPerMarket = /^prod-mattress-lifter-([a-z]{2})$/i;
   const merged = stored
     .map((p) => {
       const seed = seedById.get(p.id);
       if (!seed) return p;
       const durable = (p.images ?? []).filter(isDurableMediaUrl);
-      return {
+      const elevadorMatch = elevadorPerMarket.exec(seed.id);
+      const lockedMarket = elevadorMatch
+        ? (elevadorMatch[1].toUpperCase() as CountryCode)
+        : null;
+
+      const base = {
         ...seed,
         ...p,
         id: seed.id,
@@ -250,8 +267,42 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         slug: p.slug?.trim() ? p.slug : seed.slug,
         qtyOffers: p.qtyOffers?.length ? p.qtyOffers : seed.qtyOffers,
       };
+
+      // Per-country Elevador rows must stay pinned to their market — a wrong
+      // category dropdown was making Costa Rica preview open another listing.
+      if (lockedMarket && seed.availableIn?.length) {
+        const adminLocal =
+          typeof p.marketPrices?.[lockedMarket] === "number"
+            ? p.marketPrices![lockedMarket]
+            : seed.marketPrices?.[lockedMarket];
+        const adminCompare =
+          typeof p.marketComparePrices?.[lockedMarket] === "number"
+            ? p.marketComparePrices![lockedMarket]
+            : seed.marketComparePrices?.[lockedMarket];
+        return {
+          ...base,
+          categoryId: seed.categoryId,
+          availableIn: [...seed.availableIn],
+          slug: seed.slug,
+          marketPrices:
+            typeof adminLocal === "number"
+              ? { [lockedMarket]: adminLocal }
+              : { ...(seed.marketPrices ?? {}) },
+          marketComparePrices:
+            typeof adminCompare === "number"
+              ? { [lockedMarket]: adminCompare }
+              : { ...(seed.marketComparePrices ?? {}) },
+        };
+      }
+
+      return base;
     })
-    .filter((p) => !p.categoryId || allowedCats.has(p.categoryId));
+    .filter(
+      (p) =>
+        (!p.categoryId || allowedCats.has(p.categoryId)) &&
+        !dropLatamUniversalClone.test(p.id) &&
+        !dropLegacyElevador.test(p.id)
+    );
   for (const seed of SEED_PRODUCTS) {
     if (!merged.some((p) => p.id === seed.id)) {
       merged.push({ ...seed });
@@ -314,6 +365,34 @@ function readLocalCatalog(): PersistedCatalog | null {
   return null;
 }
 
+const MANUAL_MARKET_SESSION_KEY = "cargolf-market-manual";
+
+function readSessionManualMarket(): CountryCode | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(MANUAL_MARKET_SESSION_KEY);
+    if (raw && isValidCountry(raw) && isStoreMarket(raw)) {
+      return raw as CountryCode;
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
+function writeSessionManualMarket(country: CountryCode | null) {
+  if (typeof window === "undefined") return;
+  try {
+    if (country) {
+      window.sessionStorage.setItem(MANUAL_MARKET_SESSION_KEY, country);
+    } else {
+      window.sessionStorage.removeItem(MANUAL_MARKET_SESSION_KEY);
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 function toPersisted(state: StoreState): PersistedCatalog {
   return sanitizeCatalog({
     updatedAt: Date.now(),
@@ -324,7 +403,9 @@ function toPersisted(state: StoreState): PersistedCatalog {
     locale: state.locale,
     currency: state.currency,
     country: state.country,
-    countryManual: state.countryManual,
+    // Never persist a manual market lock — visitors must follow IP geo on
+    // the next visit. Header picks live in sessionStorage only.
+    countryManual: false,
     currencyManual: state.currencyManual,
     localeManual: state.localeManual,
     currencyRates: state.currencyRates,
@@ -336,7 +417,7 @@ function applyPersisted(
   parsed: PersistedCatalog,
   cookieCountry: CountryCode | null
 ): StoreState {
-  const manual = Boolean(parsed.countryManual);
+  // Ignore legacy countryManual saved by admin preview — IP geo must win
   const currencyManual = Boolean(parsed.currencyManual);
   const localeManual = Boolean(parsed.localeManual);
   const storedCountry =
@@ -345,9 +426,8 @@ function applyPersisted(
       : null;
   const cookieOk =
     cookieCountry && isStoreMarket(cookieCountry) ? cookieCountry : null;
-  const country = manual
-    ? storedCountry ?? cookieOk ?? DEFAULT_COUNTRY
-    : cookieOk ?? storedCountry ?? DEFAULT_COUNTRY;
+  // Prefer geo cookie, then last-seen country as a soft hint before client IP
+  const country = cookieOk ?? storedCountry ?? DEFAULT_COUNTRY;
 
   const currencyRates = mergeCurrencyRates(
     parsed.currencyRates && typeof parsed.currencyRates === "object"
@@ -366,7 +446,7 @@ function applyPersisted(
         : localeForCountry(country),
     country,
     currency: currencyManual ? storedCurrency : currencyForCountry(country),
-    countryManual: manual,
+    countryManual: false,
     currencyManual,
     localeManual,
     currencyRates,
@@ -465,10 +545,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [hydrated] = useState(true);
   const [storageReady, setStorageReady] = useState(false);
   const [geoReady, setGeoReady] = useState(false);
+  const [viewCountry, setViewCountryState] = useState<CountryCode | null>(null);
   const stateRef = useRef(state);
   const storageReadyRef = useRef(false);
-  /** Bumps on every user commit so hydrate cannot clobber fresher edits */
-  const mutateGenRef = useRef(0);
+  /** Bumps only on catalog mutations so geo/pref commits cannot abort hydrate */
+  const catalogGenRef = useRef(0);
 
   useEffect(() => {
     stateRef.current = state;
@@ -479,16 +560,59 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const prev = stateRef.current;
     const next = updater(prev);
     if (next === prev) return true;
-    mutateGenRef.current += 1;
-    // Stamp a fresh updatedAt so this beat any in-flight hydrate
     const stamped: StoreState = { ...next };
     stateRef.current = stamped;
+
+    // Only product/catalog edits may rewrite the shared catalog. Country/locale
+    // geo commits must NOT stamp seed products over a merchant's saved prices
+    // (and must not PUT to the server while an admin session cookie is present).
+    const catalogChanged =
+      prev.products !== stamped.products ||
+      prev.categories !== stamped.categories ||
+      prev.orders !== stamped.orders ||
+      prev.currencyRates !== stamped.currencyRates ||
+      prev.upsellEnabled !== stamped.upsellEnabled;
+
+    if (catalogChanged) {
+      catalogGenRef.current += 1;
+    }
+
     let saved = true;
     if (typeof window !== "undefined") {
-      const persisted = { ...toPersisted(stamped), updatedAt: Date.now() };
-      saved = flushToLocal(stamped, persisted);
-      // Always try server — do not wait for hydrate (avoids lost admin saves)
-      void flushToServer(stamped, persisted);
+      if (catalogChanged) {
+        const localNow = readLocalCatalog();
+        const persisted = {
+          ...toPersisted(stamped),
+          updatedAt: Math.max(Date.now(), (localNow?.updatedAt || 0) + 1),
+        };
+        saved = flushToLocal(stamped, persisted);
+        if (storageReadyRef.current) {
+          void flushToServer(stamped, persisted);
+        }
+      } else if (storageReadyRef.current) {
+        // Patch prefs only — keep persisted products/categories/updatedAt intact
+        const existing = readLocalCatalog();
+        if (existing) {
+          try {
+            const patched: PersistedCatalog = {
+              ...existing,
+              locale: stamped.locale,
+              currency: stamped.currency,
+              country: stamped.country,
+              countryManual: false,
+              currencyManual: stamped.currencyManual,
+              localeManual: stamped.localeManual,
+              cart: stamped.cart,
+            };
+            window.localStorage.setItem(
+              CATALOG_STORAGE_KEY,
+              catalogToJson(patched)
+            );
+          } catch {
+            /* quota */
+          }
+        }
+      }
     }
     setState(stamped);
     return saved;
@@ -498,7 +622,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
 
     async function restore() {
-      const genAtStart = mutateGenRef.current;
+      const genAtStart = catalogGenRef.current;
       try {
         const cookieCountry = readCookieCountry();
         let next = buildDefaults(cookieCountry ?? DEFAULT_COUNTRY);
@@ -526,16 +650,43 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
         if (cancelled) return;
 
-        // User edited while we were loading — keep their in-memory state
-        if (mutateGenRef.current !== genAtStart) {
+        // Catalog was edited while loading — keep in-memory products, but still
+        // mark ready. (Geo/locale commits no longer bump catalogGenRef.)
+        if (catalogGenRef.current !== genAtStart) {
           storageReadyRef.current = true;
           setStorageReady(true);
-          void flushToServer(stateRef.current);
           return;
         }
 
         if (best) {
           next = applyPersisted(best, cookieCountry);
+          // Keep locale/currency manual picks; market follows IP unless this
+          // session chose a country in the header (sessionStorage).
+          const current = stateRef.current;
+          const sessionMarket = readSessionManualMarket();
+          if (sessionMarket) {
+            next = {
+              ...next,
+              country: sessionMarket,
+              countryManual: true,
+              currency: current.currencyManual
+                ? current.currency
+                : currencyForCountry(sessionMarket),
+              locale: current.localeManual
+                ? current.locale
+                : localeForCountry(sessionMarket),
+            };
+          }
+          if (current.localeManual) {
+            next = { ...next, locale: current.locale, localeManual: true };
+          }
+          if (current.currencyManual) {
+            next = {
+              ...next,
+              currency: current.currency,
+              currencyManual: true,
+            };
+          }
         }
 
         // If local is newer than what we applied, prefer local again
@@ -547,10 +698,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           next = applyPersisted(localFinal, cookieCountry);
         }
 
-        if (mutateGenRef.current !== genAtStart) {
+        if (catalogGenRef.current !== genAtStart) {
           storageReadyRef.current = true;
           setStorageReady(true);
-          void flushToServer(stateRef.current);
           return;
         }
 
@@ -559,8 +709,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setState(next);
         storageReadyRef.current = true;
         setStorageReady(true);
-        // Only mirror to local if we are not older than what's already stored
-        flushToLocal(next);
+        // Mirror hydrate result WITHOUT bumping updatedAt. Stamping Date.now()
+        // here made stale remote seed prices look "newer" than a concurrent
+        // admin save and caused Save → price reverts for the merchant.
+        const appliedUpdatedAt =
+          localFinal &&
+          (localFinal.updatedAt || 0) > (best?.updatedAt || 0)
+            ? localFinal.updatedAt
+            : best?.updatedAt;
+        if (typeof appliedUpdatedAt === "number") {
+          flushToLocal(next, {
+            ...toPersisted(next),
+            updatedAt: appliedUpdatedAt,
+          });
+        }
       } catch (err) {
         console.error("Store hydrate failed", err);
         setCurrencyRateOverrides(DEFAULT_CURRENCY_RATES);
@@ -576,6 +738,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (!storageReady) return;
+
     let cancelled = false;
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 4000);
@@ -584,7 +748,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       if (cancelled) return;
       let applied = false;
       commit((s) => {
-        // A market picked in the header outranks IP geo, including after reload
+        // A market picked in the header outranks IP geo for this tab session
         if (s.countryManual) return s;
         const nextCurrency = s.currencyManual
           ? s.currency
@@ -673,6 +837,29 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     }
 
     async function detect() {
+      // Header pick for this browser tab outranks IP for the session only
+      const sessionMarket = readSessionManualMarket();
+      if (sessionMarket) {
+        commit((s) =>
+          s.countryManual && s.country === sessionMarket
+            ? s
+            : {
+                ...s,
+                country: sessionMarket,
+                countryManual: true,
+                currency: s.currencyManual
+                  ? s.currency
+                  : currencyForCountry(sessionMarket),
+                locale: s.localeManual
+                  ? s.locale
+                  : localeForCountry(sessionMarket),
+              }
+        );
+        window.clearTimeout(timeout);
+        if (!cancelled) setGeoReady(true);
+        return;
+      }
+
       let fromApi: CountryCode | null = null;
       let source = "default";
 
@@ -732,7 +919,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       controller.abort();
       window.clearTimeout(timeout);
     };
-  }, [commit]);
+  }, [storageReady, commit]);
 
   useEffect(() => {
     setCurrencyRateOverrides(state.currencyRates);
@@ -767,6 +954,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const setCountry = useCallback(
     (country: CountryCode, manual = true) => {
       const next = isStoreMarket(country) ? country : DEFAULT_COUNTRY;
+      if (manual) {
+        writeSessionManualMarket(next);
+      }
+      setViewCountryState(null);
       commit((s) => {
         const nextCurrency = s.currencyManual
           ? s.currency
@@ -883,17 +1074,28 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
 
   const getProduct = useCallback(
-    (idOrSlug: string) => {
+    (idOrSlug: string, forCountry?: CountryCode) => {
+      const market = forCountry ?? state.country;
       const matches = state.products.filter(
         (p) => p.id === idOrSlug || p.slug === idOrSlug
       );
       if (matches.length === 0) return undefined;
+      // Exact id always wins (admin preview links use product id)
+      const byId = matches.find((p) => p.id === idOrSlug);
+      if (byId) {
+        if (isProductAvailableIn(byId, market, state.categories)) return byId;
+        // Still return the exact product for admin preview of that listing
+        if (idOrSlug === byId.id) return byId;
+      }
       const inMarket = matches.filter((p) =>
-        isProductAvailableIn(p, state.country, state.categories)
+        isProductAvailableIn(p, market, state.categories)
       );
-      if (inMarket.length === 1) return inMarket[0];
-      if (inMarket.length > 1) return inMarket[0];
-      // Product exists but not for this country — hide it
+      if (inMarket.length >= 1) {
+        return (
+          inMarket.find((p) => p.availableIn?.includes(market)) ?? inMarket[0]
+        );
+      }
+      // Product exists but not for this country — hide on the public storefront
       return undefined;
     },
     [state.products, state.country, state.categories]
@@ -998,10 +1200,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
-    mutateGenRef.current += 1;
+    catalogGenRef.current += 1;
     setCurrencyRateOverrides(next.currencyRates);
     stateRef.current = next;
     setState(next);
+    storageReadyRef.current = true;
+    setStorageReady(true);
     const persisted = toPersisted(next);
     flushToLocal(next, persisted);
     void flushToServer(next, persisted);
@@ -1009,25 +1213,48 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const persistCatalog = useCallback(async () => {
     const current = stateRef.current;
-    const persisted = { ...toPersisted(current), updatedAt: Date.now() };
+    const localNow = readLocalCatalog();
+    const persisted = {
+      ...toPersisted(current),
+      // Always beat whatever is already in localStorage (avoids silent skip)
+      updatedAt: Math.max(Date.now(), (localNow?.updatedAt || 0) + 1),
+    };
     const localOk = flushToLocal(current, persisted);
     if (!localOk) return { ok: false, error: "local" };
     return flushToServer(current, persisted);
   }, []);
 
+  const setViewCountry = useCallback((country: CountryCode | null) => {
+    setViewCountryState((prev) => {
+      if (country === prev) return prev;
+      if (country && !isStoreMarket(country)) return prev;
+      return country;
+    });
+  }, []);
+
+  const displayCountry = viewCountry ?? state.country;
+  const displayCurrency =
+    viewCountry && !state.currencyManual
+      ? currencyForCountry(viewCountry)
+      : state.currency;
+  const displayLocale =
+    viewCountry && !state.localeManual
+      ? localeForCountry(viewCountry)
+      : state.locale;
+
   const marketProducts = useMemo(
     () =>
       filterProductsForCountry(
         state.products,
-        state.country,
+        displayCountry,
         state.categories
       ),
-    [state.products, state.country, state.categories]
+    [state.products, displayCountry, state.categories]
   );
 
   const marketCategories = useMemo(
-    () => filterCategoriesForCountry(state.categories, state.country),
-    [state.categories, state.country]
+    () => filterCategoriesForCountry(state.categories, displayCountry),
+    [state.categories, displayCountry]
   );
 
   const cartCount = useMemo(
@@ -1108,9 +1335,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const value: StoreContextValue = {
     ...state,
+    country: displayCountry,
+    currency: displayCurrency,
+    locale: displayLocale,
     hydrated,
     storageReady,
     geoReady,
+    viewCountry,
+    setViewCountry,
     marketProducts,
     marketCategories,
     setLocale,

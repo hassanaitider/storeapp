@@ -86,11 +86,12 @@ export default function CheckoutPage() {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const moroccoSimple = country === "MA";
     const created = placeOrder({
       name: form.name.trim(),
       phone: form.phone.trim(),
       city: form.city.trim(),
-      address: form.address.trim(),
+      address: moroccoSimple ? form.city.trim() : form.address.trim(),
     });
     setOrder(created);
   };
@@ -154,12 +155,14 @@ export default function CheckoutPage() {
                 value={form.city}
                 onChange={(v) => setForm((f) => ({ ...f, city: v }))}
               />
-              <Field
-                label={t.checkout.address}
-                required
-                value={form.address}
-                onChange={(v) => setForm((f) => ({ ...f, address: v }))}
-              />
+              {country !== "MA" ? (
+                <Field
+                  label={t.checkout.address}
+                  required
+                  value={form.address}
+                  onChange={(v) => setForm((f) => ({ ...f, address: v }))}
+                />
+              ) : null}
             </div>
           </section>
         </div>

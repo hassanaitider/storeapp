@@ -24,7 +24,7 @@ import {
   formatPrice,
 } from "@/lib/currency";
 import { STORE_MARKETS, currencyForCountry } from "@/lib/countries";
-import { getProductLocalPrice, isProductAvailableIn } from "@/lib/pricing";
+import { getProductLocalPrice, isProductAvailableIn, resolveProductMarket } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 import type { CountryCode, ProductQtyOffer } from "@/lib/types";
 import {
@@ -537,10 +537,13 @@ function AdminDashboard() {
               ) : (
                 <div className="space-y-3">
                   {products.map((p) => {
-                    const cat = categories.find((c) => c.id === p.categoryId);
-                    const market = (cat?.country ?? "US") as CountryCode;
+                    const market =
+                      resolveProductMarket(p, categories) ??
+                      ((categories.find((c) => c.id === p.categoryId)?.country ??
+                        "US") as CountryCode);
                     const cur = currencyForCountry(market);
                     const local = getProductLocalPrice(p, market);
+                    const cat = categories.find((c) => c.id === p.categoryId);
                     return (
                       <div
                         key={p.id}
@@ -553,6 +556,7 @@ function AdminDashboard() {
                             </p>
                             <p className="mt-1 text-sm text-[var(--muted)]">
                               {formatLocalAmount(local, cur, locale)} · {cur}
+                              {` · ${market}`}
                               {cat
                                 ? ` · ${locale === "ar" ? cat.nameAr : cat.nameEn}`
                                 : ""}
@@ -560,7 +564,7 @@ function AdminDashboard() {
                           </div>
                           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                             <A
-                              href={`/product/${encodeURIComponent(p.slug)}`}
+                              href={`/product/${encodeURIComponent(p.id)}?country=${encodeURIComponent(market)}`}
                               className="inline-flex items-center justify-center gap-1 rounded-xl border border-sand-300 px-3 py-3 text-sm font-semibold hover:bg-sand-50"
                             >
                               <ExternalLink className="h-4 w-4" />

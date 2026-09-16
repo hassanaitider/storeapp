@@ -1,24 +1,27 @@
-import { SPANISH_MARKET_CODES, STORE_MARKETS } from "./countries";
+import { STORE_MARKETS } from "./countries";
 import type { Category, Product } from "./types";
 import { withSpanishCopy } from "./seed-es";
+import { LATAM_ELEVADOR_PRODUCTS } from "./seed-latam-elevador";
 import { UNIVERSAL_MARKET_PRODUCTS } from "./seed-universal-products";
 
+/** Consistent per-market category art: country flag only (no product lifestyle) */
 const CATEGORY_IMAGES: Record<string, string> = {
-  MA: "/products/fashion-sling-1.png",
-  SA: "/products/car-vacuum.png",
-  AE: "/products/solar-camera-1.png",
-  OM: "/products/neck-massager.webp",
-  IQ: "/products/car-windshield-umbrella.png",
-  LY: "/products/fashion-sling-g1.png",
-  MX: "/products/mattress-lifter-1.png",
-  AR: "/products/neck-massager.webp",
-  CR: "/products/air-bed.png",
-  EC: "/products/baby-washer.png",
-  GT: "/products/smart-sunglasses.png",
-  HN: "/products/xiaomi-earbuds-tws.png",
-  SV: "/products/konnect-kn101-powerbank.png",
-  NI: "/products/dish-drying-rack-sink.png",
-  DO: "/products/rolling-cart-1.png",
+  MA: "/categories/flag-ma.png",
+  SA: "/categories/flag-sa.png",
+  AE: "/categories/flag-ae.png",
+  OM: "/categories/flag-om.png",
+  IQ: "/categories/flag-iq.png",
+  LY: "/categories/flag-ly.png",
+  LB: "/categories/flag-lb.png",
+  MX: "/categories/flag-mx.png",
+  AR: "/categories/flag-ar.png",
+  CR: "/categories/flag-cr.png",
+  EC: "/categories/flag-ec.png",
+  GT: "/categories/flag-gt.png",
+  HN: "/categories/flag-hn.png",
+  SV: "/categories/flag-sv.png",
+  NI: "/categories/flag-ni.png",
+  DO: "/categories/flag-do.png",
 };
 
 /** One category per open market, generated from STORE_MARKETS */
@@ -28,10 +31,10 @@ export const SEED_CATEGORIES: Category[] = STORE_MARKETS.map((c) => ({
   nameAr: `منتجات ${c.nameAr}`,
   nameEn: `${c.nameEn} Products`,
   nameEs: `Productos de ${c.nameEs ?? c.nameEn}`,
-  descriptionAr: `تشكيلة مختارة لسوق ${c.nameAr} بأسعار ${c.currency}`,
-  descriptionEn: `Curated picks for ${c.nameEn} priced in ${c.currency}`,
-  descriptionEs: `Selección para ${c.nameEs ?? c.nameEn} con precios en ${c.currency}`,
-  image: CATEGORY_IMAGES[c.code] ?? "/products/car-vacuum.png",
+  descriptionAr: `تشكيلة مختارة لسوق ${c.nameAr}`,
+  descriptionEn: `Curated picks for ${c.nameEn}`,
+  descriptionEs: `Selección para ${c.nameEs ?? c.nameEn}`,
+  image: CATEGORY_IMAGES[c.code] ?? "/categories/flag-ma.png",
   createdAt: "2026-03-01T00:00:00.000Z",
   country: c.code,
   availableIn: [c.code],
@@ -353,6 +356,159 @@ ${COD_EN}
             "عادةً تركيب بسيط بالأدوات المرفقة واتباع الخطوات — جاهزة للاستخدام خلال وقت قصير.",
           answerEn:
             "Usually simple assembly with the included hardware and steps — ready in a short time.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-corner-shower-caddy",
+    slug: "corner-shower-caddy-5-piece",
+    nameAr: "منظم دش زاوية معدني أسود — طقم 5 قطع",
+    nameEn: "Matte Black Corner Shower Caddy — 5-Piece Set",
+    descriptionAr: `
+<h3>نظّم الحمّام… واستغل كل زاوية</h3>
+<p>طقم <strong>5 قطع</strong> بلون أسود مطفي أنيق: رفّان زاوية كبيران + حامل فرشاة أسنان + رف مناشف + صحن صابون مع خطافات. تركيب <strong>بدون ثقب</strong> بلاصق قوي — مثالي للشقق المغربية والبلاط.</p>
+<ul>
+<li>رفّان زاوية L يستغلان الزاوية ويصرفان الماء بسرعة</li>
+<li>مقاومة للصدأ والرطوبة مع تهوية شبكية</li>
+<li>خطافات مدمجة للإسفنجة والموس والمناشف الصغيرة</li>
+<li>تركيب لاصق شفاف بدون أدوات — بدون تخريب البلاط</li>
+<li>تصميم عصري أسود مطفي يناسب الحمّام العصري</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Organize your shower — maximize every corner</h3>
+<p>A sleek <strong>5-piece</strong> matte-black set: two large corner shelves + toothbrush holder + towel shelf + soap dish with hooks. <strong>No-drill</strong> adhesive install — ideal for Moroccan apartments and tile walls.</p>
+<ul>
+<li>Two L-shaped corner shelves that drain water fast</li>
+<li>Rust-resistant open-wire design for humid bathrooms</li>
+<li>Built-in hooks for loofahs, razors, and washcloths</li>
+<li>Strong transparent adhesive pads — no tools, no tile damage</li>
+<li>Modern matte-black finish for a premium bathroom look</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "طقم كامل من 5 قطع بلون أسود مطفي",
+      "رفّا زاوية + حامل أسنان + رف مناشف + صحن صابون",
+      "تركيب لاصق بدون ثقب أو أدوات",
+      "شبكة معدنية لتصريف الماء بسرعة",
+      "خطافات مدمجة للإكسسوارات",
+      "مقاوم للرطوبة والصدأ في الحمّام",
+    ],
+    detailsEn: [
+      "Complete 5-piece matte-black set",
+      "2 corner shelves + toothbrush holder + towel shelf + soap dish",
+      "No-drill adhesive installation",
+      "Open wire grid for quick drainage",
+      "Built-in hooks for accessories",
+      "Rust-resistant for humid bathrooms",
+    ],
+    priceUSD: 19.9,
+    compareAtUSD: 29.9,
+    marketPrices: { MA: 199 },
+    marketComparePrices: { MA: 299 },
+    availableIn: ["MA"],
+    images: [
+      "/products/corner-shower-caddy-1.jpg",
+      "/products/corner-shower-caddy-2.jpg",
+      "/products/corner-shower-caddy-3.jpg",
+      "/products/corner-shower-caddy-4.jpg",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.8,
+    reviewCount: 94,
+    categoryId: "cat-MA",
+    createdAt: "2026-09-16T00:00:00.000Z",
+    landing: {
+      headlineAr: "طقم حمّام أسود مطفي… تنظيم كامل بدون ثقب",
+      headlineEn: "Matte-black bathroom set — full organization, no drilling",
+      introAr:
+        "حوّل زاوية الدش إلى مساحة مرتبة وأنيقة. رفّان زاوية كبيران مع حاملات للأسنان والمناشف والصابون — تركيب لاصق قوي بدون تخريب البلاط. اطلب الآن بـ 199 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+      introEn:
+        "Turn your shower corner into a clean, stylish space. Two large corner shelves plus holders for toothbrushes, towels, and soap — strong adhesive install with no tile damage. Order now for 199 MAD — free delivery and cash on delivery in Morocco.",
+      sections: [
+        {
+          titleAr: "رفّا زاوية يستغلان كل سنتيمتر",
+          titleEn: "Corner shelves that use every centimeter",
+          bodyAr:
+            "تصميم L يناسب زاوية 90° ويحفظ الشامبو والجل والنباتات الصغيرة بثبات. الشبكة المفتوحة تصرف الماء فورًا وتقلل التكدّس والروائح.",
+          bodyEn:
+            "An L-shape fits a 90° corner and holds shampoo, body wash, and small plants securely. The open grid drains water instantly and reduces buildup.",
+          image: "/products/corner-shower-caddy-1.jpg",
+        },
+        {
+          titleAr: "طقم كامل… تغليف جاهز للهديّة",
+          titleEn: "Complete set — gift-ready packaging",
+          bodyAr:
+            "يصل في علبة Corner Shower Caddy أنيقة توضّح الاستخدام: تنظيم الدش، تصريف سريع، ومتانة عالية. كل القطع بلون أسود مطفي متناسق.",
+          bodyEn:
+            "Arrives in a sleek Corner Shower Caddy box that highlights the benefits: shower organization, quick drain, and sturdy build. Every piece matches in matte black.",
+          image: "/products/corner-shower-caddy-2.jpg",
+        },
+        {
+          titleAr: "حاملات متخصصة للأسنان والمناشف والصابون",
+          titleEn: "Dedicated holders for brushes, towels, and soap",
+          bodyAr:
+            "حامل عمودي لمعجون وفرش الأسنان، رف للمناشف المطوية، وصحن صابون مع خطافات للموس — كل شيء في مكانه على الحائط.",
+          bodyEn:
+            "A vertical holder for toothpaste and brushes, a shelf for folded towels, and a soap dish with hooks for razors — everything has a place on the wall.",
+          image: "/products/corner-shower-caddy-3.jpg",
+        },
+        {
+          titleAr: "تركيب لاصق… بدون مثقاب",
+          titleEn: "Adhesive install — no drill needed",
+          bodyAr:
+            "وسائد لاصقة شفافة قوية تثبت على البلاط الرخامي أو السيراميك. مثالي للمستأجرين ولمن لا يريد ثقب الجدران — إزالة أنظف عند الحاجة.",
+          bodyEn:
+            "Strong transparent adhesive pads grip marble-look or ceramic tile. Perfect for renters and anyone who wants no wall holes — cleaner removal when needed.",
+          image: "/products/corner-shower-caddy-4.jpg",
+        },
+      ],
+      benefitsAr: [
+        "طقم 5 قطع متكامل",
+        "أسود مطفي عصري",
+        "بدون ثقب — لاصق قوي",
+        "تصريف ماء سريع",
+        "مقاوم للرطوبة",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "Complete 5-piece set",
+        "Modern matte black",
+        "No-drill strong adhesive",
+        "Quick water drainage",
+        "Humidity resistant",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "هل يتحمل وزن الشامبو الثقيل؟",
+          questionEn: "Can it hold heavy shampoo bottles?",
+          answerAr:
+            "نعم — الرفوف مصممة لتحمل زجاجات الدوش العادية عند تثبيت اللاصق بشكل صحيح على سطح نظيف وجاف.",
+          answerEn:
+            "Yes — the shelves are made for typical shower bottles when adhesive pads are applied on a clean, dry surface.",
+        },
+        {
+          questionAr: "هل يصدأ في الحمّام؟",
+          questionEn: "Will it rust in the bathroom?",
+          answerAr:
+            "التصميم الشبكي يصرف الماء بسرعة واللمسة السوداء المطفيّة مقاومة للرطوبة مع الاستخدام العادي في الحمّام.",
+          answerEn:
+            "The open-wire design drains water quickly, and the matte finish resists humidity in normal bathroom use.",
+        },
+        {
+          questionAr: "كم قطعة في الطقم؟",
+          questionEn: "How many pieces are in the set?",
+          answerAr:
+            "5 قطع: رفّا زاوية، حامل فرشاة أسنان، رف مناشف، وصحن صابون مع خطافات.",
+          answerEn:
+            "5 pieces: two corner shelves, a toothbrush holder, a towel shelf, and a soap dish with hooks.",
         },
       ],
     },
@@ -2558,238 +2714,7 @@ ${COD_EN}
       ],
     },
   },
-  {
-    id: "prod-mattress-lifter",
-    slug: "elevador-de-colchon",
-    nameAr: "رافع فرشة / مرتبة",
-    nameEn: "Mattress Lifter",
-    nameEs: "Elevador de Colchón",
-    descriptionAr: `
-<h3>رتّب سريرك بدون رفع ثقيل</h3>
-<p>أداة إسفينية بمقبض مريح تنزلق بين المرتبة والإطار وترفعها برفق — عشان تثبّت الشراشف بسهولة وتحمي ظهرك ورقبتك.</p>
-<ul>
-<li>مقبض مريح يقلل الإجهاد</li>
-<li>سطح أملس لا يمزّق الأقمشة</li>
-<li>يناسب معظم الأسرّة والمراتب</li>
-<li>ألوان أنيقة: بنفسجي · أخضر · وردي</li>
-</ul>
-${COD_AR}
-`.trim(),
-    descriptionEn: `
-<h3>Make the bed without heavy lifting</h3>
-<p>An ergonomic wedge that slides between mattress and frame to lift gently — tuck sheets faster and spare your back and neck.</p>
-<ul>
-<li>Comfort grip that reduces strain</li>
-<li>Smooth surface that won’t snag linens</li>
-<li>Fits most beds and mattresses</li>
-<li>Stylish colors: purple · green · rose</li>
-</ul>
-${COD_EN}
-`.trim(),
-    descriptionEs: `
-<h3>Haz la cama sin levantar el colchón a mano</h3>
-<p>Herramienta ergonómica en forma de cuña que se desliza entre el colchón y la base, lo eleva con suavidad y te deja meter las sábanas fácil — <strong>sin forzar la espalda ni el cuello</strong>.</p>
-<ul>
-<li>Asa cómoda que reduce el esfuerzo</li>
-<li>Superficie lisa: no engancha ni daña las telas</li>
-<li>Compatible con la mayoría de camas y colchones</li>
-<li>Colores elegantes: morado · verde · rosa</li>
-</ul>
-<p><strong>Pide ahora</strong> — envío gratis · pago contra entrega · devoluciones en 30 días.</p>
-`.trim(),
-    detailsAr: [
-      "تصميم إسفين مع مقبض بيضاوي مريح",
-      "بلاستيك متين وأملس للانزلاق السهل",
-      "يرفع المرتبة لإنزال الشراشف بسرعة",
-      "يقلل إجهاد أسفل الظهر والرقبة",
-      "ألوان: بنفسجي، أخضر، وردي",
-    ],
-    detailsEn: [
-      "Wedge design with an ergonomic oval handle",
-      "Durable smooth plastic for easy sliding",
-      "Lifts the mattress to tuck sheets quickly",
-      "Helps reduce lower-back and neck strain",
-      "Colors: purple, green, rose",
-    ],
-    detailsEs: [
-      "Diseño en cuña con asa ergonómica ovalada",
-      "Plástico resistente y liso para deslizar fácil",
-      "Eleva el colchón para meter las sábanas rápido",
-      "Ayuda a evitar tension lumbar y cervical",
-      "Colores: morado, verde y rosa",
-    ],
-    priceUSD: 19,
-    compareAtUSD: 29,
-    marketPrices: {
-      MX: 349,
-      AR: 19990,
-      CR: 9690,
-      EC: 19,
-      GT: 149,
-      HN: 489,
-      SV: 19,
-      NI: 699,
-      DO: 1149,
-    },
-    marketComparePrices: {
-      MX: 549,
-      AR: 29990,
-      CR: 14790,
-      EC: 29,
-      GT: 229,
-      HN: 749,
-      SV: 29,
-      NI: 1069,
-      DO: 1749,
-    },
-    availableIn: [...SPANISH_MARKET_CODES],
-    images: [
-      "/products/mattress-lifter-1.png",
-      "/products/mattress-lifter-2.png",
-      "/products/mattress-lifter-3.png",
-      "/products/mattress-lifter-4.jpg",
-      "/products/mattress-lifter-5.jpg",
-    ],
-    colors: [],
-    customColorEnabled: true,
-    qtyOffers: [
-      { quantity: 1, discountPercent: 0, labelEs: "1 pieza" },
-      {
-        quantity: 2,
-        discountPercent: 10,
-        popular: true,
-        labelEs: "2 piezas · ideal para las esquinas",
-      },
-      {
-        quantity: 3,
-        discountPercent: 15,
-        labelEs: "3 piezas · pack familiar",
-      },
-    ],
-    inStock: true,
-    featured: true,
-    rating: 4.8,
-    reviewCount: 167,
-    categoryId: "cat-MX",
-    createdAt: "2026-09-14T00:00:00.000Z",
-    landing: {
-      headlineAr: "سرير مرتّب… بدون ألم في الظهر",
-      headlineEn: "A neatly made bed — without back pain",
-      headlineEs: "Cama perfecta… sin dolor de espalda",
-      introAr:
-        "بدل ما ترفع المرتبة بيد واحدة، مرّر الرافع تحتها واترك مساحة كافية لإنزال الشراشف بسرعة وبشكل فندقي. مثالي لكبار السن ولمن يعاني من آلام الظهر أو الرقبة.",
-      introEn:
-        "Instead of lifting the mattress with one hand, slide the lifter underneath and create space to tuck sheets fast with a hotel-neat finish. Ideal for seniors and anyone with back or neck pain.",
-      introEs:
-        "En lugar de levantar el colchón con una sola mano, desliza el elevador debajo y crea el espacio para meter las sábanas rápido, con acabado tipo hotel. Ideal para adultos mayores y para quien sufre de espalda o cuello.",
-      sections: [
-        {
-          titleAr: "ارفع المرتبة في ثوانٍ",
-          titleEn: "Lift the mattress in seconds",
-          titleEs: "Eleva el colchón en segundos",
-          bodyAr:
-            "الطرف الرفيع ينزلق بين المرتبة والإطار. بالضغط على المقبض ترتفع المرتبة بضعة سنتيمترات — مساحة كافية لإنزال الشيت بدون مجهود.",
-          bodyEn:
-            "The thin tip slides between mattress and frame. Press the handle and the mattress rises a few centimeters — enough space to tuck the sheet without strain.",
-          bodyEs:
-            "La punta delgada se desliza entre el colchón y la base. Al apoyar el asa, el colchón sube unos centímetros: espacio suficiente para meter la sábana sin esfuerzo.",
-          image: "/products/mattress-lifter-4.jpg",
-        },
-        {
-          titleAr: "حماية أسفل الظهر والرقبة",
-          titleEn: "Protect your lower back and neck",
-          titleEs: "Cuida tu zona lumbar y cervical",
-          bodyAr:
-            "الرفع اليدوي المتكرر يرهق العمود الفقري. هذه الأداة تنقل الجهد إلى الرافعة — أقل توترًا وأكثر راحة في روتين ترتيب السرير اليومي.",
-          bodyEn:
-            "Repeated manual lifting strains the spine. This tool shifts the effort to the wedge — less tension and more comfort in your daily bed-making routine.",
-          bodyEs:
-            "Levantar a mano una y otra vez carga la columna. Esta herramienta traslada el esfuerzo a la cuña: menos tensión y más comodidad en la rutina diaria de hacer la cama.",
-          image: "/products/mattress-lifter-3.png",
-        },
-        {
-          titleAr: "يناسب معظم أنواع الأسرّة",
-          titleEn: "Works with most bed types",
-          titleEs: "Sirve para casi todo tipo de cama",
-          bodyAr:
-            "إطارات خشبية، قواعد منجدة، مراتب سميكة أو عادية — التصميم العالمي ينزلق بسلاسة دون خدش الأثاث أو تمزيق الأقمشة.",
-          bodyEn:
-            "Wood frames, upholstered bases, thick or standard mattresses — the universal design slides smoothly without scratching furniture or tearing fabric.",
-          bodyEs:
-            "Bases de madera, camas tapizadas, colchones gruesos o estándar: el diseño universal se desliza con suavidad sin rayar el mueble ni dañar las telas.",
-          image: "/products/mattress-lifter-2.png",
-        },
-        {
-          titleAr: "أنيق وعملي في غرفة النوم",
-          titleEn: "Stylish and practical in the bedroom",
-          titleEs: "Bonito y práctico en tu habitación",
-          bodyAr:
-            "بلاستيك شفاف بألوان عصرية ولمسة ذهبية على المقبض. يبدو كإكسسوار منزلي أنيق — وليس أداة صيانة تقليدية.",
-          bodyEn:
-            "Translucent plastic in modern colors with a gold-tone handle accent. Looks like a stylish home accessory — not a bulky utility tool.",
-          bodyEs:
-            "Plástico translúcido en colores modernos con detalle dorado en el asa. Se ve como un accesorio elegante del hogar, no como una herramienta tosca.",
-          image: "/products/mattress-lifter-1.png",
-        },
-      ],
-      benefitsAr: [
-        "ترتيب أسرع للشراشف",
-        "يحمي الظهر والرقبة",
-        "مقبض مريح وتصميم متين",
-        "يناسب معظم الأسرّة",
-        "توصيل مجاني والدفع عند الاستلام",
-      ],
-      benefitsEn: [
-        "Faster sheet tucking",
-        "Protects back and neck",
-        "Comfort grip, durable build",
-        "Fits most beds",
-        "Free delivery and cash on delivery",
-      ],
-      benefitsEs: [
-        "Meter sábanas más rápido",
-        "Protege espalda y cuello",
-        "Asa cómoda y construcción resistente",
-        "Compatible con la mayoría de camas",
-        "Envío gratis y pago contra entrega",
-      ],
-      faq: [
-        {
-          questionAr: "هل يكفي قطعة واحدة؟",
-          questionEn: "Is one piece enough?",
-          questionEs: "¿Basta con una sola pieza?",
-          answerAr:
-            "قطعة واحدة تكفي لزاوية واحدة. كثير يطلبون قطعتين لتثبيت زاويتين في الوقت نفسه وسرعة أكبر.",
-          answerEn:
-            "One piece works for one corner. Many shoppers order two so they can hold two corners at once and finish faster.",
-          answerEs:
-            "Una pieza alcanza para una esquina. Muchos piden dos para sujetar dos esquinas a la vez y terminar más rápido.",
-        },
-        {
-          questionAr: "هل يخدش الإطار أو يمزّق الشيت؟",
-          questionEn: "Will it scratch the frame or tear sheets?",
-          questionEs: "¿Rayará la base o romperá las sábanas?",
-          answerAr:
-            "السطح أملس والحواف مدورة للاستخدام الآمن على الخشب والقماش والمراتب.",
-          answerEn:
-            "The smooth surface and rounded edges are designed for safe use on wood, fabric, and mattresses.",
-          answerEs:
-            "La superficie lisa y los bordes redondeados están pensados para un uso seguro sobre madera, tela y colchones.",
-        },
-        {
-          questionAr: "ما الألوان المتوفرة؟",
-          questionEn: "What colors are available?",
-          questionEs: "¿Qué colores hay?",
-          answerAr:
-            "بنفسجي، أخضر، ووردي. اكتب اللون المفضل في صفحة المنتج قبل الطلب.",
-          answerEn:
-            "Purple, green, and rose. Type your preferred color on the product page before ordering.",
-          answerEs:
-            "Morado, verde y rosa. Escribe el color que prefieres en la página del producto antes de pedir.",
-        },
-      ],
-    },
-  },
+  ...LATAM_ELEVADOR_PRODUCTS,
   ...UNIVERSAL_MARKET_PRODUCTS,
 ];
 
