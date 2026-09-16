@@ -1,9 +1,9 @@
-/** Ecuador — Provincia → Cantón/Ciudad[] for COD checkout */
+/** Ecuador — complete Provincia → Cantón list (official admin divisions). */
 export type EcuadorGeoTree = Record<string, string[]>;
 
 export const GEO_EC: EcuadorGeoTree = {
   "Azuay": [
-    "Camilo Ponce Enríquez",
+    "Camilo Ponce enríquez",
     "Chordeleg",
     "Cuenca",
     "El Pan",
@@ -17,7 +17,7 @@ export const GEO_EC: EcuadorGeoTree = {
     "San Fernando",
     "Santa Isabel",
     "Sevilla de Oro",
-    "Sigsig"
+    "Sígsig"
   ],
   "Bolívar": [
     "Caluma",
@@ -45,6 +45,15 @@ export const GEO_EC: EcuadorGeoTree = {
     "San Pedro de Huaca",
     "Tulcán"
   ],
+  "Cotopaxi": [
+    "La Maná",
+    "Latacunga",
+    "Pangua",
+    "Pujilí",
+    "Salcedo",
+    "Saquisilí",
+    "Sigchos"
+  ],
   "Chimborazo": [
     "Alausí",
     "Chambo",
@@ -56,15 +65,6 @@ export const GEO_EC: EcuadorGeoTree = {
     "Pallatanga",
     "Penipe",
     "Riobamba"
-  ],
-  "Cotopaxi": [
-    "La Maná",
-    "Latacunga",
-    "Pangua",
-    "Pujilí",
-    "Salcedo",
-    "Saquisilí",
-    "Sigchos"
   ],
   "El Oro": [
     "Arenillas",
@@ -86,34 +86,25 @@ export const GEO_EC: EcuadorGeoTree = {
     "Atacames",
     "Eloy Alfaro",
     "Esmeraldas",
-    "La Concordia",
     "Muisne",
     "Quinindé",
     "Rioverde",
     "San Lorenzo"
   ],
-  "Galápagos": [
-    "Isabela",
-    "Puerto Ayora",
-    "Puerto Baquerizo Moreno",
-    "Puerto Villamil",
-    "San Cristóbal",
-    "Santa Cruz"
-  ],
   "Guayas": [
-    "Alfredo Baquerizo Moreno",
+    "Alfredo Baquerizo Moreno (Juján)",
     "Balao",
     "Balzar",
     "Colimes",
+    "Coronel Marcelino Maridueña",
     "Daule",
     "Durán",
     "El Empalme",
     "El Triunfo",
-    "General Antonio Elizalde",
+    "General  Antonio Elizalde",
     "Guayaquil",
     "Isidro Ayora",
     "Lomas de Sargentillo",
-    "Marcelino Maridueña",
     "Milagro",
     "Naranjal",
     "Naranjito",
@@ -123,13 +114,12 @@ export const GEO_EC: EcuadorGeoTree = {
     "Playas",
     "Salitre",
     "Samborondón",
+    "San Jacinto de Yaguachi",
     "Santa Lucía",
-    "Simón Bolívar",
-    "Yaguachi"
+    "Simón Bolívar"
   ],
   "Imbabura": [
     "Antonio Ante",
-    "Atuntaqui",
     "Cotacachi",
     "Ibarra",
     "Otavalo",
@@ -139,7 +129,7 @@ export const GEO_EC: EcuadorGeoTree = {
   "Loja": [
     "Calvas",
     "Catamayo",
-    "Célgica",
+    "Celica",
     "Chaguarpamba",
     "Espíndola",
     "Gonzanamá",
@@ -152,7 +142,6 @@ export const GEO_EC: EcuadorGeoTree = {
     "Quilanga",
     "Saraguro",
     "Sozoranga",
-    "Vilcabamba",
     "Zapotillo"
   ],
   "Los Ríos": [
@@ -172,7 +161,6 @@ export const GEO_EC: EcuadorGeoTree = {
   ],
   "Manabí": [
     "24 de Mayo",
-    "Bahía de Caráquez",
     "Bolívar",
     "Chone",
     "El Carmen",
@@ -200,7 +188,7 @@ export const GEO_EC: EcuadorGeoTree = {
     "Huamboya",
     "Limón Indanza",
     "Logroño",
-    "Macas",
+    "Morona",
     "Pablo Sexto",
     "Palora",
     "San Juan Bosco",
@@ -216,46 +204,21 @@ export const GEO_EC: EcuadorGeoTree = {
     "Quijos",
     "Tena"
   ],
-  "Orellana": [
-    "Aguarico",
-    "Francisco de Orellana",
-    "La Joya de los Sachas",
-    "Loreto"
-  ],
   "Pastaza": [
     "Arajuno",
     "Mera",
-    "Puyo",
+    "Pastaza",
     "Santa Clara"
   ],
   "Pichincha": [
     "Cayambe",
+    "Distrito Metropolitano de Quito",
     "Mejía",
     "Pedro Moncayo",
     "Pedro Vicente Maldonado",
     "Puerto Quito",
-    "Quito",
     "Rumiñahui",
-    "San Miguel de Los Bancos"
-  ],
-  "Santa Elena": [
-    "La Libertad",
-    "Salinas",
-    "Santa Elena"
-  ],
-  "Santo Domingo de los Tsáchilas": [
-    "La Concordia",
-    "Santo Domingo"
-  ],
-  "Sucumbíos": [
-    "Cascales",
-    "Cuyabeno",
-    "Gonzalo Pizarro",
-    "Lago Agrio",
-    "Nueva Loja",
-    "Putumayo",
-    "Shushufindi",
-    "Sucumbíos"
+    "San Miguel de los Bancos"
   ],
   "Tungurahua": [
     "Ambato",
@@ -278,6 +241,35 @@ export const GEO_EC: EcuadorGeoTree = {
     "Yacuambi",
     "Yantzaza",
     "Zamora"
+  ],
+  "Galápagos": [
+    "Isabela",
+    "San Cristóbal",
+    "Santa Cruz"
+  ],
+  "Sucumbíos": [
+    "Cascales",
+    "Cuyabeno",
+    "Gonzalo Pizarro",
+    "Lago Agrio",
+    "Putumayo",
+    "Shushufindi",
+    "Sucumbíos"
+  ],
+  "Orellana": [
+    "Aguarico",
+    "Francisco de Orellana",
+    "La Joya de los Sachas",
+    "Loreto"
+  ],
+  "Santo Domingo de los Tsáchilas": [
+    "La Concordia",
+    "Santo Domingo"
+  ],
+  "Santa Elena": [
+    "La Libertad",
+    "Salinas",
+    "Santa Elena"
   ]
 };
 

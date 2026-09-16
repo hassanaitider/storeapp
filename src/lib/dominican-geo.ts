@@ -1,239 +1,225 @@
-/** Dominican Republic — Provincia → Municipio/Ciudad[] for COD checkout */
+/** Dominican Republic — complete Provincia → Municipio list. */
 export type DominicanGeoTree = Record<string, string[]>;
 
 export const GEO_DO: DominicanGeoTree = {
-  "Azua": [
-    "Azua de Compostela",
-    "Estebanía",
-    "Guayabal",
-    "Las Charcas",
-    "Las Yayas de Viajama",
-    "Padre Las Casas",
-    "Peralta",
-    "Pueblo Viejo",
-    "Sabana Yegua",
-    "Tábara Arriba"
+  "Provincia Duarte": [
+    "Municipio Arenoso",
+    "Municipio Castillo",
+    "Municipio Eugenio María de Hostos",
+    "Municipio Las Guáranas",
+    "Municipio Pimentel",
+    "Municipio San Francisco de Macorís",
+    "Municipio Villa Riva"
   ],
-  "Baoruco": [
-    "Galván",
-    "Los Ríos",
-    "Neiba",
-    "Tamayo",
-    "Villa Jaragua"
+  "Provincia Hermanas Mirabal": [
+    "Municipio Salcedo",
+    "Municipio Tenares",
+    "Municipio Villa Tapia"
   ],
-  "Barahona": [
-    "Cabral",
-    "El Peñón",
-    "Enriquillo",
-    "Fundación",
-    "Jaquimeyes",
-    "La Ciénaga",
-    "Las Salinas",
-    "Paraíso",
-    "Polo",
-    "Santa Cruz de Barahona",
-    "Vicente Noble"
+  "Provincia María Trinidad Sánchez": [
+    "Municipio Cabrera",
+    "Municipio El Factor",
+    "Municipio Nagua",
+    "Municipio Río San Juan"
   ],
-  "Dajabón": [
-    "Dajabón",
-    "El Pino",
-    "Loma de Cabrera",
-    "Partido",
-    "Restauración"
+  "Provincia Samaná": [
+    "Municipio Las Terrenas",
+    "Municipio Samaná",
+    "Municipio Sánchez"
+  ],
+  "Provincia Dajabón": [
+    "Municipio Dajabón",
+    "Municipio El Pino",
+    "Municipio Loma de Cabrera",
+    "Municipio Partido",
+    "Municipio Restauración"
+  ],
+  "Provincia Monte Cristi": [
+    "Municipio Castañuelas",
+    "Municipio Guayubín",
+    "Municipio Las Matas de Santa Cruz",
+    "Municipio Monte Cristi",
+    "Municipio Pepillo Salcedo",
+    "Municipio Villa Vásquez"
+  ],
+  "Provincia Santiago Rodríguez": [
+    "Municipio Monción",
+    "Municipio San Ignacio de Sabaneta",
+    "Municipio Villa Los Almácigos"
+  ],
+  "Provincia Valverde": [
+    "Municipio Esperanza",
+    "Municipio Laguna Salada",
+    "Municipio Mao"
+  ],
+  "Provincia Espaillat": [
+    "Municipio Cayetano Germosén",
+    "Municipio Gaspar Hernández",
+    "Municipio Jamao al Norte",
+    "Municipio Moca"
+  ],
+  "Provincia Puerto Plata": [
+    "Municipio Altamira",
+    "Municipio Guananico",
+    "Municipio Imbert",
+    "Municipio Los Hidalgos",
+    "Municipio Luperón",
+    "Municipio Puerto Plata",
+    "Municipio Sosúa",
+    "Municipio Villa Isabela",
+    "Municipio Villa Montellano"
+  ],
+  "Provincia Santiago": [
+    "Municipio Bisonó",
+    "Municipio Jánico",
+    "Municipio Licey al Medio",
+    "Municipio Puñal",
+    "Municipio Sabana Iglesia",
+    "Municipio San José de las Matas",
+    "Municipio Santiago",
+    "Municipio Tamboril",
+    "Municipio Villa González"
+  ],
+  "Provincia La Vega": [
+    "Municipio Constanza",
+    "Municipio Jarabacoa",
+    "Municipio Jima Abajo",
+    "Municipio La Vega"
+  ],
+  "Provincia Monseñor Nouel": [
+    "Municipio Bonao",
+    "Municipio Maimón",
+    "Municipio Piedra Blanca"
+  ],
+  "Provincia Sánchez Ramírez": [
+    "Municipio Cevicos",
+    "Municipio Cotuí",
+    "Municipio Fantino",
+    "Municipio La Mata"
+  ],
+  "Provincia Elías Piña": [
+    "Municipio Bánica",
+    "Municipio Comendador",
+    "Municipio El Llano",
+    "Municipio Hondo Valle",
+    "Municipio Juan Santiago",
+    "Municipio Pedro Santana"
+  ],
+  "Provincia San Juan": [
+    "Municipio Bohechío",
+    "Municipio El Cercado",
+    "Municipio Juan de Herrera",
+    "Municipio Las Matas de Farfán",
+    "Municipio San Juan",
+    "Municipio Vallejuelo"
+  ],
+  "Provincia Baoruco": [
+    "Municipio Galván",
+    "Municipio Los Ríos",
+    "Municipio Neiba",
+    "Municipio Tamayo",
+    "Municipio Villa Jaragua"
+  ],
+  "Provincia Barahona": [
+    "Municipio Barahona",
+    "Municipio Cabral",
+    "Municipio El Peñón",
+    "Municipio Enriquillo",
+    "Municipio Fundación",
+    "Municipio Jaquimeyes",
+    "Municipio La Ciénaga",
+    "Municipio Las Salinas",
+    "Municipio Paraíso",
+    "Municipio Polo",
+    "Municipio Vicente Noble"
+  ],
+  "Provincia Independencia": [
+    "Municipio Cristóbal",
+    "Municipio Duvergé",
+    "Municipio Jimaní",
+    "Municipio La Descubierta",
+    "Municipio Mella",
+    "Municipio Postrer Río"
+  ],
+  "Provincia Pedernales": [
+    "Municipio Oviedo",
+    "Municipio Pedernales"
+  ],
+  "Provincia Hato Mayor": [
+    "Municipio El Valle",
+    "Municipio Hato Mayor",
+    "Municipio Sabana de la Mar"
+  ],
+  "Provincia Monte Plata": [
+    "Municipio Bayaguana",
+    "Municipio Monte Plata",
+    "Municipio Peralvillo",
+    "Municipio Sabana Grande de Boyá",
+    "Municipio Yamasá"
+  ],
+  "Provincia San Pedro de Macorís": [
+    "Municipio Consuelo",
+    "Municipio Guayacanes",
+    "Municipio Los Llanos",
+    "Municipio Quisqueya",
+    "Municipio Ramón Santana",
+    "Municipio San Pedro de Macorís"
   ],
   "Distrito Nacional": [
-    "Bella Vista",
-    "Ensanche Naco",
-    "Gazcue",
-    "La Esperilla",
-    "Los Prados",
-    "Mirador Sur",
-    "Naco",
-    "Piantini",
-    "Santo Domingo de Guzmán",
-    "Zona Colonial"
+    "Municipio Santo Domingo de Guzmán"
   ],
-  "Duarte": [
-    "Arenoso",
-    "Castillo",
-    "Eugenio María de Hostos",
-    "Las Guáranas",
-    "Pimentel",
-    "San Francisco de Macorís",
-    "Villa Riva"
+  "Provincia Santo Domingo": [
+    "Municipio Boca Chica",
+    "Municipio Los Alcarrizos",
+    "Municipio Pedro Brand",
+    "Municipio San Antonio de Guerra",
+    "Municipio Santo Domingo Este",
+    "Municipio Santo Domingo Norte",
+    "Municipio Santo Domingo Oeste"
   ],
-  "El Seibo": [
-    "Miches",
-    "Santa Cruz del Seibo"
+  "Provincia Azua": [
+    "Municipio Azua",
+    "Municipio Estebanía",
+    "Municipio Guayabal",
+    "Municipio Las Charcas",
+    "Municipio Las Yayas de Viajama",
+    "Municipio Padre Las Casas",
+    "Municipio Peralta",
+    "Municipio Pueblo Viejo",
+    "Municipio Sabana Yegua",
+    "Municipio Tábara Arriba"
   ],
-  "Elías Piña": [
-    "Bánica",
-    "Comendador",
-    "El Llano",
-    "Hondo Valle",
-    "Juan Santiago",
-    "Pedro Santana"
+  "Provincia Peravia": [
+    "Municipio Baní",
+    "Municipio Nizao"
   ],
-  "Espaillat": [
-    "Cayetano Germosén",
-    "Gaspar Hernández",
-    "Jamao al Norte",
-    "Moca"
+  "Provincia San Cristóbal": [
+    "Municipio Bajos de Haina",
+    "Municipio Cambita Garabitos",
+    "Municipio Los Cacaos",
+    "Municipio Sabana Grande de Palenque",
+    "Municipio San Cristóbal",
+    "Municipio San Gregorio de Nigua",
+    "Municipio Villa Altagracia",
+    "Municipio Yaguate"
   ],
-  "Hato Mayor": [
-    "El Valle",
-    "Hato Mayor del Rey",
-    "Sabana de la Mar"
+  "Provincia San José de Ocoa": [
+    "Municipio Rancho Arriba",
+    "Municipio Sabana Larga",
+    "Municipio San José de Ocoa"
   ],
-  "Hermanas Mirabal": [
-    "Salcedo",
-    "Tenares",
-    "Villa Tapia"
+  "Provincia El Seibo": [
+    "Municipio El Seibo",
+    "Municipio Miches"
   ],
-  "Independencia": [
-    "Cristóbal",
-    "Duvergé",
-    "Jimaní",
-    "La Descubierta",
-    "Mella",
-    "Postrer Río"
+  "Provincia La Altagracia": [
+    "Municipio Higüey",
+    "Municipio San Rafael del Yuma"
   ],
-  "La Altagracia": [
-    "Bávaro",
-    "Punta Cana",
-    "Salvaleón de Higüey",
-    "San Rafael del Yuma",
-    "Verón"
-  ],
-  "La Romana": [
-    "Guaymate",
-    "La Romana",
-    "Villa Hermosa"
-  ],
-  "La Vega": [
-    "Concepción de La Vega",
-    "Constanza",
-    "Jarabacoa",
-    "Jima Abajo"
-  ],
-  "María Trinidad Sánchez": [
-    "Cabrera",
-    "El Factor",
-    "Nagua",
-    "Río San Juan"
-  ],
-  "Monseñor Nouel": [
-    "Bonao",
-    "Maimón",
-    "Piedra Blanca"
-  ],
-  "Monte Cristi": [
-    "Castañuelas",
-    "Guayubín",
-    "Las Matas de Santa Cruz",
-    "Pepillo Salcedo",
-    "San Fernando de Monte Cristi",
-    "Villa Vásquez"
-  ],
-  "Monte Plata": [
-    "Bayaguana",
-    "Monte Plata",
-    "Peralvillo",
-    "Sabana Grande de Boyá",
-    "Yamasá"
-  ],
-  "Pedernales": [
-    "Oviedo",
-    "Pedernales"
-  ],
-  "Peravia": [
-    "Baní",
-    "Nizao"
-  ],
-  "Puerto Plata": [
-    "Altamira",
-    "Cabarete",
-    "Guananico",
-    "Imbert",
-    "Los Hidalgos",
-    "Luperón",
-    "San Felipe de Puerto Plata",
-    "Sosúa",
-    "Villa Isabela",
-    "Villa Montellano"
-  ],
-  "Samaná": [
-    "Las Terrenas",
-    "Sánchez",
-    "Santa Bárbara de Samaná"
-  ],
-  "San Cristóbal": [
-    "Bajos de Haina",
-    "Cambita Garabitos",
-    "Los Cacaos",
-    "Sabana Grande de Palenque",
-    "San Cristóbal",
-    "San Gregorio de Nigua",
-    "Villa Altagracia",
-    "Yaguate"
-  ],
-  "San José de Ocoa": [
-    "Rancho Arriba",
-    "Sabana Larga",
-    "San José de Ocoa"
-  ],
-  "San Juan": [
-    "Bohechío",
-    "El Cercado",
-    "Juan de Herrera",
-    "Las Matas de Farfán",
-    "San Juan de la Maguana",
-    "Vallejuelo"
-  ],
-  "San Pedro de Macorís": [
-    "Consuelo",
-    "Guayacanes",
-    "Quisqueya",
-    "Ramón Santana",
-    "San Pedro de Macorís"
-  ],
-  "Sánchez Ramírez": [
-    "Cevicos",
-    "Cotuí",
-    "Fantino",
-    "La Mata"
-  ],
-  "Santiago": [
-    "Bisonó",
-    "Jánico",
-    "Licey al Medio",
-    "Puñal",
-    "Sabana Iglesia",
-    "San José de las Matas",
-    "Santiago de los Caballeros",
-    "Tamboril",
-    "Villa Bisonó",
-    "Villa González"
-  ],
-  "Santiago Rodríguez": [
-    "Monción",
-    "San Ignacio de Sabaneta",
-    "Villa Los Almácigos"
-  ],
-  "Santo Domingo": [
-    "Boca Chica",
-    "Los Alcarrizos",
-    "Pedro Brand",
-    "San Antonio de Guerra",
-    "San Luis",
-    "Santo Domingo Este",
-    "Santo Domingo Norte",
-    "Santo Domingo Oeste"
-  ],
-  "Valverde": [
-    "Esperanza",
-    "Laguna Salada",
-    "Mao"
+  "Provincia La Romana": [
+    "Municipio Guaymate",
+    "Municipio La Romana",
+    "Municipio Villa Hermosa"
   ]
 };
 
