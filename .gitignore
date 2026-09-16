@@ -38,3 +38,7 @@ next-env.d.ts
 
 # vercel local link metadata
 .vercel
+
+# ephemeral local catalog mirror from API writes
+/data/catalog.json
+/tmp/

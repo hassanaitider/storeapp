@@ -67,6 +67,15 @@ export const COUNTRIES: CountryInfo[] = [
     dial: "+218",
   },
   {
+    code: "LB",
+    nameAr: "لبنان",
+    nameEn: "Lebanon",
+    nameEs: "Líbano",
+    currency: "LBP",
+    flag: "🇱🇧",
+    dial: "+961",
+  },
+  {
     code: "MX",
     nameAr: "المكسيك",
     nameEn: "Mexico",
@@ -201,6 +210,7 @@ export const STORE_MARKET_CODES: CountryCode[] = [
   "OM",
   "IQ",
   "LY",
+  "LB",
   "MX",
   "AR",
   "CR",
@@ -279,6 +289,7 @@ export function countryFromLocationSettings(
   if (tz.includes("dubai") || tz === "asia/dubai") return "AE";
   if (tz.includes("muscat") || tz === "asia/muscat") return "OM";
   if (tz.includes("baghdad") || tz === "asia/baghdad") return "IQ";
+  if (tz.includes("beirut") || tz === "asia/beirut") return "LB";
 
   if (tz.includes("mexico_city") || tz.includes("monterrey") || tz.includes("cancun")) {
     return "MX";
@@ -301,6 +312,7 @@ export function countryFromLocationSettings(
     if (l === "ar-om" || l.endsWith("-om")) return "OM";
     if (l === "ar-iq" || l.endsWith("-iq")) return "IQ";
     if (l === "ar-ly" || l.endsWith("-ly")) return "LY";
+    if (l === "ar-lb" || l.endsWith("-lb")) return "LB";
     if (l === "es-mx") return "MX";
     if (l === "es-ar") return "AR";
     if (l === "es-cr") return "CR";

@@ -1,6 +1,16 @@
-import { currencyForCountry, getCountry, STORE_MARKETS } from "./countries";
+import {
+  currencyForCountry,
+  getCountry,
+  isSpanishMarket,
+  STORE_MARKETS,
+} from "./countries";
 import { convertFromUSD, retailRound } from "./currency";
 import type { CountryCode, Locale, Product } from "./types";
+
+/** MENA-only — do not ship these universal tools into Latin American markets. */
+const UNIVERSAL_MENA_MARKETS = STORE_MARKETS.filter(
+  (market) => !isSpanishMarket(market.code)
+);
 
 const COD_AR =
   "<p><strong>اطلب الآن</strong> — توصيل مجاني · الدفع عند الاستلام · استرداد خلال 30 يومًا.</p>";
@@ -62,7 +72,7 @@ function forMarkets(
     "id" | "slug" | "categoryId" | "availableIn" | "marketPrices" | "marketComparePrices" | "priceUSD" | "compareAtUSD"
   >
 ): Product[] {
-  return STORE_MARKETS.map((market) => {
+  return UNIVERSAL_MENA_MARKETS.map((market) => {
     const country = market.code;
     // Markets without a hand-set price convert from USD; reusing the Saudi
     // amount would price, say, Mexico in riyal numbers.

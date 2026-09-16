@@ -1,4 +1,4 @@
-import { currencyForCountry, getCountry } from "./countries";
+import { currencyForCountry, getCountry, isStoreMarket } from "./countries";
 import {
   convertFromUSD,
   formatLocalAmount,
@@ -6,6 +6,34 @@ import {
   retailRound,
 } from "./currency";
 import type { Category, CountryCode, Locale, Product } from "./types";
+
+/**
+ * Market this listing belongs to. Prefer explicit availableIn (one row per
+ * country for LATAM Elevador) over the category dropdown, which merchants can
+ * accidentally change and then preview the wrong storefront.
+ */
+export function resolveProductMarket(
+  product: Product,
+  categories: Category[] = []
+): CountryCode | null {
+  if (product.availableIn?.length) {
+    const first = product.availableIn.find((c) => isStoreMarket(c));
+    if (first) return first;
+  }
+  const fromId = /^prod-mattress-lifter-([a-z]{2})$/i.exec(product.id || "");
+  if (fromId) {
+    const code = fromId[1].toUpperCase();
+    if (isStoreMarket(code)) return code as CountryCode;
+  }
+  const cat = categories.find((c) => c.id === product.categoryId);
+  if (cat?.country && isStoreMarket(cat.country)) return cat.country;
+  const fromCatId = /^cat-([A-Za-z]{2})$/.exec(product.categoryId || "");
+  if (fromCatId) {
+    const code = fromCatId[1].toUpperCase();
+    if (isStoreMarket(code)) return code as CountryCode;
+  }
+  return null;
+}
 
 /** Local-currency price for a product in a given market */
 export function getProductLocalPrice(
