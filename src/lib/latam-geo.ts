@@ -5,9 +5,9 @@ export type LatamGeoTree = Record<string, Record<string, string[]>>;
 
 /**
  * Markets that use the shared Latam COD checkout.
- * MX, AR, DO, and EC each have their own exclusive COD modules.
+ * MX, AR, DO, EC, and SV each have their own exclusive COD modules.
  */
-export const LATAM_COD_CHECKOUT_MARKETS: CountryCode[] = ["GT", "CR", "HN", "SV", "NI"];
+export const LATAM_COD_CHECKOUT_MARKETS: CountryCode[] = ["GT", "CR", "HN", "NI"];
 
 export function usesLatamCodCheckout(country: string): boolean {
   return LATAM_COD_CHECKOUT_MARKETS.includes(
@@ -4046,7 +4046,7 @@ export function codFormLabel(country: CountryCode): string {
   if (country === "GT") return "COD FORM GUATEMALA";
   if (country === "CR") return "COD FORM COSTA RICA";
   if (country === "HN") return "COD FORM HONDURAS";
-  if (country === "SV") return "COD FORM EL SALVADOR";
+  if (country === "SV") return "COD FORM SALVADOR";
   if (country === "NI") return "COD FORM NICARAGUA";
   if (country === "AR") return "COD FORM ARGENTINA";
   return "COD FORM";
