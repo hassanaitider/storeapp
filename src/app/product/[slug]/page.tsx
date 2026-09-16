@@ -247,12 +247,13 @@ function ProductPageInner() {
       return;
     }
     const colorLabel = customColor.trim();
+    const moroccoSimple = country === "MA";
     const created = placeOrder(
       {
         name: form.name.trim(),
         phone: form.phone.trim(),
         city: form.city.trim(),
-        address: form.address.trim(),
+        address: moroccoSimple ? form.city.trim() : form.address.trim(),
         notes: colorLabel
           ? locale === "ar"
             ? `اللون: ${colorLabel}`
@@ -297,6 +298,7 @@ function ProductPageInner() {
     usesLatamCodCheckout(country);
   const fufillsSticky =
     argentinaCod || mexicoCod || dominicanCod || ecuadorCod || latamCod;
+  const moroccoSimpleCheckout = country === "MA";
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 sm:px-6 lg:px-8">
@@ -502,12 +504,14 @@ function ProductPageInner() {
             value={form.city}
             onChange={(v) => setForm((f) => ({ ...f, city: v }))}
           />
-          <Field
-            label={t.checkout.address}
-            required
-            value={form.address}
-            onChange={(v) => setForm((f) => ({ ...f, address: v }))}
-          />
+          {!moroccoSimpleCheckout ? (
+            <Field
+              label={t.checkout.address}
+              required
+              value={form.address}
+              onChange={(v) => setForm((f) => ({ ...f, address: v }))}
+            />
+          ) : null}
 
           <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
             <span className="font-semibold text-ink-800">
