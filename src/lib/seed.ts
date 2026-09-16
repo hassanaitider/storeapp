@@ -361,6 +361,159 @@ ${COD_EN}
     },
   },
   {
+    id: "prod-corner-shower-caddy",
+    slug: "corner-shower-caddy-5-piece",
+    nameAr: "منظم دش زاوية معدني أسود — طقم 5 قطع",
+    nameEn: "Matte Black Corner Shower Caddy — 5-Piece Set",
+    descriptionAr: `
+<h3>نظّم الحمّام… واستغل كل زاوية</h3>
+<p>طقم <strong>5 قطع</strong> بلون أسود مطفي أنيق: رفّان زاوية كبيران + حامل فرشاة أسنان + رف مناشف + صحن صابون مع خطافات. تركيب <strong>بدون ثقب</strong> بلاصق قوي — مثالي للشقق المغربية والبلاط.</p>
+<ul>
+<li>رفّان زاوية L يستغلان الزاوية ويصرفان الماء بسرعة</li>
+<li>مقاومة للصدأ والرطوبة مع تهوية شبكية</li>
+<li>خطافات مدمجة للإسفنجة والموس والمناشف الصغيرة</li>
+<li>تركيب لاصق شفاف بدون أدوات — بدون تخريب البلاط</li>
+<li>تصميم عصري أسود مطفي يناسب الحمّام العصري</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Organize your shower — maximize every corner</h3>
+<p>A sleek <strong>5-piece</strong> matte-black set: two large corner shelves + toothbrush holder + towel shelf + soap dish with hooks. <strong>No-drill</strong> adhesive install — ideal for Moroccan apartments and tile walls.</p>
+<ul>
+<li>Two L-shaped corner shelves that drain water fast</li>
+<li>Rust-resistant open-wire design for humid bathrooms</li>
+<li>Built-in hooks for loofahs, razors, and washcloths</li>
+<li>Strong transparent adhesive pads — no tools, no tile damage</li>
+<li>Modern matte-black finish for a premium bathroom look</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "طقم كامل من 5 قطع بلون أسود مطفي",
+      "رفّا زاوية + حامل أسنان + رف مناشف + صحن صابون",
+      "تركيب لاصق بدون ثقب أو أدوات",
+      "شبكة معدنية لتصريف الماء بسرعة",
+      "خطافات مدمجة للإكسسوارات",
+      "مقاوم للرطوبة والصدأ في الحمّام",
+    ],
+    detailsEn: [
+      "Complete 5-piece matte-black set",
+      "2 corner shelves + toothbrush holder + towel shelf + soap dish",
+      "No-drill adhesive installation",
+      "Open wire grid for quick drainage",
+      "Built-in hooks for accessories",
+      "Rust-resistant for humid bathrooms",
+    ],
+    priceUSD: 19.9,
+    compareAtUSD: 29.9,
+    marketPrices: { MA: 199 },
+    marketComparePrices: { MA: 299 },
+    availableIn: ["MA"],
+    images: [
+      "/products/corner-shower-caddy-1.jpg",
+      "/products/corner-shower-caddy-2.jpg",
+      "/products/corner-shower-caddy-3.jpg",
+      "/products/corner-shower-caddy-4.jpg",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 4.8,
+    reviewCount: 94,
+    categoryId: "cat-MA",
+    createdAt: "2026-09-16T00:00:00.000Z",
+    landing: {
+      headlineAr: "طقم حمّام أسود مطفي… تنظيم كامل بدون ثقب",
+      headlineEn: "Matte-black bathroom set — full organization, no drilling",
+      introAr:
+        "حوّل زاوية الدش إلى مساحة مرتبة وأنيقة. رفّان زاوية كبيران مع حاملات للأسنان والمناشف والصابون — تركيب لاصق قوي بدون تخريب البلاط. اطلب الآن بـ 199 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+      introEn:
+        "Turn your shower corner into a clean, stylish space. Two large corner shelves plus holders for toothbrushes, towels, and soap — strong adhesive install with no tile damage. Order now for 199 MAD — free delivery and cash on delivery in Morocco.",
+      sections: [
+        {
+          titleAr: "رفّا زاوية يستغلان كل سنتيمتر",
+          titleEn: "Corner shelves that use every centimeter",
+          bodyAr:
+            "تصميم L يناسب زاوية 90° ويحفظ الشامبو والجل والنباتات الصغيرة بثبات. الشبكة المفتوحة تصرف الماء فورًا وتقلل التكدّس والروائح.",
+          bodyEn:
+            "An L-shape fits a 90° corner and holds shampoo, body wash, and small plants securely. The open grid drains water instantly and reduces buildup.",
+          image: "/products/corner-shower-caddy-1.jpg",
+        },
+        {
+          titleAr: "طقم كامل… تغليف جاهز للهديّة",
+          titleEn: "Complete set — gift-ready packaging",
+          bodyAr:
+            "يصل في علبة Corner Shower Caddy أنيقة توضّح الاستخدام: تنظيم الدش، تصريف سريع، ومتانة عالية. كل القطع بلون أسود مطفي متناسق.",
+          bodyEn:
+            "Arrives in a sleek Corner Shower Caddy box that highlights the benefits: shower organization, quick drain, and sturdy build. Every piece matches in matte black.",
+          image: "/products/corner-shower-caddy-2.jpg",
+        },
+        {
+          titleAr: "حاملات متخصصة للأسنان والمناشف والصابون",
+          titleEn: "Dedicated holders for brushes, towels, and soap",
+          bodyAr:
+            "حامل عمودي لمعجون وفرش الأسنان، رف للمناشف المطوية، وصحن صابون مع خطافات للموس — كل شيء في مكانه على الحائط.",
+          bodyEn:
+            "A vertical holder for toothpaste and brushes, a shelf for folded towels, and a soap dish with hooks for razors — everything has a place on the wall.",
+          image: "/products/corner-shower-caddy-3.jpg",
+        },
+        {
+          titleAr: "تركيب لاصق… بدون مثقاب",
+          titleEn: "Adhesive install — no drill needed",
+          bodyAr:
+            "وسائد لاصقة شفافة قوية تثبت على البلاط الرخامي أو السيراميك. مثالي للمستأجرين ولمن لا يريد ثقب الجدران — إزالة أنظف عند الحاجة.",
+          bodyEn:
+            "Strong transparent adhesive pads grip marble-look or ceramic tile. Perfect for renters and anyone who wants no wall holes — cleaner removal when needed.",
+          image: "/products/corner-shower-caddy-4.jpg",
+        },
+      ],
+      benefitsAr: [
+        "طقم 5 قطع متكامل",
+        "أسود مطفي عصري",
+        "بدون ثقب — لاصق قوي",
+        "تصريف ماء سريع",
+        "مقاوم للرطوبة",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "Complete 5-piece set",
+        "Modern matte black",
+        "No-drill strong adhesive",
+        "Quick water drainage",
+        "Humidity resistant",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "هل يتحمل وزن الشامبو الثقيل؟",
+          questionEn: "Can it hold heavy shampoo bottles?",
+          answerAr:
+            "نعم — الرفوف مصممة لتحمل زجاجات الدوش العادية عند تثبيت اللاصق بشكل صحيح على سطح نظيف وجاف.",
+          answerEn:
+            "Yes — the shelves are made for typical shower bottles when adhesive pads are applied on a clean, dry surface.",
+        },
+        {
+          questionAr: "هل يصدأ في الحمّام؟",
+          questionEn: "Will it rust in the bathroom?",
+          answerAr:
+            "التصميم الشبكي يصرف الماء بسرعة واللمسة السوداء المطفيّة مقاومة للرطوبة مع الاستخدام العادي في الحمّام.",
+          answerEn:
+            "The open-wire design drains water quickly, and the matte finish resists humidity in normal bathroom use.",
+        },
+        {
+          questionAr: "كم قطعة في الطقم؟",
+          questionEn: "How many pieces are in the set?",
+          answerAr:
+            "5 قطع: رفّا زاوية، حامل فرشاة أسنان، رف مناشف، وصحن صابون مع خطافات.",
+          answerEn:
+            "5 pieces: two corner shelves, a toothbrush holder, a towel shelf, and a soap dish with hooks.",
+        },
+      ],
+    },
+  },
+  {
     id: "prod-car-vacuum",
     slug: "cordless-car-vacuum",
     nameAr: "مكنسة سيارة لاسلكية",
