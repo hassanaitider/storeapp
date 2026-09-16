@@ -168,13 +168,13 @@ export function NicaraguaCodCheckout({
         <span className="inline-flex items-center gap-1.5 rounded-full border border-white/35 bg-[#0a101a] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white">
           <Zap className="h-3.5 w-3.5 fill-[#ffd54a] text-[#ffd54a]" />
           <span aria-hidden>💵</span>
-          Contra entrega
+          CONTRA ENTREGA
         </span>
         <h2 className="mt-3 text-xl font-extrabold leading-snug text-white sm:text-2xl">
           Completa tus datos para ordenar
         </h2>
         <p className="mt-1.5 text-xs font-medium tracking-wide text-white/55 sm:text-[13px]">
-          🇳🇮 COD FORM NICARAGUA · Tu producto
+          NI COD FORM NICARAGUA · Tu producto
         </p>
       </div>
 
