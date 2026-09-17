@@ -169,7 +169,7 @@ export function parseCatalogJson(raw: string): PersistedCatalog | null {
       currencyManual: Boolean(parsed.currencyManual),
       localeManual: Boolean(parsed.localeManual),
       currencyRates: (parsed.currencyRates ?? {}) as Record<CurrencyCode, number>,
-      upsellEnabled: parsed.upsellEnabled !== false,
+      upsellEnabled: parsed.upsellEnabled === true,
     });
   } catch {
     return null;

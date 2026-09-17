@@ -102,6 +102,10 @@ export function DominicanCodCheckout({
     [offers, country, upsellEnabled]
   );
 
+  useEffect(() => {
+    if (!upsellEnabled && qty !== 1) onQtyChange(1);
+  }, [upsellEnabled, qty, onQtyChange]);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -171,6 +175,7 @@ export function DominicanCodCheckout({
       </div>
 
       <form ref={formRef} onSubmit={onSubmit} className="space-y-3 p-4 sm:p-5">
+        {upsellEnabled ? (
         <div className="space-y-2.5">
           {packs.map((offer) => {
             const selected = qty === offer.quantity;
@@ -228,6 +233,7 @@ export function DominicanCodCheckout({
             );
           })}
         </div>
+        ) : null}
 
         {product.customColorEnabled ? (
           <IconField

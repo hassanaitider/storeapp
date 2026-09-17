@@ -208,9 +208,9 @@ export const translations = {
       upsellManage: "عروض الكمية",
       upsellActive: "خصم الكمية مفعّل",
       upsellInactive: "خصم الكمية متوقف",
-      upsellToggleHint: "فعّل أو أوقف ظهور عروض الكمية (1 / 2 / 3 قطع) في صفحة المنتج. يُحفظ تلقائياً.",
+      upsellToggleHint: "موقوف افتراضياً. فعّل المفتاح لإظهار عروض الكمية (1 / 2 / 3) في صفحة المنتج والـ checkout. يُحفظ تلقائياً لكل الزوّار.",
       upsellSouthAmericaHint:
-        "جميع أسواق أمريكا اللاتينية: تظهر 3 عروض كمية في الـ checkout (1 / 2 / 3). يمكنك تفعيل أو إيقاف الظهور من المفتاح أعلاه.",
+        "عروض الكمية مخفية حتى تفعّلها. بعد التفعيل: كل أسواق أمريكا اللاتينية تظهر 3 اختيارات في الـ checkout.",
       upsellEnabledFlash: "تم تفعيل خصم الكمية ✓",
       upsellDisabledFlash: "تم إيقاف خصم الكمية ✓",
       currencyRate: "سعر الصرف مقابل الدولار",
@@ -440,9 +440,9 @@ export const translations = {
       upsellManage: "Quantity offers",
       upsellActive: "Volume discount on",
       upsellInactive: "Volume discount off",
-      upsellToggleHint: "Turn on or off quantity tiers (1 / 2 / 3 pcs) on product pages. Saves automatically.",
+      upsellToggleHint: "Off by default. Turn the switch on to show quantity offers (1 / 2 / 3) on product and checkout pages. Saves automatically for all visitors.",
       upsellSouthAmericaHint:
-        "All Latin America markets: checkout shows 3 quantity offers (1 / 2 / 3). Use the switch above to show or hide upsell.",
+        "Quantity offers stay hidden until you enable them. Once on: every Latin America market shows 3 checkout choices.",
       upsellEnabledFlash: "Volume discount enabled ✓",
       upsellDisabledFlash: "Volume discount paused ✓",
       currencyRate: "Exchange rate vs USD",
@@ -674,9 +674,9 @@ export const translations = {
       upsellActive: "Descuento por cantidad activo",
       upsellInactive: "Descuento por cantidad detenido",
       upsellToggleHint:
-        "Activa o desactiva los niveles por cantidad (1 / 2 / 3 piezas) en las páginas de producto. Se guarda automáticamente.",
+        "Desactivado por defecto. Activa el interruptor para mostrar ofertas por cantidad (1 / 2 / 3) en producto y checkout. Se guarda automáticamente para todos los visitantes.",
       upsellSouthAmericaHint:
-        "Todos los mercados de América Latina: el checkout muestra 3 ofertas por cantidad (1 / 2 / 3). Usa el interruptor de arriba para mostrar u ocultar el upsell.",
+        "Las ofertas por cantidad permanecen ocultas hasta que las actives. Al activar: todos los mercados de América Latina muestran 3 opciones en el checkout.",
       upsellEnabledFlash: "Descuento por cantidad activado ✓",
       upsellDisabledFlash: "Descuento por cantidad pausado ✓",
       currencyRate: "Tipo de cambio frente al dólar",
