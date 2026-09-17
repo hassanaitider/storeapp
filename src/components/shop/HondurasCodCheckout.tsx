@@ -11,12 +11,13 @@ import {
 import { MapPin, User, Phone, ChevronDown, Zap } from "lucide-react";
 import { selectedQtyTotalLocal } from "@/components/shop/ProductQtyUpsell";
 import { formatHondurasCodPrice } from "@/lib/currency";
-import { getProductQtyOffers } from "@/lib/qty-upsell";
+import { getProductQtyOffers, selectCodQtyPacks } from "@/lib/qty-upsell";
 import {
   hondurasMunicipios,
   hondurasProvincias,
 } from "@/lib/honduras-geo";
 import type { CountryCode, Product } from "@/lib/types";
+import { useStore } from "@/context/StoreContext";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -82,10 +83,11 @@ export function HondurasCodCheckout({
 }: Props) {
   const countdown = useOfferCountdown(`${country}:${product.id}`);
   const offers = getProductQtyOffers(product, country, "es");
-  const packs = useMemo(() => {
-    const filtered = offers.filter((o) => o.quantity === 1 || o.quantity === 2);
-    return filtered.length ? filtered : offers.slice(0, 2);
-  }, [offers]);
+  const { upsellEnabled } = useStore();
+  const packs = useMemo(
+    () => selectCodQtyPacks(offers, country, upsellEnabled),
+    [offers, country, upsellEnabled]
+  );
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");

@@ -209,6 +209,8 @@ export const translations = {
       upsellActive: "خصم الكمية مفعّل",
       upsellInactive: "خصم الكمية متوقف",
       upsellToggleHint: "فعّل أو أوقف ظهور عروض الكمية (1 / 2 / 3 قطع) في صفحة المنتج. يُحفظ تلقائياً.",
+      upsellSouthAmericaHint:
+        "أمريكا الجنوبية (الأرجنتين · الإكوادور): تظهر 3 عروض كمية في checkout. باقي LATAM تبقى بعرضين.",
       upsellEnabledFlash: "تم تفعيل خصم الكمية ✓",
       upsellDisabledFlash: "تم إيقاف خصم الكمية ✓",
       currencyRate: "سعر الصرف مقابل الدولار",
@@ -439,6 +441,8 @@ export const translations = {
       upsellActive: "Volume discount on",
       upsellInactive: "Volume discount off",
       upsellToggleHint: "Turn on or off quantity tiers (1 / 2 / 3 pcs) on product pages. Saves automatically.",
+      upsellSouthAmericaHint:
+        "South America (Argentina · Ecuador): checkout shows 3 quantity offers. Other LATAM markets stay at 2.",
       upsellEnabledFlash: "Volume discount enabled ✓",
       upsellDisabledFlash: "Volume discount paused ✓",
       currencyRate: "Exchange rate vs USD",
@@ -671,6 +675,8 @@ export const translations = {
       upsellInactive: "Descuento por cantidad detenido",
       upsellToggleHint:
         "Activa o desactiva los niveles por cantidad (1 / 2 / 3 piezas) en las páginas de producto. Se guarda automáticamente.",
+      upsellSouthAmericaHint:
+        "América del Sur (Argentina · Ecuador): el checkout muestra 3 ofertas por cantidad. El resto de LATAM se queda en 2.",
       upsellEnabledFlash: "Descuento por cantidad activado ✓",
       upsellDisabledFlash: "Descuento por cantidad pausado ✓",
       currencyRate: "Tipo de cambio frente al dólar",

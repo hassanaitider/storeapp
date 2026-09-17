@@ -1,18 +1,27 @@
 "use client";
 
 import { Gift, Plus, Trash2 } from "lucide-react";
-import { currencyForCountry } from "@/lib/countries";
+import { currencyForCountry, isSouthAmericaMarket } from "@/lib/countries";
 import type { Category, CountryCode, Locale, Product, ProductQtyOffer } from "@/lib/types";
 import { getProductLocalPrice } from "@/lib/pricing";
 
 const MAX_TIERS = 5;
+const SA_DEFAULT_TIERS: ProductQtyOffer[] = [
+  { quantity: 1, discountPercent: 0 },
+  { quantity: 2, discountPercent: 10, popular: true },
+  { quantity: 3, discountPercent: 15 },
+];
 
 function productMarket(
   product: Product,
   categories: Category[]
 ): CountryCode | null {
   const cat = categories.find((c) => c.id === product.categoryId);
-  return cat?.country ?? null;
+  return (
+    cat?.country ??
+    product.availableIn?.[0] ??
+    null
+  );
 }
 
 type ProductQtyOffersEditorProps = {
@@ -37,6 +46,7 @@ export function ProductQtyOffersEditor({
   const market = productMarket(product, categories);
   const unit = market ? getProductLocalPrice(product, market) : product.priceUSD;
   const cur = market ? currencyForCountry(market) : "USD";
+  const southAmerica = market ? isSouthAmericaMarket(market) : false;
 
   const updateTier = (quantity: number, patch: Partial<ProductQtyOffer>) => {
     onChange(
@@ -56,10 +66,20 @@ export function ProductQtyOffersEditor({
       ...qtyOffers,
       {
         quantity: nextQty,
-        discountPercent: nextQty > 1 ? 5 : 0,
+        discountPercent: nextQty >= 3 ? 15 : nextQty > 1 ? 10 : 0,
         popular: nextQty === 2,
       },
     ]);
+  };
+
+  const ensureSouthAmericaThree = () => {
+    if (!southAmerica) return;
+    if (qtyOffers.length >= 3) return;
+    const byQty = new Map(qtyOffers.map((o) => [o.quantity, o]));
+    const next = SA_DEFAULT_TIERS.map(
+      (d) => byQty.get(d.quantity) ?? { ...d }
+    );
+    onChange(next);
   };
 
   const removeTier = (quantity: number) => {
@@ -80,11 +100,36 @@ export function ProductQtyOffersEditor({
                 : "Upsell — quantity tiers (same product)"}
             </h3>
             <p className="text-xs text-[var(--muted)] sm:text-sm">
-              {locale === "ar"
-                ? `حدّد عروض 1 / 2 / 3 قطع. السعر الفردي ≈ ${unit} ${cur}. اتركه فارغاً لاستخدام العروض الافتراضية.`
-                : `Set 1 / 2 / 3 piece offers. Unit ≈ ${unit} ${cur}. Leave empty for defaults.`}
+              {southAmerica
+                ? locale === "ar"
+                  ? `أمريكا الجنوبية: يلزم 3 عروض (1 / 2 / 3). السعر الفردي ≈ ${unit} ${cur}.`
+                  : locale === "es"
+                    ? `América del Sur: usa 3 ofertas (1 / 2 / 3). Precio unitario ≈ ${unit} ${cur}.`
+                    : `South America: use 3 offers (1 / 2 / 3). Unit ≈ ${unit} ${cur}.`
+                : locale === "ar"
+                  ? `حدّد عروض 1 / 2 / 3 قطع. السعر الفردي ≈ ${unit} ${cur}. اتركه فارغاً لاستخدام العروض الافتراضية.`
+                  : `Set 1 / 2 / 3 piece offers. Unit ≈ ${unit} ${cur}. Leave empty for defaults.`}
             </p>
           </div>
+        </div>
+      ) : null}
+
+      {southAmerica && sorted.length < 3 ? (
+        <div className="mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950">
+          <span>
+            {locale === "ar"
+              ? "يُفضّل 3 عروض لهذا السوق (الأرجنتين / الإكوادور)."
+              : locale === "es"
+                ? "Se recomiendan 3 ofertas para este mercado (AR / EC)."
+                : "3 offers recommended for this South America market (AR / EC)."}
+          </span>
+          <button
+            type="button"
+            onClick={ensureSouthAmericaThree}
+            className="rounded-lg bg-amber-700 px-2.5 py-1 text-xs font-bold text-white hover:bg-amber-600"
+          >
+            {locale === "ar" ? "إضافة 3 عروض" : locale === "es" ? "Cargar 3 ofertas" : "Load 3 offers"}
+          </button>
         </div>
       ) : null}
 
