@@ -53,7 +53,7 @@ const TABS: Tab[] = [
 
 function parseTab(raw: string | null): Tab {
   if (raw && (TABS as string[]).includes(raw)) return raw as Tab;
-  return "categories";
+  return "overview";
 }
 
 /** Native <a> — works even if React click handlers are dead. */
