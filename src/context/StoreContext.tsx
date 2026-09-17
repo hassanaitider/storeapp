@@ -324,7 +324,8 @@ function buildDefaults(country: CountryCode = DEFAULT_COUNTRY): StoreState {
     currencyManual: false,
     localeManual: false,
     currencyRates: { ...DEFAULT_CURRENCY_RATES },
-    upsellEnabled: true,
+    // Off until the merchant enables it from admin — packs stay hidden.
+    upsellEnabled: false,
   };
 }
 
@@ -458,7 +459,8 @@ function applyPersisted(
     ),
     orders: Array.isArray(parsed.orders) ? parsed.orders : [],
     cart: Array.isArray(parsed.cart) ? parsed.cart : [],
-    upsellEnabled: parsed.upsellEnabled !== false,
+    // Opt-in only: missing/undefined means hidden until admin enables.
+    upsellEnabled: parsed.upsellEnabled === true,
   };
 }
 

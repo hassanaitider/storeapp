@@ -125,7 +125,7 @@ export function cartItemLineLocal(
 export function selectCodQtyPacks(
   offers: ResolvedQtyOffer[],
   country: string,
-  upsellEnabled = true
+  upsellEnabled = false
 ): ResolvedQtyOffer[] {
   if (!upsellEnabled) {
     const one = offers.find((o) => o.quantity === 1);

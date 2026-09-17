@@ -88,6 +88,10 @@ export function LatamCodCheckout({
     [offers, country, upsellEnabled]
   );
 
+  useEffect(() => {
+    if (!upsellEnabled && qty !== 1) onQtyChange(1);
+  }, [upsellEnabled, qty, onQtyChange]);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [departamento, setDepartamento] = useState("");
@@ -163,6 +167,7 @@ export function LatamCodCheckout({
 
       <form ref={formRef} onSubmit={onSubmit} className="space-y-3 p-4 sm:p-5">
         {/* Qty packs */}
+        {upsellEnabled ? (
         <div className="space-y-2.5">
           {packs.map((offer) => {
             const selected = qty === offer.quantity;
@@ -220,6 +225,7 @@ export function LatamCodCheckout({
             );
           })}
         </div>
+        ) : null}
 
         {product.customColorEnabled ? (
           <IconField
