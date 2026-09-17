@@ -10,7 +10,7 @@ import { currencyForCountry } from "@/lib/countries";
 import { convertToUSD, formatLocalAmount, getCurrency } from "@/lib/currency";
 import { getProductLocalPrice, resolveProductMarket } from "@/lib/pricing";
 import { htmlToPlain, toEditorHtml } from "@/lib/rich-html";
-import { slugify } from "@/lib/utils";
+import { slugify, cn } from "@/lib/utils";
 import { ProductQtyOffersEditor } from "@/components/admin/ProductQtyOffersEditor";
 import { ProductRichEditor } from "@/components/admin/ProductRichEditor";
 import { ProductColorsEditor } from "@/components/admin/ProductColorsEditor";
@@ -56,6 +56,7 @@ export default function EditProductPage() {
   const [inStock, setInStock] = useState(true);
   const [featured, setFeatured] = useState(false);
   const [customColorEnabled, setCustomColorEnabled] = useState(false);
+  const [qtyUpsellEnabled, setQtyUpsellEnabled] = useState(false);
   const [qtyOffers, setQtyOffers] = useState<ProductQtyOffer[]>([]);
   const [flash, setFlash] = useState("");
   const [saving, setSaving] = useState(false);
@@ -97,6 +98,7 @@ export default function EditProductPage() {
       setDescriptionAr("");
       setDescriptionEn("");
       setCustomColorEnabled(false);
+      setQtyUpsellEnabled(false);
       setReady(true);
       return;
     }
@@ -126,6 +128,7 @@ export default function EditProductPage() {
     setInStock(existing.inStock !== false);
     setFeatured(Boolean(existing.featured));
     setCustomColorEnabled(Boolean(existing.customColorEnabled));
+    setQtyUpsellEnabled(Boolean(existing.qtyUpsellEnabled));
     setQtyOffers([...(existing.qtyOffers ?? [])]);
     setReady(true);
   }, [existing, isNew, categories, storageReady]);
@@ -261,6 +264,7 @@ export default function EditProductPage() {
         : existing?.availableIn,
       colors: [],
       customColorEnabled,
+      qtyUpsellEnabled,
       categoryId: lockedCategoryId,
       images: nextImages,
       slug: lockedMarket
@@ -598,7 +602,6 @@ export default function EditProductPage() {
         <ProductColorsEditor
           enabled={customColorEnabled}
           onChange={setCustomColorEnabled}
-          locale={locale}
         />
       </div>
 
@@ -607,6 +610,44 @@ export default function EditProductPage() {
           id="upsell"
           className="mt-6 scroll-mt-24 rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50/60 to-white p-5 shadow-sm sm:p-6"
         >
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm text-[var(--muted)]">
+              {qtyUpsellEnabled ? t.admin.upsellActive : t.admin.upsellInactive}
+            </p>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={qtyUpsellEnabled}
+              onClick={() => {
+                const next = !qtyUpsellEnabled;
+                setQtyUpsellEnabled(next);
+                if (!isNew && existing) {
+                  updateProduct(existing.id, { qtyUpsellEnabled: next });
+                }
+              }}
+              className={cn(
+                "inline-flex items-center gap-3 rounded-2xl border px-4 py-2.5 text-sm font-bold transition",
+                qtyUpsellEnabled
+                  ? "border-brand-600 bg-brand-700 text-white"
+                  : "border-sand-300 bg-white text-ink-800"
+              )}
+            >
+              <span
+                className={cn(
+                  "relative h-5 w-9 shrink-0 rounded-full transition",
+                  qtyUpsellEnabled ? "bg-white/40" : "bg-sand-300"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition",
+                    qtyUpsellEnabled ? "start-4" : "start-0.5"
+                  )}
+                />
+              </span>
+              Upsell
+            </button>
+          </div>
           <ProductQtyOffersEditor
             product={existing}
             categories={categories}

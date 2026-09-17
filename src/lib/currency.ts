@@ -21,6 +21,11 @@ export const DEFAULT_CURRENCY_RATES: Record<CurrencyCode, number> = {
   HNL: 25.5,
   NIO: 36.8,
   DOP: 60.5,
+  COP: 4100,
+  BRL: 5.4,
+  PEN: 3.75,
+  CLP: 960,
+  BOB: 6.9,
 };
 
 /** Approximate retail FX rates relative to USD (display) */
@@ -186,6 +191,51 @@ export const CURRENCIES: CurrencyInfo[] = [
     rate: DEFAULT_CURRENCY_RATES.DOP,
     region: "latam",
   },
+  {
+    code: "COP",
+    nameAr: "بيزو كولومبي",
+    nameEn: "Colombian Peso",
+    nameEs: "Peso colombiano",
+    symbol: "COL$",
+    rate: DEFAULT_CURRENCY_RATES.COP,
+    region: "latam",
+  },
+  {
+    code: "BRL",
+    nameAr: "ريال برازيلي",
+    nameEn: "Brazilian Real",
+    nameEs: "Real brasileño",
+    symbol: "R$",
+    rate: DEFAULT_CURRENCY_RATES.BRL,
+    region: "latam",
+  },
+  {
+    code: "PEN",
+    nameAr: "سول بيروفي",
+    nameEn: "Peruvian Sol",
+    nameEs: "Sol peruano",
+    symbol: "S/",
+    rate: DEFAULT_CURRENCY_RATES.PEN,
+    region: "latam",
+  },
+  {
+    code: "CLP",
+    nameAr: "بيزو تشيلي",
+    nameEn: "Chilean Peso",
+    nameEs: "Peso chileno",
+    symbol: "CLP$",
+    rate: DEFAULT_CURRENCY_RATES.CLP,
+    region: "latam",
+  },
+  {
+    code: "BOB",
+    nameAr: "بوليفيانو",
+    nameEn: "Bolivian Boliviano",
+    nameEs: "Boliviano",
+    symbol: "Bs",
+    rate: DEFAULT_CURRENCY_RATES.BOB,
+    region: "latam",
+  },
 ];
 
 /** Runtime overrides from admin / localStorage */
@@ -241,10 +291,10 @@ export function formatLocalAmount(
   locale: Locale = "ar"
 ): string {
   const currency = getCurrency(code);
-  // Gulf dinars quote 3 decimals; IQD, ARS and CRC are never quoted in cents
+  // Gulf dinars quote 3 decimals; these currencies are never quoted in cents
   const decimals = ["KWD", "BHD", "OMR"].includes(code)
     ? 3
-    : ["IQD", "ARS", "CRC", "LBP"].includes(code)
+    : ["IQD", "ARS", "CRC", "LBP", "COP", "CLP"].includes(code)
       ? 0
       : 2;
 

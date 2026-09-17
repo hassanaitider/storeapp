@@ -99,6 +99,20 @@ export function LatamCodCheckout({
   const [poblado, setPoblado] = useState("");
   const [direccion, setDireccion] = useState("");
   const [referencia, setReferencia] = useState("");
+  const loc =
+    country === "CR"
+      ? {
+          l1: "Provincia",
+          l2: "Cantón",
+          l3: "Distrito",
+          missing: "Selecciona provincia, cantón y distrito",
+        }
+      : {
+          l1: "Departamento",
+          l2: "Municipio",
+          l3: "Poblado",
+          missing: "Selecciona departamento, municipio y poblado",
+        };
 
   const departamentos = useMemo(
     () => (tree ? Object.keys(tree) : []),
@@ -132,13 +146,13 @@ export function LatamCodCheckout({
       return;
     }
     if (!departamento || !municipio || !poblado) {
-      window.alert("Selecciona departamento, municipio y poblado");
+      window.alert(loc.missing);
       return;
     }
     const notesParts = [
-      `Departamento: ${departamento}`,
-      `Municipio: ${municipio}`,
-      `Poblado: ${poblado}`,
+      `${loc.l1}: ${departamento}`,
+      `${loc.l2}: ${municipio}`,
+      `${loc.l3}: ${poblado}`,
       referencia.trim() ? `Referencia: ${referencia.trim()}` : "",
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
@@ -258,14 +272,14 @@ export function LatamCodCheckout({
         <SelectField
           value={departamento}
           onChange={setDepartamento}
-          placeholder="Departamento"
+          placeholder={loc.l1}
           options={departamentos}
           required
         />
         <SelectField
           value={municipio}
           onChange={setMunicipio}
-          placeholder="Municipio"
+          placeholder={loc.l2}
           options={municipios}
           required
           disabled={!departamento}
@@ -273,7 +287,7 @@ export function LatamCodCheckout({
         <SelectField
           value={poblado}
           onChange={setPoblado}
-          placeholder="Poblado"
+          placeholder={loc.l3}
           options={poblados}
           required
           disabled={!municipio}

@@ -111,6 +111,10 @@ function ProductPageInner() {
     );
   }, [getProduct, slug, previewCountry, country, products]);
 
+  const showQtyUpsell = Boolean(
+    product?.qtyUpsellEnabled === true || upsellEnabled
+  );
+
   // Ephemeral preview market — does not lock IP geo for the rest of the site
   useEffect(() => {
     setViewCountry(previewCountry);
@@ -163,7 +167,7 @@ function ProductPageInner() {
 
   useEffect(() => {
     if (!product) return;
-    if (!upsellEnabled) {
+    if (!showQtyUpsell) {
       setQty(1);
       return;
     }
@@ -173,7 +177,7 @@ function ProductPageInner() {
       const popular = offers.find((o) => o.popular);
       return popular?.quantity ?? offers[0]?.quantity ?? 1;
     });
-  }, [product?.id, country, locale, upsellEnabled]);
+  }, [product?.id, country, locale, showQtyUpsell]);
 
   const marketCurrency = currencyForCountry(country);
   const qtyOffers = useMemo(
@@ -544,7 +548,7 @@ function ProductPageInner() {
         ) : null}
 
         {/* Volume discount — shown only when enabled in admin */}
-        {upsellEnabled ? (
+        {showQtyUpsell ? (
           <ProductQtyUpsell
             product={product}
             country={country}
@@ -589,7 +593,7 @@ function ProductPageInner() {
           <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
             <span className="font-semibold text-ink-800">
               {t.cart.total}
-              {upsellEnabled ? (
+              {showQtyUpsell ? (
                 <span className="ms-1 font-normal text-[var(--muted)]">
                   · {qtyLabel}
                 </span>

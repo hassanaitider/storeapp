@@ -117,6 +117,7 @@ interface StoreContextValue extends StoreState {
   persistCatalog: () => Promise<{ ok: boolean; durable?: boolean; error?: string }>;
   upsellEnabled: boolean;
   setUpsellEnabled: (enabled: boolean) => void;
+  setAllQtyUpsellEnabled: (enabled: boolean) => void;
 }
 
 const StoreContext = createContext<StoreContextValue | null>(null);
@@ -238,12 +239,21 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         detailsEn: p.detailsEn?.length ? p.detailsEn : seed.detailsEn,
         detailsEs: p.detailsEs?.length ? p.detailsEs : seed.detailsEs,
         landing: mergeLanding(seed.landing, p.landing),
-        images: durable.length ? durable : seed.images,
+        images: (() => {
+          const seedImgs = (seed.images ?? []).filter(isDurableMediaUrl);
+          const extra = seedImgs.filter((u) => !durable.includes(u));
+          const combined = [...extra, ...durable];
+          return combined.length ? combined : seed.images;
+        })(),
         colors: [],
         customColorEnabled:
           typeof p.customColorEnabled === "boolean"
             ? p.customColorEnabled
             : Boolean(seed.customColorEnabled),
+        qtyUpsellEnabled:
+          typeof p.qtyUpsellEnabled === "boolean"
+            ? p.qtyUpsellEnabled
+            : false,
         categoryId: p.categoryId || seed.categoryId,
         marketPrices: {
           ...(seed.marketPrices ?? {}),
@@ -1184,10 +1194,33 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const updateProduct = useCallback(
     (id: string, data: Partial<Product>) => {
-      return commit((s) => ({
-        ...s,
-        products: s.products.map((p) => (p.id === id ? { ...p, ...data } : p)),
-      }));
+      return commit((s) => {
+        const target = s.products.find((p) => p.id === id);
+        if (!target) return s;
+        const slug = target.slug?.trim();
+        const syncDisplay =
+          data.qtyUpsellEnabled !== undefined ||
+          data.customColorEnabled !== undefined;
+        return {
+          ...s,
+          products: s.products.map((p) => {
+            if (p.id === id) return { ...p, ...data };
+            // Same listing in other markets (omni-light-sa / omni-light-mx…)
+            if (syncDisplay && slug && p.slug === slug) {
+              return {
+                ...p,
+                ...(data.qtyUpsellEnabled !== undefined
+                  ? { qtyUpsellEnabled: data.qtyUpsellEnabled }
+                  : {}),
+                ...(data.customColorEnabled !== undefined
+                  ? { customColorEnabled: data.customColorEnabled }
+                  : {}),
+              };
+            }
+            return p;
+          }),
+        };
+      });
     },
     [commit]
   );
@@ -1345,6 +1378,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     [commit]
   );
 
+  const setAllQtyUpsellEnabled = useCallback(
+    (enabled: boolean) => {
+      commit((s) => ({
+        ...s,
+        upsellEnabled: enabled,
+        products: s.products.map((p) => ({
+          ...p,
+          qtyUpsellEnabled: enabled,
+        })),
+      }));
+    },
+    [commit]
+  );
+
   const value: StoreContextValue = {
     ...state,
     country: displayCountry,
@@ -1382,6 +1429,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     persistCatalog,
     upsellEnabled: state.upsellEnabled,
     setUpsellEnabled,
+    setAllQtyUpsellEnabled,
   };
 
   return (

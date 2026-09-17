@@ -15,6 +15,7 @@ import {
   RotateCcw,
   Gift,
   Globe,
+  Palette,
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
@@ -77,6 +78,7 @@ function AdminDashboard() {
 
   const {
     locale,
+    setCountry,
     categories,
     products,
     orders,
@@ -87,8 +89,8 @@ function AdminDashboard() {
     deleteProduct,
     updateProduct,
     resetStore,
-    upsellEnabled,
     setUpsellEnabled,
+    setAllQtyUpsellEnabled,
   } = useStore();
 
   const [flash, setFlash] = useState("");
@@ -189,6 +191,11 @@ function AdminDashboard() {
     [orders]
   );
 
+  const anyQtyUpsell = useMemo(
+    () => products.some((p) => p.qtyUpsellEnabled === true),
+    [products]
+  );
+
   const nav: { id: Tab; label: string; icon: typeof Tags }[] = [
     { id: "overview", label: t.admin.dashboard, icon: LayoutDashboard },
     { id: "markets", label: t.admin.markets, icon: Globe },
@@ -198,6 +205,38 @@ function AdminDashboard() {
     { id: "currencies", label: t.admin.currencies, icon: Coins },
     { id: "orders", label: t.admin.orders, icon: ClipboardList },
   ];
+
+  function onToggleColor(productId: string, enabled: boolean) {
+    const ok = updateProduct(productId, { customColorEnabled: enabled });
+    if (!ok) {
+      window.alert(locale === "ar" ? "تعذّر الحفظ" : "Could not save");
+      return;
+    }
+    setFlash(enabled ? t.admin.colorEnabledFlash : t.admin.colorDisabledFlash);
+    window.setTimeout(() => setFlash(""), 2500);
+  }
+
+  function openProductInMarket(productId: string) {
+    const p = products.find((x) => x.id === productId);
+    if (!p) return;
+    const cat = categories.find((c) => c.id === p.categoryId);
+    const market = (cat?.country || p.availableIn?.[0]) as CountryCode | undefined;
+    if (market) setCountry(market, true);
+    window.location.href = `/product/${encodeURIComponent(p.slug)}`;
+  }
+
+  function onToggleUpsell(productId: string, enabled: boolean) {
+    const ok = updateProduct(productId, { qtyUpsellEnabled: enabled });
+    if (!ok) {
+      window.alert(locale === "ar" ? "تعذّر الحفظ" : "Could not save");
+      return;
+    }
+    if (enabled) {
+      setUpsellEnabled(true);
+    }
+    setFlash(enabled ? t.admin.upsellEnabledFlash : t.admin.upsellDisabledFlash);
+    window.setTimeout(() => setFlash(""), 2500);
+  }
 
   function onSaveUpsell(productId: string) {
     const offers = qtyOffersDraft[productId] ?? [];
@@ -618,6 +657,8 @@ function AdminDashboard() {
                     const cur = currencyForCountry(market);
                     const local = getProductLocalPrice(p, market);
                     const cat = categories.find((c) => c.id === p.categoryId);
+                    const colorOn = Boolean(p.customColorEnabled);
+                    const upsellOn = Boolean(p.qtyUpsellEnabled);
                     return (
                       <div
                         key={p.id}
@@ -636,10 +677,14 @@ function AdminDashboard() {
                                 : ""}
                             </p>
                           </div>
-                          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                          <div
+                            className="relative z-20 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5"
+                            style={{ pointerEvents: "auto" }}
+                          >
                             <A
                               href={`/product/${encodeURIComponent(p.id)}?country=${encodeURIComponent(market)}`}
                               className="inline-flex items-center justify-center gap-1 rounded-xl border border-sand-300 px-3 py-3 text-sm font-semibold hover:bg-sand-50"
+                              style={{ pointerEvents: "auto" }}
                             >
                               <ExternalLink className="h-4 w-4" />
                               {locale === "ar" ? "عرض" : "View"}
@@ -651,14 +696,56 @@ function AdminDashboard() {
                               <Pencil className="h-4 w-4" />
                               {t.admin.edit}
                             </A>
-                            <A
-                              href={`/admin?tab=upsell&focus=${encodeURIComponent(p.id)}`}
-                              className="inline-flex items-center justify-center gap-1 rounded-xl border border-brand-300 bg-brand-50 px-3 py-3 text-sm font-bold text-brand-800 hover:bg-brand-100"
-                              title={t.admin.upsellManage}
+                            <button
+                              type="button"
+                              role="switch"
+                              aria-checked={colorOn}
+                              title={t.admin.colorManage}
+                              onClick={() => onToggleColor(p.id, !colorOn)}
+                              className={cn(
+                                "relative z-10 inline-flex items-center justify-center gap-1 rounded-xl border px-3 py-3 text-sm font-bold transition",
+                                colorOn
+                                  ? "border-brand-600 bg-brand-50 text-brand-800"
+                                  : "border-sand-300 bg-white text-ink-800 hover:bg-sand-50"
+                              )}
+                              style={{ pointerEvents: "auto" }}
                             >
-                              <Gift className="h-4 w-4" />
+                              <Palette className="h-4 w-4" />
+                              {t.admin.colorManage}
+                            </button>
+                            <button
+                              type="button"
+                              role="switch"
+                              aria-checked={upsellOn}
+                              title={
+                                upsellOn
+                                  ? t.admin.upsellActive
+                                  : t.admin.upsellInactive
+                              }
+                              onClick={() => onToggleUpsell(p.id, !upsellOn)}
+                              className={cn(
+                                "relative z-10 inline-flex items-center justify-center gap-2 rounded-xl border px-3 py-3 text-sm font-bold transition",
+                                upsellOn
+                                  ? "border-brand-600 bg-brand-700 text-white"
+                                  : "border-sand-300 bg-white text-ink-800 hover:bg-sand-50"
+                              )}
+                              style={{ pointerEvents: "auto" }}
+                            >
+                              <span
+                                className={cn(
+                                  "relative h-5 w-9 shrink-0 rounded-full transition",
+                                  upsellOn ? "bg-white/40" : "bg-sand-300"
+                                )}
+                              >
+                                <span
+                                  className={cn(
+                                    "absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition",
+                                    upsellOn ? "start-4" : "start-0.5"
+                                  )}
+                                />
+                              </span>
                               Upsell
-                            </A>
+                            </button>
                             <button
                               type="button"
                               className="inline-flex items-center justify-center gap-1 rounded-xl border-2 border-red-300 bg-red-50 px-3 py-3 text-sm font-bold text-red-700 hover:bg-red-100"
@@ -698,13 +785,13 @@ function AdminDashboard() {
                 <button
                   type="button"
                   role="switch"
-                  aria-checked={upsellEnabled}
+                  aria-checked={anyQtyUpsell}
                   aria-label={
-                    upsellEnabled ? t.admin.upsellActive : t.admin.upsellInactive
+                    anyQtyUpsell ? t.admin.upsellActive : t.admin.upsellInactive
                   }
                   onClick={() => {
-                    const next = !upsellEnabled;
-                    setUpsellEnabled(next);
+                    const next = !anyQtyUpsell;
+                    setAllQtyUpsellEnabled(next);
                     setFlash(
                       next ? t.admin.upsellEnabledFlash : t.admin.upsellDisabledFlash
                     );
@@ -712,7 +799,7 @@ function AdminDashboard() {
                   }}
                   className={cn(
                     "inline-flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-bold transition",
-                    upsellEnabled
+                    anyQtyUpsell
                       ? "border-brand-600 bg-brand-50 text-brand-900"
                       : "border-sand-300 bg-white text-ink-800"
                   )}
@@ -720,17 +807,17 @@ function AdminDashboard() {
                   <span
                     className={cn(
                       "relative h-7 w-12 rounded-full transition",
-                      upsellEnabled ? "bg-brand-700" : "bg-sand-300"
+                      anyQtyUpsell ? "bg-brand-700" : "bg-sand-300"
                     )}
                   >
                     <span
                       className={cn(
                         "absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition",
-                        upsellEnabled ? "start-5" : "start-0.5"
+                        anyQtyUpsell ? "start-5" : "start-0.5"
                       )}
                     />
                   </span>
-                  {upsellEnabled ? t.admin.upsellActive : t.admin.upsellInactive}
+                  {anyQtyUpsell ? t.admin.upsellActive : t.admin.upsellInactive}
                 </button>
               </div>
               <p className="mb-6 rounded-xl border border-sand-200 bg-sand-50 px-4 py-3 text-sm text-[var(--muted)]">

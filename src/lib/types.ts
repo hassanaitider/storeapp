@@ -21,7 +21,14 @@ export type CountryCode =
   | "HN"
   | "SV"
   | "NI"
-  | "DO";
+  | "DO"
+  | "PA"
+  | "CO"
+  | "BR"
+  | "PE"
+  | "CL"
+  | "BO"
+  | "PR";
 
 export type CurrencyCode =
   | "SAR"
@@ -42,7 +49,12 @@ export type CurrencyCode =
   | "GTQ"
   | "HNL"
   | "NIO"
-  | "DOP";
+  | "DOP"
+  | "COP"
+  | "BRL"
+  | "PEN"
+  | "CLP"
+  | "BOB";
 
 export interface Category {
   id: string;
@@ -145,6 +157,8 @@ export interface Product {
   colors?: ProductColor[];
   /** When true, customer can type their preferred color on the product page */
   customColorEnabled?: boolean;
+  /** When true, 1/2/3 quantity offers show on the product page */
+  qtyUpsellEnabled?: boolean;
   inStock: boolean;
   featured: boolean;
   rating: number;
@@ -171,6 +185,11 @@ export interface Order {
     city: string;
     address: string;
     notes?: string;
+    state?: string;
+    neighborhood?: string;
+    district?: string;
+    postalCode?: string;
+    nationalId?: string;
   };
   country: CountryCode;
   currency: CurrencyCode;
