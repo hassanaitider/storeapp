@@ -126,9 +126,15 @@ async function writeCatalog(data: PersistedCatalog): Promise<{ durable: boolean 
 export async function GET() {
   const data = await readCatalog();
   if (!data) {
-    return NextResponse.json({ ok: true, data: null });
+    return NextResponse.json(
+      { ok: true, data: null },
+      { headers: { "Cache-Control": "no-store, max-age=0" } }
+    );
   }
-  return NextResponse.json({ ok: true, data });
+  return NextResponse.json(
+    { ok: true, data },
+    { headers: { "Cache-Control": "no-store, max-age=0" } }
+  );
 }
 
 export async function PUT(request: Request) {

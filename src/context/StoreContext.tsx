@@ -691,13 +691,23 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           }
         }
 
-        // If local is newer than what we applied, prefer local again
+        // If local is newer than what we applied, prefer local products/prices
         const localFinal = readLocalCatalog();
         if (
           localFinal &&
           (localFinal.updatedAt || 0) > (best?.updatedAt || 0)
         ) {
           next = applyPersisted(localFinal, cookieCountry);
+        }
+
+        // Upsell is a shared merchant flag: always follow the server when we
+        // successfully fetched it. Stale localStorage must not hide/show packs
+        // differently from what the admin enabled for all visitors.
+        if (remote) {
+          next = {
+            ...next,
+            upsellEnabled: remote.upsellEnabled === true,
+          };
         }
 
         if (catalogGenRef.current !== genAtStart) {
