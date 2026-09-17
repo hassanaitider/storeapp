@@ -236,10 +236,16 @@ export const SPANISH_MARKET_CODES: CountryCode[] = [
 ];
 
 /**
- * South America Spanish markets — COD upsell shows 3 quantity packs.
- * (Central America / MX / DO stay at 2 packs.)
+ * South America Spanish markets in this store (Argentina, Ecuador).
  */
 export const SOUTH_AMERICA_MARKET_CODES: CountryCode[] = ["AR", "EC"];
+
+/**
+ * Latam Spanish markets where COD checkout shows 3 quantity packs (1/2/3).
+ * Matches every SPANISH store market (MX, Central America, Caribbean, South America).
+ */
+export const LATAM_THREE_PACK_MARKET_CODES: CountryCode[] =
+  SPANISH_MARKET_CODES;
 
 export function isSpanishMarket(code: string): boolean {
   return SPANISH_MARKET_CODES.includes(code.toUpperCase() as CountryCode);
@@ -247,6 +253,13 @@ export function isSpanishMarket(code: string): boolean {
 
 export function isSouthAmericaMarket(code: string): boolean {
   return SOUTH_AMERICA_MARKET_CODES.includes(
+    code.toUpperCase() as CountryCode
+  );
+}
+
+/** COD upsell: Latam Spanish markets get 3 packs; others keep 2. */
+export function usesLatamThreeQtyPacks(code: string): boolean {
+  return LATAM_THREE_PACK_MARKET_CODES.includes(
     code.toUpperCase() as CountryCode
   );
 }
