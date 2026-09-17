@@ -372,6 +372,80 @@ function AdminDashboard() {
                   {t.admin.orders}
                 </A>
               </div>
+
+              <div className="sm:col-span-2 lg:col-span-4 rounded-2xl border border-sand-200 bg-white p-5">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100">
+                      <Gift className="h-5 w-5 text-brand-700" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-ink-900">
+                        {t.admin.upsell}
+                      </p>
+                      <p className="text-sm text-[var(--muted)]">
+                        {t.admin.upsellToggleHint}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={upsellEnabled}
+                      aria-label={
+                        upsellEnabled
+                          ? t.admin.upsellActive
+                          : t.admin.upsellInactive
+                      }
+                      onClick={() => {
+                        const next = !upsellEnabled;
+                        setUpsellEnabled(next);
+                        setFlash(
+                          next
+                            ? t.admin.upsellEnabledFlash
+                            : t.admin.upsellDisabledFlash
+                        );
+                        window.setTimeout(() => setFlash(""), 2500);
+                      }}
+                      className={cn(
+                        "inline-flex items-center gap-2 rounded-full px-2 py-1.5 transition",
+                        upsellEnabled
+                          ? "bg-brand-50 text-brand-800"
+                          : "bg-sand-100 text-ink-700"
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "relative h-6 w-11 rounded-full transition",
+                          upsellEnabled ? "bg-brand-700" : "bg-sand-300"
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            "absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition",
+                            upsellEnabled ? "start-5" : "start-0.5"
+                          )}
+                        />
+                      </span>
+                      <span className="text-sm font-semibold pe-1">
+                        {upsellEnabled
+                          ? t.admin.upsellActive
+                          : t.admin.upsellInactive}
+                      </span>
+                    </button>
+                    <A
+                      href="/admin?tab=upsell"
+                      className="rounded-xl border border-sand-300 px-4 py-2.5 text-sm font-bold hover:border-brand-400"
+                    >
+                      {t.admin.upsellManage}
+                    </A>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs text-[var(--muted)]">
+                  {t.admin.upsellSouthAmericaHint}
+                </p>
+              </div>
             </div>
           )}
 

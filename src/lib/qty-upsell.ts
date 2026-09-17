@@ -1,4 +1,4 @@
-import { currencyForCountry } from "./countries";
+import { currencyForCountry, isSouthAmericaMarket } from "./countries";
 import { convertToUSD, getCurrency } from "./currency";
 import { getProductLocalPrice, getProductPriceUSD } from "./pricing";
 import type { CountryCode, Locale, Product, ProductQtyOffer } from "./types";
@@ -116,4 +116,28 @@ export function cartItemLineLocal(
     return item.lineTotalUSD * rate;
   }
   return getProductLocalPrice(product, country) * item.quantity;
+}
+
+/**
+ * COD pack radios: South America shows 3 tiers (1/2/3);
+ * other markets keep 2 (1/2). When upsell is off, only qty 1.
+ */
+export function selectCodQtyPacks(
+  offers: ResolvedQtyOffer[],
+  country: string,
+  upsellEnabled = true
+): ResolvedQtyOffer[] {
+  if (!upsellEnabled) {
+    const one = offers.find((o) => o.quantity === 1);
+    return one ? [one] : offers.slice(0, 1);
+  }
+  const maxPacks = isSouthAmericaMarket(country) ? 3 : 2;
+  const wanted =
+    maxPacks === 3
+      ? offers.filter(
+          (o) => o.quantity === 1 || o.quantity === 2 || o.quantity === 3
+        )
+      : offers.filter((o) => o.quantity === 1 || o.quantity === 2);
+  if (wanted.length) return wanted.slice(0, maxPacks);
+  return offers.slice(0, maxPacks);
 }

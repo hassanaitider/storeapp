@@ -235,8 +235,20 @@ export const SPANISH_MARKET_CODES: CountryCode[] = [
   "DO",
 ];
 
+/**
+ * South America Spanish markets — COD upsell shows 3 quantity packs.
+ * (Central America / MX / DO stay at 2 packs.)
+ */
+export const SOUTH_AMERICA_MARKET_CODES: CountryCode[] = ["AR", "EC"];
+
 export function isSpanishMarket(code: string): boolean {
   return SPANISH_MARKET_CODES.includes(code.toUpperCase() as CountryCode);
+}
+
+export function isSouthAmericaMarket(code: string): boolean {
+  return SOUTH_AMERICA_MARKET_CODES.includes(
+    code.toUpperCase() as CountryCode
+  );
 }
 
 /** Language a market opens in before the visitor picks one themselves */
