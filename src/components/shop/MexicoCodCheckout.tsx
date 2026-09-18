@@ -12,6 +12,7 @@ import { MapPin, User, Phone, ChevronDown, Zap } from "lucide-react";
 import { selectedQtyTotalLocal } from "@/components/shop/ProductQtyUpsell";
 import { formatMexicoCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
+import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
 import { useLiveProduct } from "@/context/StoreContext";
 import {
   mexicoColonias,
@@ -85,10 +86,12 @@ export function MexicoCodCheckout({
   const countdown = useOfferCountdown(`${country}:${product.id}`);
   const liveProduct = useLiveProduct(product);
   const offers = getProductQtyOffers(liveProduct, country, "es");
-  const upsellOn = isCodQtyUpsellEnabled(liveProduct, country);
+  const upsellOn =
+    isCodQtyUpsellEnabled(product, country) ||
+    isCodQtyUpsellEnabled(liveProduct, country);
   const packs = useMemo(
-    () => selectCodQtyPacks(offers, country, upsellOn),
-    [offers, country, upsellOn]
+    () => selectCodQtyPacks(offers, country, true),
+    [offers, country]
   );
 
   useEffect(() => {
@@ -176,66 +179,6 @@ export function MexicoCodCheckout({
       </div>
 
       <form ref={formRef} onSubmit={onSubmit} className="space-y-3 p-4 sm:p-5">
-        {upsellOn ? (
-        <div className="space-y-2.5">
-          {packs.map((offer) => {
-            const selected = qty === offer.quantity;
-            const disc = offer.savePercent ?? 0;
-            const label =
-              offer.quantity === 1
-                ? "Compra 1 unidad"
-                : `Compra ${offer.quantity} · ahorra ${disc || 10}%`;
-
-            return (
-              <button
-                key={offer.quantity}
-                type="button"
-                onClick={() => onQtyChange(offer.quantity)}
-                className={cn(
-                  "relative flex w-full items-center justify-between gap-3 rounded-xl border-2 px-3.5 py-3.5 text-start transition",
-                  selected
-                    ? "border-[#ff7a00] bg-[#fff7f0]"
-                    : "border-[#e6e6e6] bg-white hover:border-[#ffb366]"
-                )}
-              >
-                {offer.quantity > 1 && disc > 0 ? (
-                  <span className="absolute -top-2 end-3 rounded-full bg-[#ff7a00] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                    Ahorra {disc}%
-                  </span>
-                ) : null}
-                <span className="flex min-w-0 items-center gap-3">
-                  <span
-                    className={cn(
-                      "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2",
-                      selected
-                        ? "border-[#ff7a00] bg-[#ff7a00]"
-                        : "border-[#cfcfcf] bg-white"
-                    )}
-                  >
-                    {selected ? (
-                      <span className="h-2 w-2 rounded-full bg-white" />
-                    ) : null}
-                  </span>
-                  <span className="text-sm font-semibold text-[#222] sm:text-[15px]">
-                    {label}
-                  </span>
-                </span>
-                <span className="shrink-0 text-end">
-                  <span className="block text-base font-extrabold text-[#ff7a00] sm:text-lg">
-                    {formatMexicoCodPrice(offer.totalLocal)}
-                  </span>
-                  {offer.fullPriceLocal > offer.totalLocal ? (
-                    <span className="text-xs text-[#999] line-through">
-                      {formatMexicoCodPrice(offer.fullPriceLocal)}
-                    </span>
-                  ) : null}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        ) : null}
-
         {product.customColorEnabled ? (
           <IconField
             icon={<span className="text-sm">🎨</span>}
@@ -243,6 +186,15 @@ export function MexicoCodCheckout({
             onChange={onCustomColorChange}
             placeholder="Escribe el color que quieres"
             required
+          />
+        ) : null}
+
+        {upsellOn ? (
+          <LatamCodQtyPacks
+            packs={packs}
+            qty={qty}
+            onQtyChange={onQtyChange}
+            formatPrice={formatMexicoCodPrice}
           />
         ) : null}
 

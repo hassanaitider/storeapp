@@ -1,9 +1,9 @@
 import type { Category, Product, Order, CartItem, CurrencyCode, CountryCode, Locale } from "@/lib/types";
 
-export const CATALOG_STORAGE_KEY = "cargolf-v51";
+export const CATALOG_STORAGE_KEY = "cargolf-v52";
 
 export const LEGACY_STORAGE_KEYS = [
-  // Skip older keys poisoned by hydrate races / wrong-market elevador rows
+  // Skip v51: it stored qtyUpsellEnabled:false for every product and hid LATAM packs
   "cargolf-v50",
   "cargolf-v49",
   "cargolf-v48",
