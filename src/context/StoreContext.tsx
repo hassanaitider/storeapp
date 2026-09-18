@@ -36,7 +36,11 @@ import {
   isProductAvailableIn,
   resolveProductMarket,
 } from "@/lib/pricing";
-import { cartItemLineUSD, withLatamThreeQtyOffers } from "@/lib/qty-upsell";
+import {
+  cartItemLineUSD,
+  isCodQtyUpsellEnabled,
+  withLatamThreeQtyOffers,
+} from "@/lib/qty-upsell";
 import {
   trackAddToCart,
   trackPurchase,
@@ -265,6 +269,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           typeof p.customColorEnabled === "boolean"
             ? p.customColorEnabled
             : Boolean(seed.customColorEnabled),
+        qtyUpsellLocked: p.qtyUpsellLocked === true,
         qtyUpsellEnabled:
           typeof p.qtyUpsellEnabled === "boolean"
             ? p.qtyUpsellEnabled

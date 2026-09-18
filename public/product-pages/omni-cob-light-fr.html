@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lampe COB Omni multifonction | Smart Shop</title>
+  <meta name="description" content="Lampe d'appoint COB rechargeable : éclairage large, aimant puissant, marteau brise-vitre. Livraison gratuite · paiement à la livraison." />
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --card: #14181e;
+      --text: #f4f1ea;
+      --muted: #a8b0ba;
+      --accent: #e11d2e;
+      --line: rgba(255,255,255,.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, #1a1012, var(--bg));
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 24px 16px 64px; }
+    .hero {
+      display: grid;
+      gap: 28px;
+      align-items: center;
+    }
+    @media (min-width: 800px) {
+      .hero { grid-template-columns: 1.05fr .95fr; }
+    }
+    .media {
+      background: #0a0a0a;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .media img { width: 100%; display: block; }
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      line-height: 1.15;
+      margin: 0 0 12px;
+    }
+    .lead { color: var(--muted); margin: 0 0 20px; font-size: 1.05rem; }
+    .price-row {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline;
+      margin-bottom: 18px;
+    }
+    .price { font-size: 1.8rem; font-weight: 800; }
+    .badge {
+      display: inline-block;
+      background: rgba(225,29,46,.15);
+      color: #ff7a86;
+      border: 1px solid rgba(225,29,46,.35);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 14px 22px;
+      border: 0;
+      cursor: pointer;
+    }
+    .trust {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    section {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+    h2 { margin: 0 0 14px; font-size: 1.35rem; }
+    ul { margin: 0; padding-left: 1.2rem; color: var(--muted); }
+    li { margin: 8px 0; }
+    .grid-3 {
+      display: grid;
+      gap: 14px;
+    }
+    @media (min-width: 700px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+    .faq details {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 10px 0;
+    }
+    .faq summary { cursor: pointer; font-weight: 650; }
+    .faq p { color: var(--muted); margin: 10px 0 0; }
+    .specs {
+      width: 100%;
+      border-collapse: collapse;
+      color: var(--muted);
+    }
+    .specs th, .specs td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 500;
+    }
+    .specs th { color: var(--text); width: 42%; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="media">
+        <img src="/products/omni-cob-light.png" alt="Lampe COB Omni multifonction avec panneau LED, aimant et marteau brise-vitre" />
+      </div>
+      <div>
+        <p class="eyebrow">Éclairage · Sécurité · Voiture</p>
+        <h1>Lampe d’appoint COB Omni multifonction</h1>
+        <p class="lead">
+          Éclairage large et puissant, interrupteur central ergonomique, aimant intégré
+          et marteau brise-vitre en acier au tungstène. Un outil compact pour la voiture,
+          les réparations, le camping et les urgences.
+        </p>
+        <div class="price-row">
+          <span class="price">À partir de 149 MAD</span>
+          <span class="badge">Livraison gratuite</span>
+        </div>
+        <a class="cta" href="#commander">Commander maintenant</a>
+        <div class="trust">
+          <div>✓ Paiement à la livraison (COD)</div>
+          <div>✓ Retour sous 30 jours</div>
+          <div>✓ Idéal Afrique / Maroc — utile en panne de courant</div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>Pourquoi cette lampe ?</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Panneau COB puissant</h3>
+          <p>Éclairage proche ou large, lumineux et uniforme pour travailler la nuit ou en atelier.</p>
+        </div>
+        <div class="card">
+          <h3>Aimant intégré</h3>
+          <p>Fixez-la sur une surface métallique (capot, porte, établi) pour travailler les deux mains libres.</p>
+        </div>
+        <div class="card">
+          <h3>Marteau brise-vitre</h3>
+          <p>Pointe en acier au tungstène pour les situations d’urgence en voiture.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Points forts</h2>
+      <ul>
+        <li>Interrupteur central large, facile à utiliser d’une seule main</li>
+        <li>Corps robuste, prise en main confortable</li>
+        <li>Éclairage COB pour un rendu clair et stable</li>
+        <li>Base magnétique pour fixation rapide</li>
+        <li>Pointe de sécurité / brise-vitre</li>
+        <li>Compacte — idéale à garder dans la voiture ou le sac à outils</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Caractéristiques</h2>
+      <table class="specs">
+        <tr><th>Nom</th><td>HIGHLIGHT OMNI COB Auxiliary Light</td></tr>
+        <tr><th>Type</th><td>Lampe d’appoint / work light COB</td></tr>
+        <tr><th>Éclairage</th><td>Panneau LED COB (portée courte / large)</td></tr>
+        <tr><th>Commande</th><td>Interrupteur central circulaire</td></tr>
+        <tr><th>Fixation</th><td>Aimant intégré (adsorption métallique)</td></tr>
+        <tr><th>Sécurité</th><td>Marteau brise-vitre en acier au tungstène</td></tr>
+        <tr><th>Usage</th><td>Voiture, garage, camping, urgences, travaux nocturnes</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Pour qui ?</h2>
+      <ul>
+        <li>Conducteurs qui veulent une lampe + outil de sécurité dans le véhicule</li>
+        <li>Techniciens / bricoleurs qui ont besoin d’un éclairage large mains libres</li>
+        <li>Camping, voyages, coupures d’électricité</li>
+      </ul>
+    </section>
+
+    <section class="faq" id="commander">
+      <h2>Questions fréquentes</h2>
+      <details open>
+        <summary>Est-ce que la lampe tient seule sur une voiture ?</summary>
+        <p>Oui, grâce à l’aimant intégré, elle peut se fixer sur des surfaces métalliques pour un usage mains libres.</p>
+      </details>
+      <details>
+        <summary>À quoi sert la pointe en métal ?</summary>
+        <p>C’est un marteau de sécurité (brise-vitre) destiné aux situations d’urgence.</p>
+      </details>
+      <details>
+        <summary>Comment payer ?</summary>
+        <p>Paiement à la livraison. Vous payez uniquement lorsque vous recevez le produit.</p>
+      </details>
+      <details>
+        <summary>Y a-t-il une livraison gratuite ?</summary>
+        <p>Oui — livraison gratuite, et retour possible sous 30 jours.</p>
+      </details>
+    </section>
+
+    <section>
+      <h2>Texte court pour publicité (FR)</h2>
+      <div class="card">
+        <p>
+          <strong>Lumière puissante. Mains libres. Sécurité en plus.</strong><br /><br />
+          Lampe COB Omni : éclairage large, aimant intégré, marteau brise-vitre.<br />
+          Parfaite pour la voiture, les pannes et le travail de nuit.<br /><br />
+          ✔ Livraison gratuite<br />
+          ✔ Paiement à la livraison<br />
+          ✔ Retour 30 jours
+        </p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

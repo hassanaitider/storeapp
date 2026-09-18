@@ -135,8 +135,9 @@ export function cartItemLineLocal(
 }
 
 /**
- * LATAM COD: 3 packs are on unless the merchant explicitly turned them off.
- * Other markets stay off until qtyUpsellEnabled is true.
+ * LATAM COD: 3 packs show by default. Old catalogs stored false on every
+ * product — ignore that unless the merchant flipped the admin switch
+ * (qtyUpsellLocked). Other markets stay off until qtyUpsellEnabled is true.
  */
 export function isCodQtyUpsellEnabled(
   product: Product | undefined,
@@ -146,7 +147,12 @@ export function isCodQtyUpsellEnabled(
   const latam =
     (country ? usesLatamThreeQtyPacks(country) : false) ||
     (product.availableIn ?? []).some((code) => usesLatamThreeQtyPacks(code));
-  if (latam) return product.qtyUpsellEnabled !== false;
+  if (latam) {
+    if (product.qtyUpsellLocked === true) {
+      return product.qtyUpsellEnabled === true;
+    }
+    return true;
+  }
   return product.qtyUpsellEnabled === true;
 }
 

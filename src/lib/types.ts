@@ -159,6 +159,12 @@ export interface Product {
   customColorEnabled?: boolean;
   /** When true, 1/2/3 quantity offers show on the product page */
   qtyUpsellEnabled?: boolean;
+  /**
+   * When true, qtyUpsellEnabled is an explicit merchant choice.
+   * Legacy catalogs wrote false on every product and hid LATAM packs —
+   * without this lock those products stay on.
+   */
+  qtyUpsellLocked?: boolean;
   inStock: boolean;
   featured: boolean;
   rating: number;

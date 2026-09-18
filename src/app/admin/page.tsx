@@ -232,6 +232,7 @@ function AdminDashboard() {
   function onToggleUpsell(productId: string, enabled: boolean) {
     const p = products.find((x) => x.id === productId);
     const ok = updateProduct(productId, {
+      qtyUpsellLocked: true,
       qtyUpsellEnabled: enabled,
       ...(enabled ? { qtyOffers: withLatamThreeQtyOffers(p?.qtyOffers) } : {}),
     });
