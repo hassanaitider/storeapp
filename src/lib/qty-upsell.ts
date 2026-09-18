@@ -23,6 +23,20 @@ const DEFAULT_TIERS: Pick<
   { quantity: 3, discountPercent: 10 },
 ];
 
+/** COD LATAM: always 1 / 2 / 3 pieces when upsell is on. */
+export const LATAM_COD_QTY_TIERS: ProductQtyOffer[] = [
+  { quantity: 1, discountPercent: 0 },
+  { quantity: 2, discountPercent: 10, popular: true },
+  { quantity: 3, discountPercent: 15 },
+];
+
+export function withLatamThreeQtyOffers(
+  offers: ProductQtyOffer[] | undefined
+): ProductQtyOffer[] {
+  const byQty = new Map((offers ?? []).map((o) => [o.quantity, o]));
+  return LATAM_COD_QTY_TIERS.map((tier) => byQty.get(tier.quantity) ?? { ...tier });
+}
+
 function tierTotalLocal(
   product: Product,
   country: CountryCode,
@@ -47,9 +61,11 @@ export function getProductQtyOffers(
   locale: Locale
 ): ResolvedQtyOffer[] {
   const unit = getProductLocalPrice(product, country);
-  const configured: ProductQtyOffer[] = product.qtyOffers?.length
-    ? [...product.qtyOffers].sort((a, b) => a.quantity - b.quantity)
-    : DEFAULT_TIERS.map((t) => ({ ...t }));
+  const configured: ProductQtyOffer[] = usesLatamThreeQtyPacks(country)
+    ? withLatamThreeQtyOffers(product.qtyOffers)
+    : product.qtyOffers?.length
+      ? [...product.qtyOffers].sort((a, b) => a.quantity - b.quantity)
+      : DEFAULT_TIERS.map((t) => ({ ...t }));
 
   return configured.map((offer) => {
     const totalLocal = tierTotalLocal(product, country, offer);
@@ -131,13 +147,13 @@ export function selectCodQtyPacks(
     const one = offers.find((o) => o.quantity === 1);
     return one ? [one] : offers.slice(0, 1);
   }
-  const maxPacks = usesLatamThreeQtyPacks(country) ? 3 : 2;
-  const wanted =
-    maxPacks === 3
-      ? offers.filter(
-          (o) => o.quantity === 1 || o.quantity === 2 || o.quantity === 3
-        )
-      : offers.filter((o) => o.quantity === 1 || o.quantity === 2);
-  if (wanted.length) return wanted.slice(0, maxPacks);
-  return offers.slice(0, maxPacks);
+  if (usesLatamThreeQtyPacks(country)) {
+    const packs = [1, 2, 3]
+      .map((qty) => offers.find((o) => o.quantity === qty))
+      .filter((o): o is ResolvedQtyOffer => Boolean(o));
+    return packs.length ? packs : offers.slice(0, 3);
+  }
+  const wanted = offers.filter((o) => o.quantity === 1 || o.quantity === 2);
+  if (wanted.length) return wanted.slice(0, 2);
+  return offers.slice(0, 2);
 }

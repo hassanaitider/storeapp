@@ -85,7 +85,6 @@ function ProductPageInner() {
     locale,
     currency,
     country,
-    upsellEnabled,
     getProduct,
     setViewCountry,
     placeOrder,
@@ -111,9 +110,7 @@ function ProductPageInner() {
     );
   }, [getProduct, slug, previewCountry, country, products]);
 
-  const showQtyUpsell = Boolean(
-    product?.qtyUpsellEnabled === true || upsellEnabled
-  );
+  const showQtyUpsell = product?.qtyUpsellEnabled === true;
 
   // Ephemeral preview market — does not lock IP geo for the rest of the site
   useEffect(() => {

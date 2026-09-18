@@ -13,9 +13,9 @@ import { selectedQtyTotalLocal } from "@/components/shop/ProductQtyUpsell";
 import { currencyForCountry } from "@/lib/countries";
 import { formatLocalAmount } from "@/lib/currency";
 import { getProductQtyOffers, selectCodQtyPacks } from "@/lib/qty-upsell";
+import { useLiveProduct } from "@/context/StoreContext";
 import { codFormLabel, geoTreeForCountry } from "@/lib/latam-geo";
 import type { CountryCode, Product } from "@/lib/types";
-import { useStore } from "@/context/StoreContext";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -81,16 +81,17 @@ export function LatamCodCheckout({
   const currency = currencyForCountry(country);
   const tree = geoTreeForCountry(country);
   const countdown = useOfferCountdown(`${country}:${product.id}`);
-  const offers = getProductQtyOffers(product, country, "es");
-  const { upsellEnabled } = useStore();
+  const liveProduct = useLiveProduct(product);
+  const offers = getProductQtyOffers(liveProduct, country, "es");
+  const upsellOn = liveProduct.qtyUpsellEnabled === true;
   const packs = useMemo(
-    () => selectCodQtyPacks(offers, country, upsellEnabled),
-    [offers, country, upsellEnabled]
+    () => selectCodQtyPacks(offers, country, upsellOn),
+    [offers, country, upsellOn]
   );
 
   useEffect(() => {
-    if (!upsellEnabled && qty !== 1) onQtyChange(1);
-  }, [upsellEnabled, qty, onQtyChange]);
+    if (!upsellOn && qty !== 1) onQtyChange(1);
+  }, [upsellOn, qty, onQtyChange]);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -181,7 +182,7 @@ export function LatamCodCheckout({
 
       <form ref={formRef} onSubmit={onSubmit} className="space-y-3 p-4 sm:p-5">
         {/* Qty packs */}
-        {upsellEnabled ? (
+        {upsellOn ? (
         <div className="space-y-2.5">
           {packs.map((offer) => {
             const selected = qty === offer.quantity;

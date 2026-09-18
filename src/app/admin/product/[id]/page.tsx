@@ -6,14 +6,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Eye, Save } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
-import { currencyForCountry } from "@/lib/countries";
+import { currencyForCountry, isSpanishMarket } from "@/lib/countries";
 import { convertToUSD, formatLocalAmount, getCurrency } from "@/lib/currency";
 import { getProductLocalPrice, resolveProductMarket } from "@/lib/pricing";
 import { htmlToPlain, toEditorHtml } from "@/lib/rich-html";
-import { slugify, cn } from "@/lib/utils";
+import { slugify } from "@/lib/utils";
 import { ProductQtyOffersEditor } from "@/components/admin/ProductQtyOffersEditor";
 import { ProductRichEditor } from "@/components/admin/ProductRichEditor";
 import { ProductColorsEditor } from "@/components/admin/ProductColorsEditor";
+import { ProductUpsellEditor } from "@/components/admin/ProductUpsellEditor";
 import type { CountryCode, Product, ProductQtyOffer } from "@/lib/types";
 import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
 import { SITE_URL } from "@/lib/site";
@@ -22,6 +23,7 @@ import {
   scaleQtyOfferMarketPrices,
 } from "@/lib/admin-price";
 import { isStoreMarket } from "@/lib/countries";
+import { withLatamThreeQtyOffers } from "@/lib/qty-upsell";
 
 export default function EditProductPage() {
   const params = useParams();
@@ -599,64 +601,46 @@ export default function EditProductPage() {
           </label>
         </div>
 
-        <ProductColorsEditor
-          enabled={customColorEnabled}
-          onChange={setCustomColorEnabled}
-        />
-      </div>
-
-      {!isNew && existing ? (
-        <div
-          id="upsell"
-          className="mt-6 scroll-mt-24 rounded-2xl border border-brand-200 bg-gradient-to-br from-brand-50/60 to-white p-5 shadow-sm sm:p-6"
-        >
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-[var(--muted)]">
-              {qtyUpsellEnabled ? t.admin.upsellActive : t.admin.upsellInactive}
-            </p>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={qtyUpsellEnabled}
-              onClick={() => {
-                const next = !qtyUpsellEnabled;
-                setQtyUpsellEnabled(next);
+        {isSpanishMarket(market) ? (
+          <div className="space-y-4">
+            <ProductColorsEditor
+              enabled={customColorEnabled}
+              onChange={(next) => {
+                setCustomColorEnabled(next);
                 if (!isNew && existing) {
-                  updateProduct(existing.id, { qtyUpsellEnabled: next });
+                  updateProduct(existing.id, { customColorEnabled: next });
                 }
               }}
-              className={cn(
-                "inline-flex items-center gap-3 rounded-2xl border px-4 py-2.5 text-sm font-bold transition",
-                qtyUpsellEnabled
-                  ? "border-brand-600 bg-brand-700 text-white"
-                  : "border-sand-300 bg-white text-ink-800"
-              )}
+            />
+            <ProductUpsellEditor
+              enabled={qtyUpsellEnabled}
+              onChange={(next) => {
+                const offers = next
+                  ? withLatamThreeQtyOffers(qtyOffers)
+                  : qtyOffers;
+                setQtyUpsellEnabled(next);
+                if (next) setQtyOffers(offers);
+                if (!isNew && existing) {
+                  updateProduct(existing.id, {
+                    qtyUpsellEnabled: next,
+                    ...(next ? { qtyOffers: offers } : {}),
+                  });
+                }
+              }}
             >
-              <span
-                className={cn(
-                  "relative h-5 w-9 shrink-0 rounded-full transition",
-                  qtyUpsellEnabled ? "bg-white/40" : "bg-sand-300"
-                )}
-              >
-                <span
-                  className={cn(
-                    "absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition",
-                    qtyUpsellEnabled ? "start-4" : "start-0.5"
-                  )}
+              {!isNew && existing ? (
+                <ProductQtyOffersEditor
+                  product={existing}
+                  categories={categories}
+                  locale={locale}
+                  qtyOffers={qtyOffers}
+                  onChange={setQtyOffers}
                 />
-              </span>
-              Upsell
-            </button>
+              ) : null}
+            </ProductUpsellEditor>
           </div>
-          <ProductQtyOffersEditor
-            product={existing}
-            categories={categories}
-            locale={locale}
-            qtyOffers={qtyOffers}
-            onChange={setQtyOffers}
-          />
-        </div>
-      ) : null}
+        ) : null}
+      </div>
 
       {/* Rich description — YouCan editor */}
       <div className="mt-6">

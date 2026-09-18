@@ -15,6 +15,7 @@ import {
   currencyForCountry,
   DEFAULT_COUNTRY,
   countryFromLocationSettings,
+  isSpanishMarket,
   isStoreMarket,
   isValidCountry,
   localeForCountry,
@@ -32,8 +33,9 @@ import {
   filterProductsForCountry,
   getProductPriceUSD,
   isProductAvailableIn,
+  resolveProductMarket,
 } from "@/lib/pricing";
-import { cartItemLineUSD } from "@/lib/qty-upsell";
+import { cartItemLineUSD, withLatamThreeQtyOffers } from "@/lib/qty-upsell";
 import {
   trackAddToCart,
   trackPurchase,
@@ -199,10 +201,22 @@ function mergeLanding(
   };
 }
 
+function slugFlagSet(
+  stored: Product[],
+  flag: "qtyUpsellEnabled" | "customColorEnabled"
+): Set<string> {
+  const set = new Set<string>();
+  for (const p of stored) {
+    if (p[flag] === true && p.slug?.trim()) set.add(p.slug.trim());
+  }
+  return set;
+}
+
 function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   if (!stored?.length) return cloneSeedProducts();
   const allowedCats = new Set(SEED_CATEGORIES.map((c) => c.id));
   const seedById = new Map(SEED_PRODUCTS.map((p) => [p.id, p]));
+  const upsellSlugs = slugFlagSet(stored, "qtyUpsellEnabled");
   /** Old LATAM clones of MENA-only tools + legacy single Elevador id (replaced by per-country rows). */
   const dropLatamUniversalClone =
     /^prod-(car-windshield-umbrella|neck-fan)-(mx|ar|cr|ec|gt|hn|sv|ni|do)$/i;
@@ -253,7 +267,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         qtyUpsellEnabled:
           typeof p.qtyUpsellEnabled === "boolean"
             ? p.qtyUpsellEnabled
-            : false,
+            : upsellSlugs.has((p.slug || seed.slug || "").trim()),
         categoryId: p.categoryId || seed.categoryId,
         marketPrices: {
           ...(seed.marketPrices ?? {}),
@@ -315,7 +329,11 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
     );
   for (const seed of SEED_PRODUCTS) {
     if (!merged.some((p) => p.id === seed.id)) {
-      merged.push({ ...seed });
+      const slug = (seed.slug || "").trim();
+      merged.push({
+        ...seed,
+        qtyUpsellEnabled: slug ? upsellSlugs.has(slug) : false,
+      });
     }
   }
   return merged;
@@ -402,6 +420,26 @@ function writeSessionManualMarket(country: CountryCode | null) {
   } catch {
     /* ignore */
   }
+}
+
+function applyCatalogDisplayFlags(
+  products: Product[],
+  catalog: PersistedCatalog | null
+): Product[] {
+  if (!catalog?.products?.length) return products;
+  const byId = new Map(catalog.products.map((p) => [p.id, p]));
+  const upsellSlugs = slugFlagSet(catalog.products, "qtyUpsellEnabled");
+  return products.map((p) => {
+    const row = byId.get(p.id);
+    const slug = (p.slug || row?.slug || "").trim();
+    const upsell =
+      typeof row?.qtyUpsellEnabled === "boolean"
+        ? row.qtyUpsellEnabled
+        : slug
+          ? upsellSlugs.has(slug)
+          : p.qtyUpsellEnabled === true;
+    return { ...p, qtyUpsellEnabled: upsell };
+  });
 }
 
 function toPersisted(state: StoreState): PersistedCatalog {
@@ -710,13 +748,24 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           next = applyPersisted(localFinal, cookieCountry);
         }
 
-        // Upsell is a shared merchant flag: always follow the server when we
-        // successfully fetched it. Stale localStorage must not hide/show packs
-        // differently from what the admin enabled for all visitors.
-        if (remote) {
+        // Display flags (qty upsell / color) must follow the newest catalog so
+        // a visitor sees what the merchant enabled — including same-slug copies
+        // that were filled back in from seed.
+        const flagCatalog =
+          localFinal && remote
+            ? (localFinal.updatedAt || 0) >= (remote.updatedAt || 0)
+              ? localFinal
+              : remote
+            : localFinal || remote;
+        if (flagCatalog) {
           next = {
             ...next,
-            upsellEnabled: remote.upsellEnabled === true,
+            upsellEnabled:
+              flagCatalog.upsellEnabled === true ||
+              (flagCatalog.products ?? []).some(
+                (p) => p.qtyUpsellEnabled === true
+              ),
+            products: applyCatalogDisplayFlags(next.products, flagCatalog),
           };
         }
 
@@ -1383,10 +1432,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       commit((s) => ({
         ...s,
         upsellEnabled: enabled,
-        products: s.products.map((p) => ({
-          ...p,
-          qtyUpsellEnabled: enabled,
-        })),
+        products: s.products.map((p) => {
+          const market = resolveProductMarket(p, s.categories);
+          if (!market || !isSpanishMarket(market)) return p;
+          return {
+            ...p,
+            qtyUpsellEnabled: enabled,
+            ...(enabled
+              ? { qtyOffers: withLatamThreeQtyOffers(p.qtyOffers) }
+              : {}),
+          };
+        }),
       }));
     },
     [commit]
@@ -1441,4 +1497,10 @@ export function useStore() {
   const ctx = useContext(StoreContext);
   if (!ctx) throw new Error("useStore must be within StoreProvider");
   return ctx;
+}
+
+/** Always read the catalog row so checkout sees the merchant's latest flags. */
+export function useLiveProduct(product: Product): Product {
+  const { products } = useStore();
+  return products.find((p) => p.id === product.id) ?? product;
 }
