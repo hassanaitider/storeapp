@@ -19,6 +19,7 @@ import {
   isStoreMarket,
   isValidCountry,
   localeForCountry,
+  usesLatamThreeQtyPacks,
 } from "@/lib/countries";
 import { isDurableMediaUrl } from "@/lib/media-url";
 import {
@@ -267,7 +268,13 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         qtyUpsellEnabled:
           typeof p.qtyUpsellEnabled === "boolean"
             ? p.qtyUpsellEnabled
-            : upsellSlugs.has((p.slug || seed.slug || "").trim()),
+            : upsellSlugs.has((p.slug || seed.slug || "").trim()) ||
+              usesLatamThreeQtyPacks(
+                lockedMarket ||
+                  p.availableIn?.[0] ||
+                  seed.availableIn?.[0] ||
+                  ""
+              ),
         categoryId: p.categoryId || seed.categoryId,
         marketPrices: {
           ...(seed.marketPrices ?? {}),
@@ -332,7 +339,10 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       const slug = (seed.slug || "").trim();
       merged.push({
         ...seed,
-        qtyUpsellEnabled: slug ? upsellSlugs.has(slug) : false,
+        qtyUpsellEnabled:
+          (slug ? upsellSlugs.has(slug) : false) ||
+          seed.qtyUpsellEnabled === true ||
+          usesLatamThreeQtyPacks(seed.availableIn?.[0] || ""),
       });
     }
   }
@@ -435,9 +445,11 @@ function applyCatalogDisplayFlags(
     const upsell =
       typeof row?.qtyUpsellEnabled === "boolean"
         ? row.qtyUpsellEnabled
-        : slug
-          ? upsellSlugs.has(slug)
-          : p.qtyUpsellEnabled === true;
+        : slug && upsellSlugs.has(slug)
+          ? true
+          : usesLatamThreeQtyPacks(
+              row?.availableIn?.[0] || p.availableIn?.[0] || ""
+            );
     return { ...p, qtyUpsellEnabled: upsell };
   });
 }

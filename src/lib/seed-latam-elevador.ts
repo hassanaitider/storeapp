@@ -101,6 +101,7 @@ ${COD_ES}`.trim(),
     images: IMAGES,
     colors: [],
     customColorEnabled: true,
+    qtyUpsellEnabled: true,
     qtyOffers: [
       { quantity: 1, discountPercent: 0, labelEs: "1 pieza" },
       {

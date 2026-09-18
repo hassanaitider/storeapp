@@ -135,6 +135,22 @@ export function cartItemLineLocal(
 }
 
 /**
+ * LATAM COD: 3 packs are on unless the merchant explicitly turned them off.
+ * Other markets stay off until qtyUpsellEnabled is true.
+ */
+export function isCodQtyUpsellEnabled(
+  product: Product | undefined,
+  country?: string
+): boolean {
+  if (!product) return false;
+  const latam =
+    (country ? usesLatamThreeQtyPacks(country) : false) ||
+    (product.availableIn ?? []).some((code) => usesLatamThreeQtyPacks(code));
+  if (latam) return product.qtyUpsellEnabled !== false;
+  return product.qtyUpsellEnabled === true;
+}
+
+/**
  * COD pack radios: all Latam Spanish markets show 3 tiers (1/2/3);
  * other markets keep 2 (1/2). When upsell is off, only qty 1.
  */

@@ -11,7 +11,7 @@ import {
 import { MapPin, User, Phone, ChevronDown, Zap } from "lucide-react";
 import { selectedQtyTotalLocal } from "@/components/shop/ProductQtyUpsell";
 import { formatHondurasCodPrice } from "@/lib/currency";
-import { getProductQtyOffers, selectCodQtyPacks } from "@/lib/qty-upsell";
+import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import {
   hondurasMunicipios,
@@ -84,7 +84,7 @@ export function HondurasCodCheckout({
   const countdown = useOfferCountdown(`${country}:${product.id}`);
   const liveProduct = useLiveProduct(product);
   const offers = getProductQtyOffers(liveProduct, country, "es");
-  const upsellOn = liveProduct.qtyUpsellEnabled === true;
+  const upsellOn = isCodQtyUpsellEnabled(liveProduct, country);
   const packs = useMemo(
     () => selectCodQtyPacks(offers, country, upsellOn),
     [offers, country, upsellOn]

@@ -35,7 +35,7 @@ import {
   ProductQtyOffersEditor,
   qtyOfferSummary,
 } from "@/components/admin/ProductQtyOffersEditor";
-import { withLatamThreeQtyOffers } from "@/lib/qty-upsell";
+import { withLatamThreeQtyOffers, isCodQtyUpsellEnabled } from "@/lib/qty-upsell";
 
 type Tab =
   | "overview"
@@ -196,7 +196,7 @@ function AdminDashboard() {
   );
 
   const anyQtyUpsell = useMemo(
-    () => products.some((p) => p.qtyUpsellEnabled === true),
+    () => products.some((p) => isCodQtyUpsellEnabled(p)),
     [products]
   );
 
@@ -664,7 +664,7 @@ function AdminDashboard() {
                     const local = getProductLocalPrice(p, market);
                     const cat = categories.find((c) => c.id === p.categoryId);
                     const colorOn = Boolean(p.customColorEnabled);
-                    const upsellOn = Boolean(p.qtyUpsellEnabled);
+                    const upsellOn = isCodQtyUpsellEnabled(p, market);
                     const latamMarket = isSpanishMarket(market);
                     return (
                       <div

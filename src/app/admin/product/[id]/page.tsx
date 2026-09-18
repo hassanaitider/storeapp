@@ -23,7 +23,7 @@ import {
   scaleQtyOfferMarketPrices,
 } from "@/lib/admin-price";
 import { isStoreMarket } from "@/lib/countries";
-import { withLatamThreeQtyOffers } from "@/lib/qty-upsell";
+import { withLatamThreeQtyOffers, isCodQtyUpsellEnabled } from "@/lib/qty-upsell";
 
 export default function EditProductPage() {
   const params = useParams();
@@ -130,7 +130,7 @@ export default function EditProductPage() {
     setInStock(existing.inStock !== false);
     setFeatured(Boolean(existing.featured));
     setCustomColorEnabled(Boolean(existing.customColorEnabled));
-    setQtyUpsellEnabled(Boolean(existing.qtyUpsellEnabled));
+    setQtyUpsellEnabled(isCodQtyUpsellEnabled(existing));
     setQtyOffers([...(existing.qtyOffers ?? [])]);
     setReady(true);
   }, [existing, isNew, categories, storageReady]);

@@ -32,7 +32,7 @@ import {
   productDiscountPercent,
 } from "@/lib/pricing";
 import { pickText } from "@/lib/localized";
-import { lineTotalUSDForQty } from "@/lib/qty-upsell";
+import { getProductQtyOffers, isCodQtyUpsellEnabled, lineTotalUSDForQty } from "@/lib/qty-upsell";
 import { trackViewContent } from "@/lib/meta-pixel";
 import {
   ProductBriefDescription,
@@ -58,7 +58,6 @@ import { usesEcuadorCodCheckout } from "@/lib/ecuador-geo";
 import { usesSalvadorCodCheckout } from "@/lib/salvador-geo";
 import { usesHondurasCodCheckout } from "@/lib/honduras-geo";
 import { usesNicaraguaCodCheckout } from "@/lib/nicaragua-geo";
-import { getProductQtyOffers } from "@/lib/qty-upsell";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order } from "@/lib/types";
 
@@ -110,7 +109,7 @@ function ProductPageInner() {
     );
   }, [getProduct, slug, previewCountry, country, products]);
 
-  const showQtyUpsell = product?.qtyUpsellEnabled === true;
+  const showQtyUpsell = isCodQtyUpsellEnabled(product, country);
 
   // Ephemeral preview market — does not lock IP geo for the rest of the site
   useEffect(() => {
