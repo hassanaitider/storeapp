@@ -230,7 +230,7 @@ function AdminDashboard() {
     window.location.href = `/product/${encodeURIComponent(p.slug)}`;
   }
 
-  function onToggleUpsell(productId: string, enabled: boolean) {
+  async function onToggleUpsell(productId: string, enabled: boolean) {
     const p = products.find((x) => x.id === productId);
     const ok = updateProduct(productId, {
       qtyUpsellLocked: true,
@@ -241,7 +241,13 @@ function AdminDashboard() {
       window.alert(locale === "ar" ? "تعذّر الحفظ" : "Could not save");
       return;
     }
-    void persistCatalog();
+    const saved = await persistCatalog();
+    if (!saved.ok) {
+      window.alert(
+        locale === "ar" ? "تعذّر حفظ الأبسل على السيرفر" : "Could not save upsell"
+      );
+      return;
+    }
     setFlash(enabled ? t.admin.upsellEnabledFlash : t.admin.upsellDisabledFlash);
     window.setTimeout(() => setFlash(""), 2500);
   }
@@ -257,6 +263,7 @@ function AdminDashboard() {
       );
       return;
     }
+    void persistCatalog();
     setFlash(locale === "ar" ? "تم حفظ Upsell ✓" : "Upsell saved ✓");
     window.setTimeout(() => setFlash(""), 2500);
   }

@@ -8,6 +8,8 @@ type Props = {
   qty: number;
   onQtyChange: (qty: number) => void;
   formatPrice: (amount: number) => string;
+  /** When false, packs stay hidden (admin upsell switch). */
+  enabled?: boolean;
 };
 
 /** Three COD quantity prices shown under the color field. */
@@ -16,7 +18,9 @@ export function LatamCodQtyPacks({
   qty,
   onQtyChange,
   formatPrice,
+  enabled = true,
 }: Props) {
+  if (!enabled || packs.length === 0) return null;
   return (
     <div className="space-y-2.5">
       {packs.map((offer) => {
