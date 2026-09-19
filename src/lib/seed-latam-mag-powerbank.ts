@@ -49,6 +49,13 @@ MAG_BANK_PRICES.AR = {
   compareAtUSD: MAG_COMPARE_USD,
 };
 
+MAG_BANK_PRICES.CR = {
+  price: 219,
+  compare: 349,
+  priceUSD: MAG_USD,
+  compareAtUSD: MAG_COMPARE_USD,
+};
+
 const MAG_MARKET_PRICES: Partial<Record<CountryCode, number>> =
   Object.fromEntries(
     SPANISH_MARKET_CODES.map((country) => [
