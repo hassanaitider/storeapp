@@ -20,1079 +20,1083 @@ export function usesArgentinaCodCheckout(country: string): boolean {
   return country.toUpperCase() === "AR";
 }
 
-/** Guatemala — complete departamentos / municipios. */
+/** Guatemala — departamentos / municipios / poblados from Fufills COD coverage. */
 export const GEO_GT: LatamGeoTree = {
   "Alta Verapaz": {
-    "Cahabón": [
-      "Centro"
-    ],
     "Chahal": [
-      "Centro"
+      "Chahal"
     ],
     "Chisec": [
-      "Centro"
+      "Chisec"
     ],
-    "Cobán": [
-      "Centro"
+    "Coban": [
+      "Coban"
     ],
-    "Fray Bartolomé de Las Casas": [
-      "Centro"
+    "Fray Bartolome De Las Casas": [
+      "Fray Bartolome De Las Casas"
     ],
-    "Lanquín": [
-      "Centro"
+    "Lanquin": [
+      "Lanquin"
     ],
-    "Panzós": [
-      "Centro"
+    "Panzos": [
+      "Panzos"
     ],
-    "Raxruhá": [
-      "Centro"
+    "Raxruha": [
+      "Raxruha"
     ],
-    "San Cristóbal Verapaz": [
-      "Centro"
+    "San Cristobal Verapaz": [
+      "San Cristobal Verapaz"
     ],
     "San Juan Chamelco": [
-      "Centro"
+      "San Juan Chamelco"
     ],
-    "San Pedro Carchá": [
-      "Centro"
+    "San Pedro Carcha": [
+      "San Pedro Carcha"
     ],
     "Santa Catalina La Tinta": [
-      "Centro"
+      "Santa Catalina La Tinta"
     ],
     "Santa Cruz Verapaz": [
-      "Centro"
+      "Santa Cruz Verapaz"
     ],
-    "Senahú": [
-      "Centro"
+    "Santa Maria Cahabon": [
+      "Santa Maria Cahabon"
+    ],
+    "Senahu": [
+      "Senahu"
     ],
     "Tactic": [
-      "Centro"
+      "Tactic"
     ],
-    "Tamahú": [
-      "Centro"
+    "Tamahu": [
+      "Tamahu"
     ],
-    "Tucurú": [
-      "Centro"
+    "Tucuru": [
+      "Tucuru"
     ]
   },
   "Baja Verapaz": {
     "Cubulco": [
-      "Centro"
-    ],
-    "El Chol": [
-      "Centro"
+      "Cubulco"
     ],
     "Granados": [
-      "Centro"
+      "Granados"
     ],
-    "Purulhá": [
-      "Centro"
+    "Purulha": [
+      "Purulha"
     ],
     "Rabinal": [
-      "Centro"
+      "Rabinal"
     ],
-    "Salamá": [
-      "Centro"
+    "Salama": [
+      "Salama"
     ],
-    "San Jerónimo": [
-      "Centro"
+    "San Jeronimo": [
+      "San Jeronimo"
     ],
     "San Miguel Chicaj": [
-      "Centro"
+      "San Miguel Chicaj"
+    ],
+    "Santa Cruz El Chol": [
+      "Santa Cruz El Chol"
     ]
   },
   "Chimaltenango": {
     "Acatenango": [
-      "Centro"
+      "Acatenango"
     ],
     "Chimaltenango": [
-      "Centro"
-    ],
-    "Comalapa": [
-      "Centro"
+      "Chimaltenango"
     ],
     "El Tejar": [
-      "Centro"
+      "El Tejar"
     ],
     "Parramos": [
-      "Centro"
+      "Parramos"
     ],
-    "Patzicía": [
-      "Centro"
+    "Patzicia": [
+      "Patzicia"
     ],
-    "Patzún": [
-      "Centro"
+    "Patzun": [
+      "Patzun"
     ],
     "Pochuta": [
-      "Centro"
+      "Pochuta"
     ],
-    "San Andrés Itzapa": [
-      "Centro"
+    "San Andres Itzapa": [
+      "San Andres Itzapa"
     ],
-    "San José Poaquil": [
-      "Centro"
+    "San Jose Poaquil": [
+      "San Jose Poaquil"
     ],
-    "San Martín Jilotepeque": [
-      "Centro"
+    "San Juan Comalapa": [
+      "San Juan Comalapa"
+    ],
+    "San Martin Jilotepeque": [
+      "San Martin Jilotepeque"
+    ],
+    "San Pedro Yepocapa": [
+      "San Pedro Yepocapa"
     ],
     "Santa Apolonia": [
-      "Centro"
+      "Santa Apolonia"
     ],
-    "Santa Cruz Balanyá": [
-      "Centro"
+    "Santa Cruz Balanya": [
+      "Santa Cruz Balanya"
     ],
-    "Tecpán Guatemala": [
-      "Centro"
-    ],
-    "Yepocapa": [
-      "Centro"
+    "Tecpan": [
+      "Tecpan"
     ],
     "Zaragoza": [
-      "Centro"
+      "Zaragoza"
     ]
   },
   "Chiquimula": {
-    "Camotán": [
-      "Centro"
+    "Camotan": [
+      "Camotan"
     ],
     "Chiquimula": [
-      "Centro"
+      "Chiquimula"
     ],
-    "Concepción Las Minas": [
-      "Centro"
+    "Concepcion Las Minas": [
+      "Concepcion Las Minas"
     ],
     "Esquipulas": [
-      "Centro"
+      "Esquipulas"
     ],
     "Ipala": [
-      "Centro"
+      "Ipala"
     ],
-    "Jocotán": [
-      "Centro"
+    "Jocotan": [
+      "Jocotan"
     ],
     "Olopa": [
-      "Centro"
+      "Olopa"
     ],
     "Quezaltepeque": [
-      "Centro"
+      "Quezaltepeque"
     ],
     "San Jacinto": [
-      "Centro"
+      "San Jacinto"
     ],
-    "San José La Arada": [
-      "Centro"
+    "San Jose La Arada": [
+      "San Jose La Arada"
     ],
     "San Juan Ermita": [
-      "Centro"
+      "San Juan Ermita"
     ]
   },
   "El Progreso": {
-    "El Jícaro": [
-      "Centro"
+    "El Jicaro": [
+      "El Jicaro"
     ],
     "Guastatoya": [
-      "Centro"
+      "Guastatoya"
     ],
-    "Morazán": [
-      "Centro"
+    "Morazan": [
+      "Morazan"
     ],
-    "San Agustín Acasaguastlán": [
-      "Centro"
+    "San Agustin Acasaguastlan": [
+      "San Agustin Acasaguastlan"
     ],
     "San Antonio La Paz": [
-      "Centro"
+      "San Antonio La Paz"
     ],
-    "San Cristóbal Acasaguastlán": [
-      "Centro"
+    "San Cristobal Acasaguastlan": [
+      "San Cristobal Acasaguastlan"
     ],
     "Sanarate": [
-      "Centro"
+      "Sanarate"
     ],
     "Sansare": [
-      "Centro"
+      "Sansare"
     ]
   },
   "Escuintla": {
     "Escuintla": [
-      "Centro"
+      "Escuintla"
     ],
     "Guanagazapa": [
-      "Centro"
+      "Guanagazapa"
     ],
     "Iztapa": [
-      "Centro"
+      "Iztapa"
     ],
     "La Democracia": [
-      "Centro"
+      "La Democracia"
     ],
     "La Gomera": [
-      "Centro"
+      "La Gomera"
     ],
     "Masagua": [
-      "Centro"
+      "Masagua"
     ],
-    "Nueva Concepción": [
-      "Centro"
+    "Nueva Concepcion": [
+      "Nueva Concepcion"
     ],
-    "Palín": [
-      "Centro"
+    "Palin": [
+      "Palin"
     ],
-    "San José": [
-      "Centro"
+    "Puerto San Jose": [
+      "Puerto San Jose"
     ],
     "San Vicente Pacaya": [
-      "Centro"
+      "San Vicente Pacaya"
     ],
-    "Santa Lucía Cotzumalguapa": [
-      "Centro"
+    "Santa Lucia Cotzumalguapa": [
+      "Santa Lucia Cotzumalguapa"
     ],
     "Sipacate": [
-      "Centro"
+      "Sipacate"
     ],
-    "Siquinalá": [
-      "Centro"
+    "Siquinala": [
+      "Siquinala"
     ],
     "Tiquisate": [
-      "Centro"
+      "Tiquisate"
     ]
   },
   "Guatemala": {
-    "Amatitlán": [
-      "Centro"
+    "Amatitlan": [
+      "Amatitlan"
     ],
     "Chinautla": [
-      "Centro"
+      "Chinautla"
     ],
     "Chuarrancho": [
-      "Centro"
+      "Chuarrancho"
     ],
     "Fraijanes": [
-      "Centro"
+      "Fraijanes"
     ],
     "Guatemala": [
-      "Centro"
-    ],
-    "Lago De Amatitlan": [
-      "Centro"
+      "Guatemala"
     ],
     "Mixco": [
-      "Centro"
+      "Mixco"
     ],
     "Palencia": [
-      "Centro"
+      "Palencia"
     ],
-    "Petapa": [
-      "Centro"
+    "San Jose Del Golfo": [
+      "San Jose Del Golfo"
     ],
-    "San José del Golfo": [
-      "Centro"
+    "San Jose Pinula": [
+      "San Jose Pinula"
     ],
-    "San José Pinula": [
-      "Centro"
+    "San Juan Sacatepequez": [
+      "San Juan Sacatepequez"
     ],
-    "San Juan Sacatepéquez": [
-      "Centro"
+    "San Miguel Petapa": [
+      "San Miguel Petapa"
     ],
     "San Pedro Ayampuc": [
-      "Centro"
+      "San Pedro Ayampuc"
     ],
-    "San Pedro Sacatepéquez": [
-      "Centro"
+    "San Pedro Sacatepequez": [
+      "San Pedro Sacatepequez"
     ],
-    "San Raimundo": [
-      "Centro"
+    "San Raymundo": [
+      "San Raymundo"
     ],
     "Santa Catarina Pinula": [
-      "Centro"
+      "Santa Catarina Pinula"
     ],
     "Villa Canales": [
-      "Centro"
+      "Villa Canales"
     ],
     "Villa Nueva": [
-      "Centro"
+      "Villa Nueva"
     ]
   },
   "Huehuetenango": {
-    "Aguacatán": [
-      "Centro"
-    ],
-    "Barillas": [
-      "Centro"
+    "Aguacatan": [
+      "Aguacatan"
     ],
     "Chiantla": [
-      "Centro"
+      "Chiantla"
     ],
     "Colotenango": [
-      "Centro"
+      "Colotenango"
     ],
-    "Concepción Huista": [
-      "Centro"
+    "Concepcion Huista": [
+      "Concepcion Huista"
     ],
     "Cuilco": [
-      "Centro"
+      "Cuilco"
     ],
     "Huehuetenango": [
-      "Centro"
-    ],
-    "Ixtahuacán": [
-      "Centro"
+      "Huehuetenango"
     ],
     "Jacaltenango": [
-      "Centro"
+      "Jacaltenango"
     ],
     "La Democracia": [
-      "Centro"
+      "La Democracia"
     ],
     "La Libertad": [
-      "Centro"
+      "La Libertad"
     ],
     "Malacatancito": [
-      "Centro"
+      "Malacatancito"
     ],
-    "Nentón": [
-      "Centro"
+    "Nenton": [
+      "Nenton"
     ],
-    "Petatán": [
-      "Centro"
+    "Petetan": [
+      "Petetan"
     ],
     "San Antonio Huista": [
-      "Centro"
+      "San Antonio Huista"
     ],
     "San Gaspar Ixchil": [
-      "Centro"
+      "San Gaspar Ixchil"
     ],
-    "San Juan Atitán": [
-      "Centro"
+    "San Ildefonso Ixtahuacan": [
+      "San Ildefonso Ixtahuacan"
+    ],
+    "San Juan Atitan": [
+      "San Juan Atitan"
     ],
     "San Juan Ixcoy": [
-      "Centro"
+      "San Juan Ixcoy"
     ],
-    "San Mateo Ixtatán": [
-      "Centro"
+    "San Mateo Ixtatan": [
+      "San Mateo Ixtatan"
     ],
-    "San Miguel Acatán": [
-      "Centro"
+    "San Miguel Acatan": [
+      "San Miguel Acatan"
     ],
     "San Pedro Necta": [
-      "Centro"
+      "San Pedro Necta"
+    ],
+    "San Pedro Soloma": [
+      "San Pedro Soloma"
     ],
     "San Rafael La Independencia": [
-      "Centro"
+      "San Rafael La Independencia"
     ],
     "San Rafael Petzal": [
-      "Centro"
+      "San Rafael Petzal"
     ],
-    "San Sebastián Coatán": [
-      "Centro"
+    "San Sebastian Coatan": [
+      "San Sebastian Coatan"
     ],
-    "San Sebastián Huehuetenango": [
-      "Centro"
+    "San Sebastian Huehuetenango": [
+      "San Sebastian Huehuetenango"
     ],
     "Santa Ana Huista": [
-      "Centro"
+      "Santa Ana Huista"
     ],
-    "Santa Bárbara": [
-      "Centro"
+    "Santa Barbara": [
+      "Santa Barbara"
+    ],
+    "Santa Cruz Barillas": [
+      "Santa Cruz Barillas"
     ],
     "Santa Eulalia": [
-      "Centro"
+      "Santa Eulalia"
     ],
     "Santiago Chimaltenango": [
-      "Centro"
+      "Santiago Chimaltenango"
     ],
     "Soloma": [
-      "Centro"
+      "Soloma"
     ],
-    "Tectitán": [
-      "Centro"
+    "Tectitan": [
+      "Tectitan"
     ],
-    "Todos Santos Cuchumatán": [
-      "Centro"
+    "Todos Santos Cuchumatan": [
+      "Todos Santos Cuchumatan"
     ],
-    "Unión Cantinil": [
-      "Centro"
+    "Union Cantinil": [
+      "Union Cantinil"
     ]
   },
   "Izabal": {
     "El Estor": [
-      "Centro"
+      "El Estor"
     ],
-    "Lívingston": [
-      "Centro"
+    "Livingston": [
+      "Livingston"
     ],
     "Los Amates": [
-      "Centro"
+      "Los Amates"
     ],
     "Morales": [
-      "Centro"
+      "Morales"
     ],
     "Puerto Barrios": [
-      "Centro"
+      "Puerto Barrios"
     ]
   },
   "Jalapa": {
     "Jalapa": [
-      "Centro"
+      "Jalapa"
     ],
     "Mataquescuintla": [
-      "Centro"
+      "Mataquescuintla"
     ],
     "Monjas": [
-      "Centro"
+      "Monjas"
     ],
     "San Carlos Alzatate": [
-      "Centro"
+      "San Carlos Alzatate"
     ],
     "San Luis Jilotepeque": [
-      "Centro"
+      "San Luis Jilotepeque"
     ],
-    "San Manuel Chaparrón": [
-      "Centro"
+    "San Manuel Chaparron": [
+      "San Manuel Chaparron"
     ],
     "San Pedro Pinula": [
-      "Centro"
+      "San Pedro Pinula"
     ]
   },
   "Jutiapa": {
     "Agua Blanca": [
-      "Centro"
+      "Agua Blanca"
     ],
-    "Asunción Mita": [
-      "Centro"
+    "Asuncion Mita": [
+      "Asuncion Mita"
     ],
     "Atescatempa": [
-      "Centro"
+      "Atescatempa"
     ],
     "Comapa": [
-      "Centro"
+      "Comapa"
     ],
     "Conguaco": [
-      "Centro"
+      "Conguaco"
     ],
     "El Adelanto": [
-      "Centro"
+      "El Adelanto"
     ],
     "El Progreso": [
-      "Centro"
+      "El Progreso"
     ],
     "Jalpatagua": [
-      "Centro"
+      "Jalpatagua"
     ],
     "Jerez": [
-      "Centro"
+      "Jerez"
     ],
     "Jutiapa": [
-      "Centro"
+      "Jutiapa"
     ],
     "Moyuta": [
-      "Centro"
+      "Moyuta"
     ],
     "Pasaco": [
-      "Centro"
+      "Pasaco"
     ],
     "Quesada": [
-      "Centro"
+      "Quesada"
     ],
-    "San José Acatempa": [
-      "Centro"
+    "San Jose Acatempa": [
+      "San Jose Acatempa"
     ],
     "Santa Catarina Mita": [
-      "Centro"
+      "Santa Catarina Mita"
     ],
     "Yupiltepeque": [
-      "Centro"
+      "Yupiltepeque"
     ],
-    "Zapotitlán": [
-      "Centro"
+    "Zapotitlan": [
+      "Zapotitlan"
     ]
   },
   "Petén": {
     "Dolores": [
-      "Centro"
+      "Dolores"
     ],
     "El Chal": [
-      "Centro"
+      "El Chal"
     ],
     "Flores": [
-      "Centro"
+      "Flores"
     ],
     "La Libertad": [
-      "Centro"
+      "La Libertad"
     ],
     "Las Cruces": [
-      "Centro"
+      "Las Cruces"
     ],
-    "Melchor de Mencos": [
-      "Centro"
+    "Melchor De Mencos": [
+      "Melchor De Mencos"
     ],
-    "Poptún": [
-      "Centro"
+    "Poptun": [
+      "Poptun"
     ],
-    "San Andrés": [
-      "Centro"
+    "San Andres": [
+      "San Andres"
     ],
     "San Benito": [
-      "Centro"
+      "San Benito"
     ],
     "San Francisco": [
-      "Centro"
+      "San Francisco"
     ],
-    "San José": [
-      "Centro"
+    "San Jose": [
+      "San Jose"
     ],
     "San Luis": [
-      "Centro"
+      "San Luis"
     ],
     "Santa Ana": [
-      "Centro"
+      "Santa Ana"
     ],
-    "Sayaxché": [
-      "Centro"
+    "Sayaxche": [
+      "Sayaxche"
     ]
   },
   "Quetzaltenango": {
     "Almolonga": [
-      "Centro"
+      "Almolonga"
     ],
-    "Cabricán": [
-      "Centro"
+    "Cabrican": [
+      "Cabrican"
     ],
-    "Cajolá": [
-      "Centro"
+    "Cajola": [
+      "Cajola"
     ],
     "Cantel": [
-      "Centro"
+      "Cantel"
     ],
     "Coatepeque": [
-      "Centro"
+      "Coatepeque"
     ],
     "Colomba": [
-      "Centro"
+      "Colomba"
     ],
-    "Concepción Chiquirichapa": [
-      "Centro"
+    "Concepcion Chiquirichapa": [
+      "Concepcion Chiquirichapa"
     ],
     "El Palmar": [
-      "Centro"
+      "El Palmar"
     ],
     "Flores Costa Cuca": [
-      "Centro"
+      "Flores Costa Cuca"
     ],
-    "Génova": [
-      "Centro"
+    "Genova": [
+      "Genova"
     ],
-    "Huitán": [
-      "Centro"
+    "Huitan": [
+      "Huitan"
     ],
     "La Esperanza": [
-      "Centro"
+      "La Esperanza"
     ],
     "Olintepeque": [
-      "Centro"
+      "Olintepeque"
     ],
-    "Ostuncalco": [
-      "Centro"
-    ],
-    "Palestina de Los Altos": [
-      "Centro"
+    "Palestina De Los Altos": [
+      "Palestina De Los Altos"
     ],
     "Quetzaltenango": [
-      "Centro"
+      "Quetzaltenango"
     ],
-    "Salcajá": [
-      "Centro"
+    "Salcaja": [
+      "Salcaja"
     ],
     "San Carlos Sija": [
-      "Centro"
+      "San Carlos Sija"
     ],
-    "San Francisco La Unión": [
-      "Centro"
+    "San Francisco La Union": [
+      "San Francisco La Union"
     ],
-    "San Martín Sacatepéquez": [
-      "Centro"
+    "San Juan Ostuncalco": [
+      "San Juan Ostuncalco"
+    ],
+    "San Martin Sacatepequez": [
+      "San Martin Sacatepequez"
     ],
     "San Mateo": [
-      "Centro"
+      "San Mateo"
     ],
-    "San Miguel Sigüila": [
-      "Centro"
+    "San Miguel Sigueila": [
+      "San Miguel Sigueila"
     ],
     "Sibilia": [
-      "Centro"
+      "Sibilia"
     ],
     "Zunil": [
-      "Centro"
+      "Zunil"
     ]
   },
   "Quiché": {
-    "Canillá": [
-      "Centro"
+    "Canilla": [
+      "Canilla"
     ],
     "Chajul": [
-      "Centro"
+      "Chajul"
     ],
-    "Chicamán": [
-      "Centro"
+    "Chicaman": [
+      "Chicaman"
     ],
-    "Chiché": [
-      "Centro"
+    "Chiche": [
+      "Chiche"
     ],
     "Chichicastenango": [
-      "Centro"
+      "Chichicastenango"
     ],
     "Chinique": [
-      "Centro"
+      "Chinique"
     ],
-    "Cunén": [
-      "Centro"
+    "Cunen": [
+      "Cunen"
     ],
-    "Ixcán": [
-      "Centro"
+    "Ixcan": [
+      "Ixcan"
     ],
     "Joyabaj": [
-      "Centro"
+      "Joyabaj"
     ],
     "Nebaj": [
-      "Centro"
+      "Nebaj"
     ],
     "Pachalum": [
-      "Centro"
+      "Pachalum"
     ],
-    "Patzité": [
-      "Centro"
+    "Patzite": [
+      "Patzite"
     ],
     "Sacapulas": [
-      "Centro"
+      "Sacapulas"
     ],
-    "San Andrés Sajcabajá": [
-      "Centro"
+    "San Andres Sajcabaja": [
+      "San Andres Sajcabaja"
     ],
     "San Antonio Ilotenango": [
-      "Centro"
+      "San Antonio Ilotenango"
     ],
-    "San Bartolomé Jocotenango": [
-      "Centro"
+    "San Bartolome Jocotenango": [
+      "San Bartolome Jocotenango"
     ],
     "San Juan Cotzal": [
-      "Centro"
+      "San Juan Cotzal"
     ],
     "San Pedro Jocopilas": [
-      "Centro"
+      "San Pedro Jocopilas"
     ],
-    "Santa Cruz del Quiché": [
-      "Centro"
+    "Santa Cruz Del Quiche": [
+      "Santa Cruz Del Quiche"
     ],
-    "Uspantán": [
-      "Centro"
+    "Santa Maria Nebaj": [
+      "Santa Maria Nebaj"
+    ],
+    "Uspantan": [
+      "Uspantan"
     ],
     "Zacualpa": [
-      "Centro"
+      "Zacualpa"
     ]
   },
   "Retalhuleu": {
     "Champerico": [
-      "Centro"
+      "Champerico"
     ],
     "El Asintal": [
-      "Centro"
+      "El Asintal"
     ],
     "Nuevo San Carlos": [
-      "Centro"
+      "Nuevo San Carlos"
     ],
     "Retalhuleu": [
-      "Centro"
+      "Retalhuleu"
     ],
-    "San Andrés Villa Seca": [
-      "Centro"
+    "San Andres Villa Seca": [
+      "San Andres Villa Seca"
     ],
     "San Felipe": [
-      "Centro"
+      "San Felipe"
     ],
-    "San Martín Zapotitlán": [
-      "Centro"
+    "San Martin Zapotitlan": [
+      "San Martin Zapotitlan"
     ],
-    "San Sebastián": [
-      "Centro"
+    "San Sebastian": [
+      "San Sebastian"
     ],
-    "Santa Cruz Muluá": [
-      "Centro"
+    "Santa Cruz Mulua": [
+      "Santa Cruz Mulua"
     ]
   },
   "Sacatepéquez": {
     "Alotenango": [
-      "Centro"
+      "Alotenango"
     ],
     "Antigua Guatemala": [
-      "Centro"
+      "Antigua Guatemala"
     ],
     "Ciudad Vieja": [
-      "Centro"
+      "Ciudad Vieja"
     ],
     "Jocotenango": [
-      "Centro"
+      "Jocotenango"
     ],
     "Magdalena Milpas Altas": [
-      "Centro"
+      "Magdalena Milpas Altas"
     ],
     "Pastores": [
-      "Centro"
+      "Pastores"
     ],
     "San Antonio Aguas Calientes": [
-      "Centro"
+      "San Antonio Aguas Calientes"
     ],
-    "San Bartolomé Milpas Altas": [
-      "Centro"
+    "San Bartolome Milpas Altas": [
+      "San Bartolome Milpas Altas"
     ],
-    "San Lucas Sacatepéquez": [
-      "Centro"
+    "San Juan Alotenango": [
+      "San Juan Alotenango"
     ],
-    "San Miguel Dueñas": [
-      "Centro"
+    "San Lucas Sacatepequez": [
+      "San Lucas Sacatepequez"
+    ],
+    "San Miguel Duenas": [
+      "San Miguel Duenas"
     ],
     "Santa Catarina Barahona": [
-      "Centro"
+      "Santa Catarina Barahona"
     ],
-    "Santa Lucía Milpas Altas": [
-      "Centro"
+    "Santa Lucia Milpas Altas": [
+      "Santa Lucia Milpas Altas"
     ],
-    "Santa María de Jesús": [
-      "Centro"
+    "Santa Maria De Jesus": [
+      "Santa Maria De Jesus"
     ],
-    "Santiago Sacatepéquez": [
-      "Centro"
+    "Santiago Sacatepequez": [
+      "Santiago Sacatepequez"
     ],
     "Santo Domingo Xenacoj": [
-      "Centro"
+      "Santo Domingo Xenacoj"
     ],
     "Sumpango": [
-      "Centro"
+      "Sumpango"
     ]
   },
   "San Marcos": {
     "Ayutla": [
-      "Centro"
+      "Ayutla"
     ],
     "Catarina": [
-      "Centro"
+      "Catarina"
     ],
     "Comitancillo": [
-      "Centro"
+      "Comitancillo"
     ],
-    "Concepción Tutuapa": [
-      "Centro"
+    "Concepcion Tutuapa": [
+      "Concepcion Tutuapa"
     ],
     "El Quetzal": [
-      "Centro"
+      "El Quetzal"
     ],
     "El Rodeo": [
-      "Centro"
+      "El Rodeo"
     ],
     "El Tumbador": [
-      "Centro"
+      "El Tumbador"
     ],
     "Esquipulas Palo Gordo": [
-      "Centro"
+      "Esquipulas Palo Gordo"
     ],
-    "Ixchiguán": [
-      "Centro"
+    "Ixchiguan": [
+      "Ixchiguan"
     ],
     "La Blanca": [
-      "Centro"
+      "La Blanca"
     ],
     "La Reforma": [
-      "Centro"
+      "La Reforma"
     ],
-    "Malacatán": [
-      "Centro"
+    "Malacatan": [
+      "Malacatan"
     ],
     "Nuevo Progreso": [
-      "Centro"
+      "Nuevo Progreso"
     ],
-    "Ocós": [
-      "Centro"
+    "Ocos": [
+      "Ocos"
     ],
     "Pajapita": [
-      "Centro"
+      "Pajapita"
     ],
-    "Río Blanco": [
-      "Centro"
+    "Rio Blanco": [
+      "Rio Blanco"
     ],
-    "San Antonio Sacatepéquez": [
-      "Centro"
+    "San Antonio Sacatepequez": [
+      "San Antonio Sacatepequez"
     ],
-    "San Cristóbal Cucho": [
-      "Centro"
+    "San Cristobal Cucho": [
+      "San Cristobal Cucho"
     ],
-    "San José Ojetenam": [
-      "Centro"
+    "San Jose Ojetenam": [
+      "San Jose Ojetenam"
     ],
     "San Lorenzo": [
-      "Centro"
+      "San Lorenzo"
     ],
     "San Marcos": [
-      "Centro"
+      "San Marcos"
     ],
-    "San Miguel Ixtahuacán": [
-      "Centro"
+    "San Miguel Ixtahuacan": [
+      "San Miguel Ixtahuacan"
     ],
     "San Pablo": [
-      "Centro"
+      "San Pablo"
     ],
-    "San Pedro Sacatepéquez": [
-      "Centro"
+    "San Pedro Sacatepequez": [
+      "San Pedro Sacatepequez"
     ],
-    "San Rafael Pie de la Cuesta": [
-      "Centro"
+    "San Rafael Pie De La Cuesta": [
+      "San Rafael Pie De La Cuesta"
     ],
     "Sibinal": [
-      "Centro"
+      "Sibinal"
     ],
     "Sipacapa": [
-      "Centro"
+      "Sipacapa"
     ],
-    "Tacaná": [
-      "Centro"
+    "Tacana": [
+      "Tacana"
     ],
     "Tajumulco": [
-      "Centro"
+      "Tajumulco"
     ],
     "Tejutla": [
-      "Centro"
+      "Tejutla"
     ]
   },
   "Santa Rosa": {
     "Barberena": [
-      "Centro"
+      "Barberena"
     ],
     "Casillas": [
-      "Centro"
+      "Casillas"
     ],
     "Chiquimulilla": [
-      "Centro"
+      "Chiquimulilla"
     ],
     "Cuilapa": [
-      "Centro"
+      "Cuilapa"
     ],
-    "Guazacapán": [
-      "Centro"
+    "Guazacapan": [
+      "Guazacapan"
     ],
     "Nueva Santa Rosa": [
-      "Centro"
+      "Nueva Santa Rosa"
     ],
     "Oratorio": [
-      "Centro"
+      "Oratorio"
     ],
-    "Pueblo Nuevo Viñas": [
-      "Centro"
+    "Pueblo Nuevo Vinas": [
+      "Pueblo Nuevo Vinas"
     ],
     "San Juan Tecuaco": [
-      "Centro"
+      "San Juan Tecuaco"
     ],
     "San Rafael Las Flores": [
-      "Centro"
+      "San Rafael Las Flores"
     ],
     "Santa Cruz Naranjo": [
-      "Centro"
+      "Santa Cruz Naranjo"
     ],
-    "Santa María Ixhuatán": [
-      "Centro"
+    "Santa Maria Ixhuatan": [
+      "Santa Maria Ixhuatan"
     ],
-    "Santa Rosa de Lima": [
-      "Centro"
+    "Santa Rosa De Lima": [
+      "Santa Rosa De Lima"
     ],
     "Taxisco": [
-      "Centro"
+      "Taxisco"
     ]
   },
-  "Sololá": {
-    "Concepción": [
-      "Centro"
+  "Solola": {
+    "Concepcion": [
+      "Concepcion"
     ],
-    "Lago De Atitlan": [
-      "Centro"
-    ],
-    "Nahualá": [
-      "Centro"
+    "Nahuala": [
+      "Nahuala"
     ],
     "Panajachel": [
-      "Centro"
+      "Panajachel"
     ],
-    "San Andrés Semetabaj": [
-      "Centro"
+    "San Andres Semetabaj": [
+      "San Andres Semetabaj"
     ],
-    "San Antonio Palopó": [
-      "Centro"
+    "San Antonio Palopo": [
+      "San Antonio Palopo"
     ],
-    "San José Chacayá": [
-      "Centro"
+    "San Jose Chacaya": [
+      "San Jose Chacaya"
     ],
     "San Juan La Laguna": [
-      "Centro"
+      "San Juan La Laguna"
     ],
-    "San Lucas Tolimán": [
-      "Centro"
+    "San Lucas Toliman": [
+      "San Lucas Toliman"
     ],
     "San Marcos La Laguna": [
-      "Centro"
+      "San Marcos La Laguna"
     ],
     "San Pablo La Laguna": [
-      "Centro"
+      "San Pablo La Laguna"
     ],
     "San Pedro La Laguna": [
-      "Centro"
+      "San Pedro La Laguna"
     ],
-    "Santa Catarina Ixtahuacán": [
-      "Centro"
+    "Santa Catarina Ixtahuacan": [
+      "Santa Catarina Ixtahuacan"
     ],
-    "Santa Catarina Palopó": [
-      "Centro"
+    "Santa Catarina Palopo": [
+      "Santa Catarina Palopo"
     ],
     "Santa Clara La Laguna": [
-      "Centro"
+      "Santa Clara La Laguna"
     ],
     "Santa Cruz La Laguna": [
-      "Centro"
+      "Santa Cruz La Laguna"
     ],
-    "Santa Lucía Utatlán": [
-      "Centro"
+    "Santa Lucia Utatlan": [
+      "Santa Lucia Utatlan"
     ],
-    "Santa María Visitación": [
-      "Centro"
+    "Santa Maria Visitacion": [
+      "Santa Maria Visitacion"
     ],
-    "Santiago Atitlán": [
-      "Centro"
+    "Santiago Atitlan": [
+      "Santiago Atitlan"
     ],
-    "Sololá": [
-      "Centro"
+    "Solola": [
+      "Solola"
     ]
   },
   "Suchitepéquez": {
     "Chicacao": [
-      "Centro"
+      "Chicacao"
     ],
     "Cuyotenango": [
-      "Centro"
+      "Cuyotenango"
     ],
     "Mazatenango": [
-      "Centro"
+      "Mazatenango"
     ],
     "Patulul": [
-      "Centro"
+      "Patulul"
     ],
     "Pueblo Nuevo": [
-      "Centro"
+      "Pueblo Nuevo"
     ],
-    "Río Bravo": [
-      "Centro"
+    "Rio Bravo": [
+      "Rio Bravo"
     ],
     "Samayac": [
-      "Centro"
+      "Samayac"
     ],
-    "San Antonio Suchitepéquez": [
-      "Centro"
+    "San Antonio Suchitepequez": [
+      "San Antonio Suchitepequez"
     ],
     "San Bernardino": [
-      "Centro"
+      "San Bernardino"
     ],
-    "San Francisco Zapotitlán": [
-      "Centro"
+    "San Francisco Zapotitlan": [
+      "San Francisco Zapotitlan"
     ],
     "San Gabriel": [
-      "Centro"
+      "San Gabriel"
     ],
-    "San José El Ídolo": [
-      "Centro"
+    "San Jose El Idolo": [
+      "San Jose El Idolo"
     ],
-    "San José La Máquina": [
-      "Centro"
+    "San Jose La Maquina": [
+      "San Jose La Maquina"
     ],
     "San Juan Bautista": [
-      "Centro"
+      "San Juan Bautista"
     ],
-    "San Lorenzo": [
-      "Centro"
+    "San Lorenzo Suchitepequez": [
+      "San Lorenzo Suchitepequez"
     ],
-    "San Miguel Panán": [
-      "Centro"
+    "San Miguel Panan": [
+      "San Miguel Panan"
     ],
     "San Pablo Jocopilas": [
-      "Centro"
+      "San Pablo Jocopilas"
     ],
-    "Santa Bárbara": [
-      "Centro"
+    "Santa Barbara": [
+      "Santa Barbara"
     ],
-    "Santo Domingo Suchitepéquez": [
-      "Centro"
+    "Santo Domingo Suchitepequez": [
+      "Santo Domingo Suchitepequez"
     ],
-    "Santo Tomás La Unión": [
-      "Centro"
+    "Santo Tomas La Union": [
+      "Santo Tomas La Union"
     ],
     "Zunilito": [
-      "Centro"
+      "Zunilito"
     ]
   },
   "Totonicapán": {
     "Momostenango": [
-      "Centro"
+      "Momostenango"
     ],
-    "San Andrés Xecul": [
-      "Centro"
+    "San Andres Xecul": [
+      "San Andres Xecul"
     ],
     "San Bartolo": [
-      "Centro"
+      "San Bartolo"
     ],
-    "San Cristóbal Totonicapán": [
-      "Centro"
+    "San Cristobal Totonicapan": [
+      "San Cristobal Totonicapan"
     ],
     "San Francisco El Alto": [
-      "Centro"
+      "San Francisco El Alto"
     ],
-    "Santa Lucía La Reforma": [
-      "Centro"
+    "Santa Lucia La Reforma": [
+      "Santa Lucia La Reforma"
     ],
-    "Santa María Chiquimula": [
-      "Centro"
+    "Santa Maria Chiquimula": [
+      "Santa Maria Chiquimula"
     ],
-    "Totonicapán": [
-      "Centro"
+    "Totonicapan": [
+      "Totonicapan"
     ]
   },
   "Zacapa": {
-    "Cabañas": [
-      "Centro"
+    "Cabanas": [
+      "Cabanas"
     ],
     "Estanzuela": [
-      "Centro"
+      "Estanzuela"
     ],
-    "Gualán": [
-      "Centro"
+    "Gualan": [
+      "Gualan"
     ],
-    "Huité": [
-      "Centro"
+    "Huite": [
+      "Huite"
     ],
-    "La Unión": [
-      "Centro"
+    "La Union": [
+      "La Union"
     ],
-    "Río Hondo": [
-      "Centro"
+    "Rio Hondo": [
+      "Rio Hondo"
     ],
     "San Diego": [
-      "Centro"
+      "San Diego"
     ],
     "San Jorge": [
-      "Centro"
+      "San Jorge"
     ],
-    "Teculután": [
-      "Centro"
+    "Teculutan": [
+      "Teculutan"
     ],
-    "Usumatlán": [
-      "Centro"
+    "Usumatlan": [
+      "Usumatlan"
     ],
     "Zacapa": [
-      "Centro"
+      "Zacapa"
     ]
   }
 };
+
 
 /** Costa Rica — complete Provincia → Cantón → Distrito. */
 export const GEO_CR: LatamGeoTree = {
