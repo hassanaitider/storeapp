@@ -148,8 +148,9 @@ export function isCodQtyUpsellEnabled(
     (country ? usesLatamThreeQtyPacks(country) : false) ||
     (product.availableIn ?? []).some((code) => usesLatamThreeQtyPacks(code));
   if (latam) {
-    if (product.qtyUpsellLocked === true) {
-      return product.qtyUpsellEnabled === true;
+    // Hide only after the merchant actually flipped the admin switch off.
+    if (product.qtyUpsellLocked === true && product.qtyUpsellEnabled === false) {
+      return false;
     }
     return true;
   }

@@ -11,7 +11,7 @@ import {
 import { MapPin, User, ChevronDown, Zap } from "lucide-react";
 import { selectedQtyTotalLocal } from "@/components/shop/ProductQtyUpsell";
 import { formatNicaraguaCodPrice } from "@/lib/currency";
-import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
+import { getProductQtyOffers, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
 import {
@@ -99,17 +99,10 @@ export function NicaraguaCodCheckout({
   const countdown = useOfferCountdown(`${country}:${product.id}`);
   const liveProduct = useLiveProduct(product);
   const offers = getProductQtyOffers(liveProduct, country, "es");
-  const upsellOn =
-    isCodQtyUpsellEnabled(product, country) ||
-    isCodQtyUpsellEnabled(liveProduct, country);
   const packs = useMemo(
     () => selectCodQtyPacks(offers, country, true),
     [offers, country]
   );
-
-  useEffect(() => {
-    if (!upsellOn && qty !== 1) onQtyChange(1);
-  }, [upsellOn, qty, onQtyChange]);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -206,14 +199,12 @@ export function NicaraguaCodCheckout({
           />
         ) : null}
 
-        {upsellOn ? (
-          <LatamCodQtyPacks
+        <LatamCodQtyPacks
             packs={packs}
             qty={qty}
             onQtyChange={onQtyChange}
             formatPrice={formatNicaraguaCodPrice}
           />
-        ) : null}
 
         <IconField
           icon={<User className="h-4 w-4" />}
