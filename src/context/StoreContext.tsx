@@ -484,10 +484,10 @@ function toPersisted(state: StoreState): PersistedCatalog {
     locale: state.locale,
     currency: state.currency,
     country: state.country,
-    // Never persist a manual market lock — visitors must follow IP geo on
-    // the next visit. Header picks live in sessionStorage only.
+    // Never persist a manual market/currency lock — visitors follow the
+    // country's local currency (ARS/NIO/DOP…), not a leftover USD preview.
     countryManual: false,
-    currencyManual: state.currencyManual,
+    currencyManual: false,
     localeManual: state.localeManual,
     currencyRates: state.currencyRates,
     upsellEnabled: state.upsellEnabled,
@@ -498,8 +498,9 @@ function applyPersisted(
   parsed: PersistedCatalog,
   cookieCountry: CountryCode | null
 ): StoreState {
-  // Ignore legacy countryManual saved by admin preview — IP geo must win
-  const currencyManual = Boolean(parsed.currencyManual);
+  // Ignore legacy country/currency locks saved by admin preview — IP geo
+  // and the market's own currency must win (do not keep a USD override).
+  const currencyManual = false;
   const localeManual = Boolean(parsed.localeManual);
   const storedCountry =
     parsed.country && isValidCountry(parsed.country) && isStoreMarket(parsed.country)
@@ -1064,15 +1065,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       }
       setViewCountryState(null);
       commit((s) => {
-        const nextCurrency = s.currencyManual
-          ? s.currency
-          : currencyForCountry(next);
+        const nextCurrency = currencyForCountry(next);
         // Switching market also switches language, unless one was chosen by hand
         const nextLocale = s.localeManual ? s.locale : localeForCountry(next);
         if (
           s.country === next &&
           s.countryManual === manual &&
           s.currency === nextCurrency &&
+          s.currencyManual === false &&
           s.locale === nextLocale
         ) {
           return s;
@@ -1082,6 +1082,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           country: next,
           countryManual: manual,
           currency: nextCurrency,
+          currencyManual: false,
           locale: nextLocale,
         };
       });

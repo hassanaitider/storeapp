@@ -332,12 +332,24 @@ export function formatCodStylePrice(amount: number): string {
   return `$${formatted}`;
 }
 
-export const formatArgentinaCodPrice = formatCodStylePrice;
 export const formatMexicoCodPrice = formatCodStylePrice;
-export const formatDominicanCodPrice = formatCodStylePrice;
 export const formatEcuadorCodPrice = formatCodStylePrice;
 export const formatSalvadorCodPrice = formatCodStylePrice;
-export const formatNicaraguaCodPrice = formatCodStylePrice;
+
+/** Argentina COD: Argentine pesos (`AR$ 74,400`), never USD. */
+export function formatArgentinaCodPrice(amount: number): string {
+  return formatLocalAmount(amount, "ARS", "es");
+}
+
+/** Dominican Republic COD: Dominican pesos (`RD$ 2,880.00`), never USD. */
+export function formatDominicanCodPrice(amount: number): string {
+  return formatLocalAmount(amount, "DOP", "es");
+}
+
+/** Nicaragua COD: córdobas (`C$ 1,803.00`), never USD. */
+export function formatNicaraguaCodPrice(amount: number): string {
+  return formatLocalAmount(amount, "NIO", "es");
+}
 
 /** Honduras COD: Lempira amounts with Fufills-style 2 decimals (`L 349.00`). */
 export function formatHondurasCodPrice(amount: number): string {
