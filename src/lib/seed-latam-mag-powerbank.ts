@@ -70,6 +70,13 @@ MAG_BANK_PRICES.HN = {
   compareAtUSD: MAG_COMPARE_USD,
 };
 
+MAG_BANK_PRICES.MX = {
+  price: 899,
+  compare: 1449,
+  priceUSD: MAG_USD,
+  compareAtUSD: MAG_COMPARE_USD,
+};
+
 const MAG_MARKET_PRICES: Partial<Record<CountryCode, number>> =
   Object.fromEntries(
     SPANISH_MARKET_CODES.map((country) => [
