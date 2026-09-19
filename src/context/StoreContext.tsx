@@ -334,20 +334,15 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       }
 
       if (magMatch && seed.availableIn?.length) {
-        const replaceOldUsd = p.priceUSD === 24;
         return {
           ...base,
           categoryId: seed.categoryId,
           availableIn: [...seed.availableIn],
           slug: seed.slug,
-          priceUSD: replaceOldUsd ? seed.priceUSD : base.priceUSD,
-          compareAtUSD: replaceOldUsd ? seed.compareAtUSD : base.compareAtUSD,
-          marketPrices: replaceOldUsd
-            ? { ...(seed.marketPrices ?? {}) }
-            : base.marketPrices,
-          marketComparePrices: replaceOldUsd
-            ? { ...(seed.marketComparePrices ?? {}) }
-            : base.marketComparePrices,
+          priceUSD: seed.priceUSD,
+          compareAtUSD: seed.compareAtUSD,
+          marketPrices: { ...(seed.marketPrices ?? {}) },
+          marketComparePrices: { ...(seed.marketComparePrices ?? {}) },
         };
       }
 

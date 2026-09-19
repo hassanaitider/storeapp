@@ -1,4 +1,5 @@
-import { getCountry, SPANISH_MARKET_CODES } from "./countries";
+import { currencyForCountry, getCountry, SPANISH_MARKET_CODES } from "./countries";
+import { DEFAULT_CURRENCY_RATES } from "./currency";
 import type { CountryCode, Product } from "./types";
 
 const COD_AR =
@@ -15,18 +16,47 @@ type LocalPrice = {
   compareAtUSD: number;
 };
 
-/** Local retail prices for the 7-in-1 magnetic power bank in LATAM COD markets. */
-const MAG_BANK_PRICES: Partial<Record<CountryCode, LocalPrice>> = {
-  MX: { price: 909, compare: 1459, priceUSD: 49, compareAtUSD: 79 },
-  AR: { price: 51490, compare: 82990, priceUSD: 49, compareAtUSD: 79 },
-  CR: { price: 24990, compare: 40290, priceUSD: 49, compareAtUSD: 79 },
-  EC: { price: 49, compare: 79, priceUSD: 49, compareAtUSD: 79 },
-  GT: { price: 379, compare: 609, priceUSD: 49, compareAtUSD: 79 },
-  HN: { price: 1249, compare: 2019, priceUSD: 49, compareAtUSD: 79 },
-  SV: { price: 49, compare: 79, priceUSD: 49, compareAtUSD: 79 },
-  NI: { price: 1799, compare: 2899, priceUSD: 49, compareAtUSD: 79 },
-  DO: { price: 2969, compare: 4790, priceUSD: 49, compareAtUSD: 79 },
-};
+const MAG_USD = 49;
+const MAG_COMPARE_USD = 79;
+
+function usdToLatamLocal(country: CountryCode, usd: number): number {
+  const code = currencyForCountry(country);
+  if (code === "USD") return usd;
+  const raw = usd * DEFAULT_CURRENCY_RATES[code];
+  if (raw >= 10000) return Math.round(raw / 10) * 10;
+  if (raw >= 1000) return Math.round(raw / 10) * 10;
+  if (raw >= 100) return Math.round(raw / 10) * 10 - 1;
+  return Math.round(raw);
+}
+
+/** $49 USD (and $79 compare) converted for every LATAM store market. */
+const MAG_BANK_PRICES: Record<CountryCode, LocalPrice> = Object.fromEntries(
+  SPANISH_MARKET_CODES.map((country) => [
+    country,
+    {
+      price: usdToLatamLocal(country, MAG_USD),
+      compare: usdToLatamLocal(country, MAG_COMPARE_USD),
+      priceUSD: MAG_USD,
+      compareAtUSD: MAG_COMPARE_USD,
+    },
+  ])
+) as Record<CountryCode, LocalPrice>;
+
+const MAG_MARKET_PRICES: Partial<Record<CountryCode, number>> =
+  Object.fromEntries(
+    SPANISH_MARKET_CODES.map((country) => [
+      country,
+      MAG_BANK_PRICES[country].price,
+    ])
+  );
+
+const MAG_MARKET_COMPARE: Partial<Record<CountryCode, number>> =
+  Object.fromEntries(
+    SPANISH_MARKET_CODES.map((country) => [
+      country,
+      MAG_BANK_PRICES[country].compare,
+    ])
+  );
 
 const IMAGES = [
   "/products/mag-powerbank-1.jpg",
@@ -263,10 +293,10 @@ export const LATAM_MAG_POWERBANK_PRODUCTS: Product[] = SPANISH_MARKET_CODES.map(
       slug: MAG_POWERBANK_SLUG,
       categoryId: `cat-${country}`,
       availableIn: [country],
-      priceUSD: local.priceUSD,
-      compareAtUSD: local.compareAtUSD,
-      marketPrices: { [country]: local.price },
-      marketComparePrices: { [country]: local.compare },
+      priceUSD: MAG_USD,
+      compareAtUSD: MAG_COMPARE_USD,
+      marketPrices: { ...MAG_MARKET_PRICES },
+      marketComparePrices: { ...MAG_MARKET_COMPARE },
     };
   }
 );
