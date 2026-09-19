@@ -30,12 +30,28 @@ import {
 } from "@/lib/countries";
 import { getProductLocalPrice, isProductAvailableIn, resolveProductMarket } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
-import type { CountryCode, ProductQtyOffer } from "@/lib/types";
+import type { CountryCode, Order, ProductQtyOffer } from "@/lib/types";
 import {
   ProductQtyOffersEditor,
   qtyOfferSummary,
 } from "@/components/admin/ProductQtyOffersEditor";
 import { withLatamThreeQtyOffers, isCodQtyUpsellEnabled } from "@/lib/qty-upsell";
+
+/** Display-only: join already-saved address fields. Does not change checkout. */
+function formatOrderCustomerAddress(customer: Order["customer"]): string {
+  return [
+    customer.address,
+    customer.city,
+    customer.neighborhood,
+    customer.district,
+    customer.state,
+    customer.postalCode,
+  ]
+    .map((part) => (part ?? "").trim())
+    .filter(Boolean)
+    .filter((part, index, all) => all.indexOf(part) === index)
+    .join(" · ");
+}
 
 type Tab =
   | "overview"
@@ -1013,7 +1029,9 @@ function AdminDashboard() {
                 </p>
               ) : (
                 <div className="space-y-3">
-                  {orders.map((o) => (
+                  {orders.map((o) => {
+                    const addressLine = formatOrderCustomerAddress(o.customer);
+                    return (
                     <div
                       key={o.id}
                       className="rounded-2xl border border-sand-200 bg-white p-4"
@@ -1024,6 +1042,16 @@ function AdminDashboard() {
                           <p className="text-sm text-[var(--muted)]">
                             {o.customer.phone} · {o.country}
                           </p>
+                          {addressLine ? (
+                            <p className="mt-2 text-sm text-ink-800">
+                              {t.checkout.address}: {addressLine}
+                            </p>
+                          ) : null}
+                          {o.customer.notes?.trim() ? (
+                            <p className="mt-1 text-sm text-[var(--muted)]">
+                              {t.checkout.notes}: {o.customer.notes}
+                            </p>
+                          ) : null}
                           <p className="mt-1 text-xs text-[var(--muted)]">
                             {new Date(o.createdAt).toLocaleString(
                               locale === "ar" ? "fr-FR" : "en-US"
@@ -1040,7 +1068,8 @@ function AdminDashboard() {
                         </div>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
