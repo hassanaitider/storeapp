@@ -7,7 +7,7 @@ import type { Locale, Product } from "@/lib/types";
 import { ProductImage } from "@/components/shop/ProductImage";
 
 const STATS = [
-  { value: "10.000", labelAr: "mAh", labelEn: "mAh", labelEs: "mAh" },
+  { value: "LED", labelAr: "شاشة رقمية", labelEn: "digital screen", labelEs: "pantalla digital" },
   { value: "4", labelAr: "كابلات مدمجة", labelEn: "built-in cables", labelEs: "cables integrados" },
   { value: "22.5W", labelAr: "شحن سلكي", labelEn: "wired charge", labelEs: "carga por cable" },
   { value: "15W", labelAr: "شحن مغناطيسي", labelEn: "magnetic charge", labelEs: "carga magnética" },
@@ -72,17 +72,17 @@ export function MagPowerBankStory({
               <li>
                 {loc(
                   locale,
-                  "تشحن ولا تثبت الجوال",
-                  "It charges, but does not hold the phone",
-                  "Carga, pero no sujeta el móvil"
+                  "ما كاينش شاشة تبين النسبة",
+                  "No screen to show remaining charge",
+                  "Sin pantalla que muestre el porcentaje"
                 )}
               </li>
               <li>
                 {loc(
                   locale,
-                  "جهاز إضافي يزيد الوزن",
-                  "One more brick in the bag",
-                  "Otro ladrillo más en la mochila"
+                  "تشحن ولا تثبت الجوال",
+                  "It charges, but does not hold the phone",
+                  "Carga, pero no sujeta el móvil"
                 )}
               </li>
             </ul>
@@ -95,9 +95,9 @@ export function MagPowerBankStory({
               <li>
                 {loc(
                   locale,
-                  "USB-C وLightning وMicro وUSB-A مدمجة",
-                  "USB-C, Lightning, Micro, and USB-A built in",
-                  "USB-C, Lightning, Micro y USB-A integrados"
+                  "شاشة رقمية + USB-C وLightning وMicro وUSB-A",
+                  "Digital screen plus USB-C, Lightning, Micro, and USB-A",
+                  "Pantalla digital y USB-C, Lightning, Micro y USB-A"
                 )}
               </li>
               <li>

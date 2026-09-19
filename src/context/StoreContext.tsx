@@ -336,6 +336,17 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       if (magMatch && seed.availableIn?.length) {
         return {
           ...base,
+          nameAr: seed.nameAr,
+          nameEn: seed.nameEn,
+          nameEs: seed.nameEs,
+          descriptionAr: seed.descriptionAr,
+          descriptionEn: seed.descriptionEn,
+          descriptionEs: seed.descriptionEs,
+          detailsAr: seed.detailsAr,
+          detailsEn: seed.detailsEn,
+          detailsEs: seed.detailsEs,
+          landing: seed.landing,
+          images: [...(seed.images ?? [])],
           categoryId: seed.categoryId,
           availableIn: [...seed.availableIn],
           slug: seed.slug,

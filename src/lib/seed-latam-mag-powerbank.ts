@@ -98,6 +98,8 @@ const IMAGES = [
   "/products/mag-powerbank-2.jpg",
   "/products/mag-powerbank-3.jpg",
   "/products/mag-powerbank-4.jpg",
+  "/products/mag-powerbank-5.jpg",
+  "/products/mag-powerbank-6.jpg",
 ];
 
 export const MAG_POWERBANK_SLUG = "bateria-portatil-magnetica-7en1";
@@ -119,57 +121,60 @@ function buildMagPowerBank(country: CountryCode): Omit<
     nameEn: "7-in-1 Magnetic Power Bank",
     nameEs: "Batería Portátil Magnética 7 en 1",
     descriptionAr: `
-<h3>شحن مغناطيسي + 4 كابلات في جهاز واحد</h3>
-<p>سعة 10.000 mAh، شحن لاسلكي 15W، شحن سلكي 22.5W، وأربعة كابلات مدمجة — بدون ما تدور على الشاحن المناسب.</p>
+<h3>شاشة رقمية + 4 كابلات مدمجة + شحن مغناطيسي</h3>
+<p>الموديل الجديد يبيّن نسبة الشحن على الشاشة، يلتصق بالمغناطيس حتى 15W، ويشحن بالكابل حتى 22.5W — وأربعة كابلات جاهزة من غير ما تدور على الشاحن.</p>
 <ul>
-<li>شحن حتى خمسة أجهزة في نفس الوقت</li>
-<li>كابلات USB-C وLightning وMicro-USB وUSB-A مدمجة</li>
-<li>قاعدة مغناطيسية للساعة والجوال</li>
-<li>خفيف للسفر والاستخدام اليومي</li>
+<li>شاشة رقمية تعرض نسبة البطارية</li>
+<li>4 كابلات مدمجة: USB-C وLightning وMicro-USB وUSB-A</li>
+<li>شحن مغناطيسي لاسلكي حتى 15W</li>
+<li>شحن سريع سلكي حتى 22.5W لآيفون وأندرويد</li>
 </ul>
 ${COD_AR}`.trim(),
     descriptionEn: `
-<h3>Magnetic charging + 4 built-in cables, one device</h3>
-<p>10,000 mAh, 15W wireless, 22.5W wired, and four cables already on the pack — no extra charger hunt.</p>
+<h3>Digital screen + 4 built-in cables + magnetic charge</h3>
+<p>The new model shows remaining charge on the screen, snaps on magnetically at up to 15W, and outputs up to 22.5W by cable — with four cables already on the pack.</p>
 <ul>
-<li>Charge up to five devices at once</li>
-<li>Built-in USB-C, Lightning, Micro-USB, and USB-A</li>
-<li>Magnetic pad for watch and phone</li>
-<li>Light enough for daily carry and travel</li>
+<li>Digital screen that shows battery percent</li>
+<li>4 built-in cables: USB-C, Lightning, Micro-USB, and USB-A</li>
+<li>Magnetic wireless charging up to 15W</li>
+<li>Wired fast charging up to 22.5W for iPhone and Android</li>
 </ul>
 ${COD_EN}`.trim(),
     descriptionEs: `
-<h3>Carga magnética y 4 cables, en un solo aparato</h3>
-<p>10.000 mAh, carga inalámbrica de 15W, carga por cable de 22.5W y cuatro cables integrados — <strong>sin buscar el cargador correcto</strong> cada vez que sales.</p>
+<h3>Pantalla digital + 4 cables integrados + carga magnética</h3>
+<p>El modelo nuevo muestra el porcentaje en pantalla, se fija al móvil con imán hasta 15W y carga por cable hasta 22.5W — con cuatro cables ya listos, sin buscar el cargador.</p>
 <ul>
-<li>Hasta cinco dispositivos al mismo tiempo</li>
-<li>USB-C, Lightning, Micro-USB y USB-A ya en la batería</li>
-<li>Base magnética para reloj y móvil</li>
-<li>Compacta para el bolso, el trabajo y el viaje</li>
+<li>Pantalla digital con el porcentaje de batería</li>
+<li>4 cables integrados: USB-C, Lightning, Micro-USB y USB-A</li>
+<li>Carga inalámbrica magnética de hasta 15W</li>
+<li>Carga rápida por cable de hasta 22.5W para iPhone y Android</li>
 </ul>
 ${COD_ES}`.trim(),
     detailsAr: [
+      "شاشة رقمية تعرض نسبة الشحن",
       "سعة 10.000 mAh للاستخدام اليومي",
       "شحن لاسلكي مغناطيسي حتى 15W",
       "شحن سريع بالكابل حتى 22.5W",
       "4 كابلات مدمجة: USB-C · Lightning · Micro-USB · USB-A",
-      "شحن الساعة والجوال والسماعات معًا",
+      "مناسب لآيفون وأندرويد",
       "إعادة شحن البطارية عبر USB-C",
     ],
     detailsEn: [
+      "Digital screen shows remaining charge",
       "10,000 mAh for daily use",
       "Magnetic wireless charging up to 15W",
       "Wired fast charging up to 22.5W",
       "4 built-in cables: USB-C · Lightning · Micro-USB · USB-A",
-      "Charge a watch, phone, and earbuds together",
+      "Works with iPhone and Android",
       "Recharge the pack over USB-C",
     ],
     detailsEs: [
+      "Pantalla digital con el porcentaje de carga",
       "10.000 mAh para el día a día",
       "Carga inalámbrica magnética de hasta 15W",
       "Carga rápida por cable de hasta 22.5W",
       "4 cables integrados: USB-C · Lightning · Micro-USB · USB-A",
-      "Carga reloj, móvil y auriculares a la vez",
+      "Sirve para iPhone y Android",
       "Se recarga a sí misma por USB-C",
     ],
     images: IMAGES,
@@ -200,87 +205,122 @@ ${COD_ES}`.trim(),
     reviewCount: 214,
     createdAt: "2026-09-19T18:00:00.000Z",
     landing: {
-      headlineAr: "بطارية واحدة بدل كابل وشاحن ومنصة",
-      headlineEn: "One pack instead of cables, a charger, and a stand",
-      headlineEs: `Una sola batería para el día a día en ${marketNameEs}`,
+      headlineAr: "شاشة رقمية وكابلات جاهزة في بطارية واحدة",
+      headlineEn: "A digital screen and ready cables in one pack",
+      headlineEs: `Pantalla digital y cables listos, en una sola batería para ${marketNameEs}`,
       introAr:
-        "المشكلة ليست فقط نفاد الشحن. المشكلة أن البطارية العادية تحتاج كابل ومنصة وشاحن إضافي. هذا الجهاز يجمع الشحن المغناطيسي والكابلات المدمجة والشحن السريع في قطعة واحدة خفيفة.",
+        "الموديل الجديد يبيّن النسبة على الشاشة، يلتصق بالمغناطيس، ويطلع بأربعة كابلات مدمجة. تشحن الجوال وهو ثابت على الظهر، أو توصل أي جهاز بالكابل الصحيح من غير ما تدور عليه.",
       introEn:
-        "The hassle is not only a dead battery. A typical power bank still needs the right cable and a place to rest the phone. This pack adds magnetic wireless charging, built-in cables, and fast wired output in one light piece.",
+        "The new model shows remaining charge on the screen, snaps on magnetically, and carries four built-in cables. Charge the phone on the back, or plug any device without hunting for the right cord.",
       introEs:
-        "El problema no es solo quedarte sin batería. Es depender de una power bank que también necesita cables y un sitio donde apoyar el móvil. Esta pieza junta carga magnética, cables integrados y carga rápida en un formato de bolsillo.",
+        "El modelo nuevo muestra el porcentaje en pantalla, se pega al móvil con imán y trae cuatro cables integrados. Cargas el teléfono fijo en la parte de atrás, o conectas cualquier aparato sin buscar el cable correcto.",
       sections: [
         {
-          titleAr: "حتى خمسة أجهزة في نفس الوقت",
-          titleEn: "Up to five devices at the same time",
-          titleEs: "Hasta cinco dispositivos al mismo tiempo",
+          titleAr: "شاشة رقمية تبين النسبة",
+          titleEn: "A digital screen that shows the percent",
+          titleEs: "Pantalla digital con el porcentaje",
           bodyAr:
-            "كابل للجوال، كابل للجهاز اللوحي، قاعدة مغناطيسية للساعة، ومنفذ للسماعات. تخرج من البيت بشاحن واحد بدل حقيبة أسلاك.",
+            "ما تقدّرش على التخمين. الشاشة تعرض مستوى الشحن وأنت في الطريق — تعرف واش باقي يكفي لباقي اليوم.",
           bodyEn:
-            "A cable for the phone, another for a tablet, a magnetic pad for the watch, and a port for earbuds. Leave home with one charger instead of a bag of cords.",
+            "No guessing. The screen shows remaining charge while you are out — you know if it still covers the rest of the day.",
           bodyEs:
-            "Un cable para el móvil, otro para la tablet, la base magnética para el reloj y un puerto para los auriculares. Sales de casa con un solo cargador, no con un lío de cables.",
+            "Sin adivinar. La pantalla muestra la carga que queda mientras sales — sabes si te alcanza para el resto del día.",
           image: "/products/mag-powerbank-1.jpg",
         },
         {
-          titleAr: "أربعة كابلات جاهزة من الخلف",
-          titleEn: "Four cables ready on the back",
-          titleEs: "Cuatro cables listos en la parte de atrás",
+          titleAr: "مغناطيس للجوال وكابلات للجهاز الثاني",
+          titleEn: "Magnetic for the phone, cables for the rest",
+          titleEs: "Imán para el móvil y cables para lo demás",
           bodyAr:
-            "USB-C وLightning وMicro-USB وUSB-A مدمجة. ما تحتاجش تدور على الكابل الصحيح وأنت مستعجل. الشحن السلكي حتى 22.5W، والمغناطيسي حتى 15W.",
+            "قطعة تلتصق بظهر الجوال المتوافق، والقطعة الثانية فيها أربعة كابلات مدمجة. تختار حسب الجهاز اللي معاك.",
           bodyEn:
-            "USB-C, Lightning, Micro-USB, and USB-A are built in. You do not hunt for the right cable when you are in a hurry. Wired charging up to 22.5W, magnetic wireless up to 15W.",
+            "One piece snaps onto a compatible phone; the other carries four built-in cables. Use whichever matches the device in your hand.",
           bodyEs:
-            "Trae USB-C, Lightning, Micro-USB y USB-A integrados. No buscas el cable correcto cuando tienes prisa. Carga por cable de hasta 22.5W y magnética inalámbrica de hasta 15W.",
+            "Una pieza se fija al móvil compatible; la otra trae cuatro cables integrados. Usas la que corresponde al aparato que llevas.",
           image: "/products/mag-powerbank-2.jpg",
         },
         {
-          titleAr: "شحن لاسلكي مغناطيسي للساعة والجوال",
-          titleEn: "Magnetic wireless charging for watch and phone",
-          titleEs: "Carga inalámbrica magnética para reloj y móvil",
+          titleAr: "شحن مغناطيسي حتى 15W",
+          titleEn: "Magnetic charging up to 15W",
+          titleEs: "Carga magnética de hasta 15W",
           bodyAr:
-            "ضع الساعة أو الجوال المتوافق على القاعدة المغناطيسية. يثبت الجهاز وهو يشحن — مفيد على المكتب أو في الطريق.",
+            "حط الجوال المتوافق على القاعدة. يثبت وهو يشحن حتى 15W — على المكتب أو في الطريق، من غير كابل ظاهر.",
           bodyEn:
-            "Set a compatible watch or phone on the magnetic pad. It stays in place while it charges — useful at a desk or on the go.",
+            "Set a compatible phone on the pad. It stays put while it charges at up to 15W — at a desk or on the go, with no loose cable.",
           bodyEs:
-            "Apoya el reloj o un móvil compatible sobre la base magnética. Queda sujeto mientras carga — útil en el escritorio o de camino.",
+            "Apoya el móvil compatible. Queda sujeto mientras carga hasta 15W — en el escritorio o de camino, sin un cable suelto.",
           image: "/products/mag-powerbank-3.jpg",
         },
         {
-          titleAr: "تعيد شحن نفسها بكابل USB-C",
-          titleEn: "It recharges itself with USB-C",
-          titleEs: "Se recarga sola con cable USB-C",
+          titleAr: "ألوان متعددة، نفس القوة",
+          titleEn: "Several colors, the same power",
+          titleEs: "Varios colores, la misma potencia",
           bodyAr:
-            "وصّل USB-C بالمقبس. الشحن السريع يملأ البطارية أسرع من باور بانك عادي، ثم ترجع تخدمك طوال اليوم.",
+            "أبيض، أزرق، بنفسجي أو برتقالي. الشحن السلكي حتى 22.5W، والمغناطيسي حتى 15W — تكتب اللون اللي بغيتي قبل تأكيد الطلب.",
           bodyEn:
-            "Plug USB-C into the wall adapter. Fast input fills the pack quicker than a typical brick, then it is ready for the rest of the day.",
+            "White, blue, purple, or orange. Wired charging up to 22.5W and magnetic wireless up to 15W — type the color you want before you confirm.",
           bodyEs:
-            "Conecta el USB-C al enchufe. La recarga rápida llena la batería antes que un power bank clásico, y vuelve a estar lista para el día.",
+            "Blanco, azul, lila o naranja. Carga por cable de hasta 22.5W y magnética de hasta 15W — escribe el color que quieres antes de confirmar.",
           image: "/products/mag-powerbank-4.jpg",
+        },
+        {
+          titleAr: "أربعة كابلات مدمجة من الخلف",
+          titleEn: "Four cables built into the back",
+          titleEs: "Cuatro cables integrados atrás",
+          bodyAr:
+            "USB-C وLightning وMicro-USB وUSB-A جاهزين. الشحن السلكي حتى 22.5W. ما تحتاجش كابل زيادة في الحقيبة.",
+          bodyEn:
+            "USB-C, Lightning, Micro-USB, and USB-A are already there. Wired output up to 22.5W. You do not pack a spare cable.",
+          bodyEs:
+            "USB-C, Lightning, Micro-USB y USB-A ya van en la batería. Salida por cable de hasta 22.5W. No llevas un cable extra en el bolso.",
+          image: "/products/mag-powerbank-5.jpg",
+        },
+        {
+          titleAr: "آيفون وأندرويد في نفس الجهاز",
+          titleEn: "iPhone and Android on the same pack",
+          titleEs: "iPhone y Android en la misma batería",
+          bodyAr:
+            "مغناطيس للجوال المتوافق، وكابلات لباقي الأجهزة. تخرج بشاحن واحد بدل ثلاثة.",
+          bodyEn:
+            "Magnetic hold for a compatible phone, plus cables for everything else. Leave with one charger instead of three.",
+          bodyEs:
+            "Sujeción magnética para el móvil compatible y cables para el resto. Sales con un solo cargador, no con tres.",
+          image: "/products/mag-powerbank-6.jpg",
         },
       ],
       benefitsAr: [
-        "10.000 mAh بدون وزن زايد",
-        "4 كابلات مدمجة لكل الأجهزة الشائعة",
+        "شاشة رقمية تعرض نسبة الشحن",
+        "4 كابلات مدمجة لآيفون وأندرويد",
         "شحن مغناطيسي 15W وشحن سلكي 22.5W",
-        "حتى 5 أجهزة معًا",
+        "10.000 mAh بدون وزن زايد",
         "توصيل مجاني والدفع عند الاستلام",
       ],
       benefitsEn: [
-        "10,000 mAh without extra bulk",
-        "4 built-in cables for common phones",
+        "Digital screen shows remaining charge",
+        "4 built-in cables for iPhone and Android",
         "15W magnetic wireless and 22.5W wired",
-        "Up to 5 devices at once",
+        "10,000 mAh without extra bulk",
         "Free delivery and cash on delivery",
       ],
       benefitsEs: [
-        "10.000 mAh sin cargar un ladrillo",
+        "Pantalla digital con el porcentaje de carga",
         "4 cables integrados para iPhone y Android",
         "15W magnética y 22.5W por cable",
-        "Hasta 5 dispositivos a la vez",
+        "10.000 mAh sin cargar un ladrillo",
         "Envío gratis y pago contra entrega",
       ],
       faq: [
+        {
+          questionAr: "واش كاين شاشة؟",
+          questionEn: "Does it have a screen?",
+          questionEs: "¿Trae pantalla?",
+          answerAr:
+            "نعم. الموديل الجديد فيه شاشة رقمية تبين نسبة الشحن المتبقية.",
+          answerEn:
+            "Yes. The new model has a digital screen that shows remaining charge.",
+          answerEs:
+            "Sí. El modelo nuevo tiene una pantalla digital que muestra el porcentaje que queda.",
+        },
         {
           questionAr: "هل يناسب آيفون وأندرويد؟",
           questionEn: "Does it work with iPhone and Android?",
@@ -296,10 +336,10 @@ ${COD_ES}`.trim(),
           questionAr: "كم جهاز يشحن في نفس الوقت؟",
           questionEn: "How many devices can it charge at once?",
           questionEs: "¿Cuántos dispositivos carga a la vez?",
-          answerAr: "حتى خمسة: كابلات مدمجة بالإضافة إلى الشحن اللاسلكي المغناطيسي.",
+          answerAr: "حتى خمسة: الكابلات المدمجة بالإضافة إلى الشحن المغناطيسي.",
           answerEn: "Up to five: the built-in cables plus magnetic wireless charging.",
           answerEs:
-            "Hasta cinco: los cables integrados más la carga inalámbrica magnética.",
+            "Hasta cinco: los cables integrados más la carga magnética inalámbrica.",
         },
         {
           questionAr: "كيف أختار اللون؟",
