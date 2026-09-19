@@ -11,6 +11,7 @@ import React, {
   type ReactNode,
 } from "react";
 import { SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed";
+import { isRetiredStoreProduct } from "@/lib/seed-universal-products";
 import {
   currencyForCountry,
   DEFAULT_COUNTRY,
@@ -222,9 +223,6 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   const allowedCats = new Set(SEED_CATEGORIES.map((c) => c.id));
   const seedById = new Map(SEED_PRODUCTS.map((p) => [p.id, p]));
   const upsellSlugs = slugFlagSet(stored, "qtyUpsellEnabled");
-  /** Old LATAM clones of MENA-only tools + legacy single Elevador id (replaced by per-country rows). */
-  const dropLatamUniversalClone =
-    /^prod-(car-windshield-umbrella|neck-fan)-(mx|ar|cr|ec|gt|hn|sv|ni|do)$/i;
   const dropLegacyElevador = /^prod-mattress-lifter$/i;
   const elevadorPerMarket = /^prod-mattress-lifter-([a-z]{2})$/i;
   const merged = stored
@@ -339,7 +337,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
     .filter(
       (p) =>
         (!p.categoryId || allowedCats.has(p.categoryId)) &&
-        !dropLatamUniversalClone.test(p.id) &&
+        !isRetiredStoreProduct(p) &&
         !dropLegacyElevador.test(p.id)
     );
   for (const seed of SEED_PRODUCTS) {
@@ -526,7 +524,9 @@ function applyPersisted(
       parsed.categories?.length ? parsed.categories : undefined
     ),
     orders: Array.isArray(parsed.orders) ? parsed.orders : [],
-    cart: Array.isArray(parsed.cart) ? parsed.cart : [],
+    cart: (Array.isArray(parsed.cart) ? parsed.cart : []).filter(
+      (item) => !isRetiredStoreProduct({ id: item.productId })
+    ),
     // Opt-in only: missing/undefined means hidden until admin enables.
     upsellEnabled: parsed.upsellEnabled === true,
   };
