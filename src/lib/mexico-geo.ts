@@ -1,5 +1,3 @@
-import { mergePlaceOptions } from "./latam-neighborhoods";
-
 /** Mexico — complete Estado → Municipio → Colonia list. */
 export type MexicoGeoTree = Record<string, Record<string, string[]>>;
 
@@ -7484,10 +7482,6 @@ const MX_MISSING_MUNICIPIOS: Record<string, string[]> = {
 };
 
 function applyMexicoGeoPatches() {
-  if (GEO_MX["Distrito Federal"] && !GEO_MX["Ciudad de México"]) {
-    GEO_MX["Ciudad de México"] = GEO_MX["Distrito Federal"];
-    delete GEO_MX["Distrito Federal"];
-  }
   for (const [estado, munis] of Object.entries(MX_MISSING_MUNICIPIOS)) {
     const bucket = GEO_MX[estado];
     if (!bucket) continue;
@@ -7503,24 +7497,16 @@ export function usesMexicoCodCheckout(country: string): boolean {
   return country.toUpperCase() === "MX";
 }
 
-function mexicoEstadoKey(estado: string): string {
-  if (estado === "Distrito Federal") return "Ciudad de México";
-  return estado;
-}
-
 export function mexicoEstados(): string[] {
   return Object.keys(GEO_MX).sort((a, b) => a.localeCompare(b, "es"));
 }
 
 export function mexicoMunicipios(estado: string): string[] {
-  const key = mexicoEstadoKey(estado);
-  return Object.keys(GEO_MX[key] ?? GEO_MX[estado] ?? {}).sort((a, b) =>
+  return Object.keys(GEO_MX[estado] ?? {}).sort((a, b) =>
     a.localeCompare(b, "es")
   );
 }
 
 export function mexicoColonias(estado: string, municipio: string): string[] {
-  const key = mexicoEstadoKey(estado);
-  const base = GEO_MX[key]?.[municipio] ?? GEO_MX[estado]?.[municipio] ?? [];
-  return mergePlaceOptions("MX", key, municipio, base);
+  return GEO_MX[estado]?.[municipio] ?? [];
 }

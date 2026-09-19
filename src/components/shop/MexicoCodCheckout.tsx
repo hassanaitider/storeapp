@@ -13,9 +13,7 @@ import { selectedQtyTotalLocal } from "@/components/shop/ProductQtyUpsell";
 import { formatMexicoCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
-import { LatamOtherPlaceField } from "@/components/shop/LatamOtherPlaceField";
 import { useLiveProduct } from "@/context/StoreContext";
-import { resolvePlace } from "@/lib/latam-other-place";
 import {
   mexicoColonias,
   mexicoEstados,
@@ -104,7 +102,6 @@ export function MexicoCodCheckout({
   const [estado, setEstado] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [colonia, setColonia] = useState("");
-  const [coloniaOtra, setColoniaOtra] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
 
   const estados = useMemo(() => mexicoEstados(), []);
@@ -117,11 +114,9 @@ export function MexicoCodCheckout({
   useEffect(() => {
     setMunicipio("");
     setColonia("");
-    setColoniaOtra("");
   }, [estado]);
   useEffect(() => {
     setColonia("");
-    setColoniaOtra("");
   }, [municipio]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
@@ -134,15 +129,14 @@ export function MexicoCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    const coloniaFinal = resolvePlace(colonia, coloniaOtra);
-    if (!estado || !municipio || !coloniaFinal) {
+    if (!estado || !municipio || !colonia) {
       window.alert("Selecciona estado, municipio y colonia");
       return;
     }
     const notesParts = [
       `Estado: ${estado}`,
       `Delegación/Municipio: ${municipio}`,
-      `Colonia: ${coloniaFinal}`,
+      `Colonia: ${colonia}`,
       codigoPostal.trim() ? `CP: ${codigoPostal.trim()}` : "",
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
@@ -150,7 +144,7 @@ export function MexicoCodCheckout({
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${coloniaFinal}, ${municipio}, ${estado}`,
+      city: `${colonia}, ${municipio}, ${estado}`,
       address: direccion.trim(),
       notes: notesParts.join(" · "),
     });
@@ -249,12 +243,6 @@ export function MexicoCodCheckout({
           options={colonias}
           required
           disabled={!municipio}
-        />
-        <LatamOtherPlaceField
-          selected={colonia}
-          value={coloniaOtra}
-          onChange={setColoniaOtra}
-          placeholder="Escribe tu colonia"
         />
         <IconField
           icon={<MapPin className="h-4 w-4" />}

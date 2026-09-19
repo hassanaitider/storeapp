@@ -1,5 +1,4 @@
 import type { CountryCode } from "./types";
-import { mergePlaceOptions } from "./latam-neighborhoods";
 
 /** Cascading location tree: Departamento → Municipio → Poblado[] */
 export type LatamGeoTree = Record<string, Record<string, string[]>>;
@@ -4128,15 +4127,6 @@ function applyLatamGeoPatches() {
 }
 
 applyLatamGeoPatches();
-
-export function enrichLatamPoblados(
-  country: CountryCode,
-  departamento: string,
-  municipio: string,
-  base: string[]
-): string[] {
-  return mergePlaceOptions(country, departamento, municipio, base);
-}
 
 export function geoTreeForCountry(country: CountryCode): LatamGeoTree | null {
   if (country === "GT") return GEO_GT;

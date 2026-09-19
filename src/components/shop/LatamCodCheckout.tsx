@@ -15,9 +15,7 @@ import { formatLocalAmount } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
-import { LatamOtherPlaceField } from "@/components/shop/LatamOtherPlaceField";
-import { codFormLabel, enrichLatamPoblados, geoTreeForCountry } from "@/lib/latam-geo";
-import { resolvePlace } from "@/lib/latam-other-place";
+import { codFormLabel, geoTreeForCountry } from "@/lib/latam-geo";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -101,7 +99,6 @@ export function LatamCodCheckout({
   const [departamento, setDepartamento] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [poblado, setPoblado] = useState("");
-  const [pobladoOtro, setPobladoOtro] = useState("");
   const [direccion, setDireccion] = useState("");
   const [referencia, setReferencia] = useState("");
   const loc =
@@ -115,38 +112,29 @@ export function LatamCodCheckout({
       : {
           l1: "Departamento",
           l2: "Municipio",
-          l3: "Colonia / Zona",
-          missing: "Selecciona departamento, municipio y colonia/zona",
+          l3: "Poblado",
+          missing: "Selecciona departamento, municipio y poblado",
         };
 
   const departamentos = useMemo(
-    () => (tree ? Object.keys(tree).sort((a, b) => a.localeCompare(b, "es")) : []),
+    () => (tree ? Object.keys(tree) : []),
     [tree]
   );
   const municipios = useMemo(() => {
     if (!tree || !departamento) return [];
-    return Object.keys(tree[departamento] ?? {}).sort((a, b) =>
-      a.localeCompare(b, "es")
-    );
+    return Object.keys(tree[departamento] ?? {});
   }, [tree, departamento]);
   const poblados = useMemo(() => {
     if (!tree || !departamento || !municipio) return [];
-    return enrichLatamPoblados(
-      country,
-      departamento,
-      municipio,
-      tree[departamento]?.[municipio] ?? []
-    );
-  }, [tree, country, departamento, municipio]);
+    return tree[departamento]?.[municipio] ?? [];
+  }, [tree, departamento, municipio]);
 
   useEffect(() => {
     setMunicipio("");
     setPoblado("");
-    setPobladoOtro("");
   }, [departamento]);
   useEffect(() => {
     setPoblado("");
-    setPobladoOtro("");
   }, [municipio]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
@@ -159,15 +147,14 @@ export function LatamCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    const pobladoFinal = resolvePlace(poblado, pobladoOtro);
-    if (!departamento || !municipio || !pobladoFinal) {
+    if (!departamento || !municipio || !poblado) {
       window.alert(loc.missing);
       return;
     }
     const notesParts = [
       `${loc.l1}: ${departamento}`,
       `${loc.l2}: ${municipio}`,
-      `${loc.l3}: ${pobladoFinal}`,
+      `${loc.l3}: ${poblado}`,
       referencia.trim() ? `Referencia: ${referencia.trim()}` : "",
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
@@ -175,7 +162,7 @@ export function LatamCodCheckout({
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${departamento} / ${municipio} / ${pobladoFinal}`,
+      city: `${departamento} / ${municipio} / ${poblado}`,
       address: direccion.trim(),
       notes: notesParts.join(" · "),
     });
@@ -253,12 +240,6 @@ export function LatamCodCheckout({
           options={poblados}
           required
           disabled={!municipio}
-        />
-        <LatamOtherPlaceField
-          selected={poblado}
-          value={pobladoOtro}
-          onChange={setPobladoOtro}
-          placeholder={`Escribe tu ${loc.l3.toLowerCase()}`}
         />
 
         <IconField

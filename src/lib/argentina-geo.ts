@@ -1,6 +1,3 @@
-import { mergePlaceOptions } from "./latam-neighborhoods";
-import { withOtherPlace } from "./latam-other-place";
-
 /** Argentina — complete Provincia → Localidad list (official). */
 export type ArgentinaGeoTree = Record<string, string[]>;
 
@@ -2443,12 +2440,5 @@ export function argentinaProvincias(): string[] {
 
 export function argentinaLocalidades(provincia: string): string[] {
   const key = provincia === "Río negro" ? "Río Negro" : provincia;
-  const list = [...(GEO_AR[key] ?? GEO_AR[provincia] ?? [])].sort((a, b) =>
-    a.localeCompare(b, "es")
-  );
-  return withOtherPlace(list);
-}
-
-export function argentinaBarrios(provincia: string, localidad: string): string[] {
-  return mergePlaceOptions("AR", provincia, localidad, []);
+  return GEO_AR[key] ?? GEO_AR[provincia] ?? [];
 }

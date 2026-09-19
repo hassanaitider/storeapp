@@ -14,9 +14,7 @@ import { formatEcuadorCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
-import { LatamOtherPlaceField } from "@/components/shop/LatamOtherPlaceField";
-import { ecuadorBarrios, ecuadorCiudades, ecuadorProvincias } from "@/lib/ecuador-geo";
-import { resolvePlace } from "@/lib/latam-other-place";
+import { ecuadorCiudades, ecuadorProvincias } from "@/lib/ecuador-geo";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -112,28 +110,14 @@ export function EcuadorCodCheckout({
   const [direccion, setDireccion] = useState("");
   const [provincia, setProvincia] = useState("");
   const [ciudad, setCiudad] = useState("");
-  const [ciudadOtra, setCiudadOtra] = useState("");
-  const [barrio, setBarrio] = useState("");
-  const [barrioOtro, setBarrioOtro] = useState("");
   const [referencia, setReferencia] = useState("");
 
   const provincias = useMemo(() => ecuadorProvincias(), []);
   const ciudades = useMemo(() => ecuadorCiudades(provincia), [provincia]);
-  const barrios = useMemo(
-    () => ecuadorBarrios(provincia, resolvePlace(ciudad, ciudadOtra) || ciudad),
-    [provincia, ciudad, ciudadOtra]
-  );
 
   useEffect(() => {
     setCiudad("");
-    setCiudadOtra("");
-    setBarrio("");
-    setBarrioOtro("");
   }, [provincia]);
-  useEffect(() => {
-    setBarrio("");
-    setBarrioOtro("");
-  }, [ciudad]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
   const totalLabel = formatEcuadorCodPrice(totalLocal);
@@ -145,16 +129,13 @@ export function EcuadorCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    const ciudadFinal = resolvePlace(ciudad, ciudadOtra);
-    const barrioFinal = resolvePlace(barrio, barrioOtro);
-    if (!provincia || !ciudadFinal || !barrioFinal) {
-      window.alert("Selecciona provincia, ciudad y barrio");
+    if (!provincia || !ciudad) {
+      window.alert("Selecciona provincia y ciudad");
       return;
     }
     const notesParts = [
       `Provincia: ${provincia}`,
-      `Ciudad: ${ciudadFinal}`,
-      `Barrio: ${barrioFinal}`,
+      `Ciudad: ${ciudad}`,
       referencia.trim() ? `Referencia: ${referencia.trim()}` : "",
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
@@ -162,7 +143,7 @@ export function EcuadorCodCheckout({
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${barrioFinal}, ${ciudadFinal}, ${provincia}`,
+      city: `${ciudad}, ${provincia}`,
       address: direccion.trim(),
       notes: notesParts.join(" · "),
     });
@@ -253,26 +234,6 @@ export function EcuadorCodCheckout({
           options={ciudades}
           required
           disabled={!provincia}
-        />
-        <LatamOtherPlaceField
-          selected={ciudad}
-          value={ciudadOtra}
-          onChange={setCiudadOtra}
-          placeholder="Escribe tu ciudad"
-        />
-        <SelectField
-          value={barrio}
-          onChange={setBarrio}
-          placeholder="Barrio"
-          options={barrios}
-          required
-          disabled={!ciudad}
-        />
-        <LatamOtherPlaceField
-          selected={barrio}
-          value={barrioOtro}
-          onChange={setBarrioOtro}
-          placeholder="Escribe tu barrio"
         />
         <IconField
           icon={<MapPin className="h-4 w-4" />}

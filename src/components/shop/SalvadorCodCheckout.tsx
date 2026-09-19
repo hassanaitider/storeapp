@@ -14,13 +14,10 @@ import { formatSalvadorCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
-import { LatamOtherPlaceField } from "@/components/shop/LatamOtherPlaceField";
 import {
-  salvadorColonias,
   salvadorMunicipios,
   salvadorProvincias,
 } from "@/lib/salvador-geo";
-import { resolvePlace } from "@/lib/latam-other-place";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -115,8 +112,6 @@ export function SalvadorCodCheckout({
   const [phone, setPhone] = useState("");
   const [provincia, setProvincia] = useState("");
   const [municipio, setMunicipio] = useState("");
-  const [colonia, setColonia] = useState("");
-  const [coloniaOtra, setColoniaOtra] = useState("");
   const [direccion, setDireccion] = useState("");
 
   const provincias = useMemo(() => salvadorProvincias(), []);
@@ -124,20 +119,10 @@ export function SalvadorCodCheckout({
     () => salvadorMunicipios(provincia),
     [provincia]
   );
-  const colonias = useMemo(
-    () => salvadorColonias(provincia, municipio),
-    [provincia, municipio]
-  );
 
   useEffect(() => {
     setMunicipio("");
-    setColonia("");
-    setColoniaOtra("");
   }, [provincia]);
-  useEffect(() => {
-    setColonia("");
-    setColoniaOtra("");
-  }, [municipio]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
   const totalLabel = formatSalvadorCodPrice(totalLocal);
@@ -149,22 +134,20 @@ export function SalvadorCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    const coloniaFinal = resolvePlace(colonia, coloniaOtra);
-    if (!provincia || !municipio || !coloniaFinal) {
-      window.alert("Selecciona departamento, municipio y colonia/barrio");
+    if (!provincia || !municipio) {
+      window.alert("Selecciona provincia y ciudad/municipio");
       return;
     }
     const notesParts = [
-      `Departamento: ${provincia}`,
-      `Municipio: ${municipio}`,
-      `Colonia/Barrio: ${coloniaFinal}`,
+      `Provincia: ${provincia}`,
+      `Ciudad/Municipio: ${municipio}`,
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
 
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${coloniaFinal}, ${municipio}, ${provincia}`,
+      city: `${municipio}, ${provincia}`,
       address: direccion.trim(),
       notes: notesParts.join(" · "),
     });
@@ -236,31 +219,17 @@ export function SalvadorCodCheckout({
         <SelectField
           value={provincia}
           onChange={setProvincia}
-          placeholder="Departamento"
+          placeholder="Provincia"
           options={provincias}
           required
         />
         <SelectField
           value={municipio}
           onChange={setMunicipio}
-          placeholder="Municipio / Distrito"
+          placeholder="Ciudad/Municipio"
           options={municipios}
           required
           disabled={!provincia}
-        />
-        <SelectField
-          value={colonia}
-          onChange={setColonia}
-          placeholder="Colonia / Barrio"
-          options={colonias}
-          required
-          disabled={!municipio}
-        />
-        <LatamOtherPlaceField
-          selected={colonia}
-          value={coloniaOtra}
-          onChange={setColoniaOtra}
-          placeholder="Escribe tu colonia o barrio"
         />
         <IconField
           icon={<MapPin className="h-4 w-4" />}

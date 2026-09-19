@@ -14,13 +14,10 @@ import { formatHondurasCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
-import { LatamOtherPlaceField } from "@/components/shop/LatamOtherPlaceField";
 import {
-  hondurasBarrios,
   hondurasMunicipios,
   hondurasProvincias,
 } from "@/lib/honduras-geo";
-import { resolvePlace } from "@/lib/latam-other-place";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -103,28 +100,16 @@ export function HondurasCodCheckout({
   const [direccion, setDireccion] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [municipio, setMunicipio] = useState("");
-  const [barrio, setBarrio] = useState("");
-  const [barrioOtro, setBarrioOtro] = useState("");
 
   const departamentos = useMemo(() => hondurasProvincias(), []);
   const municipios = useMemo(
     () => hondurasMunicipios(departamento),
     [departamento]
   );
-  const barrios = useMemo(
-    () => hondurasBarrios(departamento, municipio),
-    [departamento, municipio]
-  );
 
   useEffect(() => {
     setMunicipio("");
-    setBarrio("");
-    setBarrioOtro("");
   }, [departamento]);
-  useEffect(() => {
-    setBarrio("");
-    setBarrioOtro("");
-  }, [municipio]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
   const totalLabel = formatHondurasCodPrice(totalLocal);
@@ -136,22 +121,20 @@ export function HondurasCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    const barrioFinal = resolvePlace(barrio, barrioOtro);
-    if (!departamento || !municipio || !barrioFinal) {
-      window.alert("Selecciona departamento, municipio y barrio/colonia");
+    if (!departamento || !municipio) {
+      window.alert("Selecciona departamento y ciudad/municipio");
       return;
     }
     const notesParts = [
       `Departamento: ${departamento}`,
-      `Municipio: ${municipio}`,
-      `Barrio/Colonia: ${barrioFinal}`,
+      `Ciudad/Municipio: ${municipio}`,
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
 
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${barrioFinal}, ${municipio}, ${departamento}`,
+      city: `${municipio}, ${departamento}`,
       address: direccion.trim(),
       notes: notesParts.join(" · "),
     });
@@ -237,24 +220,10 @@ export function HondurasCodCheckout({
         <SelectField
           value={municipio}
           onChange={setMunicipio}
-          placeholder="Municipio"
+          placeholder="Ciudad/Municipio"
           options={municipios}
           required
           disabled={!departamento}
-        />
-        <SelectField
-          value={barrio}
-          onChange={setBarrio}
-          placeholder="Barrio / Colonia"
-          options={barrios}
-          required
-          disabled={!municipio}
-        />
-        <LatamOtherPlaceField
-          selected={barrio}
-          value={barrioOtro}
-          onChange={setBarrioOtro}
-          placeholder="Escribe tu barrio o colonia"
         />
 
         <div className="flex items-center justify-between gap-3 rounded-xl bg-[#121c2d] px-4 py-3.5 text-white">
