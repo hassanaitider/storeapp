@@ -1098,173 +1098,8 @@ export const GEO_GT: LatamGeoTree = {
 };
 
 
-/** Costa Rica — complete Provincia → Cantón → Distrito. */
+/** Costa Rica — departamentos / municipios / ciudades from Fufills COD coverage. */
 export const GEO_CR: LatamGeoTree = {
-  "San José": {
-    "Acosta": [
-      "Cangrejal",
-      "Guaitil",
-      "Palmichal",
-      "Sabanillas",
-      "San Ignacio"
-    ],
-    "Alajuelita": [
-      "Alajuelita",
-      "Concepción",
-      "San Antonio",
-      "San Felipe",
-      "San Josecito"
-    ],
-    "Aserrí": [
-      "Aserrí",
-      "Legua",
-      "Monterrey",
-      "Salitrillos",
-      "San Gabriel",
-      "Tarbaca",
-      "Vuelta de Jorco"
-    ],
-    "Curridabat": [
-      "Curridabat",
-      "Granadilla",
-      "Sánchez",
-      "Tirrases"
-    ],
-    "Desamparados": [
-      "Damas",
-      "Desamparados",
-      "Frailes",
-      "Gravilias",
-      "Los Guido",
-      "Patarrá",
-      "Rosario",
-      "San Antonio",
-      "San Cristobal",
-      "San Juan de Dios",
-      "San Miguel",
-      "San Rafael Abajo",
-      "San Rafael Arriba"
-    ],
-    "Dota": [
-      "Copey",
-      "Jardín",
-      "Santa María"
-    ],
-    "Escazú": [
-      "Escazú",
-      "San Antonio",
-      "San Rafael"
-    ],
-    "Goicoechea": [
-      "Calle Blancos",
-      "Guadalupe",
-      "Ipís",
-      "Mata de Plátano",
-      "Purral",
-      "Rancho Redondo",
-      "San Francisco"
-    ],
-    "León Cortés Castro": [
-      "Llano Bonito",
-      "San Andrés",
-      "San Antonio",
-      "San Isidro",
-      "San Pablo",
-      "Santa Cruz"
-    ],
-    "Montes de Oca": [
-      "Mercedes",
-      "Sabanilla",
-      "San Pedro",
-      "San Rafael"
-    ],
-    "Mora": [
-      "Colón",
-      "Guayabo",
-      "Jaris",
-      "Picagres",
-      "Piedras Negras",
-      "Quitirrisí",
-      "Tabarcia"
-    ],
-    "Moravia": [
-      "La Trinidad",
-      "San Jerónimo",
-      "San Vicente"
-    ],
-    "Pérez Zeledón": [
-      "Barú",
-      "Cajón",
-      "Daniel Flores",
-      "El General",
-      "La Amistad",
-      "Páramo",
-      "Pejibaye",
-      "Platanares",
-      "Río Nuevo",
-      "Rivas",
-      "San Isidro de El General",
-      "San Pedro"
-    ],
-    "Puriscal": [
-      "Barbacoas",
-      "Candelarita",
-      "Chires",
-      "Desamparaditos",
-      "Grifo Alto",
-      "Mercedes Sur",
-      "San Antonio",
-      "San Rafael",
-      "Santiago"
-    ],
-    "San José": [
-      "Carmen",
-      "Catedral",
-      "Hatillo",
-      "Hospital",
-      "Mata Redonda",
-      "Merced",
-      "Pavas",
-      "San Francisco de Dos Ríos",
-      "San Sebastián",
-      "Uruca",
-      "Zapote"
-    ],
-    "Santa Ana": [
-      "Brasil",
-      "Piedades",
-      "Pozos",
-      "Salitral",
-      "Santa Ana",
-      "Uruca"
-    ],
-    "Tarrazú": [
-      "San Carlos",
-      "San Lorenzo",
-      "San Marcos"
-    ],
-    "Tibás": [
-      "Anselmo Llorente",
-      "Cinco Esquinas",
-      "Colima",
-      "León XIII",
-      "San Juan"
-    ],
-    "Turrubares": [
-      "Carara",
-      "San Juan de Mata",
-      "San Luis",
-      "San Pablo",
-      "San Pedro"
-    ],
-    "Vázquez de Coronado": [
-      "Cascajal",
-      "Dulce Nombre de Jesús",
-      "Patalillo",
-      "San Isidro",
-      "San Rafael"
-    ]
-  },
   "Alajuela": {
     "Alajuela": [
       "Alajuela",
@@ -1278,7 +1113,6 @@ export const GEO_CR: LatamGeoTree = {
       "San Isidro",
       "San José",
       "San Rafael",
-      "Sarapiquí",
       "Tambor",
       "Turrúcares"
     ],
@@ -1295,23 +1129,11 @@ export const GEO_CR: LatamGeoTree = {
     "Grecia": [
       "Bolivar",
       "Grecia",
-      "Puente de Piedra",
+      "Puente De Piedra",
       "San Isidro",
       "San José",
       "San Roque",
       "Tacares"
-    ],
-    "Guatuso": [
-      "Buenavista",
-      "Cote",
-      "Katira",
-      "San Rafael"
-    ],
-    "Los Chiles": [
-      "Caño Negro",
-      "El Amparo",
-      "Los Chiles",
-      "San Jorge"
     ],
     "Naranjo": [
       "Cirrí Sur",
@@ -1346,25 +1168,10 @@ export const GEO_CR: LatamGeoTree = {
       "San Pedro",
       "San Rafael"
     ],
-    "Río Cuarto": [
-      "Río Cuarto",
-      "Santa Isabel",
-      "Santa Rita"
-    ],
     "San Carlos": [
-      "Aguas Zarcas",
-      "Buenavista",
-      "Cutris",
       "Florencia",
       "La Fortuna",
-      "La Palmera",
-      "La Tigra",
-      "Monterrey",
-      "Pital",
-      "Pocosol",
-      "Quesada",
-      "Venado",
-      "Venecia"
+      "Quesada"
     ],
     "San Mateo": [
       "Desmonte",
@@ -1376,42 +1183,23 @@ export const GEO_CR: LatamGeoTree = {
       "Alfaro",
       "Ángeles",
       "Concepción",
-      "Peñas Blancas",
       "Piedades Norte",
       "Piedades Sur",
       "San Isidro",
       "San Juan",
-      "San Lorenzo",
       "San Rafael",
       "San Ramón",
       "Santiago",
-      "Volio",
-      "Zapotal"
+      "Volio"
     ],
     "Sarchí": [
       "Rodríguez",
       "San Pedro",
       "Sarchí Norte",
-      "Sarchí Sur",
-      "Toro Amarillo"
-    ],
-    "Upala": [
-      "Aguas Claras",
-      "Bijagua",
-      "Canalete",
-      "Delicias",
-      "Dos Ríos",
-      "San José O Pizote",
-      "Upala",
-      "Yolillal"
+      "Sarchí Sur"
     ],
     "Zarcero": [
-      "Brisas",
       "Guadalupe",
-      "Laguna",
-      "Palmira",
-      "Tapesco",
-      "Zapote",
       "Zarcero"
     ]
   },
@@ -1436,7 +1224,6 @@ export const GEO_CR: LatamGeoTree = {
     ],
     "El Guarco": [
       "El Tejar",
-      "Patio de Agua",
       "San Isidro",
       "Tobosi"
     ],
@@ -1466,13 +1253,12 @@ export const GEO_CR: LatamGeoTree = {
     "Paraíso": [
       "Birrisito",
       "Cachí",
-      "Llanos de Santa Lucía",
+      "Llanos De Santa Lucía",
       "Orosi",
       "Paraíso",
       "Santiago"
     ],
     "Turrialba": [
-      "Chirripó",
       "La Isabel",
       "La Suiza",
       "Pavones",
@@ -1486,11 +1272,38 @@ export const GEO_CR: LatamGeoTree = {
       "Turrialba"
     ]
   },
+  "Guanacaste": {
+    "Bagaces": [
+      "Bagaces",
+      "La Fortuna",
+      "Mogote"
+    ],
+    "Carrillo": [
+      "Belén",
+      "Filadelfia",
+      "Palmira",
+      "Sardinal"
+    ],
+    "La Cruz": [
+      "La Cruz",
+      "Santa Elena"
+    ],
+    "Liberia": [
+      "Cañas Dulces",
+      "Curubandé",
+      "Liberia",
+      "Mayorga",
+      "Nacascolo"
+    ],
+    "Santa Cruz": [
+      "Cartagena"
+    ]
+  },
   "Heredia": {
     "Barva": [
       "Barva",
       "Puente Salas",
-      "San José de la Montaña",
+      "San José De La Montaña",
       "San Pablo",
       "San Pedro",
       "San Roque",
@@ -1510,8 +1323,7 @@ export const GEO_CR: LatamGeoTree = {
       "Heredia",
       "Mercedes",
       "San Francisco",
-      "Ulloa",
-      "Varablanca"
+      "Ulloa"
     ],
     "San Isidro": [
       "Concepción",
@@ -1547,126 +1359,24 @@ export const GEO_CR: LatamGeoTree = {
       "Santo Domingo",
       "Santo Tomás",
       "Tures"
-    ],
-    "Sarapiquí": [
-      "Cureña",
-      "La Virgen",
-      "Las Horquetas",
-      "Llanuras del Gaspar",
-      "Puerto Viejo"
     ]
   },
-  "Guanacaste": {
-    "Abangares": [
-      "Colorado",
-      "Las Juntas",
-      "San Juan",
-      "Sierra"
+  "Limón": {
+    "Guácimo": [
+      "Guácimo",
+      "Mercedes",
+      "Pocora"
     ],
-    "Bagaces": [
-      "Bagaces",
-      "La Fortuna",
-      "Mogote",
-      "Río Naranjo"
+    "Limón": [
+      "Limón"
     ],
-    "Cañas": [
-      "Bebedero",
-      "Cañas",
-      "Palmira",
-      "Porozal",
-      "San Miguel"
-    ],
-    "Carrillo": [
-      "Belén",
-      "Filadelfia",
-      "Palmira",
-      "Sardinal"
-    ],
-    "Hojancha": [
-      "Hojancha",
-      "Huacas",
-      "Matambú",
-      "Monte Romo",
-      "Puerto Carrillo"
-    ],
-    "La Cruz": [
-      "La Cruz",
-      "La Garita",
-      "Santa Cecilia",
-      "Santa Elena"
-    ],
-    "Liberia": [
-      "Cañas Dulces",
-      "Curubandé",
-      "Liberia",
-      "Mayorga",
-      "Nacascolo"
-    ],
-    "Nandayure": [
-      "Bejuco",
-      "Carmona",
-      "Porvenir",
-      "San Pablo",
-      "Santa Rita",
-      "Zapotal"
-    ],
-    "Nicoya": [
-      "Belén de Nosarita",
-      "Mansión",
-      "Nicoya",
-      "Nosara",
-      "Quebrada Honda",
-      "Sámara",
-      "San Antonio"
-    ],
-    "Santa Cruz": [
-      "Bolsón",
-      "Cabo Velas",
-      "Cartagena",
-      "Cuajiniquil",
-      "Diriá",
-      "Santa Cruz",
-      "Tamarindo",
-      "Tempate",
-      "Veintisiete de Abril"
-    ],
-    "Tilarán": [
-      "Arenal",
-      "Cabeceras",
-      "Líbano",
-      "Quebrada Grande",
-      "Santa Rosa",
-      "Tierras Morenas",
-      "Tilarán",
-      "Tronadora"
+    "Pococí": [
+      "Guápiles",
+      "Jiménez",
+      "La Colonia"
     ]
   },
   "Puntarenas": {
-    "Buenos Aires": [
-      "Biolley",
-      "Boruca",
-      "Brunka",
-      "Buenos Aires",
-      "Chánguena",
-      "Colinas",
-      "Pilas",
-      "Potrero Grande",
-      "Volcán"
-    ],
-    "Corredores": [
-      "Canoas",
-      "Corredor",
-      "La Cuesta",
-      "Laurel"
-    ],
-    "Coto Brus": [
-      "Aguabuena",
-      "Gutiérrez Braun",
-      "Limoncito",
-      "Pittier",
-      "Sabalito",
-      "San Vito"
-    ],
     "Esparza": [
       "Caldera",
       "Espíritu Santo",
@@ -1675,1870 +1385,1910 @@ export const GEO_CR: LatamGeoTree = {
       "San Juan Grande",
       "San Rafael"
     ],
-    "Garabito": [
-      "Jacó",
-      "Lagunillas",
-      "Tárcoles"
-    ],
-    "Golfito": [
-      "Golfito",
-      "Guaycará",
-      "Pavón"
-    ],
-    "Montes de Oro": [
+    "Montes De Oro": [
       "La Unión",
       "Miramar",
       "San Isidro"
     ],
-    "Monteverde": [
-      "Monteverde"
-    ],
-    "Osa": [
-      "Bahía Ballena",
-      "Bahía Drake",
-      "Palmar",
-      "Piedras Blancas",
-      "Puerto Cortés",
-      "Sierpe"
-    ],
-    "Parrita": [
-      "Parrita"
-    ],
-    "Puerto Jiménez": [
-      "Puerto Jiménez"
-    ],
     "Puntarenas": [
       "Acapulco",
-      "Arancibia",
       "Barranca",
       "Chacarita",
-      "Chira",
       "Chomes",
-      "Cóbano",
       "El Roble",
       "Guacimal",
-      "Isla del Coco",
-      "Lepanto",
-      "Manzanillo",
-      "Paquera",
       "Pitahaya",
       "Puntarenas"
-    ],
-    "Quepos": [
-      "Naranjito",
-      "Quepos",
-      "Savegre"
     ]
   },
-  "Limón": {
-    "Guácimo": [
-      "Duacarí",
-      "Guácimo",
+  "San José": {
+    "Acosta": [
+      "Guaitil",
+      "Palmichal",
+      "San Ignacio"
+    ],
+    "Alajuelita": [
+      "Alajuelita",
+      "Concepción",
+      "San Antonio",
+      "San Felipe",
+      "San Josecito"
+    ],
+    "Aserrí": [
+      "Aserrí",
+      "Salitrillos",
+      "San Gabriel",
+      "Tarbaca",
+      "Vuelta De Jorco"
+    ],
+    "Curridabat": [
+      "Curridabat",
+      "Granadilla",
+      "Sánchez",
+      "Tirrases"
+    ],
+    "Desamparados": [
+      "Damas",
+      "Desamparados",
+      "Frailes",
+      "Gravilias",
+      "Los Guido",
+      "Patarrá",
+      "Rosario",
+      "San Antonio",
+      "San Juan De Dios",
+      "San Miguel",
+      "San Rafael Abajo",
+      "San Rafael Arriba"
+    ],
+    "Escazú": [
+      "Escazú",
+      "San Antonio",
+      "San Rafael"
+    ],
+    "Goicoechea": [
+      "Calle Blancos",
+      "Guadalupe",
+      "Ipís",
+      "Mata De Plátano",
+      "Purral",
+      "Rancho Redondo",
+      "San Francisco"
+    ],
+    "Montes De Oca": [
       "Mercedes",
-      "Pocora",
-      "Río Jiménez"
+      "Sabanilla",
+      "San Pedro",
+      "San Rafael"
     ],
-    "Limón": [
-      "Limón",
-      "Matama",
-      "Río Blanco",
-      "Valle La Estrella"
+    "Mora": [
+      "Colón",
+      "Guayabo",
+      "Jaris",
+      "Quitirrisí",
+      "Tabarcia"
     ],
-    "Matina": [
-      "Batán",
-      "Carrandí",
-      "Matina"
+    "Moravia": [
+      "La Trinidad",
+      "San Jerónimo",
+      "San Vicente"
     ],
-    "Pococí": [
-      "Cariari",
-      "Colorado",
-      "Guápiles",
-      "Jiménez",
-      "La Colonia",
-      "Rita",
-      "Roxana"
+    "Puriscal": [
+      "Barbacoas",
+      "Candelarita",
+      "Desamparaditos",
+      "San Antonio",
+      "San Rafael",
+      "Santiago"
     ],
-    "Siquirres": [
-      "Alegría",
-      "El Cairo",
-      "Florida",
-      "Germania",
-      "Pacuarito",
-      "Reventazón",
-      "Siquirres"
+    "Pérez Zeledón": [
+      "Cajón",
+      "Daniel Flores",
+      "El General",
+      "Páramo",
+      "Platanares",
+      "Rivas",
+      "San Isidro De El General"
     ],
-    "Talamanca": [
-      "Bratsi",
-      "Cahuita",
-      "Sixaola",
-      "Telire"
+    "San José": [
+      "Carmen",
+      "Catedral",
+      "Hatillo",
+      "Hospital",
+      "Mata Redonda",
+      "Merced",
+      "Pavas",
+      "San Francisco De Dos Ríos",
+      "San Sebastián",
+      "Uruca",
+      "Zapote"
+    ],
+    "Santa Ana": [
+      "Brasil",
+      "Piedades",
+      "Pozos",
+      "Salitral",
+      "Santa Ana",
+      "Uruca"
+    ],
+    "Tibás": [
+      "Anselmo Llorente",
+      "Cinco Esquinas",
+      "Colima",
+      "León XIII",
+      "San Juan"
+    ],
+    "Turrubares": [
+      "San Juan De Mata",
+      "San Luis"
+    ],
+    "Vázquez De Coronado": [
+      "Cascajal",
+      "Dulce Nombre De Jesús",
+      "Patalillo",
+      "San Isidro",
+      "San Rafael"
     ]
   }
 };
 
-/** Honduras — complete departamentos / municipios. */
+
+/** Honduras — departamentos / municipios from Fufills COD coverage. */
 export const GEO_HN: LatamGeoTree = {
-  "Islas de La Bahia": {
-    "Guanaja": [
-      "Centro"
-    ],
-    "Jose Santos Guardiola": [
-      "Centro"
-    ],
-    "Roatan": [
-      "Centro"
-    ],
-    "Utila": [
-      "Centro"
-    ]
-  },
-  "Colon": {
-    "Balfate": [
-      "Centro"
-    ],
-    "Bonito Oriental": [
-      "Centro"
-    ],
-    "Iriona": [
-      "Centro"
-    ],
-    "Limon": [
-      "Centro"
-    ],
-    "Saba": [
-      "Centro"
-    ],
-    "Santa Fe": [
-      "Centro"
-    ],
-    "Santa Rosa de Aguan": [
-      "Centro"
-    ],
-    "Sonaguera": [
-      "Centro"
-    ],
-    "Tocoa": [
-      "Centro"
-    ],
-    "Trujillo": [
-      "Centro"
-    ]
-  },
-  "Atlantida": {
+  "Atlántida": {
     "Arizona": [
-      "Centro"
+      "Arizona"
     ],
     "El Porvenir": [
-      "Centro"
+      "El Porvenir"
     ],
     "Esparta": [
-      "Centro"
+      "Esparta"
     ],
     "Jutiapa": [
-      "Centro"
+      "Jutiapa"
     ],
     "La Ceiba": [
-      "Centro"
+      "La Ceiba"
     ],
     "La Masica": [
-      "Centro"
+      "La Masica"
     ],
     "San Francisco": [
-      "Centro"
+      "San Francisco"
     ],
     "Tela": [
-      "Centro"
-    ]
-  },
-  "Cortes": {
-    "Choloma": [
-      "Centro"
-    ],
-    "La Lima": [
-      "Centro"
-    ],
-    "Omoa": [
-      "Centro"
-    ],
-    "Pimienta": [
-      "Centro"
-    ],
-    "Potrerillos": [
-      "Centro"
-    ],
-    "Puerto Cortes": [
-      "Centro"
-    ],
-    "San Antonio de Cortes": [
-      "Centro"
-    ],
-    "San Francisco de Yojoa": [
-      "Centro"
-    ],
-    "San Manuel": [
-      "Centro"
-    ],
-    "San Pedro Sula": [
-      "Centro"
-    ],
-    "Santa Cruz de Yojoa": [
-      "Centro"
-    ],
-    "Villanueva": [
-      "Centro"
-    ]
-  },
-  "Yoro": {
-    "Arenal": [
-      "Centro"
-    ],
-    "El Negrito": [
-      "Centro"
-    ],
-    "El Progreso": [
-      "Centro"
-    ],
-    "Jocon": [
-      "Centro"
-    ],
-    "Morazan": [
-      "Centro"
-    ],
-    "Olanchito": [
-      "Centro"
-    ],
-    "Santa Rita": [
-      "Centro"
-    ],
-    "Sulaco": [
-      "Centro"
-    ],
-    "Victoria": [
-      "Centro"
-    ],
-    "Yorito": [
-      "Centro"
-    ],
-    "Yoro": [
-      "Centro"
-    ]
-  },
-  "Olancho": {
-    "Campamento": [
-      "Centro"
-    ],
-    "Catacamas": [
-      "Centro"
-    ],
-    "Concordia": [
-      "Centro"
-    ],
-    "Dulce Nombre de Culmi": [
-      "Centro"
-    ],
-    "El Rosario": [
-      "Centro"
-    ],
-    "Esquipulas del Norte": [
-      "Centro"
-    ],
-    "Gualaco": [
-      "Centro"
-    ],
-    "Guarizama": [
-      "Centro"
-    ],
-    "Guata": [
-      "Centro"
-    ],
-    "Guayape": [
-      "Centro"
-    ],
-    "Jano": [
-      "Centro"
-    ],
-    "Juticalpa": [
-      "Centro"
-    ],
-    "La Union": [
-      "Centro"
-    ],
-    "Mangulile": [
-      "Centro"
-    ],
-    "Manto": [
-      "Centro"
-    ],
-    "Patuca": [
-      "Centro"
-    ],
-    "Salama": [
-      "Centro"
-    ],
-    "San Esteban": [
-      "Centro"
-    ],
-    "San Francisco de Becerra": [
-      "Centro"
-    ],
-    "San Francisco de La Paz": [
-      "Centro"
-    ],
-    "Santa Maria del Real": [
-      "Centro"
-    ],
-    "Silca": [
-      "Centro"
-    ],
-    "Yocon": [
-      "Centro"
-    ]
-  },
-  "Santa Barbara": {
-    "Arada": [
-      "Centro"
-    ],
-    "Atima": [
-      "Centro"
-    ],
-    "Azacualpa": [
-      "Centro"
-    ],
-    "Ceguaca": [
-      "Centro"
-    ],
-    "Chinda": [
-      "Centro"
-    ],
-    "Concepcion del Norte": [
-      "Centro"
-    ],
-    "Concepcion del Sur": [
-      "Centro"
-    ],
-    "El Nispero": [
-      "Centro"
-    ],
-    "Gualala": [
-      "Centro"
-    ],
-    "Ilama": [
-      "Centro"
-    ],
-    "Las Vegas": [
-      "Centro"
-    ],
-    "Macuelizo": [
-      "Centro"
-    ],
-    "Naranjito": [
-      "Centro"
-    ],
-    "Nueva Frontera": [
-      "Centro"
-    ],
-    "Nuevo Celilac": [
-      "Centro"
-    ],
-    "Petoa": [
-      "Centro"
-    ],
-    "Proteccion": [
-      "Centro"
-    ],
-    "Quimistan": [
-      "Centro"
-    ],
-    "San Francisco de Ojuera": [
-      "Centro"
-    ],
-    "San Jose de Colinas": [
-      "Centro"
-    ],
-    "San Luis": [
-      "Centro"
-    ],
-    "San Marcos": [
-      "Centro"
-    ],
-    "San Nicolas": [
-      "Centro"
-    ],
-    "San Pedro Zacapa": [
-      "Centro"
-    ],
-    "San Vicente Centenario": [
-      "Centro"
-    ],
-    "Santa Barbara": [
-      "Centro"
-    ],
-    "Santa Rita": [
-      "Centro"
-    ],
-    "Trinidad": [
-      "Centro"
-    ]
-  },
-  "Copan": {
-    "Cabana": [
-      "Centro"
-    ],
-    "Concepción": [
-      "Centro"
-    ],
-    "Copan Ruinas": [
-      "Centro"
-    ],
-    "Corquin": [
-      "Centro"
-    ],
-    "Cucuyagua": [
-      "Centro"
-    ],
-    "Dolores": [
-      "Centro"
-    ],
-    "Dulce Nombre": [
-      "Centro"
-    ],
-    "El Paraiso": [
-      "Centro"
-    ],
-    "Florida": [
-      "Centro"
-    ],
-    "La Jigua": [
-      "Centro"
-    ],
-    "La Union": [
-      "Centro"
-    ],
-    "Nueva Arcadia": [
-      "Centro"
-    ],
-    "San Agustin": [
-      "Centro"
-    ],
-    "San Antonio": [
-      "Centro"
-    ],
-    "San Jeronimo": [
-      "Centro"
-    ],
-    "San Jose": [
-      "Centro"
-    ],
-    "San Juan de Opoa": [
-      "Centro"
-    ],
-    "San Nicolas": [
-      "Centro"
-    ],
-    "San Pedro": [
-      "Centro"
-    ],
-    "Santa Rita": [
-      "Centro"
-    ],
-    "Santa Rosa de Copan": [
-      "Centro"
-    ],
-    "Trinidad de Copan": [
-      "Centro"
-    ],
-    "Veracruz": [
-      "Centro"
-    ]
-  },
-  "Lempira": {
-    "Belen": [
-      "Centro"
-    ],
-    "Candelaria": [
-      "Centro"
-    ],
-    "Cololaca": [
-      "Centro"
-    ],
-    "Erandique": [
-      "Centro"
-    ],
-    "Gracias": [
-      "Centro"
-    ],
-    "Gualcince": [
-      "Centro"
-    ],
-    "Guarita": [
-      "Centro"
-    ],
-    "La Campa": [
-      "Centro"
-    ],
-    "La Iguala": [
-      "Centro"
-    ],
-    "La Union": [
-      "Centro"
-    ],
-    "La Virtud": [
-      "Centro"
-    ],
-    "Las Flores": [
-      "Centro"
-    ],
-    "Lepaera": [
-      "Centro"
-    ],
-    "Mapulaca": [
-      "Centro"
-    ],
-    "Piraera": [
-      "Centro"
-    ],
-    "San Andres": [
-      "Centro"
-    ],
-    "San Francisco": [
-      "Centro"
-    ],
-    "San Juan Guarita": [
-      "Centro"
-    ],
-    "San Manuel Colohete": [
-      "Centro"
-    ],
-    "San Marcos de Caiquin": [
-      "Centro"
-    ],
-    "San Rafael": [
-      "Centro"
-    ],
-    "San Sebastian": [
-      "Centro"
-    ],
-    "Santa Cruz": [
-      "Centro"
-    ],
-    "Talgua": [
-      "Centro"
-    ],
-    "Tambla": [
-      "Centro"
-    ],
-    "Tomala": [
-      "Centro"
-    ],
-    "Valladolid": [
-      "Centro"
-    ],
-    "Virginia": [
-      "Centro"
-    ]
-  },
-  "Comayagua": {
-    "Ajuterique": [
-      "Centro"
-    ],
-    "Comayagua": [
-      "Centro"
-    ],
-    "El Rosario": [
-      "Centro"
-    ],
-    "Esquias": [
-      "Centro"
-    ],
-    "Humuya": [
-      "Centro"
-    ],
-    "La Libertad": [
-      "Centro"
-    ],
-    "La Trinidad": [
-      "Centro"
-    ],
-    "Lamani": [
-      "Centro"
-    ],
-    "Las Lajas": [
-      "Centro"
-    ],
-    "Lejamani": [
-      "Centro"
-    ],
-    "Meambar": [
-      "Centro"
-    ],
-    "Minas de Oro": [
-      "Centro"
-    ],
-    "Ojos de Agua": [
-      "Centro"
-    ],
-    "San Jerónimo": [
-      "Centro"
-    ],
-    "San Jose de Comayagua": [
-      "Centro"
-    ],
-    "San Jose del Potrero": [
-      "Centro"
-    ],
-    "San Luis": [
-      "Centro"
-    ],
-    "San Sebastian": [
-      "Centro"
-    ],
-    "Siguatepeque": [
-      "Centro"
-    ],
-    "Taulabe": [
-      "Centro"
-    ],
-    "Villa de San Antonio": [
-      "Centro"
-    ]
-  },
-  "Intibuca": {
-    "Camasca": [
-      "Centro"
-    ],
-    "Colomoncagua": [
-      "Centro"
-    ],
-    "Concepcion": [
-      "Centro"
-    ],
-    "Dolores": [
-      "Centro"
-    ],
-    "Intibuca": [
-      "Centro"
-    ],
-    "Jesus de Otoro": [
-      "Centro"
-    ],
-    "La Esperanza": [
-      "Centro"
-    ],
-    "Magdalena": [
-      "Centro"
-    ],
-    "Masaguara": [
-      "Centro"
-    ],
-    "San Antonio": [
-      "Centro"
-    ],
-    "San Francisco de Opalaca": [
-      "Centro"
-    ],
-    "San Isidro": [
-      "Centro"
-    ],
-    "San Juan": [
-      "Centro"
-    ],
-    "San Marcos de Sierra": [
-      "Centro"
-    ],
-    "San Miguelito": [
-      "Centro"
-    ],
-    "Santa Lucia": [
-      "Centro"
-    ],
-    "Yamaranguila": [
-      "Centro"
-    ]
-  },
-  "Francisco Morazan": {
-    "Alubaren": [
-      "Centro"
-    ],
-    "Cedros": [
-      "Centro"
-    ],
-    "Curaren": [
-      "Centro"
-    ],
-    "Distrito Central": [
-      "Centro"
-    ],
-    "El Porvenir": [
-      "Centro"
-    ],
-    "Guaimaca": [
-      "Centro"
-    ],
-    "La Libertad": [
-      "Centro"
-    ],
-    "La Venta": [
-      "Centro"
-    ],
-    "Lepaterique": [
-      "Centro"
-    ],
-    "Maraita": [
-      "Centro"
-    ],
-    "Marale": [
-      "Centro"
-    ],
-    "Nueva Armenia": [
-      "Centro"
-    ],
-    "Ojojona": [
-      "Centro"
-    ],
-    "Orica": [
-      "Centro"
-    ],
-    "Reitoca": [
-      "Centro"
-    ],
-    "Sabanagrande": [
-      "Centro"
-    ],
-    "San Antonio de Oriente": [
-      "Centro"
-    ],
-    "San Buenaventura": [
-      "Centro"
-    ],
-    "San Ignacio": [
-      "Centro"
-    ],
-    "San Juan de Flores": [
-      "Centro"
-    ],
-    "San Miguelito": [
-      "Centro"
-    ],
-    "Santa Ana": [
-      "Centro"
-    ],
-    "Santa Lucia": [
-      "Centro"
-    ],
-    "Talanga": [
-      "Centro"
-    ],
-    "Tatumbla": [
-      "Centro"
-    ],
-    "Valle de Angeles": [
-      "Centro"
-    ],
-    "Vallecillo": [
-      "Centro"
-    ],
-    "Villa de San Francisco": [
-      "Centro"
-    ]
-  },
-  "Ocotepeque": {
-    "Belen Gualcho": [
-      "Centro"
-    ],
-    "Concepcion": [
-      "Centro"
-    ],
-    "Dolores Merendon": [
-      "Centro"
-    ],
-    "Fraternidad": [
-      "Centro"
-    ],
-    "La Encarnacion": [
-      "Centro"
-    ],
-    "La Labor": [
-      "Centro"
-    ],
-    "Lucerna": [
-      "Centro"
-    ],
-    "Mercedes": [
-      "Centro"
-    ],
-    "Ocotepeque": [
-      "Centro"
-    ],
-    "San Fernando": [
-      "Centro"
-    ],
-    "San Francisco del Valle": [
-      "Centro"
-    ],
-    "San Jorge": [
-      "Centro"
-    ],
-    "San Marcos": [
-      "Centro"
-    ],
-    "Santa Fe": [
-      "Centro"
-    ],
-    "Sensenti": [
-      "Centro"
-    ],
-    "Sinuapa": [
-      "Centro"
-    ]
-  },
-  "La Paz": {
-    "Aguanqueterique": [
-      "Centro"
-    ],
-    "Cabanas": [
-      "Centro"
-    ],
-    "Cane": [
-      "Centro"
-    ],
-    "Chinacla": [
-      "Centro"
-    ],
-    "Guajiquiro": [
-      "Centro"
-    ],
-    "La Paz": [
-      "Centro"
-    ],
-    "Lauterique": [
-      "Centro"
-    ],
-    "Marcala": [
-      "Centro"
-    ],
-    "Mercedes de Oriente": [
-      "Centro"
-    ],
-    "Opatoro": [
-      "Centro"
-    ],
-    "San Antonio del Norte": [
-      "Centro"
-    ],
-    "San Jose": [
-      "Centro"
-    ],
-    "San Juan": [
-      "Centro"
-    ],
-    "San Pedro de Tutule": [
-      "Centro"
-    ],
-    "Santa Ana": [
-      "Centro"
-    ],
-    "Santa Elena": [
-      "Centro"
-    ],
-    "Santa Maria": [
-      "Centro"
-    ],
-    "Santiago de Puringla": [
-      "Centro"
-    ],
-    "Yarula": [
-      "Centro"
-    ]
-  },
-  "El Paraiso": {
-    "Alauca": [
-      "Centro"
-    ],
-    "Danli": [
-      "Centro"
-    ],
-    "El Paraiso": [
-      "Centro"
-    ],
-    "Guinope": [
-      "Centro"
-    ],
-    "Jacaleapa": [
-      "Centro"
-    ],
-    "Liure": [
-      "Centro"
-    ],
-    "Moroceli": [
-      "Centro"
-    ],
-    "Oropoli": [
-      "Centro"
-    ],
-    "Potrerillos": [
-      "Centro"
-    ],
-    "San Antonio de Flores": [
-      "Centro"
-    ],
-    "San Lucas": [
-      "Centro"
-    ],
-    "San Matias": [
-      "Centro"
-    ],
-    "Soledad": [
-      "Centro"
-    ],
-    "Teupasenti": [
-      "Centro"
-    ],
-    "Texiguat": [
-      "Centro"
-    ],
-    "Trojes": [
-      "Centro"
-    ],
-    "Vado Ancho": [
-      "Centro"
-    ],
-    "Yauyupe": [
-      "Centro"
-    ],
-    "Yuscaran": [
-      "Centro"
-    ]
-  },
-  "Valle": {
-    "Alianza": [
-      "Centro"
-    ],
-    "Amapala": [
-      "Centro"
-    ],
-    "Aramecina": [
-      "Centro"
-    ],
-    "Caridad": [
-      "Centro"
-    ],
-    "Goascoran": [
-      "Centro"
-    ],
-    "Langue": [
-      "Centro"
-    ],
-    "Nacaome": [
-      "Centro"
-    ],
-    "San Francisco de Coray": [
-      "Centro"
-    ],
-    "San Lorenzo": [
-      "Centro"
+      "Tela"
     ]
   },
   "Choluteca": {
     "Apacilagua": [
-      "Centro"
+      "Apacilagua"
     ],
     "Choluteca": [
-      "Centro"
+      "Choluteca"
     ],
-    "Concepcion de Maria": [
-      "Centro"
+    "Concepcion De Maria": [
+      "Concepcion De Maria"
     ],
     "Duyure": [
-      "Centro"
+      "Duyure"
     ],
     "El Corpus": [
-      "Centro"
+      "El Corpus"
     ],
     "El Triunfo": [
-      "Centro"
+      "El Triunfo"
     ],
     "Marcovia": [
-      "Centro"
+      "Marcovia"
     ],
     "Morolica": [
-      "Centro"
+      "Morolica"
     ],
-    "Namasigue": [
-      "Centro"
+    "Namasiguee": [
+      "Namasiguee"
     ],
     "Orocuina": [
-      "Centro"
+      "Orocuina"
     ],
     "Pespire": [
-      "Centro"
+      "Pespire"
     ],
-    "San Antonio de Flores": [
-      "Centro"
+    "San Antonio De Flores": [
+      "San Antonio De Flores"
     ],
     "San Isidro": [
-      "Centro"
+      "San Isidro"
     ],
     "San Jose": [
-      "Centro"
+      "San Jose"
     ],
-    "San Marcos de Colon": [
-      "Centro"
+    "San Marcos De Colon": [
+      "San Marcos De Colon"
     ],
-    "Santa Ana de Yusguare": [
-      "Centro"
+    "Santa Ana De Yusguare": [
+      "Santa Ana De Yusguare"
+    ]
+  },
+  "Colón": {
+    "Balfate": [
+      "Balfate"
+    ],
+    "Bonito Oriental": [
+      "Bonito Oriental"
+    ],
+    "Iriona": [
+      "Iriona"
+    ],
+    "Limon": [
+      "Limon"
+    ],
+    "Saba": [
+      "Saba"
+    ],
+    "Santa Fe": [
+      "Santa Fe"
+    ],
+    "Santa Rosa De Aguan": [
+      "Santa Rosa De Aguan"
+    ],
+    "Sonaguera": [
+      "Sonaguera"
+    ],
+    "Tocoa": [
+      "Tocoa"
+    ],
+    "Trujillo": [
+      "Trujillo"
+    ]
+  },
+  "Comayagua": {
+    "Ajuterique": [
+      "Ajuterique"
+    ],
+    "Comayagua": [
+      "Comayagua"
+    ],
+    "El Rosario": [
+      "El Rosario"
+    ],
+    "Esquias": [
+      "Esquias"
+    ],
+    "Humuya": [
+      "Humuya"
+    ],
+    "La Libertad": [
+      "La Libertad"
+    ],
+    "La Trinidad": [
+      "La Trinidad"
+    ],
+    "Lamani": [
+      "Lamani"
+    ],
+    "Las Lajas": [
+      "Las Lajas"
+    ],
+    "Lejamani": [
+      "Lejamani"
+    ],
+    "Meambar": [
+      "Meambar"
+    ],
+    "Minas De Oro": [
+      "Minas De Oro"
+    ],
+    "Ojos De Agua": [
+      "Ojos De Agua"
+    ],
+    "San Jeronimo": [
+      "San Jeronimo"
+    ],
+    "San Jose De Comayagua": [
+      "San Jose De Comayagua"
+    ],
+    "San Jose Del Potrero": [
+      "San Jose Del Potrero"
+    ],
+    "San Luis": [
+      "San Luis"
+    ],
+    "San Sebastian": [
+      "San Sebastian"
+    ],
+    "Siguatepeque": [
+      "Siguatepeque"
+    ],
+    "Taulabe": [
+      "Taulabe"
+    ],
+    "Villa De San Antonio": [
+      "Villa De San Antonio"
+    ]
+  },
+  "Copán": {
+    "Cabanas": [
+      "Cabanas"
+    ],
+    "Concepcion": [
+      "Concepcion"
+    ],
+    "Copan Ruinas": [
+      "Copan Ruinas"
+    ],
+    "Corquin": [
+      "Corquin"
+    ],
+    "Cucuyagua": [
+      "Cucuyagua"
+    ],
+    "Dolores": [
+      "Dolores"
+    ],
+    "Dulce Nombre": [
+      "Dulce Nombre"
+    ],
+    "El Paraiso": [
+      "El Paraiso"
+    ],
+    "Florida": [
+      "Florida"
+    ],
+    "La Jigua": [
+      "La Jigua"
+    ],
+    "La Union": [
+      "La Union"
+    ],
+    "Nueva Arcadia": [
+      "Nueva Arcadia"
+    ],
+    "San Agustin": [
+      "San Agustin"
+    ],
+    "San Antonio": [
+      "San Antonio"
+    ],
+    "San Jeronimo": [
+      "San Jeronimo"
+    ],
+    "San Jose": [
+      "San Jose"
+    ],
+    "San Juan De Opoa": [
+      "San Juan De Opoa"
+    ],
+    "San Nicolas": [
+      "San Nicolas"
+    ],
+    "San Pedro De Copan": [
+      "San Pedro De Copan"
+    ],
+    "Santa Rita": [
+      "Santa Rita"
+    ],
+    "Santa Rosa De Copan": [
+      "Santa Rosa De Copan"
+    ],
+    "Trinidad De Copan": [
+      "Trinidad De Copan"
+    ],
+    "Veracruz": [
+      "Veracruz"
+    ]
+  },
+  "Cortés": {
+    "Choloma": [
+      "Choloma"
+    ],
+    "La Lima": [
+      "La Lima"
+    ],
+    "Omoa": [
+      "Omoa"
+    ],
+    "Pimienta": [
+      "Pimienta"
+    ],
+    "Potrerillos": [
+      "Potrerillos"
+    ],
+    "Puerto Cortes": [
+      "Puerto Cortes"
+    ],
+    "San Antonio De Cortes": [
+      "San Antonio De Cortes"
+    ],
+    "San Francisco De Yojoa": [
+      "San Francisco De Yojoa"
+    ],
+    "San Manuel": [
+      "San Manuel"
+    ],
+    "San Pedro Sula": [
+      "San Pedro Sula"
+    ],
+    "Santa Cruz De Yojoa": [
+      "Santa Cruz De Yojoa"
+    ],
+    "Villanueva": [
+      "Villanueva"
+    ]
+  },
+  "El Paraíso": {
+    "Alauca": [
+      "Alauca"
+    ],
+    "Danli": [
+      "Danli"
+    ],
+    "El Paraiso": [
+      "El Paraiso"
+    ],
+    "Gueinope": [
+      "Gueinope"
+    ],
+    "Jacaleapa": [
+      "Jacaleapa"
+    ],
+    "Liure": [
+      "Liure"
+    ],
+    "Moroceli": [
+      "Moroceli"
+    ],
+    "Oropoli": [
+      "Oropoli"
+    ],
+    "Potrerillos": [
+      "Potrerillos"
+    ],
+    "San Antonio De Flores": [
+      "San Antonio De Flores"
+    ],
+    "San Lucas": [
+      "San Lucas"
+    ],
+    "San Matias": [
+      "San Matias"
+    ],
+    "Soledad": [
+      "Soledad"
+    ],
+    "Teupasenti": [
+      "Teupasenti"
+    ],
+    "Texiguat": [
+      "Texiguat"
+    ],
+    "Trojes": [
+      "Trojes"
+    ],
+    "Vado Ancho": [
+      "Vado Ancho"
+    ],
+    "Yauyupe": [
+      "Yauyupe"
+    ],
+    "Yuscaran": [
+      "Yuscaran"
+    ]
+  },
+  "Francisco Morazán": {
+    "Alubaren": [
+      "Alubaren"
+    ],
+    "Cedros": [
+      "Cedros"
+    ],
+    "Curaren": [
+      "Curaren"
+    ],
+    "El Porvenir": [
+      "El Porvenir"
+    ],
+    "Guaimaca": [
+      "Guaimaca"
+    ],
+    "La Libertad": [
+      "La Libertad"
+    ],
+    "La Venta": [
+      "La Venta"
+    ],
+    "Lepaterique": [
+      "Lepaterique"
+    ],
+    "Maraita": [
+      "Maraita"
+    ],
+    "Marale": [
+      "Marale"
+    ],
+    "Nueva Armenia": [
+      "Nueva Armenia"
+    ],
+    "Ojojona": [
+      "Ojojona"
+    ],
+    "Orica": [
+      "Orica"
+    ],
+    "Reitoca": [
+      "Reitoca"
+    ],
+    "Sabanagrande": [
+      "Sabanagrande"
+    ],
+    "San Antonio De Oriente": [
+      "San Antonio De Oriente"
+    ],
+    "San Buenaventura": [
+      "San Buenaventura"
+    ],
+    "San Ignacio": [
+      "San Ignacio"
+    ],
+    "San Juan De Flores": [
+      "San Juan De Flores"
+    ],
+    "San Miguelito": [
+      "San Miguelito"
+    ],
+    "Santa Ana": [
+      "Santa Ana"
+    ],
+    "Santa Lucia": [
+      "Santa Lucia"
+    ],
+    "Talanga": [
+      "Talanga"
+    ],
+    "Tatumbla": [
+      "Tatumbla"
+    ],
+    "Tegucigalpa": [
+      "Tegucigalpa"
+    ],
+    "Valle De Angeles": [
+      "Valle De Angeles"
+    ],
+    "Vallecillo": [
+      "Vallecillo"
+    ],
+    "Villa De San Francisco": [
+      "Villa De San Francisco"
     ]
   },
   "Gracias a Dios": {
     "Ahuas": [
-      "Centro"
+      "Ahuas"
     ],
     "Brus Laguna": [
-      "Centro"
+      "Brus Laguna"
     ],
     "Juan Francisco Bulnes": [
-      "Centro"
+      "Juan Francisco Bulnes"
     ],
     "Puerto Lempira": [
-      "Centro"
+      "Puerto Lempira"
     ],
-    "Ramón Villeda Morales": [
-      "Centro"
+    "Villeda Morales": [
+      "Villeda Morales"
     ],
-    "Wampusirpi": [
-      "Centro"
+    "Wampusirpe": [
+      "Wampusirpe"
+    ]
+  },
+  "Intibucá": {
+    "Camasca": [
+      "Camasca"
+    ],
+    "Colomoncagua": [
+      "Colomoncagua"
+    ],
+    "Concepcion": [
+      "Concepcion"
+    ],
+    "Dolores": [
+      "Dolores"
+    ],
+    "Intibuca": [
+      "Intibuca"
+    ],
+    "Jesus De Otoro": [
+      "Jesus De Otoro"
+    ],
+    "La Esperanza": [
+      "La Esperanza"
+    ],
+    "Magdalena": [
+      "Magdalena"
+    ],
+    "Masaguara": [
+      "Masaguara"
+    ],
+    "San Antonio": [
+      "San Antonio"
+    ],
+    "San Francisco De Opalaca": [
+      "San Francisco De Opalaca"
+    ],
+    "San Isidro": [
+      "San Isidro"
+    ],
+    "San Juan": [
+      "San Juan"
+    ],
+    "San Marcos De La Sierra": [
+      "San Marcos De La Sierra"
+    ],
+    "San Miguelito": [
+      "San Miguelito"
+    ],
+    "Santa Lucia": [
+      "Santa Lucia"
+    ],
+    "Yamaranguila": [
+      "Yamaranguila"
+    ]
+  },
+  "Islas de la Bahía": {
+    "Guanaja": [
+      "Guanaja"
+    ],
+    "Jose Santos Guardiola": [
+      "Jose Santos Guardiola"
+    ],
+    "Roatan": [
+      "Roatan"
+    ],
+    "Utila": [
+      "Utila"
+    ]
+  },
+  "La Paz": {
+    "Aguanqueterique": [
+      "Aguanqueterique"
+    ],
+    "Cabanas": [
+      "Cabanas"
+    ],
+    "Cane": [
+      "Cane"
+    ],
+    "Chinacla": [
+      "Chinacla"
+    ],
+    "Guajiquiro": [
+      "Guajiquiro"
+    ],
+    "La Paz": [
+      "La Paz"
+    ],
+    "Lauterique": [
+      "Lauterique"
+    ],
+    "Marcala": [
+      "Marcala"
+    ],
+    "Mercedes De Oriente": [
+      "Mercedes De Oriente"
+    ],
+    "Opatoro": [
+      "Opatoro"
+    ],
+    "San Antonio Del Norte": [
+      "San Antonio Del Norte"
+    ],
+    "San Jose": [
+      "San Jose"
+    ],
+    "San Juan": [
+      "San Juan"
+    ],
+    "San Pedro De Tutule": [
+      "San Pedro De Tutule"
+    ],
+    "Santa Ana": [
+      "Santa Ana"
+    ],
+    "Santa Elena": [
+      "Santa Elena"
+    ],
+    "Santa Maria": [
+      "Santa Maria"
+    ],
+    "Santiago De Puringla": [
+      "Santiago De Puringla"
+    ],
+    "Yarula": [
+      "Yarula"
+    ]
+  },
+  "Lempira": {
+    "Belen": [
+      "Belen"
+    ],
+    "Candelaria": [
+      "Candelaria"
+    ],
+    "Cololaca": [
+      "Cololaca"
+    ],
+    "Erandique": [
+      "Erandique"
+    ],
+    "Gracias": [
+      "Gracias"
+    ],
+    "Gualcince": [
+      "Gualcince"
+    ],
+    "Guarita": [
+      "Guarita"
+    ],
+    "La Campa": [
+      "La Campa"
+    ],
+    "La Iguala": [
+      "La Iguala"
+    ],
+    "La Union": [
+      "La Union"
+    ],
+    "La Virtud": [
+      "La Virtud"
+    ],
+    "Las Flores": [
+      "Las Flores"
+    ],
+    "Lepaera": [
+      "Lepaera"
+    ],
+    "Mapulaca": [
+      "Mapulaca"
+    ],
+    "Piraera": [
+      "Piraera"
+    ],
+    "San Andres": [
+      "San Andres"
+    ],
+    "San Francisco": [
+      "San Francisco"
+    ],
+    "San Juan Guarita": [
+      "San Juan Guarita"
+    ],
+    "San Manuel Colohete": [
+      "San Manuel Colohete"
+    ],
+    "San Marcos De Caiquin": [
+      "San Marcos De Caiquin"
+    ],
+    "San Rafael": [
+      "San Rafael"
+    ],
+    "San Sebastian": [
+      "San Sebastian"
+    ],
+    "Santa Cruz": [
+      "Santa Cruz"
+    ],
+    "Talgua": [
+      "Talgua"
+    ],
+    "Tambla": [
+      "Tambla"
+    ],
+    "Tomala": [
+      "Tomala"
+    ],
+    "Valladolid": [
+      "Valladolid"
+    ],
+    "Virginia": [
+      "Virginia"
+    ]
+  },
+  "Ocotepeque": {
+    "Belen Gualcho": [
+      "Belen Gualcho"
+    ],
+    "Concepcion": [
+      "Concepcion"
+    ],
+    "Dolores Merendon": [
+      "Dolores Merendon"
+    ],
+    "Fraternidad": [
+      "Fraternidad"
+    ],
+    "La Encarnacion": [
+      "La Encarnacion"
+    ],
+    "La Labor": [
+      "La Labor"
+    ],
+    "Lucerna": [
+      "Lucerna"
+    ],
+    "Mercedes": [
+      "Mercedes"
+    ],
+    "Ocotepeque": [
+      "Ocotepeque"
+    ],
+    "San Fernando": [
+      "San Fernando"
+    ],
+    "San Francisco Del Valle": [
+      "San Francisco Del Valle"
+    ],
+    "San Jorge": [
+      "San Jorge"
+    ],
+    "San Marcos": [
+      "San Marcos"
+    ],
+    "Santa Fe": [
+      "Santa Fe"
+    ],
+    "Sensenti": [
+      "Sensenti"
+    ],
+    "Sinuapa": [
+      "Sinuapa"
+    ]
+  },
+  "Olancho": {
+    "Campamento": [
+      "Campamento"
+    ],
+    "Catacamas": [
+      "Catacamas"
+    ],
+    "Concordia": [
+      "Concordia"
+    ],
+    "Dulce Nombre De Culmi": [
+      "Dulce Nombre De Culmi"
+    ],
+    "El Rosario": [
+      "El Rosario"
+    ],
+    "Esquipulas Del Norte": [
+      "Esquipulas Del Norte"
+    ],
+    "Gualaco": [
+      "Gualaco"
+    ],
+    "Guarizama": [
+      "Guarizama"
+    ],
+    "Guata": [
+      "Guata"
+    ],
+    "Guayape": [
+      "Guayape"
+    ],
+    "Jano": [
+      "Jano"
+    ],
+    "Juticalpa": [
+      "Juticalpa"
+    ],
+    "La Union": [
+      "La Union"
+    ],
+    "Mangulile": [
+      "Mangulile"
+    ],
+    "Manto": [
+      "Manto"
+    ],
+    "Patuca": [
+      "Patuca"
+    ],
+    "Salama": [
+      "Salama"
+    ],
+    "San Esteban": [
+      "San Esteban"
+    ],
+    "San Francisco De Becerra": [
+      "San Francisco De Becerra"
+    ],
+    "San Francisco De La Paz": [
+      "San Francisco De La Paz"
+    ],
+    "Santa Maria Del Real": [
+      "Santa Maria Del Real"
+    ],
+    "Silca": [
+      "Silca"
+    ],
+    "Yocon": [
+      "Yocon"
+    ]
+  },
+  "Santa Bárbara": {
+    "Arada": [
+      "Arada"
+    ],
+    "Atima": [
+      "Atima"
+    ],
+    "Azacualpa": [
+      "Azacualpa"
+    ],
+    "Ceguaca": [
+      "Ceguaca"
+    ],
+    "Chinda": [
+      "Chinda"
+    ],
+    "Concepcion Del Norte": [
+      "Concepcion Del Norte"
+    ],
+    "Concepcion Del Sur": [
+      "Concepcion Del Sur"
+    ],
+    "El Nispero": [
+      "El Nispero"
+    ],
+    "Gualala": [
+      "Gualala"
+    ],
+    "Ilama": [
+      "Ilama"
+    ],
+    "Las Vegas": [
+      "Las Vegas"
+    ],
+    "Macuelizo": [
+      "Macuelizo"
+    ],
+    "Naranjito": [
+      "Naranjito"
+    ],
+    "Nueva Frontera": [
+      "Nueva Frontera"
+    ],
+    "Nuevo Celilac": [
+      "Nuevo Celilac"
+    ],
+    "Petoa": [
+      "Petoa"
+    ],
+    "Proteccion": [
+      "Proteccion"
+    ],
+    "Quimistan": [
+      "Quimistan"
+    ],
+    "San Francisco De Ojuera": [
+      "San Francisco De Ojuera"
+    ],
+    "San Jose De Las Colinas": [
+      "San Jose De Las Colinas"
+    ],
+    "San Luis": [
+      "San Luis"
+    ],
+    "San Marcos": [
+      "San Marcos"
+    ],
+    "San Nicolas": [
+      "San Nicolas"
+    ],
+    "San Pedro Zacapa": [
+      "San Pedro Zacapa"
+    ],
+    "San Vicente Centenario": [
+      "San Vicente Centenario"
+    ],
+    "Santa Barbara": [
+      "Santa Barbara"
+    ],
+    "Santa Rita": [
+      "Santa Rita"
+    ],
+    "Trinidad": [
+      "Trinidad"
+    ]
+  },
+  "Valle": {
+    "Alianza": [
+      "Alianza"
+    ],
+    "Amapala": [
+      "Amapala"
+    ],
+    "Aramecina": [
+      "Aramecina"
+    ],
+    "Caridad": [
+      "Caridad"
+    ],
+    "Goascoran": [
+      "Goascoran"
+    ],
+    "Langue": [
+      "Langue"
+    ],
+    "Nacaome": [
+      "Nacaome"
+    ],
+    "San Francisco De Coray": [
+      "San Francisco De Coray"
+    ],
+    "San Lorenzo": [
+      "San Lorenzo"
+    ]
+  },
+  "Yoro": {
+    "Arenal": [
+      "Arenal"
+    ],
+    "El Negrito": [
+      "El Negrito"
+    ],
+    "El Progreso": [
+      "El Progreso"
+    ],
+    "Jocon": [
+      "Jocon"
+    ],
+    "Morazan": [
+      "Morazan"
+    ],
+    "Olanchito": [
+      "Olanchito"
+    ],
+    "Santa Rita": [
+      "Santa Rita"
+    ],
+    "Sulaco": [
+      "Sulaco"
+    ],
+    "Victoria": [
+      "Victoria"
+    ],
+    "Yorito": [
+      "Yorito"
+    ],
+    "Yoro": [
+      "Yoro"
     ]
   }
 };
 
-/** El Salvador — complete departamentos / municipios. */
+
+/** El Salvador — departamentos / municipios from Fufills COD coverage. */
 export const GEO_SV: LatamGeoTree = {
   "Ahuachapán": {
     "Ahuachapán": [
-      "Centro"
+      "Ahuachapán"
     ],
     "Apaneca": [
-      "Centro"
-    ],
-    "Concepción de Ataco": [
-      "Centro"
-    ],
-    "Tacuba": [
-      "Centro"
+      "Apaneca"
     ],
     "Atiquizaya": [
-      "Centro"
+      "Atiquizaya"
+    ],
+    "Concepción de Ataco": [
+      "Concepción de Ataco"
     ],
     "El Refugio": [
-      "Centro"
-    ],
-    "San Lorenzo": [
-      "Centro"
-    ],
-    "Turín": [
-      "Centro"
+      "El Refugio"
     ],
     "Guaymango": [
-      "Centro"
+      "Guaymango"
     ],
     "Jujutla": [
-      "Centro"
+      "Jujutla"
     ],
     "San Francisco Menéndez": [
-      "Centro"
+      "San Francisco Menéndez"
+    ],
+    "San Lorenzo": [
+      "San Lorenzo"
     ],
     "San Pedro Puxtla": [
-      "Centro"
+      "San Pedro Puxtla"
+    ],
+    "Tacuba": [
+      "Tacuba"
+    ],
+    "Turín": [
+      "Turín"
     ]
   },
   "Cabañas": {
+    "Cinquera": [
+      "Cinquera"
+    ],
     "Dolores": [
-      "Centro"
+      "Dolores"
     ],
     "Guacotecti": [
-      "Centro"
-    ],
-    "San Isidro": [
-      "Centro"
-    ],
-    "Sensuntepeque": [
-      "Centro"
-    ],
-    "Victoria": [
-      "Centro"
-    ],
-    "Cinquera": [
-      "Centro"
+      "Guacotecti"
     ],
     "Ilobasco": [
-      "Centro"
+      "Ilobasco"
     ],
     "Jutiapa": [
-      "Centro"
+      "Jutiapa"
+    ],
+    "San Isidro": [
+      "San Isidro"
+    ],
+    "Sensuntepeque": [
+      "Sensuntepeque"
     ],
     "Tejutepeque": [
-      "Centro"
+      "Tejutepeque"
+    ],
+    "Victoria": [
+      "Victoria"
     ]
   },
   "Chalatenango": {
     "Agua Caliente": [
-      "Centro"
-    ],
-    "Dulce Nombre de María": [
-      "Centro"
-    ],
-    "El Paraíso": [
-      "Centro"
-    ],
-    "La Reina": [
-      "Centro"
-    ],
-    "Nueva Concepción": [
-      "Centro"
-    ],
-    "San Fernando": [
-      "Centro"
-    ],
-    "San Francisco Morazán": [
-      "Centro"
-    ],
-    "San Rafael": [
-      "Centro"
-    ],
-    "Santa Rita": [
-      "Centro"
-    ],
-    "Tejutla": [
-      "Centro"
-    ],
-    "Citalá": [
-      "Centro"
-    ],
-    "La Palma": [
-      "Centro"
-    ],
-    "San Ignacio": [
-      "Centro"
+      "Agua Caliente"
     ],
     "Arcatao": [
-      "Centro"
+      "Arcatao"
     ],
     "Azacualpa": [
-      "Centro"
+      "Azacualpa"
     ],
-    "San José Cancasque": [
-      "Centro"
+    "Cancasque": [
+      "Cancasque"
     ],
     "Chalatenango": [
-      "Centro"
+      "Chalatenango"
+    ],
+    "Citalá": [
+      "Citalá"
     ],
     "Comalapa": [
-      "Centro"
+      "Comalapa"
     ],
     "Concepción Quezaltepeque": [
-      "Centro"
+      "Concepción Quezaltepeque"
+    ],
+    "Dulce Nombre de María": [
+      "Dulce Nombre de María"
     ],
     "El Carrizal": [
-      "Centro"
+      "El Carrizal"
+    ],
+    "El Paraíso": [
+      "El Paraíso"
     ],
     "La Laguna": [
-      "Centro"
+      "La Laguna"
     ],
-    "San José Las Flores": [
-      "Centro"
+    "La Palma": [
+      "La Palma"
+    ],
+    "La Reina": [
+      "La Reina"
+    ],
+    "Las Flores": [
+      "Las Flores"
     ],
     "Las Vueltas": [
-      "Centro"
+      "Las Vueltas"
     ],
     "Nombre de Jesús": [
-      "Centro"
+      "Nombre de Jesús"
+    ],
+    "Nueva Concepción": [
+      "Nueva Concepción"
     ],
     "Nueva Trinidad": [
-      "Centro"
+      "Nueva Trinidad"
     ],
     "Ojos de Agua": [
-      "Centro"
+      "Ojos de Agua"
     ],
     "Potonico": [
-      "Centro"
-    ],
-    "San Antonio de la Cruz": [
-      "Centro"
+      "Potonico"
     ],
     "San Antonio Los Ranchos": [
-      "Centro"
+      "San Antonio Los Ranchos"
+    ],
+    "San Antonio de la Cruz": [
+      "San Antonio de la Cruz"
+    ],
+    "San Fernando": [
+      "San Fernando"
     ],
     "San Francisco Lempa": [
-      "Centro"
+      "San Francisco Lempa"
+    ],
+    "San Francisco Morazán": [
+      "San Francisco Morazán"
+    ],
+    "San Ignacio": [
+      "San Ignacio"
     ],
     "San Isidro Labrador": [
-      "Centro"
+      "San Isidro Labrador"
     ],
     "San Luis del Carmen": [
-      "Centro"
+      "San Luis del Carmen"
     ],
     "San Miguel de Mercedes": [
-      "Centro"
+      "San Miguel de Mercedes"
     ],
-    "Embalse Cerron Grande": [
-      "Centro"
+    "San Rafael": [
+      "San Rafael"
+    ],
+    "Santa Rita": [
+      "Santa Rita"
+    ],
+    "Tejutla": [
+      "Tejutla"
     ]
   },
   "Cuscatlán": {
-    "Oratorio de Concepción": [
-      "Centro"
-    ],
-    "San Bartolomé Perulapía": [
-      "Centro"
-    ],
-    "San José Guayabal": [
-      "Centro"
-    ],
-    "San Pedro Perulapán": [
-      "Centro"
-    ],
-    "Suchitoto": [
-      "Centro"
-    ],
     "Candelaria": [
-      "Centro"
+      "Candelaria"
     ],
     "Cojutepeque": [
-      "Centro"
+      "Cojutepeque"
     ],
     "El Carmen": [
-      "Centro"
+      "El Carmen"
     ],
     "El Rosario": [
-      "Centro"
+      "El Rosario"
     ],
     "Monte San Juan": [
-      "Centro"
+      "Monte San Juan"
+    ],
+    "Oratorio de Concepción": [
+      "Oratorio de Concepción"
+    ],
+    "San Bartolomé Perulapía": [
+      "San Bartolomé Perulapía"
     ],
     "San Cristóbal": [
-      "Centro"
+      "San Cristóbal"
+    ],
+    "San José Guayabal": [
+      "San José Guayabal"
+    ],
+    "San Pedro Perulapán": [
+      "San Pedro Perulapán"
     ],
     "San Rafael Cedros": [
-      "Centro"
+      "San Rafael Cedros"
     ],
     "San Ramón": [
-      "Centro"
+      "San Ramón"
     ],
     "Santa Cruz Analquito": [
-      "Centro"
+      "Santa Cruz Analquito"
     ],
     "Santa Cruz Michapa": [
-      "Centro"
+      "Santa Cruz Michapa"
+    ],
+    "Suchitoto": [
+      "Suchitoto"
     ],
     "Tenancingo": [
-      "Centro"
+      "Tenancingo"
     ]
   },
   "La Libertad": {
-    "Ciudad Arce": [
-      "Centro"
-    ],
-    "San Juan Opico": [
-      "Centro"
+    "Antiguo Cuscatlán": [
+      "Antiguo Cuscatlán"
     ],
     "Chiltiupán": [
-      "Centro"
+      "Chiltiupán"
     ],
-    "Jicalapa": [
-      "Centro"
-    ],
-    "La Libertad": [
-      "Centro"
-    ],
-    "Tamanique": [
-      "Centro"
-    ],
-    "Teotepeque": [
-      "Centro"
-    ],
-    "Antiguo Cuscatlán": [
-      "Centro"
-    ],
-    "Huizúcar": [
-      "Centro"
-    ],
-    "Nuevo Cuscatlán": [
-      "Centro"
-    ],
-    "San José Villanueva": [
-      "Centro"
-    ],
-    "Zaragoza": [
-      "Centro"
-    ],
-    "Quezaltepeque": [
-      "Centro"
-    ],
-    "San Matías": [
-      "Centro"
-    ],
-    "San Pablo Tacachico": [
-      "Centro"
+    "Ciudad Arce": [
+      "Ciudad Arce"
     ],
     "Colón": [
-      "Centro"
-    ],
-    "Jayaque": [
-      "Centro"
-    ],
-    "Sacacoyo": [
-      "Centro"
-    ],
-    "Talnique": [
-      "Centro"
-    ],
-    "Tepecoyo": [
-      "Centro"
+      "Colón"
     ],
     "Comasagua": [
-      "Centro"
+      "Comasagua"
+    ],
+    "Huizúcar": [
+      "Huizúcar"
+    ],
+    "Jayaque": [
+      "Jayaque"
+    ],
+    "Jicalapa": [
+      "Jicalapa"
+    ],
+    "La Libertad": [
+      "La Libertad"
+    ],
+    "Nuevo Cuscatlán": [
+      "Nuevo Cuscatlán"
+    ],
+    "Puerto La Libertad": [
+      "Puerto La Libertad"
+    ],
+    "Quezaltepeque": [
+      "Quezaltepeque"
+    ],
+    "Sacacoyo": [
+      "Sacacoyo"
+    ],
+    "San José Villanueva": [
+      "San José Villanueva"
+    ],
+    "San Juan Opico": [
+      "San Juan Opico"
+    ],
+    "San Matías": [
+      "San Matías"
+    ],
+    "San Pablo Tacachico": [
+      "San Pablo Tacachico"
     ],
     "Santa Tecla": [
-      "Centro"
+      "Santa Tecla"
+    ],
+    "Talnique": [
+      "Talnique"
+    ],
+    "Tamanique": [
+      "Tamanique"
+    ],
+    "Teotepeque": [
+      "Teotepeque"
+    ],
+    "Tepecoyo": [
+      "Tepecoyo"
+    ],
+    "Zaragoza": [
+      "Zaragoza"
     ]
   },
   "La Paz": {
+    "Cuyultitán": [
+      "Cuyultitán"
+    ],
     "El Rosario": [
-      "Centro"
+      "El Rosario"
     ],
     "Jerusalén": [
-      "Centro"
+      "Jerusalén"
     ],
     "Mercedes La Ceiba": [
-      "Centro"
-    ],
-    "Paraíso de Osorio": [
-      "Centro"
-    ],
-    "San Antonio Masahuat": [
-      "Centro"
-    ],
-    "San Emigdio": [
-      "Centro"
-    ],
-    "San Juan Tepezontes": [
-      "Centro"
-    ],
-    "San Luis La Herradura": [
-      "Centro"
-    ],
-    "San Miguel Tepezontes": [
-      "Centro"
-    ],
-    "San Pedro Nonualco": [
-      "Centro"
-    ],
-    "Santa María Ostuma": [
-      "Centro"
-    ],
-    "Santiago Nonualco": [
-      "Centro"
-    ],
-    "San Juan Nonualco": [
-      "Centro"
-    ],
-    "San Rafael Obrajuelo": [
-      "Centro"
-    ],
-    "Zacatecoluca": [
-      "Centro"
-    ],
-    "Cuyultitán": [
-      "Centro"
+      "Mercedes La Ceiba"
     ],
     "Olocuilta": [
-      "Centro"
+      "Olocuilta"
+    ],
+    "Paraíso de Osorio": [
+      "Paraíso de Osorio"
+    ],
+    "San Antonio Masahuat": [
+      "San Antonio Masahuat"
+    ],
+    "San Emigdio": [
+      "San Emigdio"
     ],
     "San Francisco Chinameca": [
-      "Centro"
+      "San Francisco Chinameca"
+    ],
+    "San Juan Nonualco": [
+      "San Juan Nonualco"
     ],
     "San Juan Talpa": [
-      "Centro"
+      "San Juan Talpa"
+    ],
+    "San Juan Tepezontes": [
+      "San Juan Tepezontes"
+    ],
+    "San Luis La Herradura": [
+      "San Luis La Herradura"
     ],
     "San Luis Talpa": [
-      "Centro"
+      "San Luis Talpa"
+    ],
+    "San Miguel Tepezontes": [
+      "San Miguel Tepezontes"
     ],
     "San Pedro Masahuat": [
-      "Centro"
+      "San Pedro Masahuat"
+    ],
+    "San Pedro Nonualco": [
+      "San Pedro Nonualco"
+    ],
+    "San Rafael Obrajuelo": [
+      "San Rafael Obrajuelo"
+    ],
+    "Santa María Ostuma": [
+      "Santa María Ostuma"
+    ],
+    "Santiago Nonualco": [
+      "Santiago Nonualco"
     ],
     "Tapalhuaca": [
-      "Centro"
+      "Tapalhuaca"
+    ],
+    "Zacatecoluca": [
+      "Zacatecoluca"
     ]
   },
   "La Unión": {
     "Anamorós": [
-      "Centro"
+      "Anamorós"
     ],
     "Bolívar": [
-      "Centro"
+      "Bolívar"
     ],
     "Concepción de Oriente": [
-      "Centro"
-    ],
-    "El Sauce": [
-      "Centro"
-    ],
-    "Lislique": [
-      "Centro"
-    ],
-    "Nueva Esparta": [
-      "Centro"
-    ],
-    "Pasaquina": [
-      "Centro"
-    ],
-    "Polorós": [
-      "Centro"
-    ],
-    "San José": [
-      "Centro"
-    ],
-    "Santa Rosa de Lima": [
-      "Centro"
+      "Concepción de Oriente"
     ],
     "Conchagua": [
-      "Centro"
+      "Conchagua"
     ],
     "El Carmen": [
-      "Centro"
+      "El Carmen"
+    ],
+    "El Sauce": [
+      "El Sauce"
     ],
     "Intipucá": [
-      "Centro"
+      "Intipucá"
     ],
     "La Unión": [
-      "Centro"
+      "La Unión"
     ],
-    "Meanguera del Golfo": [
-      "Centro"
+    "Lislique": [
+      "Lislique"
+    ],
+    "Meanguera Del Golfo": [
+      "Meanguera Del Golfo"
+    ],
+    "Nueva Esparta": [
+      "Nueva Esparta"
+    ],
+    "Pasaquina": [
+      "Pasaquina"
+    ],
+    "Polorós": [
+      "Polorós"
     ],
     "San Alejo": [
-      "Centro"
+      "San Alejo"
+    ],
+    "San José": [
+      "San José"
+    ],
+    "Santa Rosa de Lima": [
+      "Santa Rosa de Lima"
     ],
     "Yayantique": [
-      "Centro"
+      "Yayantique"
     ],
     "Yucuaiquín": [
-      "Centro"
+      "Yucuaiquín"
     ]
   },
   "Morazán": {
     "Arambala": [
-      "Centro"
+      "Arambala"
     ],
     "Cacaopera": [
-      "Centro"
-    ],
-    "Corinto": [
-      "Centro"
-    ],
-    "El Rosario": [
-      "Centro"
-    ],
-    "Joateca": [
-      "Centro"
-    ],
-    "Jocoaitique": [
-      "Centro"
-    ],
-    "Meanguera": [
-      "Centro"
-    ],
-    "Perquín": [
-      "Centro"
-    ],
-    "San Fernando": [
-      "Centro"
-    ],
-    "San Isidro": [
-      "Centro"
-    ],
-    "Torola": [
-      "Centro"
+      "Cacaopera"
     ],
     "Chilanga": [
-      "Centro"
+      "Chilanga"
+    ],
+    "Corinto": [
+      "Corinto"
     ],
     "Delicias de Concepción": [
-      "Centro"
+      "Delicias de Concepción"
     ],
     "El Divisadero": [
-      "Centro"
+      "El Divisadero"
+    ],
+    "El Rosario": [
+      "El Rosario"
     ],
     "Gualococti": [
-      "Centro"
+      "Gualococti"
     ],
     "Guatajiagua": [
-      "Centro"
+      "Guatajiagua"
+    ],
+    "Joateca": [
+      "Joateca"
+    ],
+    "Jocoaitique": [
+      "Jocoaitique"
     ],
     "Jocoro": [
-      "Centro"
+      "Jocoro"
     ],
     "Lolotiquillo": [
-      "Centro"
+      "Lolotiquillo"
+    ],
+    "Meanguera": [
+      "Meanguera"
     ],
     "Osicala": [
-      "Centro"
+      "Osicala"
+    ],
+    "Perquín": [
+      "Perquín"
     ],
     "San Carlos": [
-      "Centro"
+      "San Carlos"
+    ],
+    "San Fernando": [
+      "San Fernando"
     ],
     "San Francisco Gotera": [
-      "Centro"
+      "San Francisco Gotera"
+    ],
+    "San Isidro": [
+      "San Isidro"
     ],
     "San Simón": [
-      "Centro"
+      "San Simón"
     ],
     "Sensembra": [
-      "Centro"
+      "Sensembra"
     ],
     "Sociedad": [
-      "Centro"
+      "Sociedad"
+    ],
+    "Torola": [
+      "Torola"
     ],
     "Yamabal": [
-      "Centro"
+      "Yamabal"
     ],
     "Yoloaiquín": [
-      "Centro"
+      "Yoloaiquín"
     ]
   },
   "San Miguel": {
-    "Chirilagua": [
-      "Centro"
-    ],
-    "Comacarán": [
-      "Centro"
-    ],
-    "Moncagua": [
-      "Centro"
-    ],
-    "Quelepa": [
-      "Centro"
-    ],
-    "San Miguel": [
-      "Centro"
-    ],
-    "Uluazapa": [
-      "Centro"
-    ],
     "Carolina": [
-      "Centro"
+      "Carolina"
     ],
     "Chapeltique": [
-      "Centro"
-    ],
-    "Ciudad Barrios": [
-      "Centro"
-    ],
-    "Nuevo Edén de San Juan": [
-      "Centro"
-    ],
-    "San Antonio": [
-      "Centro"
-    ],
-    "San Gerardo": [
-      "Centro"
-    ],
-    "San Luis de la Reina": [
-      "Centro"
-    ],
-    "Sesori": [
-      "Centro"
+      "Chapeltique"
     ],
     "Chinameca": [
-      "Centro"
+      "Chinameca"
+    ],
+    "Chirilagua": [
+      "Chirilagua"
+    ],
+    "Ciudad Barrios": [
+      "Ciudad Barrios"
+    ],
+    "Comacarán": [
+      "Comacarán"
     ],
     "El Tránsito": [
-      "Centro"
+      "El Tránsito"
     ],
     "Lolotique": [
-      "Centro"
+      "Lolotique"
+    ],
+    "Moncagua": [
+      "Moncagua"
     ],
     "Nueva Guadalupe": [
-      "Centro"
+      "Nueva Guadalupe"
+    ],
+    "Nuevo Edén de San Juan": [
+      "Nuevo Edén de San Juan"
+    ],
+    "Quelepa": [
+      "Quelepa"
+    ],
+    "San Antonio del Mosco": [
+      "San Antonio del Mosco"
+    ],
+    "San Gerardo": [
+      "San Gerardo"
     ],
     "San Jorge": [
-      "Centro"
+      "San Jorge"
     ],
-    "San Rafael": [
-      "Centro"
+    "San Luis de La Reina": [
+      "San Luis de La Reina"
+    ],
+    "San Miguel": [
+      "San Miguel"
+    ],
+    "San Rafael Oriente": [
+      "San Rafael Oriente"
+    ],
+    "Sesori": [
+      "Sesori"
+    ],
+    "Uluazapa": [
+      "Uluazapa"
     ]
   },
   "San Salvador": {
-    "Ayutuxtepeque": [
-      "Centro"
-    ],
-    "Cuscatancingo": [
-      "Centro"
-    ],
-    "Delgado": [
-      "Centro"
-    ],
-    "Mejicanos": [
-      "Centro"
-    ],
-    "San Salvador": [
-      "Centro"
-    ],
-    "Ilopango": [
-      "Centro"
-    ],
-    "San Martín": [
-      "Centro"
-    ],
-    "Soyapango": [
-      "Centro"
-    ],
-    "Tonacatepeque": [
-      "Centro"
-    ],
     "Aguilares": [
-      "Centro"
-    ],
-    "El Paisnal": [
-      "Centro"
-    ],
-    "Guazapa": [
-      "Centro"
+      "Aguilares"
     ],
     "Apopa": [
-      "Centro"
+      "Apopa"
+    ],
+    "Ayutuxtepeque": [
+      "Ayutuxtepeque"
+    ],
+    "Cuscatancingo": [
+      "Cuscatancingo"
+    ],
+    "Delgado": [
+      "Delgado"
+    ],
+    "El Paisnal": [
+      "El Paisnal"
+    ],
+    "Guazapa": [
+      "Guazapa"
+    ],
+    "Ilopango": [
+      "Ilopango"
+    ],
+    "Mejicanos": [
+      "Mejicanos"
     ],
     "Nejapa": [
-      "Centro"
+      "Nejapa"
     ],
     "Panchimalco": [
-      "Centro"
+      "Panchimalco"
     ],
     "Rosario de Mora": [
-      "Centro"
+      "Rosario de Mora"
     ],
     "San Marcos": [
-      "Centro"
+      "San Marcos"
+    ],
+    "San Martín": [
+      "San Martín"
+    ],
+    "San Salvador": [
+      "San Salvador"
     ],
     "Santiago Texacuangos": [
-      "Centro"
+      "Santiago Texacuangos"
     ],
     "Santo Tomás": [
-      "Centro"
+      "Santo Tomás"
     ],
-    "Lago de Llopango": [
-      "Centro"
+    "Soyapango": [
+      "Soyapango"
+    ],
+    "Tonacatepeque": [
+      "Tonacatepeque"
     ]
   },
   "San Vicente": {
     "Apastepeque": [
-      "Centro"
-    ],
-    "San Esteban Catarina": [
-      "Centro"
-    ],
-    "San Ildefonso": [
-      "Centro"
-    ],
-    "San Lorenzo": [
-      "Centro"
-    ],
-    "San Sebastián": [
-      "Centro"
-    ],
-    "Santa Clara": [
-      "Centro"
-    ],
-    "Santo Domingo": [
-      "Centro"
+      "Apastepeque"
     ],
     "Guadalupe": [
-      "Centro"
+      "Guadalupe"
     ],
     "San Cayetano Istepeque": [
-      "Centro"
+      "San Cayetano Istepeque"
+    ],
+    "San Esteban Catarina": [
+      "San Esteban Catarina"
+    ],
+    "San Idelfonso": [
+      "San Idelfonso"
+    ],
+    "San Lorenzo": [
+      "San Lorenzo"
+    ],
+    "San Sebastián": [
+      "San Sebastián"
     ],
     "San Vicente": [
-      "Centro"
+      "San Vicente"
+    ],
+    "Santa Clara": [
+      "Santa Clara"
+    ],
+    "Santo Domingo": [
+      "Santo Domingo"
     ],
     "Tecoluca": [
-      "Centro"
+      "Tecoluca"
     ],
     "Tepetitán": [
-      "Centro"
+      "Tepetitán"
     ],
     "Verapaz": [
-      "Centro"
+      "Verapaz"
     ]
   },
   "Santa Ana": {
-    "Santa Ana": [
-      "Centro"
-    ],
-    "Coatepeque": [
-      "Centro"
-    ],
-    "El Congo": [
-      "Centro"
-    ],
-    "Masahuat": [
-      "Centro"
-    ],
-    "Metapán": [
-      "Centro"
-    ],
-    "Santa Rosa Guachipilín": [
-      "Centro"
-    ],
-    "Texistepeque": [
-      "Centro"
-    ],
-    "Candelaria de la Frontera": [
-      "Centro"
+    "Candelaria De La Frontera": [
+      "Candelaria De La Frontera"
     ],
     "Chalchuapa": [
-      "Centro"
+      "Chalchuapa"
+    ],
+    "Coatepeque": [
+      "Coatepeque"
+    ],
+    "El Congo": [
+      "El Congo"
     ],
     "El Porvenir": [
-      "Centro"
+      "El Porvenir"
+    ],
+    "Masahuat": [
+      "Masahuat"
+    ],
+    "Metapán": [
+      "Metapán"
     ],
     "San Antonio Pajonal": [
-      "Centro"
+      "San Antonio Pajonal"
     ],
     "San Sebastián Salitrillo": [
-      "Centro"
+      "San Sebastián Salitrillo"
+    ],
+    "Santa Ana": [
+      "Santa Ana"
+    ],
+    "Santa Rosa Guachipilín": [
+      "Santa Rosa Guachipilín"
     ],
     "Santiago de la Frontera": [
-      "Centro"
+      "Santiago de la Frontera"
     ],
-    "Lago de Guija": [
-      "Centro"
-    ],
-    "Lago de Coatepeque": [
-      "Centro"
+    "Texistepeque": [
+      "Texistepeque"
     ]
   },
   "Sonsonate": {
-    "Nahulingo": [
-      "Centro"
-    ],
-    "San Antonio del Monte": [
-      "Centro"
-    ],
-    "Santo Domingo": [
-      "Centro"
-    ],
-    "Sonsonate": [
-      "Centro"
-    ],
-    "Sonzacate": [
-      "Centro"
+    "Acajutla": [
+      "Acajutla"
     ],
     "Armenia": [
-      "Centro"
+      "Armenia"
     ],
     "Caluco": [
-      "Centro"
+      "Caluco"
     ],
     "Cuisnahuat": [
-      "Centro"
+      "Cuisnahuat"
     ],
     "Izalco": [
-      "Centro"
-    ],
-    "San Julián": [
-      "Centro"
-    ],
-    "Santa Isabel Ishuatán": [
-      "Centro"
+      "Izalco"
     ],
     "Juayúa": [
-      "Centro"
+      "Juayúa"
     ],
     "Nahuizalco": [
-      "Centro"
+      "Nahuizalco"
+    ],
+    "Nahulingo": [
+      "Nahulingo"
     ],
     "Salcoatitán": [
-      "Centro"
+      "Salcoatitán"
+    ],
+    "San Antonio del Monte": [
+      "San Antonio del Monte"
+    ],
+    "San Julián": [
+      "San Julián"
     ],
     "Santa Catarina Masahuat": [
-      "Centro"
+      "Santa Catarina Masahuat"
     ],
-    "Acajutla": [
-      "Centro"
+    "Santa Isabel Ishuatán": [
+      "Santa Isabel Ishuatán"
+    ],
+    "Santo Domingo de Guzmán": [
+      "Santo Domingo de Guzmán"
+    ],
+    "Sonsonate": [
+      "Sonsonate"
+    ],
+    "Sonzacate": [
+      "Sonzacate"
     ]
   },
   "Usulután": {
-    "California": [
-      "Centro"
-    ],
-    "Concepción Batres": [
-      "Centro"
-    ],
-    "Ereguayquín": [
-      "Centro"
-    ],
-    "Jucuarán": [
-      "Centro"
-    ],
-    "Ozatlán": [
-      "Centro"
-    ],
-    "San Dionisio": [
-      "Centro"
-    ],
-    "Santa Elena": [
-      "Centro"
-    ],
-    "Santa María": [
-      "Centro"
-    ],
-    "Tecapán": [
-      "Centro"
-    ],
-    "Usulután": [
-      "Centro"
-    ],
     "Alegría": [
-      "Centro"
+      "Alegría"
     ],
     "Berlín": [
-      "Centro"
+      "Berlín"
+    ],
+    "California": [
+      "California"
+    ],
+    "Concepción Batres": [
+      "Concepción Batres"
     ],
     "El Triunfo": [
-      "Centro"
+      "El Triunfo"
+    ],
+    "Ereguayquín": [
+      "Ereguayquín"
     ],
     "Estanzuelas": [
-      "Centro"
-    ],
-    "Jucuapa": [
-      "Centro"
-    ],
-    "Mercedes Umaña": [
-      "Centro"
-    ],
-    "Nueva Granada": [
-      "Centro"
-    ],
-    "San Buenaventura": [
-      "Centro"
-    ],
-    "Santiago de María": [
-      "Centro"
+      "Estanzuelas"
     ],
     "Jiquilisco": [
-      "Centro"
+      "Jiquilisco"
+    ],
+    "Jucuapa": [
+      "Jucuapa"
+    ],
+    "Jucuarán": [
+      "Jucuarán"
+    ],
+    "Mercedes Umaña": [
+      "Mercedes Umaña"
+    ],
+    "Nueva Granada": [
+      "Nueva Granada"
+    ],
+    "Ozatlán": [
+      "Ozatlán"
     ],
     "Puerto El Triunfo": [
-      "Centro"
+      "Puerto El Triunfo"
     ],
     "San Agustín": [
-      "Centro"
+      "San Agustín"
+    ],
+    "San Buenaventura": [
+      "San Buenaventura"
+    ],
+    "San Dionisio": [
+      "San Dionisio"
     ],
     "San Francisco Javier": [
-      "Centro"
+      "San Francisco Javier"
+    ],
+    "Santa Elena": [
+      "Santa Elena"
+    ],
+    "Santa María": [
+      "Santa María"
+    ],
+    "Santiago de María": [
+      "Santiago de María"
+    ],
+    "Tecapán": [
+      "Tecapán"
+    ],
+    "Usulután": [
+      "Usulután"
     ]
   }
 };
+
 
 /** Nicaragua — complete departamentos / municipios. */
 export const GEO_NI: LatamGeoTree = {
@@ -4036,6 +3786,817 @@ export const GEO_NI: LatamGeoTree = {
     ]
   }
 };
+
+const NI_FUFILLS: LatamGeoTree = {
+  "Chinandega": {
+    "Chinandega": [
+      "Chinandega"
+    ]
+  },
+  "León": {
+    "León": [
+      "León"
+    ]
+  },
+  "Managua": {
+    "Ciudad Sandino": [
+      "Ciudad Sandino"
+    ],
+    "El Crucero": [
+      "El Crucero"
+    ],
+    "Managua": [
+      "10 De Enero",
+      "10 De Junio",
+      "11 De Mayo",
+      "12 De Octubre",
+      "13 De Mayo",
+      "14 De Junio",
+      "14 De Septiembre",
+      "15 De Mayo Una",
+      "16 De Marzo",
+      "18 De Agosto",
+      "18 De Mayo",
+      "19 De Febrero",
+      "19 De Julio",
+      "22 De Enero",
+      "25 Aniversario",
+      "25 De Febrero",
+      "28 De Mayo",
+      "30 De Mayo",
+      "31 De Diciembre",
+      "4 De Noviembre",
+      "8 De Marzo",
+      "9 De Junio",
+      "Acahualinca",
+      "Acoma",
+      "Acrópolis",
+      "Adolfo Reyes",
+      "Alamedas Km 8 Carretera Masaya",
+      "Alamedas Santo Domingo",
+      "Aldo Chavarría",
+      "Alemania Democrática",
+      "Alexis Arguello",
+      "Alfredo Nobel",
+      "Altagracia Norte",
+      "Altagracia Sur",
+      "Altamira Este",
+      "Altamonte",
+      "Altos De La Sabana",
+      "Altos De Las Colinas",
+      "Altos De Las Cumbres",
+      "Altos De Santo Domingo",
+      "Altos De Ticomo",
+      "Amanda Aguilar",
+      "Américas 1",
+      "Américas 2",
+      "Américas 3",
+      "Américas 4",
+      "Andrés Castro",
+      "Anexo 1 Unidad De Propósito",
+      "Anexo 18 De Mayo",
+      "Anexo 2 Unidad De Propósito",
+      "Anexo Américas 2",
+      "Anexo Batahola Sur",
+      "Anexo Camilo Ortega",
+      "Anexo Colonia Primero De Mayo",
+      "Anexo Georgino Andrade",
+      "Anexo Jardines De Veracruz",
+      "Anexo La Primavera",
+      "Anexo Las Sierritas Santo Domingo",
+      "Anexo Reparto San Juan",
+      "Anexo Villa Fraternidad",
+      "Anexo Villa Libertad",
+      "Anexo Villa Roma",
+      "Anexo Villa Venezuela",
+      "Anexo Waspán Sur",
+      "Arges Sequeira",
+      "Ariel Darce",
+      "Arlen Siu",
+      "Arnoldo Alemán",
+      "Augusto Cesar Sandino",
+      "B15",
+      "Balcones De Santo Domingo 1",
+      "Balcones De Santo Domingo 2",
+      "Bariloche",
+      "Barricada",
+      "Barrio Cuba",
+      "Barrio México",
+      "Barrio Nuevo",
+      "Barrio Primero De Mayo",
+      "Barrio Venezuela",
+      "Batahola Norte",
+      "Batahola Sur",
+      "Bell Air",
+      "Bello Horizonte Etapa 1",
+      "Bello Horizonte Etapa 2",
+      "Bello Horizonte Etapa 3",
+      "Bello Horizonte Etapa 4",
+      "Bello Horizonte Etapa 5",
+      "Bello Horizonte Etapa 6",
+      "Belmonte",
+      "Benedicto Valverde",
+      "Berlín",
+      "Bertha Calderon",
+      "Bertha Díaz",
+      "Bertilda Olegaria",
+      "Betancur",
+      "Blanca Arauz",
+      "Blanca Segovia",
+      "Blas Real Espinales",
+      "Bolonia",
+      "Bosque Norte Y Sur",
+      "Bosques De Altamira",
+      "Bosques De Bolonia",
+      "Bosques De Miraflores",
+      "Bosques De Nejapa",
+      "Bosques De San Isidro",
+      "Bosques De Santa María",
+      "Bosques De Santo Domingo",
+      "Bosques Del Prado",
+      "Bosques Del Recreo",
+      "Bosques Del Terraza",
+      "Buena Vista",
+      "Buenos Aires",
+      "Callejón Zelaya",
+      "Camilo Chamorro",
+      "Camilo Ortega",
+      "Camino Del Río",
+      "Campo Bello",
+      "Campo Bruce",
+      "Canadá Sureste",
+      "Candelaria",
+      "Carlos Aguirre",
+      "Carlos Fonseca",
+      "Carlos Marx",
+      "Carlos Núñez",
+      "Carlos Núñez 380",
+      "Carlos Núñez Américas 4",
+      "Carlos Núñez Los Martinez",
+      "Carlos Reina",
+      "Casa Blanca",
+      "Casa Fontana",
+      "Casa Real Etapa 1",
+      "Casa Real Etapa 2",
+      "Casa Real Etapa 3",
+      "Casimiro Sotelo",
+      "Castellana",
+      "Catalina",
+      "Cedros De Las Colinas",
+      "Centro Cívico",
+      "Centro Histórico Cultural",
+      "Che Guevara",
+      "Ciudad Jardín",
+      "Ciudad San Sebastián",
+      "Ciudad Xolotlán",
+      "Ciudadela Nicaragua",
+      "Colinas De Santa Cruz",
+      "Colinas De Verona",
+      "Colinas Sur",
+      "Colonia Centroamérica",
+      "Colonia Del Periodista",
+      "Colonia Edgard Lang",
+      "Colonia Independencia",
+      "Colonia Managua",
+      "Colonia Mantica",
+      "Colonia Miguel Bonilla",
+      "Colonia Nicarao",
+      "Colonia Oscar Perez Cassar",
+      "Colonia Primero De Mayo",
+      "Colonial Los Robles 1",
+      "Colonial Los Robles 2",
+      "Colonial Los Robles 3",
+      "Colonial Los Robles 4",
+      "Colonial Los Robles 5",
+      "Colonial Los Robles 6",
+      "Colonial Los Robles 7",
+      "Colonial Los Robles 8",
+      "Comandante Aureleano",
+      "Combatiente Desconocido",
+      "Concepción De Maria",
+      "Condesa 1 Y 2",
+      "Condominio Roma",
+      "Cortijo De La Sabana",
+      "Costa Rica",
+      "Cristian Perez",
+      "Cristo Del Rosario",
+      "Cuatro Esquinas De Las Enramadas",
+      "Cumbres De Las Colinas",
+      "Daniel Chavarría",
+      "David Tejada",
+      "Delagneau",
+      "Dignidad 4 De Mayo",
+      "Dinamarca",
+      "Divino Niño",
+      "Domitila Lugo",
+      "Don Bosco",
+      "Ducuali",
+      "Eddy Mayorga",
+      "Edgard Lang",
+      "Edgard Munguía",
+      "Edmundo Matamoros",
+      "Eduardo Contreras",
+      "El Boquete Sector Norte Santo Domingo",
+      "El Bóer",
+      "El Carmen",
+      "El Cenicero",
+      "El Cortijo",
+      "El Dorado",
+      "El Edén",
+      "El Encanto 1 Y 2",
+      "El Paraisito",
+      "El Pedernal",
+      "El Pilar",
+      "El Progreso",
+      "El Rodeito",
+      "El Rodeo",
+      "El Rodeo Santo Domingo",
+      "El Rosal",
+      "El Seminario",
+      "El Sosiego",
+      "Embusa 1 Y 2",
+      "Enrique Bermudez 380",
+      "Enrique Gutiérrez",
+      "Enrique Lorente",
+      "Enrique Schmidt Nejapa",
+      "Enrique Schmidt Villa Flor",
+      "Enrique Schmitd Rotonda de Cristo",
+      "Entreverde",
+      "Ermitas De Esquipulas",
+      "Escuela Quemada",
+      "Estancia Santo Domingo",
+      "Estefanía",
+      "Farabundo Martí",
+      "Finlandia Rubén Darío Las Colinas",
+      "Flor De Las Colinas",
+      "Francisco Aguilar",
+      "Francisco Meza Rojas",
+      "Francisco Morazán",
+      "Francisco Salazar",
+      "Frascati",
+      "Georgino Andrade",
+      "German Pomares Américas 2",
+      "German Pomares- Nejapa",
+      "Germán Pomares",
+      "Germán Pomares -Ticomo",
+      "Germán Silva",
+      "Gertrudis Áreas",
+      "Goenz",
+      "Golfo Pérsico",
+      "Grenada",
+      "Habana 1 - Rotonda De Cristo",
+      "Habana 2 Maria",
+      "Hadas Villas",
+      "Haras De La Hoyada",
+      "Herlinda López",
+      "Hialeah 1 Y 2",
+      "Hialeah 3",
+      "Hialeah 4",
+      "Hilario Sánchez 1",
+      "Hilario Sánchez 2",
+      "Hilario Sánchez Sur",
+      "Hogar Propio",
+      "Hugo Chávez",
+      "Héroes Y Mártires De Ayapal",
+      "Héroes Y Mártires Del Bocay",
+      "Inmaculada Villa Fontana",
+      "Intermezzo Del Bosque",
+      "Isabel Urbina",
+      "Isaías Gómez",
+      "Israel Galeano",
+      "Jacarandas",
+      "Jardines De Las Colinas",
+      "Jardines De Managua",
+      "Jardines De Santa Clara",
+      "Jardines De Santo Domingo 1",
+      "Jardines De Santo Domingo 2",
+      "Jardines De Veracruz",
+      "Javier Cuadra",
+      "Jericob",
+      "Jonathan Gonzalez",
+      "Jorge Cassaly",
+      "Jorge Dimitrov",
+      "Jorge Salazar",
+      "Jose Benito Escobar",
+      "Jose Dolores Estrada",
+      "Juan Emilio Menocal",
+      "Julio Buitrago",
+      "Kilocho",
+      "La Arboleda Santo Domingo",
+      "La Chureca",
+      "La Curva Sabana Grande",
+      "La Esperanza",
+      "La Esperanza Jocote Dulce",
+      "La Florida",
+      "La Fuente",
+      "La Luz",
+      "La Maravilla",
+      "La Morita",
+      "La Primavera",
+      "La Quinta",
+      "La Reforma",
+      "La Rioja",
+      "La Veranera",
+      "La Zacatera",
+      "Largaespada",
+      "Larreynaga",
+      "Las Alemanias",
+      "Las Brisas",
+      "Las Carolinas",
+      "Las Colinas",
+      "Las Cuarezmas",
+      "Las Cumbres",
+      "Las Delicias",
+      "Las Flores",
+      "Las Jinotepes",
+      "Las Lomas Camino Viejo",
+      "Las Lomitas Centroamérica",
+      "Las Mercedes",
+      "Las Palmas",
+      "Las Palmeras",
+      "Las Piedrecitas",
+      "Las Praderas",
+      "Las Torres",
+      "Las Veraneras",
+      "Laureano Mairena",
+      "Laureles Norte",
+      "Laureles Sur",
+      "Leningrado",
+      "Leonel Rugama",
+      "Liberia",
+      "Linda Vista Norte",
+      "Linda Vista Sur",
+      "Llamas Del Bosque",
+      "Loma De Tiscapa",
+      "Loma Linda",
+      "Loma Verde",
+      "Lomas De Buenos Aires",
+      "Lomas De Guadalupe",
+      "Lomas De Las Colinas",
+      "Lomas De Maromo",
+      "Lomas De Monserrat",
+      "Lomas De Notredame",
+      "Lomas De San Juan",
+      "Lomas De San Ángel",
+      "Lomas De Santo Domingo",
+      "Lomas De Ticomo",
+      "Lomas Del Consuelo",
+      "Lomas Del Sur",
+      "Lomas Del Valle",
+      "Los Andes",
+      "Los Angeles",
+      "Los Angeles Jocote Dulce",
+      "Los Arcos",
+      "Los Cocos",
+      "Los Cocos Sabana Grande",
+      "Los Corteses",
+      "Los Geranios",
+      "Los Ingenieros",
+      "Los Laureles- Camilo Ortega",
+      "Los Madroños",
+      "Los Martínez San Judas",
+      "Los Membreños",
+      "Los Palmares",
+      "Los Pescadores",
+      "Los Vanegas",
+      "Luis Alfonso Velásquez 1",
+      "Luis Alfonso Velásquez 2",
+      "Macaraly",
+      "Madroños Villa Fontana",
+      "Maestro Gabriel",
+      "Magnolia",
+      "Managua",
+      "Manchester",
+      "Manolo Morales",
+      "Manuel Fernández",
+      "Manuel Olivares",
+      "Marcell Pallais",
+      "Maria Auxiliadora",
+      "Maria Dolores Alemán",
+      "Martha Quezada",
+      "Martin Luter King",
+      "Marvin Marín",
+      "Mayales",
+      "Memorial Sandino",
+      "Mercado Ivan Montenegro",
+      "Michelangelo",
+      "Milagro De Dios",
+      "Mirador La Sabana",
+      "Mirador Las Cumbres",
+      "Mirador Norte Santo Domingo",
+      "Mirador Sur Santo Domingo",
+      "Miraflores 1",
+      "Miraflores 2",
+      "Miralagos",
+      "Mirasol",
+      "Mirna Ugarte",
+      "Mombacho",
+      "Monseñor Lezcano Este",
+      "Monseñor Lezcano Oeste",
+      "Monte Carlos",
+      "Monte Fresco",
+      "Monte Verde",
+      "Montecristi",
+      "Motastepe",
+      "Mártires De Ayapal",
+      "Máximo Jeréz",
+      "Naciones Unidas",
+      "Nejapa",
+      "Nicarao Sector Sur",
+      "Nora Astorga",
+      "Nueva Libia",
+      "Nueva Nicaragua",
+      "Nueva Sabana",
+      "Nuevo Horizonte",
+      "Omar Torrijos",
+      "Omar Torrijos - Loma Linda",
+      "Oscar Lino Paz Cubas",
+      "Oscar Turcios Rotonda de Cristo",
+      "Oswaldo Manzanares",
+      "Pablo Úbeda",
+      "Palermo",
+      "Palestina",
+      "Palma Real",
+      "Pantasma",
+      "Paseo Del Prado",
+      "Paseo Del Valle",
+      "Paseo Las Colinas",
+      "Paula Corea",
+      "Pedregal",
+      "Pedro Arauz Palacios",
+      "Pedro Joaquín Chamorro",
+      "Piquín Guerrero",
+      "Planes De Altamira 1",
+      "Planes De Altamira 2",
+      "Planes De Altamira 3",
+      "Planes De Puntaldía",
+      "Planes Del Doral",
+      "Planetarium",
+      "Plaza España Costado Sur",
+      "Portal Del Bosque",
+      "Portal Del Carmen",
+      "Portezuelo Parque Industrial",
+      "Praderas Del Doral",
+      "Proyecto Piloto",
+      "Puertas Del Sol",
+      "Quinta Nina",
+      "Quintas Del Valle",
+      "Rafael Ríos",
+      "Rafaela Herrera",
+      "Recreo Norte",
+      "Recreo Sur",
+      "Rene Cisneros",
+      "Rene Polanco",
+      "Reparto Colombia",
+      "Reparto Cuadra",
+      "Reparto España",
+      "Reparto Lomas De Guadalupe",
+      "Reparto Lopez",
+      "Reparto Los Robles",
+      "Reparto San Juan",
+      "Reparto Segovia",
+      "Reparto Serrano",
+      "Reparto Shick 1",
+      "Reparto Shick 2",
+      "Reparto Shick 3",
+      "Reparto Shick 4",
+      "Reparto Simón Bolívar",
+      "Reparto Tiscapa",
+      "Reparto Walter Ferretí",
+      "Revolución",
+      "Riguero",
+      "Riguero Norte",
+      "Romin Manrique",
+      "Rubenia",
+      "Rubén Darío",
+      "Rubén Darío - Candelaria",
+      "Ríos De Agua Viva",
+      "Sabana Grande",
+      "Sabanas",
+      "Sacuanjoche",
+      "Sajonia",
+      "Salomón Moreno",
+      "Salvadorita",
+      "Samarkanda",
+      "San Antonio",
+      "San Antonio Sur",
+      "San Cristóbal",
+      "San Francisco De Asís",
+      "San Ignacio Waslala",
+      "San Jose",
+      "San Jose Oriental",
+      "San Judas",
+      "San Lucas",
+      "San Luis Norte",
+      "San Luis Sur",
+      "San Martin",
+      "San Pablo",
+      "San Patricio",
+      "San Pedro",
+      "San Pedro San Judas",
+      "San Sebastián",
+      "San Sebastián Sur",
+      "Santa Ana Nicalit",
+      "Santa Ana Norte",
+      "Santa Ana Sur",
+      "Santa Anita",
+      "Santa Anita 2",
+      "Santa Bárbara",
+      "Santa Elena",
+      "Santa Emilia",
+      "Santa Isabel",
+      "Santa Julia",
+      "Santa Lucia",
+      "Santa Margarita",
+      "Santa Maria De Las Victorias",
+      "Santa María De Los Lagos",
+      "Santa Mónica",
+      "Santa Mónica Cruz Del Paraíso",
+      "Santa Rosa",
+      "Santo Domingo",
+      "Santos López",
+      "Sector Aeropuerto Internacional De Managua",
+      "Sector Banco Central",
+      "Sector Camino De Oriente",
+      "Sector Catedral Metropolitana",
+      "Sector Central Comarca Cedro Galán",
+      "Sector Central Comarca Chiquilistagua",
+      "Sector Centro Comercial Managua",
+      "Sector Centro Comercial Nejapa",
+      "Sector Cerro Los Martinez",
+      "Sector Cerro Tabuya",
+      "Sector Colegio Americano",
+      "Sector Colegio Centroamérica",
+      "Sector Comarca Jocote Dulce",
+      "Sector Conchita Palacios",
+      "Sector Corte Suprema De Justicia",
+      "Sector Cuatro Esquinas De Esquipulas",
+      "Sector Cuesta Del Plomo",
+      "Sector El Retiro",
+      "Sector El Seminario",
+      "Sector Enel Central",
+      "Sector Esquipulas",
+      "Sector Este 1 Comarca Sabana Grande Sur",
+      "Sector Este 2 Comarca Sabana Grande Sur",
+      "Sector Este América 2",
+      "Sector Este Comarca Candelaria Sur",
+      "Sector Este Comarca Las Enramadas",
+      "Sector Este Comarca Monte Tabor",
+      "Sector Este Comarca San Jose De La Cañada",
+      "Sector Este La Primavera",
+      "Sector Este Laguna De Asososca",
+      "Sector Este Las Colinas",
+      "Sector Este Las Cuarezma",
+      "Sector Este Laureles Sur",
+      "Sector Este Planes De Altamira 3",
+      "Sector Este Portezuelo",
+      "Sector Este Sabana Grande",
+      "Sector Este San Judas",
+      "Sector Este Vallarta",
+      "Sector Este Villa Venezuela",
+      "Sector Este Waspán Sur",
+      "Sector Este Zona Franca Industrial",
+      "Sector Gobierno",
+      "Sector Hogar Zacarías Guerra",
+      "Sector Holiday Inn",
+      "Sector Hospital Bertha Calderón",
+      "Sector Hospital Manolo Morales",
+      "Sector Hotel Camino Real",
+      "Sector Hotel Las Colinas",
+      "Sector Hotel Las Mercedes",
+      "Sector Industrial La Refinería",
+      "Sector Instituto Salomón De La Selva",
+      "Sector La Kativo",
+      "Sector La Piñata",
+      "Sector La Salle",
+      "Sector Laguna De Asososca",
+      "Sector Laguna De Tiscapa",
+      "Sector Mercado Israel Lewites",
+      "Sector Mercado Mayoreo",
+      "Sector Mercado Oriental",
+      "Sector Mercado Roberto Huembes",
+      "Sector Metrocentro",
+      "Sector Milagro De Dios",
+      "Sector Mokorón",
+      "Sector Noreste Camilo Chamorro",
+      "Sector Noreste Comarca Pochocuape",
+      "Sector Noreste Comarca San Cristóbal",
+      "Sector Noreste Las Colinas",
+      "Sector Noreste Los Vanegas",
+      "Sector Noreste Valle De Ticomo",
+      "Sector Noroeste Altos De Ticomo",
+      "Sector Noroeste Comarca San Isidro Libertador",
+      "Sector Noroeste Las Colinas",
+      "Sector Noroeste Paso Desnivel Centroamérica",
+      "Sector Noroeste Rotonda Jean Paul Genie",
+      "Sector Noroeste Rotonda Rubén Darío",
+      "Sector Noroeste Rotonda Universitaria",
+      "Sector Norte Aeropuerto Internacional De Managua",
+      "Sector Norte Cedro Galán",
+      "Sector Norte Ciudad Industrial Xolotlán",
+      "Sector Norte Colinas De Santa Cruz",
+      "Sector Norte Comarca Chiquilistagua",
+      "Sector Norte Comarca Esquipulas",
+      "Sector Norte Comarca Las Viudas",
+      "Sector Norte Comarca Los Ladinos",
+      "Sector Norte Comarca Nejapa",
+      "Sector Norte Comarca San Antonio Sur",
+      "Sector Norte Comarca San Cristóbal",
+      "Sector Norte Comarca San Isidro Libertador",
+      "Sector Norte Cruz Del Paraíso",
+      "Sector Norte De Waspán Norte",
+      "Sector Norte El Mirador",
+      "Sector Norte Estancia De Santo Domingo",
+      "Sector Norte Jocote Dulce",
+      "Sector Norte Las Brisas",
+      "Sector Norte Las Colinas",
+      "Sector Norte Las Jaguitas",
+      "Sector Norte Laureles Norte",
+      "Sector Norte Laureles Sur",
+      "Sector Norte Linda Vista",
+      "Sector Norte Montecristi",
+      "Sector Norte Sabana Grande",
+      "Sector Norte San Isidro De La Cruz Verde",
+      "Sector Norte Sierritas De Santo Domingo",
+      "Sector Occidental Lago De Managua",
+      "Sector Oeste Américas 2",
+      "Sector Oeste Avenida Naciones Unidas",
+      "Sector Oeste Avenida Universitaria",
+      "Sector Oeste Colinas De Santa Cruz",
+      "Sector Oeste Comarca Candelaria Sur",
+      "Sector Oeste Comarca Chiquilistagua",
+      "Sector Oeste Comarca Esquipulas",
+      "Sector Oeste Comarca Las Enramadas",
+      "Sector Oeste Comarca Nejapa",
+      "Sector Oeste Comarca Sabana Grande Sur",
+      "Sector Oeste Comarca Santo Domingo",
+      "Sector Oeste Lomas De San Ángel",
+      "Sector Oeste Monte Tabor",
+      "Sector Oeste Portezuelo",
+      "Sector Oeste San Isidro De La Cruz Verde",
+      "Sector Ofiplaza",
+      "Sector Pali Zumen",
+      "Sector Parque Las Piedrecitas",
+      "Sector Paseo Las Brisa",
+      "Sector Plaza España",
+      "Sector Radio Nicaragua",
+      "Sector Rio Borbollón",
+      "Sector Rio Lodoso",
+      "Sector Rio Santa Elena",
+      "Sector San Isidro De La Cruz Verde",
+      "Sector Sur 1 Mercado Mayoreo",
+      "Sector Sur 2 Mercado Mayoreo",
+      "Sector Sur Altos De Santo Domingo",
+      "Sector Sur Anexo Villa Libertad",
+      "Sector Sur Centro Histórico",
+      "Sector Sur Club Terraza",
+      "Sector Sur Comarca Las Enramadas",
+      "Sector Sur Comarca Las Jaguitas",
+      "Sector Sur Comarca Las Viudas",
+      "Sector Sur Comarca Los Ladinos",
+      "Sector Sur Comarca Nejapa",
+      "Sector Sur Comarca Pochocuape",
+      "Sector Sur Comarca San Antonio Sur",
+      "Sector Sur Comarca San Cristóbal",
+      "Sector Sur Comarca San Isidro Libertador",
+      "Sector Sur Comarca Ticomo",
+      "Sector Sur Cruz Del Paraíso",
+      "Sector Sur Esquipulas",
+      "Sector Sur Jocote Dulce",
+      "Sector Sur Laguna Nejapa",
+      "Sector Sur Laguna Tiscapa",
+      "Sector Sur Loma Linda",
+      "Sector Sur Lomas De Guadalupe",
+      "Sector Sur Memorial Sandino",
+      "Sector Sur Montecristi",
+      "Sector Sur Pista Jean Paul Genie",
+      "Sector Sur Rotonda Jean Paul Genie",
+      "Sector Sur Sabana Grande",
+      "Sector Sur San Isidro De La Cruz Verde",
+      "Sector Sur San Juan",
+      "Sector Sur Sierritas De Santo Domingo",
+      "Sector Sur Valle Ticomo",
+      "Sector Sur Villa Reconciliación",
+      "Sector Sureste Comarca Las Enramadas",
+      "Sector Sureste Comarca San Jose La Cañada",
+      "Sector Sureste San Isidro De La Cruz Verde",
+      "Sector Sureste San Juan",
+      "Sector Sureste Santa Isabel",
+      "Sector Sureste Valle Ticomo",
+      "Sector Suroeste Camino De Oriente",
+      "Sector Suroeste Colonia El Periodista",
+      "Sector Suroeste Comarca San Jose La Cañada",
+      "Sector Suroeste Pista Suburbana",
+      "Sector Suroeste Rotonda Universitaria",
+      "Sector Suroeste Santa Anita",
+      "Sector Unan Managua",
+      "Sector Valle De Ticomo",
+      "Sector Zona Franca Industrial",
+      "Serranías",
+      "Shelim Shible",
+      "Sierra Maestra",
+      "Sierritas De Santo Domingo",
+      "Sol De Libertad",
+      "Sócrates Sandino",
+      "Tenderí",
+      "Terracota 1 Y 2",
+      "Tierra Prometida",
+      "Torres Molina",
+      "Ulsa",
+      "Unidad De Propósito",
+      "Unión Soviética",
+      "Urbanización Gloria",
+      "Urbanización Madrid",
+      "Urbanización Ticomo Sur",
+      "Vallarta",
+      "Valle Azul",
+      "Valle Blanco",
+      "Valle Del Prado",
+      "Valle Dorado",
+      "Villa Argentina",
+      "Villa Austria",
+      "Villa Bellini",
+      "Villa Bulgaria",
+      "Villa Canadá",
+      "Villa Cuba Libre",
+      "Villa De Andalucía",
+      "Villa Del Rosario",
+      "Villa Dignidad",
+      "Villa Feliz",
+      "Villa Flor Norte",
+      "Villa Flor Sur",
+      "Villa Florencia",
+      "Villa Fontana Este",
+      "Villa Fontana Norte",
+      "Villa Fontana Sur",
+      "Villa Fraternidad",
+      "Villa Galicia",
+      "Villa Israel",
+      "Villa Jacinto",
+      "Villa Japón",
+      "Villa La Sabana",
+      "Villa Libertad",
+      "Villa Loreto",
+      "Villa Miguel Gutiérrez",
+      "Villa Nueva",
+      "Villa Pedro Joaquín Chamorro",
+      "Villa Progreso",
+      "Villa Reconciliación",
+      "Villa Revolución",
+      "Villa Roma",
+      "Villa Rubén Darío",
+      "Villa San Jacinto",
+      "Villa San Ángel",
+      "Villa Santa Fe",
+      "Villa Sol",
+      "Villa Tiscapa",
+      "Villa Valencia",
+      "Villa Venezuela",
+      "Villanova",
+      "Villas Gaudi",
+      "Villas Italianas",
+      "Vincent Poujardeu",
+      "Virgen De Guadalupe",
+      "Vista Al Xolotlán",
+      "Vista Esmeralda",
+      "Vista Hermosa",
+      "Vistas De Esquipulas",
+      "Vittoria",
+      "Walter Ferreti",
+      "Waspan Sur",
+      "Waspán Norte",
+      "William Diaz",
+      "William Galeano",
+      "Ángel Valentín Barrios"
+    ],
+    "Mateare": [
+      "Mateare"
+    ],
+    "San Rafael Del Sur": [
+      "San Rafael Del Sur"
+    ],
+    "Ticuantepe": [
+      "Ticuantepe"
+    ],
+    "Tipitapa": [
+      "Tipitapa"
+    ],
+    "Villa El Carmen": [
+      "Villa El Carmen"
+    ]
+  }
+};
+
+function applyNicaraguaFufills() {
+  for (const [dept, munis] of Object.entries(NI_FUFILLS)) {
+    if (!GEO_NI[dept]) GEO_NI[dept] = {};
+    for (const [muni, villages] of Object.entries(munis)) {
+      GEO_NI[dept][muni] = villages;
+    }
+  }
+}
+
+applyNicaraguaFufills();
 
 export function geoTreeForCountry(country: CountryCode): LatamGeoTree | null {
   if (country === "GT") return GEO_GT;

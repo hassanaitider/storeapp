@@ -1,246 +1,212 @@
-/** Dominican Republic — complete Provincia → Municipio list. */
+/** Dominican Republic — Provincia → Municipio from Fufills COD coverage. */
 export type DominicanGeoTree = Record<string, string[]>;
-
 export const GEO_DO: DominicanGeoTree = {
-  "Provincia Duarte": [
-    "Municipio Arenoso",
-    "Municipio Castillo",
-    "Municipio Eugenio María de Hostos",
-    "Municipio Las Guáranas",
-    "Municipio Pimentel",
-    "Municipio San Francisco de Macorís",
-    "Municipio Villa Riva"
+  "AZUA": [
+    "AZUA (AZUA DE COMPOSTELA)",
+    "DOÑA EMMA BALAGUER VIUDA VALLEJO",
+    "ESTEBANÍA",
+    "LAS BARÍAS-LA ESTANCIA",
+    "LAS CLAVELLINA",
+    "LOS JOVILLOS",
+    "SABANA YEGUA"
   ],
-  "Provincia Hermanas Mirabal": [
-    "Municipio Salcedo",
-    "Municipio Tenares",
-    "Municipio Villa Tapia"
+  "BAHORUCO": [
+    "EL PALMAR",
+    "GALVÁN",
+    "NEIBA",
+    "VILLA JARAGUA"
   ],
-  "Provincia María Trinidad Sánchez": [
-    "Municipio Cabrera",
-    "Municipio El Factor",
-    "Municipio Nagua",
-    "Municipio Río San Juan"
+  "BARAHONA": [
+    "BARAHONA (SANTA CRUZ DE BARAHONA)",
+    "CABRAL",
+    "EL CACHON",
+    "EL PEÑÓN",
+    "FUNDACION",
+    "JAQUIMEYES",
+    "LA GUÁZARA",
+    "PESCADERÍA",
+    "VILLA CENTRAL"
   ],
-  "Provincia Samaná": [
-    "Municipio Las Terrenas",
-    "Municipio Samaná",
-    "Municipio Sánchez"
+  "DAJABÓN": [
+    "CAÑONGO",
+    "DAJABÓN",
+    "LOMA DE CABRERA",
+    "SANTIAGO DE LA CRUZ"
   ],
-  "Provincia Dajabón": [
-    "Municipio Dajabón",
-    "Municipio El Pino",
-    "Municipio Loma de Cabrera",
-    "Municipio Partido",
-    "Municipio Restauración"
+  "DISTRITO NACIONAL": [
+    "SANTO DOMINGO"
   ],
-  "Provincia Monte Cristi": [
-    "Municipio Castañuelas",
-    "Municipio Guayubín",
-    "Municipio Las Matas de Santa Cruz",
-    "Municipio Monte Cristi",
-    "Municipio Pepillo Salcedo",
-    "Municipio Villa Vásquez"
+  "DUARTE": [
+    "JAYA",
+    "LA PEÑA",
+    "PRESIDENTE DON ANTONIO GUZMÁN FERNÁNDEZ",
+    "SAN FRANCISCO DE MACORÍS"
   ],
-  "Provincia Santiago Rodríguez": [
-    "Municipio Monción",
-    "Municipio San Ignacio de Sabaneta",
-    "Municipio Villa Los Almácigos"
+  "EL SEIBO": [
+    "EL SEIBO (SANTA CRUZ DEL SEIBO)",
+    "SANTA LUCIA"
   ],
-  "Provincia Valverde": [
-    "Municipio Esperanza",
-    "Municipio Laguna Salada",
-    "Municipio Mao"
+  "ELÍAS PIÑA": [
+    "COMENDADOR"
   ],
-  "Provincia Espaillat": [
-    "Municipio Cayetano Germosén",
-    "Municipio Gaspar Hernández",
-    "Municipio Jamao al Norte",
-    "Municipio Moca"
+  "ESPAILLAT": [
+    "CANCA LA REINA",
+    "CAYETANO GERMOSÉN",
+    "EL HIGUERITO",
+    "JUAN LÓPEZ",
+    "LA ORTEGA",
+    "LAS LAGUNAS",
+    "MOCA",
+    "MONTE DE LA JAGUA",
+    "SAN VICTOR"
   ],
-  "Provincia Puerto Plata": [
-    "Municipio Altamira",
-    "Municipio Guananico",
-    "Municipio Imbert",
-    "Municipio Los Hidalgos",
-    "Municipio Luperón",
-    "Municipio Puerto Plata",
-    "Municipio Sosúa",
-    "Municipio Villa Isabela",
-    "Municipio Villa Montellano"
+  "HATO MAYOR": [
+    "GUAYABO DULCE",
+    "HATO MAYOR (HATO MAYOR DEL REY)",
+    "MATA PALACIO",
+    "YERBA BUENA"
   ],
-  "Provincia Santiago": [
-    "Municipio Bisonó",
-    "Municipio Jánico",
-    "Municipio Licey al Medio",
-    "Municipio Puñal",
-    "Municipio Sabana Iglesia",
-    "Municipio San José de las Matas",
-    "Municipio Santiago",
-    "Municipio Tamboril",
-    "Municipio Villa González"
+  "HERMANAS MIRABAL (SALCEDO)": [
+    "SALCEDO (JUANA NÚÑEZ)",
+    "TENARES"
   ],
-  "Provincia La Vega": [
-    "Municipio Constanza",
-    "Municipio Jarabacoa",
-    "Municipio Jima Abajo",
-    "Municipio La Vega"
+  "INDEPENDENCIA": [
+    "BOCA DE CACHÓN",
+    "EL LIMÓN",
+    "JIMANÍ"
   ],
-  "Provincia Monseñor Nouel": [
-    "Municipio Bonao",
-    "Municipio Maimón",
-    "Municipio Piedra Blanca"
+  "LA ALTAGRACIA": [
+    "BÁVARO",
+    "HIGUEY (SALVALEÓN DE HIGUEY)",
+    "LA OTRA BANDA (HIGUEY)",
+    "PUNTA CANA",
+    "VERÓN"
   ],
-  "Provincia Sánchez Ramírez": [
-    "Municipio Cevicos",
-    "Municipio Cotuí",
-    "Municipio Fantino",
-    "Municipio La Mata"
+  "LA ROMANA": [
+    "CALETA",
+    "LA ROMANA",
+    "VILLA HERMOSA"
   ],
-  "Provincia Elías Piña": [
-    "Municipio Bánica",
-    "Municipio Comendador",
-    "Municipio El Llano",
-    "Municipio Hondo Valle",
-    "Municipio Juan Santiago",
-    "Municipio Pedro Santana"
+  "LA VEGA": [
+    "BUENA VISTA",
+    "CONSTANZA",
+    "JARABACOA",
+    "LA VEGA (CONCEPCIÓN DE LA VEGA)",
+    "RÍO VERDE ARRIBA"
   ],
-  "Provincia San Juan": [
-    "Municipio Bohechío",
-    "Municipio El Cercado",
-    "Municipio Juan de Herrera",
-    "Municipio Las Matas de Farfán",
-    "Municipio San Juan",
-    "Municipio Vallejuelo"
+  "MARÍA TRINIDAD SÁNCHEZ": [
+    "ARROYO AL MEDIO",
+    "EL FACTOR",
+    "NAGUA",
+    "NAGUA (SAN JOSE DE MATANZAS)"
   ],
-  "Provincia Baoruco": [
-    "Municipio Galván",
-    "Municipio Los Ríos",
-    "Municipio Neiba",
-    "Municipio Tamayo",
-    "Municipio Villa Jaragua"
+  "MONSEÑOR NOUEL": [
+    "ARROYO TORO-MASIPEDRO",
+    "BONAO",
+    "JAYACO",
+    "JUMA BEJUCAL",
+    "LA SALVIA-LOS QUEMADOS",
+    "PIEDRA BLANCA",
+    "SABANA DEL PUERTO",
+    "VILLA SONADOR"
   ],
-  "Provincia Barahona": [
-    "Municipio Barahona",
-    "Municipio Cabral",
-    "Municipio El Peñón",
-    "Municipio Enriquillo",
-    "Municipio Fundación",
-    "Municipio Jaquimeyes",
-    "Municipio La Ciénaga",
-    "Municipio Las Salinas",
-    "Municipio Paraíso",
-    "Municipio Polo",
-    "Municipio Vicente Noble"
+  "MONTE CRISTI": [
+    "MONTE CRISTI (SAN FERNANDO DE MONTE CRISTI)",
+    "VILLA VÁSQUEZ (SANTA ANA, VILLA ISABEL)"
   ],
-  "Provincia Independencia": [
-    "Municipio Cristóbal",
-    "Municipio Duvergé",
-    "Municipio Jimaní",
-    "Municipio La Descubierta",
-    "Municipio Mella",
-    "Municipio Postrer Río"
+  "MONTE PLATA": [
+    "MONTE PLATA",
+    "SABANA GRANDE DE BOYÁ"
   ],
-  "Provincia Pedernales": [
-    "Municipio Oviedo",
-    "Municipio Pedernales"
+  "PEDERNALES": [
+    "JOSÉ FRANCISCO PEÑA GÓMEZ",
+    "PEDERNALES"
   ],
-  "Provincia Hato Mayor": [
-    "Municipio El Valle",
-    "Municipio Hato Mayor",
-    "Municipio Sabana de la Mar"
+  "PERAVIA": [
+    "BANÍ",
+    "CATALINA",
+    "MATANZAS",
+    "PAYA",
+    "VILLA SOMBRERO"
   ],
-  "Provincia Monte Plata": [
-    "Municipio Bayaguana",
-    "Municipio Monte Plata",
-    "Municipio Peralvillo",
-    "Municipio Sabana Grande de Boyá",
-    "Municipio Yamasá"
+  "PUERTO PLATA": [
+    "PUERTO PLATA (SAN FELIPE DE PUERTO PLATA)",
+    "SOSÚA",
+    "VILLA MONTELLANO"
   ],
-  "Provincia San Pedro de Macorís": [
-    "Municipio Consuelo",
-    "Municipio Guayacanes",
-    "Municipio Los Llanos",
-    "Municipio Quisqueya",
-    "Municipio Ramón Santana",
-    "Municipio San Pedro de Macorís"
+  "SAMANÁ": [
+    "LAS TERRENAS",
+    "SAMANÁ (SANTA BÁRBARA DE SAMANÁ)",
+    "SÁNCHEZ"
   ],
-  "Distrito Nacional": [
-    "Municipio Santo Domingo de Guzmán"
+  "SAN CRISTOBAL": [
+    "EL CARRIL",
+    "HAINA (BAJOS DE HAINA)",
+    "HATO DAMAS",
+    "NIGUA (SAN GREGORIO DE NIGUA)",
+    "SAN CRISTOBAL",
+    "VILLA ALTAGRACIA"
   ],
-  "Provincia Santo Domingo": [
-    "Municipio Boca Chica",
-    "Municipio Los Alcarrizos",
-    "Municipio Pedro Brand",
-    "Municipio San Antonio de Guerra",
-    "Municipio Santo Domingo Este",
-    "Municipio Santo Domingo Norte",
-    "Municipio Santo Domingo Oeste"
+  "SAN JOSÉ DE OCOA": [
+    "EL NARANJAL",
+    "SABANA LARGA",
+    "SAN JOSÉ DE OCOA"
   ],
-  "Provincia Azua": [
-    "Municipio Azua",
-    "Municipio Estebanía",
-    "Municipio Guayabal",
-    "Municipio Las Charcas",
-    "Municipio Las Yayas de Viajama",
-    "Municipio Padre Las Casas",
-    "Municipio Peralta",
-    "Municipio Pueblo Viejo",
-    "Municipio Sabana Yegua",
-    "Municipio Tábara Arriba"
+  "SAN JUAN": [
+    "EL ROSARIO",
+    "HATO DEL PADRE",
+    "JUAN DE HERRERA",
+    "SAN JUAN"
   ],
-  "Provincia Peravia": [
-    "Municipio Baní",
-    "Municipio Nizao"
+  "SAN PEDRO DE MACORÍS": [
+    "CONSUELO",
+    "SAN PEDRO DE MACORÍS"
   ],
-  "Provincia San Cristóbal": [
-    "Municipio Bajos de Haina",
-    "Municipio Cambita Garabitos",
-    "Municipio Los Cacaos",
-    "Municipio Sabana Grande de Palenque",
-    "Municipio San Cristóbal",
-    "Municipio San Gregorio de Nigua",
-    "Municipio Villa Altagracia",
-    "Municipio Yaguate"
+  "SANTIAGO": [
+    "CANABACOA",
+    "CANCA DE LA PIEDRA",
+    "GUAYABAL",
+    "LAS PALOMAS",
+    "LICEY AL MEDIO",
+    "PUÑAL",
+    "SANTIAGO DE LOS CABALLEROS",
+    "TAMBORIL (PEÑA)",
+    "VILLA GONZÁLEZ"
   ],
-  "Provincia San José de Ocoa": [
-    "Municipio Rancho Arriba",
-    "Municipio Sabana Larga",
-    "Municipio San José de Ocoa"
+  "SANTIAGO RODRÍGUEZ": [
+    "SABANETA (SAN IGNACIO DE SABANETA)",
+    "VILLA LOS ALMÁCIGOS"
   ],
-  "Provincia El Seibo": [
-    "Municipio El Seibo",
-    "Municipio Miches"
+  "SANTO DOMINGO": [
+    "BOCA CHICA",
+    "LA CALETA",
+    "LA GUÁYIGA",
+    "LA VICTORIA",
+    "LOS ALCARRIZOS",
+    "PALMAREJO-VILLA LINDA",
+    "PANTOJA",
+    "PEDRO BRAND",
+    "SAN LUIS",
+    "SANTO DOMINGO ESTE",
+    "SANTO DOMINGO NORTE",
+    "SANTO DOMINGO OESTE"
   ],
-  "Provincia La Altagracia": [
-    "Municipio Higüey",
-    "Municipio San Rafael del Yuma"
+  "SÁNCHEZ RAMÍREZ": [
+    "COTUÍ",
+    "LA BIJA",
+    "LA MATA",
+    "QUITA SUEÑO"
   ],
-  "Provincia La Romana": [
-    "Municipio Guaymate",
-    "Municipio La Romana",
-    "Municipio Villa Hermosa"
+  "VALVERDE": [
+    "BOCA DE MAO",
+    "ESPERANZA",
+    "JAIBÓN (PUEBLO NUEVO)",
+    "MAO (SANTA CRUZ DE MAO)",
+    "ÁNIMA"
   ]
 };
 
-function addDominicanCities(provincia: string, cities: string[]) {
-  const current = GEO_DO[provincia];
-  if (!current) return;
-  GEO_DO[provincia] = [...new Set([...current, ...cities])];
-}
 
-addDominicanCities("Provincia La Altagracia", [
-  "Municipio Verón-Punta Cana",
-  "Municipio Punta Cana",
-  "Municipio Bávaro",
-]);
-addDominicanCities("Provincia Puerto Plata", ["Municipio Cabarete"]);
-addDominicanCities("Provincia Samaná", [
-  "Municipio Las Galeras",
-  "Municipio El Limón",
-]);
-addDominicanCities("Provincia Santo Domingo", ["Municipio La Victoria"]);
-addDominicanCities("Provincia Espaillat", ["Municipio San Víctor"]);
 
 export function usesDominicanCodCheckout(country: string): boolean {
   return country.toUpperCase() === "DO";
