@@ -270,7 +270,6 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
             ? p.customColorEnabled
             : Boolean(seed.customColorEnabled),
         qtyUpsellLocked: p.qtyUpsellLocked === true,
-        qtyUpsellLocked: Boolean(p.qtyUpsellLocked),
         qtyUpsellEnabled: isCodQtyUpsellEnabled(
           {
             ...p,

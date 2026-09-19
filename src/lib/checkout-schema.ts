@@ -122,6 +122,7 @@ const SCHEMAS: Record<CountryCode, CheckoutSchema> = {
   OM: { ...MENA, phoneMin: 8, phoneMax: 8 },
   IQ: { ...MENA, phoneMin: 10, phoneMax: 10 },
   LY: { ...MENA, phoneMin: 9, phoneMax: 10 },
+  LB: { ...MENA, phoneMin: 8, phoneMax: 8 },
   KW: { ...MENA, phoneMin: 8, phoneMax: 8 },
   BH: { ...MENA, phoneMin: 8, phoneMax: 8 },
   QA: { ...MENA, phoneMin: 8, phoneMax: 8 },
