@@ -609,6 +609,7 @@ export default function EditProductPage() {
                 setCustomColorEnabled(next);
                 if (!isNew && existing) {
                   updateProduct(existing.id, { customColorEnabled: next });
+                  void persistCatalog();
                 }
               }}
             />
@@ -622,9 +623,11 @@ export default function EditProductPage() {
                 if (next) setQtyOffers(offers);
                 if (!isNew && existing) {
                   updateProduct(existing.id, {
+                    qtyUpsellLocked: true,
                     qtyUpsellEnabled: next,
                     ...(next ? { qtyOffers: offers } : {}),
                   });
+                  void persistCatalog();
                 }
               }}
             >

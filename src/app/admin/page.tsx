@@ -216,6 +216,7 @@ function AdminDashboard() {
       window.alert(locale === "ar" ? "تعذّر الحفظ" : "Could not save");
       return;
     }
+    void persistCatalog();
     setFlash(enabled ? t.admin.colorEnabledFlash : t.admin.colorDisabledFlash);
     window.setTimeout(() => setFlash(""), 2500);
   }
@@ -447,6 +448,7 @@ function AdminDashboard() {
                       onClick={() => {
                         const next = !anyQtyUpsell;
                         setAllQtyUpsellEnabled(next);
+                        void persistCatalog();
                         setFlash(
                           next
                             ? t.admin.upsellEnabledFlash
@@ -820,6 +822,7 @@ function AdminDashboard() {
                   onClick={() => {
                     const next = !anyQtyUpsell;
                     setAllQtyUpsellEnabled(next);
+                    void persistCatalog();
                     setFlash(
                       next ? t.admin.upsellEnabledFlash : t.admin.upsellDisabledFlash
                     );

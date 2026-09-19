@@ -109,7 +109,10 @@ function ProductPageInner() {
     );
   }, [getProduct, slug, previewCountry, country, products]);
 
-  const showQtyUpsell = isCodQtyUpsellEnabled(product, country);
+  const showQtyUpsell = isCodQtyUpsellEnabled(
+    product,
+    previewCountry ?? product?.availableIn?.[0] ?? country
+  );
 
   // Ephemeral preview market — does not lock IP geo for the rest of the site
   useEffect(() => {

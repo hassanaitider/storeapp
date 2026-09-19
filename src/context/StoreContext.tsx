@@ -270,16 +270,20 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
             ? p.customColorEnabled
             : Boolean(seed.customColorEnabled),
         qtyUpsellLocked: p.qtyUpsellLocked === true,
-        qtyUpsellEnabled:
-          typeof p.qtyUpsellEnabled === "boolean"
-            ? p.qtyUpsellEnabled
-            : upsellSlugs.has((p.slug || seed.slug || "").trim()) ||
-              usesLatamThreeQtyPacks(
-                lockedMarket ||
-                  p.availableIn?.[0] ||
-                  seed.availableIn?.[0] ||
-                  ""
-              ),
+        qtyUpsellLocked: Boolean(p.qtyUpsellLocked),
+        qtyUpsellEnabled: isCodQtyUpsellEnabled(
+          {
+            ...p,
+            qtyUpsellLocked: p.qtyUpsellLocked,
+            availableIn: p.availableIn?.length
+              ? p.availableIn
+              : seed.availableIn,
+          },
+          lockedMarket ||
+            p.availableIn?.[0] ||
+            seed.availableIn?.[0] ||
+            ""
+        ),
         categoryId: p.categoryId || seed.categoryId,
         marketPrices: {
           ...(seed.marketPrices ?? {}),
@@ -443,19 +447,19 @@ function applyCatalogDisplayFlags(
 ): Product[] {
   if (!catalog?.products?.length) return products;
   const byId = new Map(catalog.products.map((p) => [p.id, p]));
-  const upsellSlugs = slugFlagSet(catalog.products, "qtyUpsellEnabled");
   return products.map((p) => {
     const row = byId.get(p.id);
-    const slug = (p.slug || row?.slug || "").trim();
-    const upsell =
-      typeof row?.qtyUpsellEnabled === "boolean"
-        ? row.qtyUpsellEnabled
-        : slug && upsellSlugs.has(slug)
-          ? true
-          : usesLatamThreeQtyPacks(
-              row?.availableIn?.[0] || p.availableIn?.[0] || ""
-            );
-    return { ...p, qtyUpsellEnabled: upsell };
+    const merged: Product = {
+      ...p,
+      qtyUpsellEnabled: row?.qtyUpsellEnabled ?? p.qtyUpsellEnabled,
+      qtyUpsellLocked: row?.qtyUpsellLocked ?? p.qtyUpsellLocked,
+    };
+    const market =
+      row?.availableIn?.[0] || p.availableIn?.[0] || undefined;
+    return {
+      ...merged,
+      qtyUpsellEnabled: isCodQtyUpsellEnabled(merged, market),
+    };
   });
 }
 
@@ -1266,6 +1270,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const slug = target.slug?.trim();
         const syncDisplay =
           data.qtyUpsellEnabled !== undefined ||
+          data.qtyUpsellLocked !== undefined ||
           data.customColorEnabled !== undefined;
         return {
           ...s,
@@ -1277,6 +1282,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
                 ...p,
                 ...(data.qtyUpsellEnabled !== undefined
                   ? { qtyUpsellEnabled: data.qtyUpsellEnabled }
+                  : {}),
+                ...(data.qtyUpsellLocked !== undefined
+                  ? { qtyUpsellLocked: data.qtyUpsellLocked }
                   : {}),
                 ...(data.customColorEnabled !== undefined
                   ? { customColorEnabled: data.customColorEnabled }
@@ -1454,6 +1462,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           if (!market || !isSpanishMarket(market)) return p;
           return {
             ...p,
+            qtyUpsellLocked: true,
             qtyUpsellEnabled: enabled,
             ...(enabled
               ? { qtyOffers: withLatamThreeQtyOffers(p.qtyOffers) }
