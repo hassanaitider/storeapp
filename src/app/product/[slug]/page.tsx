@@ -38,6 +38,8 @@ import {
   ProductBriefDescription,
   ProductDetailSections,
 } from "@/components/shop/ProductLanding";
+import { MagPowerBankStory } from "@/components/shop/MagPowerBankStory";
+import { MAG_POWERBANK_SLUG } from "@/lib/seed-latam-mag-powerbank";
 import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
 import {
   ProductQtyUpsell,
@@ -615,7 +617,11 @@ function ProductPageInner() {
       )}
 
       {/* 4) Detailed description: image → text → image → text */}
-      <ProductDetailSections product={product} locale={locale} />
+      {product.slug === MAG_POWERBANK_SLUG ? (
+        <MagPowerBankStory product={product} locale={locale} />
+      ) : (
+        <ProductDetailSections product={product} locale={locale} />
+      )}
 
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-sand-200/80 bg-white/95 shadow-[0_-8px_30px_rgba(14,34,29,0.08)] backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">

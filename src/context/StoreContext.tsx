@@ -231,6 +231,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       if (!seed) return p;
       const durable = (p.images ?? []).filter(isDurableMediaUrl);
       const elevadorMatch = elevadorPerMarket.exec(seed.id);
+      const magMatch = /^prod-mag-powerbank-([a-z]{2})$/i.exec(seed.id);
       const lockedMarket = elevadorMatch
         ? (elevadorMatch[1].toUpperCase() as CountryCode)
         : null;
@@ -329,6 +330,24 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
             typeof adminCompare === "number"
               ? { [lockedMarket]: adminCompare }
               : { ...(seed.marketComparePrices ?? {}) },
+        };
+      }
+
+      if (magMatch && seed.availableIn?.length) {
+        const replaceOldUsd = p.priceUSD === 24;
+        return {
+          ...base,
+          categoryId: seed.categoryId,
+          availableIn: [...seed.availableIn],
+          slug: seed.slug,
+          priceUSD: replaceOldUsd ? seed.priceUSD : base.priceUSD,
+          compareAtUSD: replaceOldUsd ? seed.compareAtUSD : base.compareAtUSD,
+          marketPrices: replaceOldUsd
+            ? { ...(seed.marketPrices ?? {}) }
+            : base.marketPrices,
+          marketComparePrices: replaceOldUsd
+            ? { ...(seed.marketComparePrices ?? {}) }
+            : base.marketComparePrices,
         };
       }
 

@@ -1,7 +1,7 @@
 import { STORE_MARKETS } from "./countries";
 import type { Category, Product } from "./types";
 import { withSpanishCopy } from "./seed-es";
-import { LATAM_ELEVADOR_PRODUCTS } from "./seed-latam-elevador";
+import { LATAM_MAG_POWERBANK_PRODUCTS } from "./seed-latam-mag-powerbank";
 import { UNIVERSAL_MARKET_PRODUCTS } from "./seed-universal-products";
 
 /** Consistent per-market category art: country flag only (no product lifestyle) */
@@ -2587,7 +2587,7 @@ ${COD_EN}
       ],
     },
   },
-  ...LATAM_ELEVADOR_PRODUCTS,
+  ...LATAM_MAG_POWERBANK_PRODUCTS,
   ...UNIVERSAL_MARKET_PRODUCTS,
 ];
 
