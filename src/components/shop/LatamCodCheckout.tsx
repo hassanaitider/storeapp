@@ -101,20 +101,12 @@ export function LatamCodCheckout({
   const [poblado, setPoblado] = useState("");
   const [direccion, setDireccion] = useState("");
   const [referencia, setReferencia] = useState("");
-  const loc =
-    country === "CR"
-      ? {
-          l1: "Provincia",
-          l2: "Cantón",
-          l3: "Distrito",
-          missing: "Selecciona provincia, cantón y distrito",
-        }
-      : {
-          l1: "Departamento",
-          l2: "Municipio",
-          l3: "Poblado",
-          missing: "Selecciona departamento, municipio y poblado",
-        };
+  const loc = {
+    l1: "Departamento",
+    l2: "Municipio",
+    l3: "Poblado",
+    missing: "Selecciona departamento, municipio y poblado",
+  };
 
   const departamentos = useMemo(
     () => (tree ? Object.keys(tree) : []),
