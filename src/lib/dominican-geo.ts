@@ -1,3 +1,6 @@
+import { mergePlaceOptions } from "./latam-neighborhoods";
+import { withOtherPlace } from "./latam-other-place";
+
 /** Dominican Republic — complete Provincia → Municipio list. */
 export type DominicanGeoTree = Record<string, string[]>;
 
@@ -223,6 +226,33 @@ export const GEO_DO: DominicanGeoTree = {
   ]
 };
 
+function cleanDoLabel(name: string): string {
+  return name.replace(/^Provincia\s+/i, "").replace(/^Municipio\s+/i, "").trim();
+}
+
+function normalizeDominicanGeo() {
+  const next: DominicanGeoTree = {};
+  for (const [rawKey, rawCities] of Object.entries(GEO_DO)) {
+    const key = cleanDoLabel(rawKey);
+    const cities = rawCities.map(cleanDoLabel);
+    next[key] = [...new Set([...(next[key] ?? []), ...cities])];
+  }
+  const extras: Record<string, string[]> = {
+    "La Altagracia": ["Verón-Punta Cana", "Punta Cana", "Bávaro"],
+    "Puerto Plata": ["Cabarete"],
+    Samaná: ["Las Galeras", "El Limón"],
+    "Santo Domingo": ["La Victoria"],
+    Espaillat: ["San Víctor"],
+  };
+  for (const [provincia, cities] of Object.entries(extras)) {
+    next[provincia] = [...new Set([...(next[provincia] ?? []), ...cities])];
+  }
+  for (const key of Object.keys(GEO_DO)) delete GEO_DO[key];
+  Object.assign(GEO_DO, next);
+}
+
+normalizeDominicanGeo();
+
 export function usesDominicanCodCheckout(country: string): boolean {
   return country.toUpperCase() === "DO";
 }
@@ -232,5 +262,12 @@ export function dominicanProvincias(): string[] {
 }
 
 export function dominicanCiudades(provincia: string): string[] {
-  return GEO_DO[provincia] ?? [];
+  const list = [
+    ...(GEO_DO[provincia] ?? GEO_DO[`Provincia ${provincia}`] ?? []),
+  ].sort((a, b) => a.localeCompare(b, "es"));
+  return withOtherPlace(list);
+}
+
+export function dominicanSectores(provincia: string, municipio: string): string[] {
+  return mergePlaceOptions("DO", provincia, municipio, []);
 }

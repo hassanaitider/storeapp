@@ -1,4 +1,5 @@
 import { GEO_NI } from "./latam-geo";
+import { mergePlaceOptions } from "./latam-neighborhoods";
 
 /** Nicaragua — exclusive COD checkout (not shared with other markets). */
 export function usesNicaraguaCodCheckout(country: string): boolean {
@@ -15,12 +16,15 @@ export function nicaraguaMunicipios(departamento: string): string[] {
   );
 }
 
-/** Barrio / Sector options from the GEO_NI poblado list. */
+/** Barrio / Sector options from GEO_NI plus major-city overlays. */
 export function nicaraguaBarrios(
   departamento: string,
   municipio: string
 ): string[] {
-  return [...(GEO_NI[departamento]?.[municipio] ?? [])].sort((a, b) =>
-    a.localeCompare(b, "es")
+  return mergePlaceOptions(
+    "NI",
+    departamento,
+    municipio,
+    GEO_NI[departamento]?.[municipio] ?? []
   );
 }

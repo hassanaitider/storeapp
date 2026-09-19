@@ -14,10 +14,13 @@ import { formatArgentinaCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
+import { LatamOtherPlaceField } from "@/components/shop/LatamOtherPlaceField";
 import {
+  argentinaBarrios,
   argentinaLocalidades,
   argentinaProvincias,
 } from "@/lib/argentina-geo";
+import { resolvePlace } from "@/lib/latam-other-place";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -113,6 +116,9 @@ export function ArgentinaCodCheckout({
   const [calle, setCalle] = useState("");
   const [provincia, setProvincia] = useState("");
   const [localidad, setLocalidad] = useState("");
+  const [localidadOtra, setLocalidadOtra] = useState("");
+  const [barrio, setBarrio] = useState("");
+  const [barrioOtro, setBarrioOtro] = useState("");
   const [direccion, setDireccion] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
   const [referencia, setReferencia] = useState("");
@@ -122,10 +128,25 @@ export function ArgentinaCodCheckout({
     () => argentinaLocalidades(provincia),
     [provincia]
   );
+  const isCaba = provincia === "Ciudad de Buenos Aires";
+  const barrios = useMemo(
+    () =>
+      isCaba
+        ? []
+        : argentinaBarrios(provincia, resolvePlace(localidad, localidadOtra) || localidad),
+    [isCaba, provincia, localidad, localidadOtra]
+  );
 
   useEffect(() => {
     setLocalidad("");
+    setLocalidadOtra("");
+    setBarrio("");
+    setBarrioOtro("");
   }, [provincia]);
+  useEffect(() => {
+    setBarrio("");
+    setBarrioOtro("");
+  }, [localidad]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
   const totalLabel = formatArgentinaCodPrice(totalLocal);
@@ -137,13 +158,18 @@ export function ArgentinaCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    if (!provincia || !localidad) {
-      window.alert("Selecciona provincia y localidad");
+    const localidadFinal = resolvePlace(localidad, localidadOtra);
+    const barrioFinal = isCaba ? localidadFinal : resolvePlace(barrio, barrioOtro);
+    if (!provincia || !localidadFinal || !barrioFinal) {
+      window.alert(
+        isCaba ? "Selecciona provincia y barrio" : "Selecciona provincia, localidad y barrio"
+      );
       return;
     }
     const notesParts = [
       `Provincia: ${provincia}`,
-      `Localidad: ${localidad}`,
+      isCaba ? `Barrio: ${localidadFinal}` : `Localidad: ${localidadFinal}`,
+      !isCaba ? `Barrio: ${barrioFinal}` : "",
       calle.trim() ? `Calle: ${calle.trim()}` : "",
       codigoPostal.trim() ? `CP: ${codigoPostal.trim()}` : "",
       referencia.trim() ? `Referencia: ${referencia.trim()}` : "",
@@ -153,7 +179,9 @@ export function ArgentinaCodCheckout({
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${localidad}, ${provincia}`,
+      city: isCaba
+        ? `${localidadFinal}, ${provincia}`
+        : `${barrioFinal}, ${localidadFinal}, ${provincia}`,
       address: [calle.trim(), direccion.trim()].filter(Boolean).join(" — "),
       notes: notesParts.join(" · "),
     });
@@ -242,11 +270,35 @@ export function ArgentinaCodCheckout({
         <SelectField
           value={localidad}
           onChange={setLocalidad}
-          placeholder="localidad"
+          placeholder={isCaba ? "Barrio" : "Localidad"}
           options={localidades}
           required
           disabled={!provincia}
         />
+        <LatamOtherPlaceField
+          selected={localidad}
+          value={localidadOtra}
+          onChange={setLocalidadOtra}
+          placeholder={isCaba ? "Escribe tu barrio" : "Escribe tu localidad"}
+        />
+        {!isCaba ? (
+          <>
+            <SelectField
+              value={barrio}
+              onChange={setBarrio}
+              placeholder="Barrio"
+              options={barrios}
+              required
+              disabled={!localidad}
+            />
+            <LatamOtherPlaceField
+              selected={barrio}
+              value={barrioOtro}
+              onChange={setBarrioOtro}
+              placeholder="Escribe tu barrio"
+            />
+          </>
+        ) : null}
 
         <IconField
           icon={<MapPin className="h-4 w-4" />}

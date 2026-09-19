@@ -14,10 +14,13 @@ import { formatDominicanCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
+import { LatamOtherPlaceField } from "@/components/shop/LatamOtherPlaceField";
 import {
   dominicanCiudades,
   dominicanProvincias,
+  dominicanSectores,
 } from "@/lib/dominican-geo";
+import { resolvePlace } from "@/lib/latam-other-place";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -113,13 +116,27 @@ export function DominicanCodCheckout({
   const [direccion, setDireccion] = useState("");
   const [provincia, setProvincia] = useState("");
   const [ciudad, setCiudad] = useState("");
+  const [ciudadOtra, setCiudadOtra] = useState("");
+  const [sector, setSector] = useState("");
+  const [sectorOtro, setSectorOtro] = useState("");
 
   const provincias = useMemo(() => dominicanProvincias(), []);
   const ciudades = useMemo(() => dominicanCiudades(provincia), [provincia]);
+  const sectores = useMemo(
+    () => dominicanSectores(provincia, resolvePlace(ciudad, ciudadOtra) || ciudad),
+    [provincia, ciudad, ciudadOtra]
+  );
 
   useEffect(() => {
     setCiudad("");
+    setCiudadOtra("");
+    setSector("");
+    setSectorOtro("");
   }, [provincia]);
+  useEffect(() => {
+    setSector("");
+    setSectorOtro("");
+  }, [ciudad]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
   const totalLabel = formatDominicanCodPrice(totalLocal);
@@ -131,20 +148,23 @@ export function DominicanCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    if (!provincia || !ciudad) {
-      window.alert("Selecciona provincia y ciudad");
+    const ciudadFinal = resolvePlace(ciudad, ciudadOtra);
+    const sectorFinal = resolvePlace(sector, sectorOtro);
+    if (!provincia || !ciudadFinal || !sectorFinal) {
+      window.alert("Selecciona provincia, municipio y sector/barrio");
       return;
     }
     const notesParts = [
       `Provincia: ${provincia}`,
-      `Ciudad: ${ciudad}`,
+      `Municipio: ${ciudadFinal}`,
+      `Sector/Barrio: ${sectorFinal}`,
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
 
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${ciudad}, ${provincia}`,
+      city: `${sectorFinal}, ${ciudadFinal}, ${provincia}`,
       address: direccion.trim(),
       notes: notesParts.join(" · "),
     });
@@ -231,10 +251,30 @@ export function DominicanCodCheckout({
         <SelectField
           value={ciudad}
           onChange={setCiudad}
-          placeholder="Ej: Santo Domingo"
+          placeholder="Municipio"
           options={ciudades}
           required
           disabled={!provincia}
+        />
+        <LatamOtherPlaceField
+          selected={ciudad}
+          value={ciudadOtra}
+          onChange={setCiudadOtra}
+          placeholder="Escribe tu municipio"
+        />
+        <SelectField
+          value={sector}
+          onChange={setSector}
+          placeholder="Sector / Barrio"
+          options={sectores}
+          required
+          disabled={!ciudad}
+        />
+        <LatamOtherPlaceField
+          selected={sector}
+          value={sectorOtro}
+          onChange={setSectorOtro}
+          placeholder="Escribe tu sector o barrio"
         />
 
         <div className="flex items-center justify-between gap-3 rounded-xl bg-[#121c2d] px-4 py-3.5 text-white">

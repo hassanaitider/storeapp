@@ -1,3 +1,6 @@
+import { mergePlaceOptions } from "./latam-neighborhoods";
+import { withOtherPlace } from "./latam-other-place";
+
 /** Ecuador — Provincia → Ciudad/Parroquia (complete official list). */
 export type EcuadorGeoTree = Record<string, string[]>;
 
@@ -1156,5 +1159,11 @@ export function ecuadorProvincias(): string[] {
 }
 
 export function ecuadorCiudades(provincia: string): string[] {
-  return GEO_EC[provincia] ?? [];
+  return withOtherPlace(
+    [...(GEO_EC[provincia] ?? [])].sort((a, b) => a.localeCompare(b, "es"))
+  );
+}
+
+export function ecuadorBarrios(provincia: string, ciudad: string): string[] {
+  return mergePlaceOptions("EC", provincia, ciudad, []);
 }

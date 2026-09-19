@@ -411,6 +411,7 @@ ${COD_EN}
     marketComparePrices: { MA: 299 },
     availableIn: ["MA"],
     images: [
+      "/products/corner-shower-caddy-main.jpg",
       "/products/corner-shower-caddy-1.jpg",
       "/products/corner-shower-caddy-2.jpg",
       "/products/corner-shower-caddy-3.jpg",

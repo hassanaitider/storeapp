@@ -14,11 +14,13 @@ import { formatNicaraguaCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
+import { LatamOtherPlaceField } from "@/components/shop/LatamOtherPlaceField";
 import {
   nicaraguaBarrios,
   nicaraguaDepartamentos,
   nicaraguaMunicipios,
 } from "@/lib/nicaragua-geo";
+import { resolvePlace } from "@/lib/latam-other-place";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -114,6 +116,7 @@ export function NicaraguaCodCheckout({
   const [departamento, setDepartamento] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [barrio, setBarrio] = useState("");
+  const [barrioOtro, setBarrioOtro] = useState("");
   const [direccion, setDireccion] = useState("");
   const [referencia, setReferencia] = useState("");
 
@@ -130,10 +133,12 @@ export function NicaraguaCodCheckout({
   useEffect(() => {
     setMunicipio("");
     setBarrio("");
+    setBarrioOtro("");
   }, [departamento]);
 
   useEffect(() => {
     setBarrio("");
+    setBarrioOtro("");
   }, [municipio]);
 
   const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
@@ -146,14 +151,15 @@ export function NicaraguaCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    if (!departamento || !municipio || !barrio) {
+    const barrioFinal = resolvePlace(barrio, barrioOtro);
+    if (!departamento || !municipio || !barrioFinal) {
       window.alert("Selecciona departamento, municipio y barrio/sector");
       return;
     }
     const notesParts = [
       `Departamento: ${departamento}`,
       `Municipio: ${municipio}`,
-      `Barrio/Sector: ${barrio}`,
+      `Barrio/Sector: ${barrioFinal}`,
       referencia.trim() ? `Punto de referencia: ${referencia.trim()}` : "",
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
@@ -161,7 +167,7 @@ export function NicaraguaCodCheckout({
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${municipio}, ${departamento}`,
+      city: `${barrioFinal}, ${municipio}, ${departamento}`,
       address: direccion.trim(),
       notes: notesParts.join(" · "),
     });
@@ -252,6 +258,12 @@ export function NicaraguaCodCheckout({
           options={barrios}
           required
           disabled={!municipio}
+        />
+        <LatamOtherPlaceField
+          selected={barrio}
+          value={barrioOtro}
+          onChange={setBarrioOtro}
+          placeholder="Escribe tu barrio o sector"
         />
         <IconField
           icon={<MapPin className="h-4 w-4" />}

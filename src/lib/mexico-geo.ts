@@ -1,3 +1,5 @@
+import { mergePlaceOptions } from "./latam-neighborhoods";
+
 /** Mexico — complete Estado → Municipio → Colonia list. */
 export type MexicoGeoTree = Record<string, Record<string, string[]>>;
 
@@ -7464,8 +7466,46 @@ export const GEO_MX: MexicoGeoTree = {
   }
 };
 
+const MX_MISSING_MUNICIPIOS: Record<string, string[]> = {
+  "Baja California": ["San Quintín", "San Felipe"],
+  Campeche: ["Seybaplaya", "Dzitbalché"],
+  Chiapas: [
+    "Capitán Luis Ángel Vidal",
+    "Rincón Chamula San Pedro",
+    "Mezcalapa",
+    "El Parral",
+    "Emiliano Zapata",
+    "Honduras de la Sierra",
+  ],
+  Guerrero: ["Ñuu Savi", "Santa Cruz del Rincón", "San Nicolás", "Las Vigas"],
+  Morelos: ["Coatetelco", "Xoxocotla", "Hueyapan"],
+  "Quintana Roo": ["Puerto Morelos"],
+  Sinaloa: ["Eldorado", "Juan José Ríos"],
+};
+
+function applyMexicoGeoPatches() {
+  if (GEO_MX["Distrito Federal"] && !GEO_MX["Ciudad de México"]) {
+    GEO_MX["Ciudad de México"] = GEO_MX["Distrito Federal"];
+    delete GEO_MX["Distrito Federal"];
+  }
+  for (const [estado, munis] of Object.entries(MX_MISSING_MUNICIPIOS)) {
+    const bucket = GEO_MX[estado];
+    if (!bucket) continue;
+    for (const municipio of munis) {
+      if (!bucket[municipio]) bucket[municipio] = ["Centro"];
+    }
+  }
+}
+
+applyMexicoGeoPatches();
+
 export function usesMexicoCodCheckout(country: string): boolean {
   return country.toUpperCase() === "MX";
+}
+
+function mexicoEstadoKey(estado: string): string {
+  if (estado === "Distrito Federal") return "Ciudad de México";
+  return estado;
 }
 
 export function mexicoEstados(): string[] {
@@ -7473,11 +7513,14 @@ export function mexicoEstados(): string[] {
 }
 
 export function mexicoMunicipios(estado: string): string[] {
-  return Object.keys(GEO_MX[estado] ?? {}).sort((a, b) =>
+  const key = mexicoEstadoKey(estado);
+  return Object.keys(GEO_MX[key] ?? GEO_MX[estado] ?? {}).sort((a, b) =>
     a.localeCompare(b, "es")
   );
 }
 
 export function mexicoColonias(estado: string, municipio: string): string[] {
-  return GEO_MX[estado]?.[municipio] ?? [];
+  const key = mexicoEstadoKey(estado);
+  const base = GEO_MX[key]?.[municipio] ?? GEO_MX[estado]?.[municipio] ?? [];
+  return mergePlaceOptions("MX", key, municipio, base);
 }
