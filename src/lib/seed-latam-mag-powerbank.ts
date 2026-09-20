@@ -50,8 +50,8 @@ MAG_BANK_PRICES.AR = {
 };
 
 MAG_BANK_PRICES.CR = {
-  price: 219,
-  compare: 349,
+  price: 22000,
+  compare: 35490,
   priceUSD: MAG_USD,
   compareAtUSD: MAG_COMPARE_USD,
 };
