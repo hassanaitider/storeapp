@@ -2,6 +2,7 @@ import { STORE_MARKETS } from "./countries";
 import type { Category, Product } from "./types";
 import { withSpanishCopy } from "./seed-es";
 import { LATAM_MAG_POWERBANK_PRODUCTS } from "./seed-latam-mag-powerbank";
+import { LATAM_VIDEO_WALKIE_PRODUCTS } from "./seed-latam-video-walkie";
 import { UNIVERSAL_MARKET_PRODUCTS } from "./seed-universal-products";
 
 /** Consistent per-market category art: country flag only (no product lifestyle) */
@@ -2588,6 +2589,7 @@ ${COD_EN}
     },
   },
   ...LATAM_MAG_POWERBANK_PRODUCTS,
+  ...LATAM_VIDEO_WALKIE_PRODUCTS,
   ...UNIVERSAL_MARKET_PRODUCTS,
 ];
 
