@@ -48,7 +48,7 @@ WALKIE_PRICES.AR = {
   compareAtUSD: WALKIE_COMPARE_USD,
 };
 WALKIE_PRICES.CR = {
-  price: 26500,
+  price: 26900,
   compare: 44500,
   priceUSD: WALKIE_USD,
   compareAtUSD: WALKIE_COMPARE_USD,
