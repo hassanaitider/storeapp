@@ -1,9 +1,10 @@
 "use client";
 
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Star } from "lucide-react";
 import { useT } from "@/hooks/useT";
 import { pickList, pickText } from "@/lib/localized";
 import type { Locale, Product } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { isGifUrl } from "@/components/shop/ProductMediaGallery";
 import { ProductHtmlBody } from "@/components/shop/ProductHtmlBody";
 import { htmlToPlain } from "@/lib/rich-html";
@@ -198,6 +199,53 @@ export function ProductDetailSections({
           </div>
         </section>
       )}
+
+      {landing.reviews?.length ? (
+        <section className="mx-auto max-w-3xl">
+          <h3 className="product-section-title text-ink-900">
+            {t.product.customerReviews}
+          </h3>
+          <ul className="mt-5 space-y-4">
+            {landing.reviews.map((review) => {
+              const text =
+                locale === "es"
+                  ? review.textEs
+                  : locale === "ar"
+                    ? review.textAr
+                    : review.textEn;
+              return (
+                <li
+                  key={`${review.name}-${review.city}`}
+                  className="rounded-[1.25rem] border border-sand-200 bg-white px-5 py-4 shadow-[0_8px_24px_rgba(14,34,29,0.04)]"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-sm font-bold text-ink-900">
+                      {review.name}
+                      <span className="ms-2 font-medium text-[var(--muted)]">
+                        {review.city}
+                      </span>
+                    </p>
+                    <div className="flex">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star
+                          key={i}
+                          className={cn(
+                            "h-3.5 w-3.5",
+                            i < review.rating
+                              ? "fill-sand-400 text-sand-400"
+                              : "text-sand-300"
+                          )}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="product-body mt-2 text-[var(--muted)]">{text}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : null}
     </div>
   );
 }

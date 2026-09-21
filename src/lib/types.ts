@@ -91,6 +91,15 @@ export interface ProductLandingFaq {
   answerEs?: string;
 }
 
+export interface ProductLandingReview {
+  name: string;
+  city: string;
+  rating: number;
+  textAr: string;
+  textEn: string;
+  textEs: string;
+}
+
 export interface ProductLanding {
   headlineAr: string;
   headlineEn: string;
@@ -103,6 +112,7 @@ export interface ProductLanding {
   benefitsEn: string[];
   benefitsEs?: string[];
   faq: ProductLandingFaq[];
+  reviews?: ProductLandingReview[];
 }
 
 /** Color option shown on the product page swatches */
