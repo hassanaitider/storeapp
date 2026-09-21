@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
@@ -13,6 +14,8 @@ import { cn } from "@/lib/utils";
 
 export function Header() {
   const t = useT();
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith("/admin");
   const {
     locale,
     setLocale,
@@ -26,6 +29,12 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const currencyInfo = getCurrency(currency);
   const market = getCountry(country);
+  const countryLabel =
+    locale === "ar"
+      ? market.nameAr
+      : locale === "es"
+        ? (market.nameEs ?? market.nameEn)
+        : market.nameEn;
 
   const links = [
     { href: "/", label: t.nav.home },
@@ -62,26 +71,38 @@ export function Header() {
             <option value="es">Español</option>
           </select>
 
-          <select
-            aria-label={t.common.country}
-            value={country}
-            onChange={(e) => setCountry(e.target.value as CountryCode, true)}
-            className={cn(
-              "max-w-[9.5rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:max-w-[12rem] sm:text-sm",
-              !geoReady && "opacity-60"
-            )}
-            title={
-              locale === "ar"
-                ? "اختر سوقك (الدولة)"
-                : "Choose your market (country)"
-            }
-          >
-            {STORE_MARKETS.map((c) => (
-              <option key={c.code} value={c.code}>
-                {c.flag} {locale === "ar" ? c.nameAr : c.nameEn}
-              </option>
-            ))}
-          </select>
+          {isAdmin ? (
+            <select
+              aria-label={t.common.country}
+              value={country}
+              onChange={(e) => setCountry(e.target.value as CountryCode, true)}
+              className={cn(
+                "max-w-[9.5rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:max-w-[12rem] sm:text-sm",
+                !geoReady && "opacity-60"
+              )}
+              title={
+                locale === "ar"
+                  ? "اختر سوقك (الدولة)"
+                  : "Choose your market (country)"
+              }
+            >
+              {STORE_MARKETS.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.flag} {locale === "ar" ? c.nameAr : c.nameEn}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <span
+              className={cn(
+                "max-w-[9.5rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:max-w-[12rem] sm:text-sm",
+                !geoReady && "opacity-60"
+              )}
+              title={countryLabel}
+            >
+              {market.flag} {countryLabel}
+            </span>
+          )}
 
           <select
             aria-label={t.common.currency}
