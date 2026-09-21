@@ -109,9 +109,9 @@ function buildVideoWalkie(country: CountryCode): Omit<
 > {
   const marketNameEs = getCountry(country).nameEs ?? getCountry(country).nameEn;
   return {
-    nameAr: "جهاز اتصال لاسلكي بالفيديو",
-    nameEn: "Video Walkie Talkie",
-    nameEs: "Walkie Talkie con Video",
+    nameAr: "جهاز اتصال لاسلكي بالفيديو 1 par",
+    nameEn: "Video Walkie Talkie 1 par",
+    nameEs: "Walkie Talkie con Video 1 par",
     descriptionAr: `
 <h3>كاميرا وشاشة في جهاز واحد</h3>
 <p>جهاز اتصال لاسلكي بالفيديو عبر الواي فاي — الطفل يشوفك وأنت تشوفه، بمسافة 150 إلى 500 متر.</p>
