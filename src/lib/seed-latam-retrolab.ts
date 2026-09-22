@@ -256,50 +256,6 @@ ${COD_ES}
             "No. Los juegos vienen precargados — juega sin WiFi ni suscripción.",
         },
       ],
-      reviews: [
-        {
-          name: "Adam F.",
-          city: "Ciudad de México",
-          rating: 5,
-          textAr: "شريت وحدة ليا ودابا كنطلب لهاديا. كل واحد كيشوفني كنلعب ويبغي وحدة.",
-          textEn:
-            "Bought one for myself and now I'm ordering more as gifts. Everyone who sees me play wants one.",
-          textEs:
-            "Compré una para mí y ahora pido más de regalo. Quien me ve jugar quiere una.",
-        },
-        {
-          name: "Dina H.",
-          city: "Buenos Aires",
-          rating: 5,
-          textAr: "جات مزيانة والنظام شغال. جودة/ثمن ممتازة.",
-          textEn: "Arrived perfect and the system runs well. Great value.",
-          textEs: "Llegó perfecta y el sistema anda bien. Relación calidad-precio excelente.",
-        },
-        {
-          name: "Emil M.",
-          city: "San José",
-          rating: 5,
-          textAr: "عملية ومحمولة. البطارية كتدوم والشاشة واضحة.",
-          textEn: "Practical and portable. Good battery life and a clear screen.",
-          textEs: "Práctica y portátil. Buena batería y pantalla clara.",
-        },
-        {
-          name: "Asa M.",
-          city: "Guayaquil",
-          rating: 5,
-          textAr: "أحسن جودة مقابل الثمن. ما كاينش أحسن.",
-          textEn: "Best quality for the price. Nothing better.",
-          textEs: "Calidad-precio no hay nada mejor.",
-        },
-        {
-          name: "Samara W.",
-          city: "Santo Domingo",
-          rating: 5,
-          textAr: "أحسن هدية توصلات ليا فحياتي!",
-          textEn: "Best gift I've received in my life!!",
-          textEs: "¡El mejor regalo que he recibido en mi vida!",
-        },
-      ],
     },
   };
 }
