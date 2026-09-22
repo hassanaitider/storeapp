@@ -102,158 +102,176 @@ function buildRetroLab(country: CountryCode): Omit<
 > {
   const marketNameEs = getCountry(country).nameEs ?? getCountry(country).nameEn;
   return {
-    nameAr: "وحدة ألعاب ريترو لاب 64 جيجا",
-    nameEn: "RetroLab Console 64 GB",
-    nameEs: "Consola RetroLab 64 GB",
+    nameAr: "وحدة ألعاب محمولة FORYOBUD R36S 64 جيجا",
+    nameEn: "FORYOBUD R36S Portable Console 64 GB",
+    nameEs: "Consola portátil FORYOBUD R36S 64 GB",
     descriptionAr: `
-<h3>أكثر من 60,000 لعبة كلاسيكية في جهاز واحد</h3>
-<p>وحدة محمولة بتصميم شفاف أرجواني، شاشة 3.5 إنش، وسعة 64 جيجابايت — جاهزة للعب فورًا بدون إنترنت أو اشتراك.</p>
+<h3>وحدة ألعاب محمولة FORYOBUD R36S</h3>
+<p>كونسول ريترو محمول — موديل R36S، شاشة ملونة 3.5 إنش بدقة 640×480، وبطاقة ذاكرة 64 جيجابايت مع نحو 20,000 لعبة مدمجة.</p>
 <ul>
-<li>أكثر من 60,000 لعبة مثبتة مسبقًا</li>
-<li>شاشة IPS عالية الدقة 3.5"</li>
-<li>سعة 64 جيجابايت + فتحة توسعة</li>
-<li>بطارية طويلة · شحن USB-C</li>
-<li>لعب جماعي وحفظ التقدم</li>
+<li>العلامة: FORYOBUD · الموديل: R36S</li>
+<li>معالج Rockchip RK3326 / ARM Cortex-A35 (64 بت)</li>
+<li>شاشة ملونة 3.5" · 640×480 · بدون لمس</li>
+<li>بطارية 3000 مللي أمبير · نظام Linux</li>
+<li>~20,000 لعبة مدمجة · واي فاي · هيكل ABS</li>
 </ul>
 ${COD_AR}
 `.trim(),
     descriptionEn: `
-<h3>60,000+ classic games in one handheld</h3>
-<p>Portable console with a transparent purple shell, 3.5" screen, and 64 GB storage — ready to play with no WiFi or subscription.</p>
+<h3>FORYOBUD R36S portable video game console</h3>
+<p>Handheld retro console — model R36S, 3.5" color screen at 640×480, and a 64 GB memory card with about 20,000 built-in games.</p>
 <ul>
-<li>60,000+ pre-loaded games</li>
-<li>3.5" IPS HD display</li>
-<li>64 GB storage + expandable slot</li>
-<li>Long battery · USB-C charging</li>
-<li>Multiplayer and save progress</li>
+<li>Brand: FORYOBUD · Model: R36S</li>
+<li>Rockchip RK3326 / ARM Cortex-A35 64-bit processor</li>
+<li>3.5" color display · 640×480 · not touchscreen</li>
+<li>3000 mAh battery · Linux OS</li>
+<li>~20,000 built-in games · Wi-Fi · ABS plastic</li>
 </ul>
 ${COD_EN}
 `.trim(),
     descriptionEs: `
-<h3>Más de 60.000 juegos clásicos en una sola consola</h3>
-<p>Consola portátil con carcasa transparente morada, pantalla de 3.5" y 64 GB de almacenamiento — lista para jugar sin WiFi ni suscripción.</p>
+<h3>Consola de juego portátil FORYOBUD R36S</h3>
+<p>Consola retro de mano — modelo R36S, pantalla a color de 3.5" a 640×480 y tarjeta de memoria de 64 GB con unos 20.000 juegos integrados.</p>
 <ul>
-<li>Más de 60.000 juegos precargados</li>
-<li>Pantalla IPS HD de 3.5"</li>
-<li>Almacenamiento 64 GB + ranura expansible</li>
-<li>Batería de larga duración · carga USB-C</li>
-<li>Multijugador y guardado de partida</li>
+<li>Marca: FORYOBUD · Modelo: R36S</li>
+<li>Procesador Rockchip RK3326 / ARM Cortex-A35 64 bits</li>
+<li>Pantalla a color 3.5" · 640×480 · sin táctil</li>
+<li>Batería 3000 mAh · sistema Linux</li>
+<li>~20.000 juegos integrados · Wi-Fi · plástico ABS</li>
 </ul>
 <p><em>Envío a ${marketNameEs}.</em></p>
 ${COD_ES}
 `.trim(),
     detailsAr: [
-      "سعة 64 جيجابايت",
-      'شاشة IPS 3.5"',
-      "أكثر من 60,000 لعبة مثبتة",
-      "معالج رباعي النواة 64-bit",
-      "بطارية حتى ~12 ساعة",
-      "شحن USB-C",
-      "حفظ التقدم ولعب جماعي",
+      "FORYOBUD · R36S",
+      "معالج Rockchip RK3326 / Cortex-A35 64 بت",
+      'شاشة ملونة 3.5" · 640×480 · غير لمسية',
+      "بطارية 3000 مللي أمبير",
+      "نظام Linux",
+      "واي فاي",
+      "~20,000 لعبة مدمجة",
+      "ذاكرة: بطاقة 64 جيجا (خيار 128 جيجا)",
+      "مادة: بلاستيك ABS",
+      "منشأ: Guangdong, China",
     ],
     detailsEn: [
-      "64 GB capacity",
-      '3.5" IPS screen',
-      "60,000+ pre-installed games",
-      "64-bit quad-core processor",
-      "Battery up to ~12 hours",
-      "USB-C charging",
-      "Save progress & multiplayer",
+      "FORYOBUD · R36S",
+      "Rockchip RK3326 / Cortex-A35 64-bit",
+      '3.5" color display · 640×480 · not touch',
+      "3000 mAh battery",
+      "Linux OS",
+      "Wi-Fi",
+      "~20,000 built-in games",
+      "Memory: 64 GB card (128 GB option)",
+      "ABS plastic",
+      "Origin: Guangdong, China",
     ],
     detailsEs: [
-      "Capacidad 64 GB",
-      'Pantalla IPS 3.5"',
-      "Más de 60.000 juegos precargados",
-      "Procesador quad-core 64-bit",
-      "Batería hasta ~12 horas",
-      "Carga USB-C",
-      "Guardar partida y multijugador",
+      "FORYOBUD · R36S",
+      "Procesador Rockchip RK3326 / Cortex-A35 64 bits",
+      'Pantalla a color 3.5" · 640×480 · no táctil',
+      "Batería 3000 mAh",
+      "Sistema operativo Linux",
+      "Wi-Fi",
+      "~20.000 juegos integrados",
+      "Memoria: tarjeta 64 GB (opción 128 GB)",
+      "Material: plástico ABS",
+      "Origen: Guangdong, China",
+      "Molde privado: sí",
     ],
     images: [...IMAGES],
     inStock: true,
     featured: true,
-    rating: 4.9,
-    reviewCount: 1018,
+    rating: 4.8,
+    reviewCount: 312,
     createdAt: "2026-09-22T00:00:00.000Z",
     landing: {
-      headlineAr: "كل كلاسيكياتك… في يدك",
-      headlineEn: "Everything you grew up playing. In one handheld.",
-      headlineEs: "Todo lo que jugabas de niño. En una sola consola.",
+      headlineAr: "FORYOBUD R36S — كلاسيكيات في يدك",
+      headlineEn: "FORYOBUD R36S — classics in your hand",
+      headlineEs: "FORYOBUD R36S — clásicos en tu mano",
       introAr:
-        "أكثر من 60,000 لعبة جاهزة. شغّل والجعب — بدون تنزيل أو اشتراك.",
+        "نحو 20,000 لعبة، شاشة ملونة 640×480، وبطاقة 64 جيجا — شغّل والعب.",
       introEn:
-        "60,000+ games ready to go. Switch on and play — no downloads or subscription.",
+        "About 20,000 games, a 640×480 color screen, and a 64 GB card — switch on and play.",
       introEs:
-        "Más de 60.000 juegos listos. Enciende y juega — sin descargas ni suscripción.",
+        "Unos 20.000 juegos, pantalla a color 640×480 y tarjeta de 64 GB — enciende y juega.",
       sections: [
         {
-          titleAr: "شاشة حادة 3.5 إنش",
-          titleEn: "Sharp 3.5\" HD display",
-          titleEs: "Pantalla nítida de 3.5\"",
+          titleAr: "شاشة ملونة 3.5 إنش · 640×480",
+          titleEn: "3.5\" color screen · 640×480",
+          titleEs: "Pantalla a color 3.5\" · 640×480",
           bodyAr:
-            "شاشة IPS عالية الدقة — ألعابك القديمة تبان أوضح من أي وقت. ويمكن توصيلها بالتلفزيون عبر HDMI.",
+            "عرض ملون واضح بدقة 640×480. الشاشة غير لمسية — التحكم بالأزرار والعصي.",
           bodyEn:
-            "IPS HD screen — your classics look sharper than ever. Or connect to a TV with HDMI.",
+            "Clear color display at 640×480. Not a touchscreen — play with buttons and sticks.",
           bodyEs:
-            "Pantalla IPS HD — tus clásicos se ven más nítidos que nunca. O conéctala a la TV con HDMI.",
+            "Pantalla a color nítida a 640×480. No es táctil — juegas con botones y sticks.",
           image: "/products/retrolab-console-1.jpg",
         },
         {
-          titleAr: "64 جيجا وجاهز للعب",
-          titleEn: "64 GB — ready to play",
-          titleEs: "64 GB — lista para jugar",
+          titleAr: "RK3326 وبطاقة 64 جيجا",
+          titleEn: "RK3326 and 64 GB card",
+          titleEs: "RK3326 y tarjeta de 64 GB",
           bodyAr:
-            "سعة 64 جيجابايت مع فتحة توسعة. الألعاب مثبتة مسبقًا — بدون واي فاي.",
+            "معالج Rockchip RK3326 (Cortex-A35)، نظام Linux، بطارية 3000 مللي أمبير، وواي فاي. الذاكرة عبر بطاقة 64 جيجا (متوفر أيضًا 128 جيجا).",
           bodyEn:
-            "64 GB storage plus an expandable slot. Games are pre-loaded — no WiFi needed.",
+            "Rockchip RK3326 (Cortex-A35), Linux OS, 3000 mAh battery, and Wi-Fi. Storage on a 64 GB card (128 GB also available).",
           bodyEs:
-            "64 GB de almacenamiento más ranura expansible. Juegos precargados — sin necesidad de WiFi.",
+            "Rockchip RK3326 (Cortex-A35), Linux, batería 3000 mAh y Wi-Fi. Memoria en tarjeta de 64 GB (también hay opción 128 GB).",
           image: "/products/retrolab-console-1.jpg",
         },
       ],
       benefitsAr: [
-        "أكثر من 60,000 لعبة",
-        'شاشة 3.5" IPS',
-        "64 جيجابايت",
+        "~20,000 لعبة مدمجة",
+        "RK3326 · Linux · واي فاي",
+        "64 جيجا · بطارية 3000 مللي أمبير",
         "توصيل مجاني والدفع عند الاستلام",
       ],
       benefitsEn: [
-        "60,000+ games",
-        '3.5" IPS screen',
-        "64 GB storage",
+        "~20,000 built-in games",
+        "RK3326 · Linux · Wi-Fi",
+        "64 GB · 3000 mAh battery",
         "Free delivery and cash on delivery",
       ],
       benefitsEs: [
-        "Más de 60.000 juegos",
-        'Pantalla IPS 3.5"',
-        "Almacenamiento 64 GB",
+        "~20.000 juegos integrados",
+        "RK3326 · Linux · Wi-Fi",
+        "64 GB · batería 3000 mAh",
         "Envío gratis y pago contra entrega",
       ],
       faq: [
         {
-          questionAr: "كم سعة التخزين؟",
-          questionEn: "What is the storage capacity?",
-          questionEs: "¿Cuál es la capacidad de almacenamiento?",
-          answerAr: "64 جيجابايت، مع فتحة لتوسيع السعة ببطاقة إضافية.",
-          answerEn: "64 GB, plus an expandable slot for an extra card.",
-          answerEs: "64 GB, más una ranura expansible para una tarjeta extra.",
-        },
-        {
-          questionAr: "ما حجم الشاشة؟",
-          questionEn: "What is the screen size?",
-          questionEs: "¿Cuál es el tamaño de la pantalla?",
-          answerAr: 'شاشة IPS عالية الدقة بحجم 3.5 إنش.',
-          answerEn: 'A 3.5" IPS HD display.',
-          answerEs: 'Pantalla IPS HD de 3.5".',
-        },
-        {
-          questionAr: "هل تحتاج إنترنت؟",
-          questionEn: "Does it need internet?",
-          questionEs: "¿Necesita internet?",
-          answerAr: "لا. الألعاب مثبتة مسبقًا — العب فورًا بدون واي فاي أو اشتراك.",
-          answerEn: "No. Games are pre-loaded — play with no WiFi or subscription.",
+          questionAr: "ما الموديل والعلامة؟",
+          questionEn: "What brand and model is it?",
+          questionEs: "¿Qué marca y modelo es?",
+          answerAr: "FORYOBUD، الموديل R36S — وحدة ألعاب فيديو محمولة.",
+          answerEn: "FORYOBUD, model R36S — a portable video game console.",
           answerEs:
-            "No. Los juegos vienen precargados — juega sin WiFi ni suscripción.",
+            "FORYOBUD, modelo R36S — consola de juego de video portátil.",
+        },
+        {
+          questionAr: "كم سعة الذاكرة؟",
+          questionEn: "What is the memory capacity?",
+          questionEs: "¿Cuál es la capacidad de memoria?",
+          answerAr: "بطاقة ذاكرة 64 جيجابايت (يتوفر أيضًا خيار 128 جيجا).",
+          answerEn: "64 GB memory card (128 GB option also available).",
+          answerEs: "Tarjeta de memoria de 64 GB (también hay opción de 128 GB).",
+        },
+        {
+          questionAr: "هل الشاشة لمسية؟",
+          questionEn: "Is the screen touch?",
+          questionEs: "¿La pantalla es táctil?",
+          answerAr: "لا. شاشة ملونة فقط — التحكم بالأزرار.",
+          answerEn: "No. Color display only — control with buttons.",
+          answerEs: "No. Solo pantalla a color — control con botones.",
+        },
+        {
+          questionAr: "كم عدد الألعاب؟",
+          questionEn: "How many games are included?",
+          questionEs: "¿Cuántos juegos incluye?",
+          answerAr: "نحو 20,000 لعبة مدمجة.",
+          answerEn: "About 20,000 built-in games.",
+          answerEs: "Unos 20.000 juegos integrados.",
         },
       ],
     },
