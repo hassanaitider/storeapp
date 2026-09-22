@@ -232,6 +232,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       const durable = (p.images ?? []).filter(isDurableMediaUrl);
       const elevadorMatch = elevadorPerMarket.exec(seed.id);
       const magMatch = /^prod-mag-powerbank-([a-z]{2})$/i.exec(seed.id);
+      const retrolabMatch = /^prod-retrolab-([a-z]{2})$/i.exec(seed.id);
       const lockedMarket = elevadorMatch
         ? (elevadorMatch[1].toUpperCase() as CountryCode)
         : null;
@@ -333,7 +334,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         };
       }
 
-      if (magMatch && seed.availableIn?.length) {
+      if ((magMatch || retrolabMatch) && seed.availableIn?.length) {
         return {
           ...base,
           nameAr: seed.nameAr,
