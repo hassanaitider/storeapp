@@ -6,6 +6,24 @@ import {
   verifyAdminSessionEdge,
 } from "./lib/admin-auth-edge";
 
+/** Public HTML must not use no-store — it blocks back/forward cache (bfcache). */
+function applyDocumentCacheHeaders(
+  request: NextRequest,
+  response: NextResponse,
+  pathname: string
+) {
+  const accept = request.headers.get("accept") ?? "";
+  const isHtmlDocument = accept.includes("text/html");
+  if (!isHtmlDocument) return;
+  if (pathname.startsWith("/api") || pathname.startsWith("/admin")) return;
+  // Next.js defaults to "private, no-cache, no-store, …" on dynamic HTML.
+  // Use revalidation without no-store so history navigations can use bfcache.
+  response.headers.set(
+    "Cache-Control",
+    "private, max-age=0, must-revalidate"
+  );
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -34,6 +52,8 @@ export async function middleware(request: NextRequest) {
   }
 
   const response = NextResponse.next();
+  applyDocumentCacheHeaders(request, response, pathname);
+
   const existing = request.cookies.get("geo-country")?.value;
   // Do not short-circuit on cookie alone — CDN headers can refresh market
   const headerCountry =
