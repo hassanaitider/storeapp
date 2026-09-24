@@ -3,7 +3,10 @@ import type { Category, Product } from "./types";
 import { withSpanishCopy } from "./seed-es";
 import { LATAM_MAG_POWERBANK_PRODUCTS } from "./seed-latam-mag-powerbank";
 import { LATAM_RETROLAB_PRODUCTS } from "./seed-latam-retrolab";
-import { UNIVERSAL_MARKET_PRODUCTS } from "./seed-universal-products";
+import {
+  isRetiredStoreProduct,
+  UNIVERSAL_MARKET_PRODUCTS,
+} from "./seed-universal-products";
 
 /** Consistent per-market category art: country flag only (no product lifestyle) */
 const CATEGORY_IMAGES: Record<string, string> = {
@@ -2593,4 +2596,6 @@ ${COD_EN}
   ...UNIVERSAL_MARKET_PRODUCTS,
 ];
 
-export const SEED_PRODUCTS: Product[] = BASE_PRODUCTS.map(withSpanishCopy);
+export const SEED_PRODUCTS: Product[] = BASE_PRODUCTS.map(withSpanishCopy).filter(
+  (p) => !isRetiredStoreProduct(p)
+);
