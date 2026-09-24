@@ -1,4 +1,5 @@
 import type { Category, Product, Order, CartItem, CurrencyCode, CountryCode, Locale } from "@/lib/types";
+import { isRetiredStoreProduct } from "@/lib/seed-universal-products";
 
 export const CATALOG_STORAGE_KEY = "cargolf-v53";
 
@@ -113,9 +114,13 @@ export function sanitizeCatalog(
     ...data,
     updatedAt: data.updatedAt || Date.now(),
     categories: (data.categories ?? []).map(sanitizeCategory),
-    products: (data.products ?? []).map(sanitizeProduct),
+    products: (data.products ?? [])
+      .filter((p) => !isRetiredStoreProduct(p))
+      .map(sanitizeProduct),
     orders: Array.isArray(data.orders) ? data.orders : [],
-    cart: Array.isArray(data.cart) ? data.cart : [],
+    cart: Array.isArray(data.cart)
+      ? data.cart.filter((item) => !isRetiredStoreProduct({ id: item.productId }))
+      : [],
   };
 }
 
