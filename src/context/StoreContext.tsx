@@ -367,6 +367,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         !dropLegacyElevador.test(p.id)
     );
   for (const seed of SEED_PRODUCTS) {
+    if (isRetiredStoreProduct(seed)) continue;
     if (!merged.some((p) => p.id === seed.id)) {
       const slug = (seed.slug || "").trim();
       merged.push({
