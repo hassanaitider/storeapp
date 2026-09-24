@@ -1,10 +1,11 @@
 import type { Category, Product, Order, CartItem, CurrencyCode, CountryCode, Locale } from "@/lib/types";
 import { isRetiredStoreProduct } from "@/lib/seed-universal-products";
 
-export const CATALOG_STORAGE_KEY = "cargolf-v53";
+export const CATALOG_STORAGE_KEY = "cargolf-v54";
 
 export const LEGACY_STORAGE_KEYS = [
   // Skip v51–v52: they stored qtyUpsellEnabled:false and hid LATAM packs
+  "cargolf-v53",
   "cargolf-v50",
   "cargolf-v49",
   "cargolf-v48",

@@ -72,19 +72,6 @@ RETRO_PRICES.MX = {
   compareAtUSD: RETRO_COMPARE_USD,
 };
 
-const RETRO_MARKET_PRICES: Partial<Record<CountryCode, number>> =
-  Object.fromEntries(
-    SPANISH_MARKET_CODES.map((country) => [country, RETRO_PRICES[country].price])
-  );
-
-const RETRO_MARKET_COMPARE: Partial<Record<CountryCode, number>> =
-  Object.fromEntries(
-    SPANISH_MARKET_CODES.map((country) => [
-      country,
-      RETRO_PRICES[country].compare,
-    ])
-  );
-
 const IMAGES = ["/products/retrolab-console-1.jpg"];
 
 export const RETROLAB_SLUG = "consola-retrolab";
@@ -293,8 +280,8 @@ export const LATAM_RETROLAB_PRODUCTS: Product[] = SPANISH_MARKET_CODES.map(
       availableIn: [country],
       priceUSD: RETRO_USD,
       compareAtUSD: RETRO_COMPARE_USD,
-      marketPrices: { ...RETRO_MARKET_PRICES },
-      marketComparePrices: { ...RETRO_MARKET_COMPARE },
+      marketPrices: { [country]: local.price },
+      marketComparePrices: { [country]: local.compare },
     };
   }
 );

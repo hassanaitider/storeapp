@@ -77,22 +77,6 @@ MAG_BANK_PRICES.MX = {
   compareAtUSD: MAG_COMPARE_USD,
 };
 
-const MAG_MARKET_PRICES: Partial<Record<CountryCode, number>> =
-  Object.fromEntries(
-    SPANISH_MARKET_CODES.map((country) => [
-      country,
-      MAG_BANK_PRICES[country].price,
-    ])
-  );
-
-const MAG_MARKET_COMPARE: Partial<Record<CountryCode, number>> =
-  Object.fromEntries(
-    SPANISH_MARKET_CODES.map((country) => [
-      country,
-      MAG_BANK_PRICES[country].compare,
-    ])
-  );
-
 const IMAGES = [
   "/products/mag-powerbank-1.jpg",
   "/products/mag-powerbank-2.jpg",
@@ -370,8 +354,8 @@ export const LATAM_MAG_POWERBANK_PRODUCTS: Product[] = SPANISH_MARKET_CODES.map(
       availableIn: [country],
       priceUSD: MAG_USD,
       compareAtUSD: MAG_COMPARE_USD,
-      marketPrices: { ...MAG_MARKET_PRICES },
-      marketComparePrices: { ...MAG_MARKET_COMPARE },
+      marketPrices: { [country]: local.price },
+      marketComparePrices: { [country]: local.compare },
     };
   }
 );

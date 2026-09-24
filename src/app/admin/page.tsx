@@ -26,9 +26,11 @@ import {
 import {
   STORE_MARKETS,
   currencyForCountry,
+  getCountry,
   isSpanishMarket,
+  isStoreMarket,
 } from "@/lib/countries";
-import { getProductLocalPrice, isProductAvailableIn, resolveProductMarket } from "@/lib/pricing";
+import { getProductLocalPrice, resolveProductMarket } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order, ProductQtyOffer } from "@/lib/types";
 import {
@@ -215,6 +217,33 @@ function AdminDashboard() {
     () => products.some((p) => isCodQtyUpsellEnabled(p)),
     [products]
   );
+
+  /** One product appears in exactly one country section (no cross-market mix). */
+  const productsByMarket = useMemo(() => {
+    const buckets = new Map<string, typeof products>();
+    for (const m of STORE_MARKETS) buckets.set(m.code, []);
+    buckets.set("other", []);
+
+    for (const p of products) {
+      const listed = (p.availableIn ?? []).filter((c) => isStoreMarket(c));
+      const cat = categories.find((c) => c.id === p.categoryId);
+      const catMarket =
+        cat?.country && isStoreMarket(cat.country) ? cat.country : null;
+      const key =
+        listed.length === 1
+          ? listed[0]
+          : catMarket ?? resolveProductMarket(p, categories) ?? "other";
+      (buckets.get(key) ?? buckets.get("other")!).push(p);
+    }
+
+    return [
+      ...STORE_MARKETS.map((m) => ({
+        code: m.code as CountryCode | "other",
+        items: buckets.get(m.code) ?? [],
+      })),
+      { code: "other" as const, items: buckets.get("other") ?? [] },
+    ].filter((g) => g.items.length > 0);
+  }, [products, categories]);
 
   const nav: { id: Tab; label: string; icon: typeof Tags }[] = [
     { id: "overview", label: t.admin.dashboard, icon: LayoutDashboard },
@@ -680,27 +709,61 @@ function AdminDashboard() {
                   {t.admin.emptyProducts}
                 </p>
               ) : (
-                <div className="space-y-3">
-                  {products.map((p) => {
-                    const market =
-                      resolveProductMarket(p, categories) ??
-                      ((categories.find((c) => c.id === p.categoryId)?.country ??
-                        "US") as CountryCode);
+                <div className="space-y-10">
+                  {productsByMarket.map((group) => {
+                    const info =
+                      group.code === "other" ? null : getCountry(group.code);
+                    const heading = info
+                      ? `${info.flag} ${
+                          locale === "ar"
+                            ? info.nameAr
+                            : locale === "es"
+                              ? (info.nameEs ?? info.nameEn)
+                              : info.nameEn
+                        }`
+                      : locale === "ar"
+                        ? "أسواق أخرى"
+                        : locale === "es"
+                          ? "Otros mercados"
+                          : "Other markets";
+                    return (
+                      <section key={group.code} className="space-y-3">
+                        <div className="flex items-center gap-2 border-b border-sand-200 pb-2">
+                          <h3 className="text-lg font-semibold text-ink-900">
+                            {heading}
+                          </h3>
+                          <span className="rounded-full bg-sand-100 px-2.5 py-0.5 text-xs font-semibold text-ink-700">
+                            {group.items.length}
+                          </span>
+                        </div>
+                        {group.items.map((p) => {
+                    const market: CountryCode =
+                      group.code === "other"
+                        ? resolveProductMarket(p, categories) ??
+                          ((categories.find((c) => c.id === p.categoryId)
+                            ?.country ?? "US") as CountryCode)
+                        : group.code;
                     const cur = currencyForCountry(market);
                     const local = getProductLocalPrice(p, market);
                     const cat = categories.find((c) => c.id === p.categoryId);
                     const colorOn = Boolean(p.customColorEnabled);
                     const upsellOn = isCodQtyUpsellEnabled(p, market);
                     const latamMarket = isSpanishMarket(market);
+                    const name =
+                      locale === "ar"
+                        ? p.nameAr
+                        : locale === "es"
+                          ? (p.nameEs ?? p.nameEn)
+                          : p.nameEn;
                     return (
                       <div
-                        key={p.id}
+                        key={`${group.code}-${p.id}`}
                         className="rounded-2xl border border-sand-200 bg-white p-4 shadow-sm"
                       >
                         <div className="flex flex-col gap-4">
                           <div className="min-w-0">
                             <p className="text-lg font-semibold text-ink-900">
-                              {locale === "ar" ? p.nameAr : p.nameEn}
+                              {name}
                             </p>
                             <p className="mt-1 text-sm text-[var(--muted)]">
                               {formatLocalAmount(local, cur, locale)} · {cur}
@@ -816,6 +879,9 @@ function AdminDashboard() {
                           </div>
                         </div>
                       </div>
+                    );
+                        })}
+                      </section>
                     );
                   })}
                 </div>

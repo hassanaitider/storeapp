@@ -233,6 +233,8 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       const elevadorMatch = elevadorPerMarket.exec(seed.id);
       const magMatch = /^prod-mag-powerbank-([a-z]{2})$/i.exec(seed.id);
       const retrolabMatch = /^prod-retrolab-([a-z]{2})$/i.exec(seed.id);
+      const miniCameraMatch = /^prod-mini-camera-([a-z]{2})$/i.exec(seed.id);
+      const clipEarbudsMatch = /^prod-clip-earbuds-([a-z]{2})$/i.exec(seed.id);
       const lockedMarket = elevadorMatch
         ? (elevadorMatch[1].toUpperCase() as CountryCode)
         : null;
@@ -292,10 +294,10 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           ...(seed.marketComparePrices ?? {}),
           ...(p.marketComparePrices ?? {}),
         },
-        // Union so newly opened markets reach catalogs saved before the launch
-        availableIn: Array.from(
-          new Set([...(seed.availableIn ?? []), ...(p.availableIn ?? [])])
-        ),
+        // Seed markets win — prevents stale cross-region leaks from old catalogs
+        availableIn: seed.availableIn?.length
+          ? [...seed.availableIn]
+          : Array.from(new Set([...(p.availableIn ?? [])])),
         featured: typeof p.featured === "boolean" ? p.featured : seed.featured,
         inStock: typeof p.inStock === "boolean" ? p.inStock : seed.inStock,
         priceUSD: typeof p.priceUSD === "number" ? p.priceUSD : seed.priceUSD,
@@ -334,7 +336,10 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         };
       }
 
-      if ((magMatch || retrolabMatch) && seed.availableIn?.length) {
+      if (
+        (magMatch || retrolabMatch || miniCameraMatch || clipEarbudsMatch) &&
+        seed.availableIn?.length
+      ) {
         return {
           ...base,
           nameAr: seed.nameAr,

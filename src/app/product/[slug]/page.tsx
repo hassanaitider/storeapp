@@ -38,8 +38,12 @@ import {
   ProductBriefDescription,
   ProductDetailSections,
 } from "@/components/shop/ProductLanding";
+import { ClipEarbudsStory } from "@/components/shop/ClipEarbudsStory";
 import { MagPowerBankStory } from "@/components/shop/MagPowerBankStory";
+import { MiniCameraStory } from "@/components/shop/MiniCameraStory";
+import { CLIP_EARBUDS_SLUG } from "@/lib/seed-latam-clip-earbuds";
 import { MAG_POWERBANK_SLUG } from "@/lib/seed-latam-mag-powerbank";
+import { MINI_CAMERA_SLUG } from "@/lib/seed-latam-mini-camera";
 import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
 import {
   ProductQtyUpsell,
@@ -103,12 +107,12 @@ function ProductPageInner() {
     const preferred = previewCountry ?? country;
     const inPreferred = getProduct(slug, preferred);
     if (inPreferred) return inPreferred;
-    const inCurrent = getProduct(slug);
-    if (inCurrent) return inCurrent;
-    // Admin preview / deep link: product exists in another market only
-    return (
-      products.find((p) => p.id === slug || p.slug === slug) ?? undefined
-    );
+    // Exact id (admin / per-country LATAM row) — never fall through to another market's slug twin
+    const byId = products.find((p) => p.id === slug);
+    if (byId) return byId;
+    // Public storefront: no cross-market slug fallback
+    if (!previewCountry) return undefined;
+    return getProduct(slug) ?? undefined;
   }, [getProduct, slug, previewCountry, country, products]);
 
   const showQtyUpsell = isCodQtyUpsellEnabled(
@@ -619,6 +623,10 @@ function ProductPageInner() {
       {/* 4) Detailed description: image → text → image → text */}
       {product.slug === MAG_POWERBANK_SLUG ? (
         <MagPowerBankStory product={product} locale={locale} />
+      ) : product.slug === MINI_CAMERA_SLUG ? (
+        <MiniCameraStory product={product} locale={locale} />
+      ) : product.slug === CLIP_EARBUDS_SLUG ? (
+        <ClipEarbudsStory product={product} locale={locale} />
       ) : (
         <ProductDetailSections product={product} locale={locale} />
       )}
