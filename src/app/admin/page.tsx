@@ -30,7 +30,7 @@ import {
   isSpanishMarket,
   isStoreMarket,
 } from "@/lib/countries";
-import { getProductLocalPrice, resolveProductMarket } from "@/lib/pricing";
+import { getProductLocalPrice, isProductAvailableIn, resolveProductMarket } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order, ProductQtyOffer } from "@/lib/types";
 import {
