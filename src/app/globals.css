@@ -242,6 +242,7 @@ button {
   margin-bottom: 0;
 }
 
+.ProseMirror img,
 .prose-product img {
   display: block;
   width: 100%;

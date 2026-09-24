@@ -36,8 +36,15 @@
       border: 1px solid var(--line);
       border-radius: 18px;
       overflow: hidden;
+      aspect-ratio: 1 / 1;
     }
-    .media img { width: 100%; display: block; }
+    .media img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      display: block;
+    }
     .eyebrow {
       color: var(--accent);
       font-size: 12px;
@@ -137,7 +144,14 @@
   <div class="wrap">
     <div class="hero">
       <div class="media">
-        <img src="/products/omni-cob-light.png" alt="Lampe COB Omni multifonction avec panneau LED, aimant et marteau brise-vitre" />
+        <img
+          src="/products/omni-cob-light.png"
+          alt="Lampe COB Omni multifonction avec panneau LED, aimant et marteau brise-vitre"
+          width="800"
+          height="800"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div>
         <p class="eyebrow">Éclairage · Sécurité · Voiture</p>

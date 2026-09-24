@@ -130,6 +130,10 @@ export function ProductRichEditor({
       Image.configure({
         HTMLAttributes: {
           class: "rounded-xl max-w-full h-auto my-3 mx-auto block",
+          width: "1200",
+          height: "1200",
+          loading: "lazy",
+          decoding: "async",
         },
       }),
       Link.configure({
@@ -174,7 +178,11 @@ export function ProductRichEditor({
     setUploading(true);
     try {
       const url = await uploadMediaFile(file);
-      editor.chain().focus().setImage({ src: url }).run();
+      editor
+        .chain()
+        .focus()
+        .setImage({ src: url, width: 1200, height: 1200 })
+        .run();
     } catch (err) {
       window.alert(err instanceof Error ? err.message : "Upload failed");
     } finally {
