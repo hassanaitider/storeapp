@@ -150,10 +150,12 @@ export function MiniCameraStory({
             <h3 className="product-section-title text-ink-900">{title}</h3>
             <p className="product-body text-[var(--muted)]">{body}</p>
             {image ? (
-              <div className="overflow-hidden rounded-[1.25rem] border border-sand-200 bg-sand-50 shadow-[0_12px_40px_rgba(14,34,29,0.06)]">
+              <div className="media-slot media-slot--story overflow-hidden rounded-[1.25rem] border border-sand-200 bg-sand-50 shadow-[0_12px_40px_rgba(14,34,29,0.06)]">
                 <ProductImage
                   src={image}
                   alt={title}
+                  width={1200}
+                  height={1200}
                   className="media-full max-h-[min(70vh,42rem)] w-full"
                 />
               </div>

@@ -37,5 +37,21 @@ export function sanitizeProductHtml(html: string): string {
     .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
     .replace(/\son\w+\s*=\s*(['"]).*?\1/gi, "")
     .replace(/\son\w+\s*=\s*[^\s>]+/gi, "")
-    .replace(/javascript:/gi, "");
+    .replace(/javascript:/gi, "")
+    .replace(/<img\b([^>]*)>/gi, (_match, attrs: string) => {
+      let next = attrs;
+      if (!/\bwidth\s*=/i.test(next)) {
+        next += ` width="1200"`;
+      }
+      if (!/\bheight\s*=/i.test(next)) {
+        next += ` height="1200"`;
+      }
+      if (!/\bloading\s*=/i.test(next)) {
+        next += ` loading="lazy"`;
+      }
+      if (!/\bdecoding\s*=/i.test(next)) {
+        next += ` decoding="async"`;
+      }
+      return `<img${next}>`;
+    });
 }

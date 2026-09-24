@@ -19,6 +19,10 @@ export function productCoverSrc(images: string[] | undefined | null): string {
   return still || list[0] || "/products/car-vacuum.png";
 }
 
+/** Default intrinsic ratio for product stills (reserves space before load). */
+export const PRODUCT_MEDIA_WIDTH = 1200;
+export const PRODUCT_MEDIA_HEIGHT = 1200;
+
 type Props = {
   src: string;
   alt: string;
@@ -26,10 +30,15 @@ type Props = {
   /** Fill a `relative` parent (like next/image fill) */
   fill?: boolean;
   priority?: boolean;
+  /** Intrinsic width hint for CLS (defaults to square product media). */
+  width?: number;
+  /** Intrinsic height hint for CLS (defaults to square product media). */
+  height?: number;
 };
 
 /**
  * Native img for reliable local/static/data/GIF display (avoids next/image blanks).
+ * Always emits width/height so the browser can reserve aspect-ratio before paint.
  */
 export function ProductImage({
   src,
@@ -37,6 +46,8 @@ export function ProductImage({
   className,
   fill,
   priority,
+  width = PRODUCT_MEDIA_WIDTH,
+  height = PRODUCT_MEDIA_HEIGHT,
 }: Props) {
   const [current, setCurrent] = useState(src);
   const fallback = "/products/car-vacuum.png";
@@ -46,6 +57,8 @@ export function ProductImage({
     <img
       src={current || fallback}
       alt={alt}
+      width={width}
+      height={height}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       onError={() => {

@@ -45,6 +45,8 @@ export function ProductCard({
           src={cover}
           alt={name}
           fill
+          width={800}
+          height={1000}
           className="object-contain p-2 transition duration-500 group-hover:scale-[1.02]"
         />
         {discount > 0 && (

@@ -76,6 +76,8 @@ export default function CartPage() {
                     src={productCoverSrc(product.images)}
                     alt={name}
                     fill
+                    width={224}
+                    height={224}
                     className="object-contain p-1"
                   />
                 </Link>

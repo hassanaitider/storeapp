@@ -160,6 +160,8 @@ export function ProductMediaGallery({
           <img
             src={activeUrl}
             alt={pickText(product, "name", locale)}
+            width={1200}
+            height={1200}
             className={activeIsGif ? "media-full--gif" : undefined}
             onClick={(e) => e.stopPropagation()}
           />
@@ -173,11 +175,11 @@ export function ProductMediaGallery({
         <div
           className={cn(
             "relative w-full overflow-hidden rounded-[1.35rem] border border-sand-200 bg-white shadow-sm",
-            "min-h-[16rem] sm:min-h-[22rem]"
+            "media-slot media-slot--hero min-h-[16rem] sm:min-h-[22rem]"
           )}
         >
           {activeUrl ? (
-            <div className="relative flex w-full items-center justify-center p-3 sm:p-4">
+            <div className="relative flex h-full w-full items-center justify-center p-3 sm:p-4">
               <button
                 type="button"
                 className="block w-full cursor-zoom-in border-0 bg-transparent p-0"
@@ -194,6 +196,8 @@ export function ProductMediaGallery({
                 <img
                   src={activeUrl}
                   alt={pickText(product, "name", locale)}
+                  width={1200}
+                  height={1200}
                   className={cn(
                     "media-full max-h-[min(90vh,56rem)] w-full",
                     activeIsGif && "media-full--gif"
@@ -307,6 +311,7 @@ export function ProductMediaGallery({
                       src={url}
                       alt=""
                       fill
+                      sizes="(max-width:640px) 25vw, 160px"
                       unoptimized={needsUnoptimizedImage(url)}
                       className="object-contain p-1"
                     />

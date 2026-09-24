@@ -33,10 +33,12 @@ function StoryMedia({
 }) {
   const gif = isGifUrl(src);
   return (
-    <div className="relative overflow-hidden rounded-[1.25rem] border border-sand-200 bg-sand-50 shadow-[0_12px_40px_rgba(14,34,29,0.06)]">
+    <div className="media-slot media-slot--story relative overflow-hidden rounded-[1.25rem] border border-sand-200 bg-sand-50 shadow-[0_12px_40px_rgba(14,34,29,0.06)]">
       <ProductImage
         src={src}
         alt={alt}
+        width={1200}
+        height={1200}
         className="media-full max-h-[min(70vh,42rem)] w-full"
       />
       {(badge || gif) && (

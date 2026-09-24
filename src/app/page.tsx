@@ -26,6 +26,8 @@ export default function HomePage() {
             alt=""
             fill
             priority
+            width={1800}
+            height={1200}
             className="object-cover opacity-35 mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-950 via-brand-950/55 to-transparent" />
@@ -100,6 +102,8 @@ export default function HomePage() {
                 src={cat.image || "/categories/flag-ma.png"}
                 alt={pickText(cat, "name", locale)}
                 fill
+                width={900}
+                height={1200}
                 className="object-contain bg-sand-100 p-2 transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/30 to-transparent" />
