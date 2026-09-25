@@ -1,9 +1,8 @@
-import { GEO_HN } from "./latam-geo";
+import { GEO_HN } from "./geo-hn";
+
+export { usesHondurasCodCheckout } from "./cod-markets";
 
 /** Honduras — exclusive COD checkout (not shared with other markets). */
-export function usesHondurasCodCheckout(country: string): boolean {
-  return country.toUpperCase() === "HN";
-}
 
 /** Departamento (shown as Provincia in the COD form). */
 export function hondurasProvincias(): string[] {

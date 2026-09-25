@@ -12,22 +12,22 @@ import {
 
 /** Consistent per-market category art: country flag only (no product lifestyle) */
 const CATEGORY_IMAGES: Record<string, string> = {
-  MA: "/categories/flag-ma.png",
-  SA: "/categories/flag-sa.png",
-  AE: "/categories/flag-ae.png",
-  OM: "/categories/flag-om.png",
-  IQ: "/categories/flag-iq.png",
-  LY: "/categories/flag-ly.png",
-  LB: "/categories/flag-lb.png",
-  MX: "/categories/flag-mx.png",
-  AR: "/categories/flag-ar.png",
-  CR: "/categories/flag-cr.png",
-  EC: "/categories/flag-ec.png",
-  GT: "/categories/flag-gt.png",
-  HN: "/categories/flag-hn.png",
-  SV: "/categories/flag-sv.png",
-  NI: "/categories/flag-ni.png",
-  DO: "/categories/flag-do.png",
+  MA: "/categories/flag-ma.webp",
+  SA: "/categories/flag-sa.webp",
+  AE: "/categories/flag-ae.webp",
+  OM: "/categories/flag-om.webp",
+  IQ: "/categories/flag-iq.webp",
+  LY: "/categories/flag-ly.webp",
+  LB: "/categories/flag-lb.webp",
+  MX: "/categories/flag-mx.webp",
+  AR: "/categories/flag-ar.webp",
+  CR: "/categories/flag-cr.webp",
+  EC: "/categories/flag-ec.webp",
+  GT: "/categories/flag-gt.webp",
+  HN: "/categories/flag-hn.webp",
+  SV: "/categories/flag-sv.webp",
+  NI: "/categories/flag-ni.webp",
+  DO: "/categories/flag-do.webp",
 };
 
 /** One category per open market, generated from STORE_MARKETS */
@@ -40,7 +40,7 @@ export const SEED_CATEGORIES: Category[] = STORE_MARKETS.map((c) => ({
   descriptionAr: `تشكيلة مختارة لسوق ${c.nameAr}`,
   descriptionEn: `Curated picks for ${c.nameEn}`,
   descriptionEs: `Selección para ${c.nameEs ?? c.nameEn}`,
-  image: CATEGORY_IMAGES[c.code] ?? "/categories/flag-ma.png",
+  image: CATEGORY_IMAGES[c.code] ?? "/categories/flag-ma.webp",
   createdAt: "2026-03-01T00:00:00.000Z",
   country: c.code,
   availableIn: [c.code],
@@ -103,12 +103,12 @@ ${COD_EN}
     marketComparePrices: { MA: 399, SA: 229, AE: 219, OM: 22.9 },
     availableIn: ["MA"],
     images: [
-      "/products/fashion-sling-demo.gif",
-      "/products/fashion-sling-g1.png",
-      "/products/fashion-sling-g2.png",
-      "/products/fashion-sling-g3.png",
-      "/products/fashion-sling-1.png",
-      "/products/fashion-sling-2.png",
+      "/products/fashion-sling-demo.webp",
+      "/products/fashion-sling-g1.webp",
+      "/products/fashion-sling-g2.webp",
+      "/products/fashion-sling-g3.webp",
+      "/products/fashion-sling-1.webp",
+      "/products/fashion-sling-2.webp",
     ],
     colors: [],
     customColorEnabled: true,
@@ -133,7 +133,7 @@ ${COD_EN}
             "واجهة سوداء أنيقة مع كلمة FASHION ولمسة برونزية عصرية. تظهر الحقيبة على الصدر بشكل عملي وأنيق — مثالية للعمل، الجولات، وركوب الدراجة النارية.",
           bodyEn:
             "A sleek black face with FASHION branding and a modern bronze accent. It sits cleanly across the chest — ideal for work, city walks, and motorcycle rides.",
-          image: "/products/fashion-sling-1.png",
+          image: "/products/fashion-sling-1.webp",
         },
         {
           titleAr: "جاهزة للطريق والمدينة",
@@ -142,7 +142,7 @@ ${COD_EN}
             "مقبض علوي وحزام كتف مبطّن لراحة طوال اليوم. احملها بثقة بجانب الدراجة أو في التنقل اليومي — خفيفة ومتينة في الوقت نفسه.",
           bodyEn:
             "A top handle and padded strap for all-day comfort. Carry it with confidence next to your bike or on your daily commute — light yet durable.",
-          image: "/products/fashion-sling-2.png",
+          image: "/products/fashion-sling-2.webp",
         },
         {
           titleAr: "اشحن هاتفك… وأنت تتحرك",
@@ -151,7 +151,7 @@ ${COD_EN}
             "ضع باور بانك داخل الحقيبة وصِل هاتفك عبر منفذ USB الخارجي. شحن مستمر دون فتح الحقيبة — مثالي للرحلات والتنقل الطويل.",
           bodyEn:
             "Keep a power bank inside and plug your phone into the external USB port. Charge without opening the bag — perfect for trips and long days out.",
-          image: "/products/fashion-sling-3.png",
+          image: "/products/fashion-sling-3.webp",
         },
         {
           titleAr: "تنظيم ذكي لأجهزتك",
@@ -160,7 +160,7 @@ ${COD_EN}
             "حجرة رئيسية واسعة مع جيب داخلي: تناسب السماعات الكبيرة، التابلت، الهاتف، والباور بانك. كل شيء في مكانه… بدون فوضى.",
           bodyEn:
             "A roomy main compartment with an inner pocket fits large headphones, a tablet, phone, and power bank. Everything in place — no clutter.",
-          image: "/products/fashion-sling-4.png",
+          image: "/products/fashion-sling-4.webp",
         },
         {
           titleAr: "مقاس عملي يتسع للتابلت",
@@ -169,7 +169,7 @@ ${COD_EN}
             "الأبعاد التقريبية 32 × 16 × 9 سم تتسع لتابلت 9.7 إنش. قفل تركيبة رقمي يحمي السحّابات من الفتح غير المرغوب — أمان إضافي في الأماكن المزدحمة.",
           bodyEn:
             "Approx. 32 × 16 × 9 cm — fits a 9.7-inch tablet. A combination lock secures the zippers against unwanted opening — extra safety in crowded places.",
-          image: "/products/fashion-sling-5.png",
+          image: "/products/fashion-sling-5.webp",
         },
       ],
       benefitsAr: [
@@ -263,11 +263,11 @@ ${COD_EN}
     marketComparePrices: { MA: 499, SA: 299, AE: 289, OM: 29.9 },
     availableIn: ["MA"],
     images: [
-      "/products/rolling-cart-1.png",
-      "/products/rolling-cart-2.png",
-      "/products/rolling-cart-3.png",
-      "/products/rolling-cart-4.png",
-      "/products/rolling-cart-demo.gif",
+      "/products/rolling-cart-1.webp",
+      "/products/rolling-cart-2.webp",
+      "/products/rolling-cart-3.webp",
+      "/products/rolling-cart-4.webp",
+      "/products/rolling-cart-demo.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -292,7 +292,7 @@ ${COD_EN}
             "عجلات كونية 360° تتحرك بسلاسة دون إزعاج ودون خدش الأرضية. عند التثبيت، فعّل الفرامل لوضع أغراض أكبر بثبات وأمان.",
           bodyEn:
             "360° casters glide smoothly without noise or floor marks. When parked, engage the brakes to place larger items safely and securely.",
-          image: "/products/rolling-cart-1.png",
+          image: "/products/rolling-cart-1.webp",
         },
         {
           titleAr: "سعة كبيرة… وتنظيم مرتب",
@@ -301,7 +301,7 @@ ${COD_EN}
             "سلتان معدنيتان عميقتان تستوعبان الكتب والديكور والسلال. ضع ما تريد بثقة — الجوانب مرتفعة لتقليل السقوط.",
           bodyEn:
             "Two deep metal baskets hold books, décor, and organizers. Place items with confidence — high sides help keep everything in place.",
-          image: "/products/rolling-cart-2.png",
+          image: "/products/rolling-cart-2.webp",
         },
         {
           titleAr: "سطح خشبي أنيق للاستخدام اليومي",
@@ -310,7 +310,7 @@ ${COD_EN}
             "لوحة سميكة بحواف مستديرة تصلح كطاولة جانبية بجانب الكنبة أو السرير: إضاءة، مشروب، أو دفتر ملاحظات دائمًا في متناولك.",
           bodyEn:
             "A thick rounded-corner board works as a side table by the sofa or bed: lamp, drink, or notebook always within reach.",
-          image: "/products/rolling-cart-3.png",
+          image: "/products/rolling-cart-3.webp",
         },
         {
           titleAr: "هيكل متين بلمسة عصرية",
@@ -319,7 +319,7 @@ ${COD_EN}
             "أنابيب معدنية سميكة بلون أسود مطفي تقاوم التشوه وتمنح مظهرًا صناعيًا أنيقًا يناسب الصالة والمكتب والمطبخ.",
           bodyEn:
             "Thick matte-black metal tubes resist bending and give a clean industrial look that fits living rooms, offices, and kitchens.",
-          image: "/products/rolling-cart-4.png",
+          image: "/products/rolling-cart-4.webp",
         },
       ],
       benefitsAr: [
@@ -417,11 +417,11 @@ ${COD_EN}
     marketComparePrices: { MA: 299 },
     availableIn: ["MA"],
     images: [
-      "/products/corner-shower-caddy-main.jpg",
-      "/products/corner-shower-caddy-1.jpg",
-      "/products/corner-shower-caddy-2.jpg",
-      "/products/corner-shower-caddy-3.jpg",
-      "/products/corner-shower-caddy-4.jpg",
+      "/products/corner-shower-caddy-main.webp",
+      "/products/corner-shower-caddy-1.webp",
+      "/products/corner-shower-caddy-2.webp",
+      "/products/corner-shower-caddy-3.webp",
+      "/products/corner-shower-caddy-4.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -446,7 +446,7 @@ ${COD_EN}
             "تصميم L يناسب زاوية 90° ويحفظ الشامبو والجل والنباتات الصغيرة بثبات. الشبكة المفتوحة تصرف الماء فورًا وتقلل التكدّس والروائح.",
           bodyEn:
             "An L-shape fits a 90° corner and holds shampoo, body wash, and small plants securely. The open grid drains water instantly and reduces buildup.",
-          image: "/products/corner-shower-caddy-1.jpg",
+          image: "/products/corner-shower-caddy-1.webp",
         },
         {
           titleAr: "طقم كامل… تغليف جاهز للهديّة",
@@ -455,7 +455,7 @@ ${COD_EN}
             "يصل في علبة Corner Shower Caddy أنيقة توضّح الاستخدام: تنظيم الدش، تصريف سريع، ومتانة عالية. كل القطع بلون أسود مطفي متناسق.",
           bodyEn:
             "Arrives in a sleek Corner Shower Caddy box that highlights the benefits: shower organization, quick drain, and sturdy build. Every piece matches in matte black.",
-          image: "/products/corner-shower-caddy-2.jpg",
+          image: "/products/corner-shower-caddy-2.webp",
         },
         {
           titleAr: "حاملات متخصصة للأسنان والمناشف والصابون",
@@ -464,7 +464,7 @@ ${COD_EN}
             "حامل عمودي لمعجون وفرش الأسنان، رف للمناشف المطوية، وصحن صابون مع خطافات للموس — كل شيء في مكانه على الحائط.",
           bodyEn:
             "A vertical holder for toothpaste and brushes, a shelf for folded towels, and a soap dish with hooks for razors — everything has a place on the wall.",
-          image: "/products/corner-shower-caddy-3.jpg",
+          image: "/products/corner-shower-caddy-3.webp",
         },
         {
           titleAr: "تركيب لاصق… بدون مثقاب",
@@ -473,7 +473,7 @@ ${COD_EN}
             "وسائد لاصقة شفافة قوية تثبت على البلاط الرخامي أو السيراميك. مثالي للمستأجرين ولمن لا يريد ثقب الجدران — إزالة أنظف عند الحاجة.",
           bodyEn:
             "Strong transparent adhesive pads grip marble-look or ceramic tile. Perfect for renters and anyone who wants no wall holes — cleaner removal when needed.",
-          image: "/products/corner-shower-caddy-4.jpg",
+          image: "/products/corner-shower-caddy-4.webp",
         },
       ],
       benefitsAr: [
@@ -574,8 +574,8 @@ ${COD_EN}
     },
     availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
     images: [
-      "/products/car-vacuum-demo.gif",
-      "/products/car-vacuum.png",
+      "/products/car-vacuum-demo.webp",
+      "/products/car-vacuum.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -600,7 +600,7 @@ ${COD_EN}
             "الفوهة الرفيعة تدخل بين المقاعد، حول ناقل الحركة، وداخل فتحات الكونسول لتلتقط الأوساخ التي تفوتها المكنسة العادية. نتيجة أوضح في دقائق — بدون تفكيك أو عناء.",
           bodyEn:
             "The slim nozzle slips between seats, around the gear shift, and into console gaps to pick up dirt regular vacuums miss. Cleaner results in minutes — no hassle.",
-          image: "/products/car-vacuum.png",
+          image: "/products/car-vacuum.webp",
         },
         {
           titleAr: "لاسلكية… استخدمها في أي مكان",
@@ -707,8 +707,8 @@ ${COD_EN}
     },
     availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
     images: [
-      "/products/baby-washer-demo.gif",
-      "/products/baby-washer.png",
+      "/products/baby-washer-demo.webp",
+      "/products/baby-washer.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -733,7 +733,7 @@ ${COD_EN}
             "لوحة رقمية تتيح اختيار الوقت المناسب، بما فيها دورات قصيرة مثل 15 دقيقة للقطع الصغيرة — تنظيف عملي وأنتِ مشغولة.",
           bodyEn:
             "The digital panel lets you set the right time, including short cycles like 15 minutes for small loads — practical cleaning on busy days.",
-          image: "/products/baby-washer.png",
+          image: "/products/baby-washer.webp",
         },
         {
           titleAr: "تصميم شفاف وأنيق",
@@ -840,8 +840,8 @@ ${COD_EN}
     },
     availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
     images: [
-      "/products/smart-sunglasses-demo.gif",
-      "/products/smart-sunglasses.png",
+      "/products/smart-sunglasses-demo.webp",
+      "/products/smart-sunglasses.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -866,7 +866,7 @@ ${COD_EN}
             "عدسات داكنة أنيقة تحمي عينيك أثناء القيادة أو المشي أو الجلسات الخارجية، مع مظهر فاخر يناسب إطلالتك اليومية.",
           bodyEn:
             "Dark stylish lenses protect your eyes while driving, walking, or outdoors — with a premium look for everyday outfits.",
-          image: "/products/smart-sunglasses.png",
+          image: "/products/smart-sunglasses.webp",
         },
         {
           titleAr: "مكالمات أوضح… بدون سماعات ظاهرة",
@@ -973,12 +973,12 @@ ${COD_EN}
     },
     availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
     images: [
-      "/products/wireless-clock-demo.gif",
-      "/products/wireless-clock-1.png",
-      "/products/wireless-clock-charger.png",
-      "/products/wireless-clock-2.png",
-      "/products/wireless-clock-3.png",
-      "/products/wireless-clock-4.png",
+      "/products/wireless-clock-demo.webp",
+      "/products/wireless-clock-1.webp",
+      "/products/wireless-clock-charger.webp",
+      "/products/wireless-clock-2.webp",
+      "/products/wireless-clock-3.webp",
+      "/products/wireless-clock-4.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -1003,7 +1003,7 @@ ${COD_EN}
             "تقنية حتى 15 واط تقلل فوضى الطاولة. فقط ضع الهاتف المتوافق واتركه يشحن أثناء نومك أو عملك.",
           bodyEn:
             "Up to 15W wireless charging cuts cable clutter. Drop a compatible phone on top and charge while you sleep or work.",
-          image: "/products/wireless-clock-1.png",
+          image: "/products/wireless-clock-1.webp",
         },
         {
           titleAr: "حماية ذكية وتوافق واسع",
@@ -1012,7 +1012,7 @@ ${COD_EN}
             "حماية تساعد على شحن أكثر أمانًا، مع توافق واسع للهواتف الداعمة لـ Qi، وتغذية عبر Type-C.",
           bodyEn:
             "Protection supports safer charging, wide Qi phone compatibility, and Type-C power input.",
-          image: "/products/wireless-clock-charger.png",
+          image: "/products/wireless-clock-charger.webp",
         },
         {
           titleAr: "منبه + حرارة في نظرة واحدة",
@@ -1021,7 +1021,7 @@ ${COD_EN}
             "شاشة LED مرآوية تعرض الوقت ودرجة الحرارة بوضوح — بدون ما تضيء الغرفة كلها.",
           bodyEn:
             "A mirrored LED shows time and temperature clearly — without lighting the whole room.",
-          image: "/products/wireless-clock-3.png",
+          image: "/products/wireless-clock-3.webp",
         },
       ],
       benefitsAr: [
@@ -1110,7 +1110,7 @@ ${COD_EN}
     },
     availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
     images: [
-      "/products/neck-massager-demo.gif",
+      "/products/neck-massager-demo.webp",
       "/products/neck-massager.webp",
     ],
     colors: [],
@@ -1239,8 +1239,8 @@ ${COD_EN}
     },
     availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
     images: [
-      "/products/air-bed-demo.gif",
-      "/products/air-bed.png",
+      "/products/air-bed-demo.webp",
+      "/products/air-bed.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -1265,7 +1265,7 @@ ${COD_EN}
             "لوحة التحكم تتيح النفخ والتفريغ بسهولة، مع ارتفاع مريح وسطح مناسب لنوم الضيوف أو الاستخدام المؤقت.",
           bodyEn:
             "The control panel makes inflate/deflate easy, with a comfortable height and surface for guests or temporary use.",
-          image: "/products/air-bed.png",
+          image: "/products/air-bed.webp",
         },
         {
           titleAr: "يوفر المساحة والمال",
@@ -1367,12 +1367,12 @@ ${COD_EN}
     marketComparePrices: { AE: 229 },
     availableIn: ["AE"],
     images: [
-      "/products/solar-camera-demo.gif",
-      "/products/solar-camera-g1.png",
-      "/products/solar-camera-g2.png",
-      "/products/solar-camera-g3.png",
-      "/products/solar-camera-2.png",
-      "/products/solar-camera-3.png",
+      "/products/solar-camera-demo.webp",
+      "/products/solar-camera-g1.webp",
+      "/products/solar-camera-g2.webp",
+      "/products/solar-camera-g3.webp",
+      "/products/solar-camera-2.webp",
+      "/products/solar-camera-3.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -1402,7 +1402,7 @@ ${COD_EN}
             "اربط الكاميرا باللوحة الشمسية لتحصل على طاقة طوال اليوم. مثالية لمناخ الإمارات المشمس ولحماية الفلل والأسوار والمستودعات.",
           bodyEn:
             "Connect the camera to the solar panel for all-day power. Ideal for the UAE sun and for villas, fences, and warehouses.",
-          image: "/products/solar-camera-4.png",
+          image: "/products/solar-camera-4.webp",
         },
         {
           titleAr: "بطارية 10800mAh واستعداد طويل",
@@ -1411,7 +1411,7 @@ ${COD_EN}
             "بطارية داخلية كبيرة باستهلاك منخفض تبقي الكاميرا جاهزة حتى مع الغيوم أو الليل — طمأنينة أكثر لأسرته.",
           bodyEn:
             "A large built-in battery with low power use keeps the camera ready even through clouds or night — more peace of mind for your family.",
-          image: "/products/solar-camera-5.png",
+          image: "/products/solar-camera-5.webp",
         },
         {
           titleAr: "4G + ثلاث شاشات على جوالك",
@@ -1420,7 +1420,7 @@ ${COD_EN}
             "راقب بعدسات متعددة ودقة عالية، وتابع ثلاث زوايا معًا من التطبيق. تغطية أوسع للحركة حول المنزل.",
           bodyEn:
             "Monitor with multi-lens high resolution and follow three angles together in the app. Wider coverage around the home.",
-          image: "/products/solar-camera-3.png",
+          image: "/products/solar-camera-3.webp",
         },
       ],
       benefitsAr: [
@@ -1508,10 +1508,10 @@ ${COD_EN}
     marketComparePrices: { AE: 189 },
     availableIn: ["AE"],
     images: [
-      "/products/solar-powerbank-demo.gif",
-      "/products/solar-powerbank-g1.png",
-      "/products/solar-powerbank-g2.png",
-      "/products/solar-powerbank-g3.png",
+      "/products/solar-powerbank-demo.webp",
+      "/products/solar-powerbank-g1.webp",
+      "/products/solar-powerbank-g2.webp",
+      "/products/solar-powerbank-g3.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -1536,7 +1536,7 @@ ${COD_EN}
             "افتح الألواح تحت الشمس وأعد تعبئة الطاقة وأنت بعيد عن الكهرباء — تصميم متين يناسب الأجواء الخارجية.",
           bodyEn:
             "Open the panels under the sun and top up power away from the grid — a rugged design for outdoor conditions.",
-          image: "/products/solar-powerbank-3.png",
+          image: "/products/solar-powerbank-3.webp",
         },
         {
           titleAr: "شحن سريع + لاسلكي + كابل مدمج",
@@ -1545,7 +1545,7 @@ ${COD_EN}
             "مخرج لاسلكي 5V/1A وكابل Lightning 5V/2.1A مع شحن سريع — حلول متعددة في جهاز واحد بدون ما تحمل أسلاك كثيرة.",
           bodyEn:
             "Wireless 5V/1A output and a Lightning line at 5V/2.1A with fast charging — multiple options in one device without carrying many cables.",
-          image: "/products/solar-powerbank-2.png",
+          image: "/products/solar-powerbank-2.webp",
         },
         {
           titleAr: "إضاءة LED للطوارئ",
@@ -1554,7 +1554,7 @@ ${COD_EN}
             "مصباحان LED قويان يفيدانك في الليل أو انقطاع الكهرباء أو التخييم — أكثر من مجرد شاحن.",
           bodyEn:
             "Two strong LED lamps help at night, during outages, or camping — more than just a charger.",
-          image: "/products/solar-powerbank-1.png",
+          image: "/products/solar-powerbank-1.webp",
         },
       ],
       benefitsAr: [
@@ -1640,10 +1640,10 @@ ${COD_EN}
     marketComparePrices: { SA: 189 },
     availableIn: ["SA"],
     images: [
-      "/products/iphone13-battery-case-demo.gif",
-      "/products/iphone13-battery-case-g1.png",
-      "/products/iphone13-battery-case-g2.png",
-      "/products/iphone13-battery-case-g3.png",
+      "/products/iphone13-battery-case-demo.webp",
+      "/products/iphone13-battery-case-g1.webp",
+      "/products/iphone13-battery-case-g2.webp",
+      "/products/iphone13-battery-case-g3.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -1668,7 +1668,7 @@ ${COD_EN}
             "صُمم لآيفون 13 برو: يحمي الجهاز ويشحنّه في نفس الوقت مع مؤشرات LED واضحة لمستوى الطاقة.",
           bodyEn:
             "Built for iPhone 13 Pro: protects the phone and charges it at the same time with clear LED power indicators.",
-          image: "/products/iphone13-battery-case.png",
+          image: "/products/iphone13-battery-case.webp",
         },
         {
           titleAr: "سعة 6800mAh لاستخدام أطول",
@@ -1768,10 +1768,10 @@ ${COD_EN}
     marketComparePrices: { SA: 190 },
     availableIn: ["SA"],
     images: [
-      "/products/budi-powerbank-20000-demo.gif",
-      "/products/budi-powerbank-20000-g1.png",
-      "/products/budi-powerbank-20000-g2.png",
-      "/products/budi-powerbank-20000-g3.png",
+      "/products/budi-powerbank-20000-demo.webp",
+      "/products/budi-powerbank-20000-g1.webp",
+      "/products/budi-powerbank-20000-g2.webp",
+      "/products/budi-powerbank-20000-g3.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -1796,7 +1796,7 @@ ${COD_EN}
             "اشحن أكثر من مرة بدون ما تدور على فيشة — مثالي للعمل، السفر، والطوارئ.",
           bodyEn:
             "Charge more than once without hunting for an outlet — ideal for work, travel, and emergencies.",
-          image: "/products/budi-powerbank-20000.png",
+          image: "/products/budi-powerbank-20000.webp",
         },
         {
           titleAr: "ضمان عامين",
@@ -1898,10 +1898,10 @@ ${COD_EN}
     marketComparePrices: { AE: 200 },
     availableIn: [],
     images: [
-      "/products/denx-dx648-earbuds-demo.gif",
-      "/products/denx-dx648-earbuds-g1.png",
-      "/products/denx-dx648-earbuds-g2.png",
-      "/products/denx-dx648-earbuds-g3.png",
+      "/products/denx-dx648-earbuds-demo.webp",
+      "/products/denx-dx648-earbuds-g1.webp",
+      "/products/denx-dx648-earbuds-g2.webp",
+      "/products/denx-dx648-earbuds-g3.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -1926,7 +1926,7 @@ ${COD_EN}
             "استمتع بموسيقى ومكالمات أوضح مع تصميم In-Ear مريح للاستخدام اليومي.",
           bodyEn:
             "Enjoy clearer music and calls with a comfortable in-ear design for everyday use.",
-          image: "/products/denx-dx648-earbuds.png",
+          image: "/products/denx-dx648-earbuds.webp",
         },
         {
           titleAr: "بلوتوث 5.1 واستعداد طويل",
@@ -2026,10 +2026,10 @@ ${COD_EN}
     marketComparePrices: { SA: 149 },
     availableIn: ["SA"],
     images: [
-      "/products/xiaomi-earbuds-tws-demo.gif",
-      "/products/xiaomi-earbuds-tws-g1.png",
-      "/products/xiaomi-earbuds-tws-g2.png",
-      "/products/xiaomi-earbuds-tws-g3.png",
+      "/products/xiaomi-earbuds-tws-demo.webp",
+      "/products/xiaomi-earbuds-tws-g1.webp",
+      "/products/xiaomi-earbuds-tws-g2.webp",
+      "/products/xiaomi-earbuds-tws-g3.webp",
     ],
     colors: [
       { id: "green", nameAr: "أخضر", nameEn: "Green", hex: "#1f4d3a" },
@@ -2060,7 +2060,7 @@ ${COD_EN}
             "علبة شحن بشعار mi ولمسة معدنية ذهبية، مع مؤشر LED واضح ومظهر يناسب الاستخدام اليومي.",
           bodyEn:
             "A charging case with the mi logo and a gold trim, plus a clear LED indicator for everyday style.",
-          image: "/products/xiaomi-earbuds-tws.png",
+          image: "/products/xiaomi-earbuds-tws.webp",
         },
         {
           titleAr: "بلوتوث 5.0 وتحكم باللمس",
@@ -2158,10 +2158,10 @@ ${COD_EN}
     marketComparePrices: { OM: 32 },
     availableIn: ["OM"],
     images: [
-      "/products/kitchen-3pcs-offer-demo.gif",
-      "/products/kitchen-3pcs-offer-g1.png",
-      "/products/kitchen-3pcs-offer-g2.png",
-      "/products/kitchen-3pcs-offer-g3.png",
+      "/products/kitchen-3pcs-offer-demo.webp",
+      "/products/kitchen-3pcs-offer-g1.webp",
+      "/products/kitchen-3pcs-offer-g2.webp",
+      "/products/kitchen-3pcs-offer-g3.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -2186,7 +2186,7 @@ ${COD_EN}
             "وفّر على شراء الأجهزة منفصلة واحصل على خلاط ومفرمة وعصارة معًا لتجهيز وصفاتك ومشروباتك يوميًا.",
           bodyEn:
             "Save versus buying separately and get a blender, chopper, and juicer together for daily recipes and drinks.",
-          image: "/products/kitchen-3pcs-offer.png",
+          image: "/products/kitchen-3pcs-offer.webp",
         },
         {
           titleAr: "خلاط قوي وعصير فريش",
@@ -2286,10 +2286,10 @@ ${COD_EN}
     marketComparePrices: { OM: 14.9 },
     availableIn: ["OM"],
     images: [
-      "/products/dish-drying-rack-sink-demo.gif",
-      "/products/dish-drying-rack-sink-g1.png",
-      "/products/dish-drying-rack-sink-g2.png",
-      "/products/dish-drying-rack-sink-g3.png",
+      "/products/dish-drying-rack-sink-demo.webp",
+      "/products/dish-drying-rack-sink-g1.webp",
+      "/products/dish-drying-rack-sink-g2.webp",
+      "/products/dish-drying-rack-sink-g3.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -2314,7 +2314,7 @@ ${COD_EN}
             "صينية سفلية بفوهة تصريف توجّه الماء للحوض بدل ما يتجمع على الرخامة.",
           bodyEn:
             "A bottom tray with a spout directs water into the sink instead of pooling on the counter.",
-          image: "/products/dish-drying-rack-sink.png",
+          image: "/products/dish-drying-rack-sink.webp",
         },
         {
           titleAr: "أذرع قابلة للتمديد",
@@ -2418,10 +2418,10 @@ ${COD_EN}
     marketComparePrices: { SA: 139 },
     availableIn: ["SA"],
     images: [
-      "/products/konnect-kn101-powerbank-demo.gif",
-      "/products/konnect-kn101-powerbank-g1.png",
-      "/products/konnect-kn101-powerbank-g2.png",
-      "/products/konnect-kn101-powerbank-g3.png",
+      "/products/konnect-kn101-powerbank-demo.webp",
+      "/products/konnect-kn101-powerbank-g1.webp",
+      "/products/konnect-kn101-powerbank-g2.webp",
+      "/products/konnect-kn101-powerbank-g3.webp",
     ],
     colors: [],
     customColorEnabled: false,
@@ -2446,7 +2446,7 @@ ${COD_EN}
             "اشحن جوالك وأكثر من جهاز خلال السفر والعمل والطوارئ بدون ما تدور على فيشة.",
           bodyEn:
             "Charge your phone and more devices during travel, work, and emergencies without hunting for an outlet.",
-          image: "/products/konnect-kn101-powerbank.png",
+          image: "/products/konnect-kn101-powerbank.webp",
         },
         {
           titleAr: "كابلات مدمجة لكل الأجهزة",

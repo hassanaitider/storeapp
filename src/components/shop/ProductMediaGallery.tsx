@@ -15,7 +15,21 @@ import type { Locale, Product } from "@/lib/types";
 
 export function isGifUrl(url: string) {
   const clean = url.split("?")[0].toLowerCase();
-  return clean.endsWith(".gif") || clean.includes("image/gif");
+  return (
+    clean.endsWith(".gif") ||
+    clean.includes("image/gif") ||
+    // Animated product demos converted from GIF → WebP
+    /-demo\.webp$/i.test(clean)
+  );
+}
+
+/** Prefer a still for LCP — multi-MB GIFs stay out of the first paint. */
+export function preferredMediaIndex(images: string[] | undefined): number {
+  const list = images ?? [];
+  const still = list.findIndex((u) => Boolean(u) && !isGifUrl(u));
+  if (still >= 0) return still;
+  const any = list.findIndex(Boolean);
+  return any >= 0 ? any : 0;
 }
 
 export function splitProductMedia(images: string[]) {
@@ -313,6 +327,7 @@ export function ProductMediaGallery({
                       fill
                       sizes="(max-width:640px) 25vw, 160px"
                       unoptimized={needsUnoptimizedImage(url)}
+                      loading="lazy"
                       className="object-contain p-1"
                     />
                   </button>
@@ -386,6 +401,7 @@ export function ProductMediaGallery({
                       alt=""
                       fill
                       unoptimized
+                      loading="lazy"
                       className="object-contain p-1"
                       sizes="(max-width:640px) 45vw, 200px"
                     />

@@ -44,11 +44,11 @@ export const metadata: Metadata = {
     title: "Smart Shop | سمارت شوب",
     description:
       "متجر Smart Shop — متجر متنوع · توصيل مجاني · الدفع عند الاستلام · استرداد 30 يومًا",
-    images: [{ url: "/brand/smart-shop-logo.png" }],
+    images: [{ url: "/brand/smart-shop-logo.webp" }],
   },
   icons: {
-    icon: "/brand/smart-shop-logo.png",
-    apple: "/brand/smart-shop-logo.png",
+    icon: "/brand/smart-shop-logo.webp",
+    apple: "/brand/smart-shop-logo.webp",
   },
 };
 
@@ -59,13 +59,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <head>
-        <MetaPixelHead />
-      </head>
       <body
         className={`${display.variable} ${sans.variable} ${arabic.variable} font-sans antialiased`}
       >
         <StoreProvider>
+          <MetaPixelHead />
           <MetaPixel />
           <SiteShell>{children}</SiteShell>
         </StoreProvider>

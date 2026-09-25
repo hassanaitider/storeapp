@@ -1,6 +1,9 @@
 import { currencyForCountry, getCountry, SPANISH_MARKET_CODES } from "./countries";
 import { DEFAULT_CURRENCY_RATES } from "./currency";
+import { CLIP_EARBUDS_SLUG } from "./product-slugs";
 import type { CountryCode, Product } from "./types";
+
+export { CLIP_EARBUDS_SLUG } from "./product-slugs";
 
 const COD_AR =
   "<p><strong>اطلب الآن</strong> — توصيل مجاني · الدفع عند الاستلام · استرداد خلال 30 يومًا.</p>";
@@ -79,8 +82,6 @@ const IMAGES = [
   "/products/clip-earbuds-4.webp",
   "/products/clip-earbuds-2.webp",
 ];
-
-export const CLIP_EARBUDS_SLUG = "audifonos-clip-inalambricos-9d";
 
 function buildClipEarbuds(country: CountryCode): Omit<
   Product,

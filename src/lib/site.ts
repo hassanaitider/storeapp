@@ -6,5 +6,5 @@ export const SITE_URL =
 export const SITE_HOST = "www.cargolf.net";
 export const SITE_EMAIL = "support@cargolf.net";
 
-/** Primary brand mark (transparent PNG — header / footer) */
-export const BRAND_LOGO_SRC = "/brand/smart-shop-logo.png?v=2";
+/** Primary brand mark (WebP — header / footer) */
+export const BRAND_LOGO_SRC = "/brand/smart-shop-logo.webp?v=3";

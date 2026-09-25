@@ -1,6 +1,9 @@
 import { currencyForCountry, getCountry, SPANISH_MARKET_CODES } from "./countries";
 import { DEFAULT_CURRENCY_RATES } from "./currency";
+import { RETROLAB_SLUG } from "./product-slugs";
 import type { CountryCode, Product } from "./types";
+
+export { RETROLAB_SLUG } from "./product-slugs";
 
 const COD_AR =
   "<p><strong>اطلب الآن</strong> — توصيل مجاني · الدفع عند الاستلام · استرداد خلال 30 يومًا.</p>";
@@ -72,9 +75,7 @@ RETRO_PRICES.MX = {
   compareAtUSD: RETRO_COMPARE_USD,
 };
 
-const IMAGES = ["/products/retrolab-console-1.jpg"];
-
-export const RETROLAB_SLUG = "consola-retrolab";
+const IMAGES = ["/products/retrolab-console-1.webp"];
 
 function buildRetroLab(country: CountryCode): Omit<
   Product,
@@ -193,7 +194,7 @@ ${COD_ES}
             "Clear color display at 640×480. Not a touchscreen — play with buttons and sticks.",
           bodyEs:
             "Pantalla a color nítida a 640×480. No es táctil — juegas con botones y sticks.",
-          image: "/products/retrolab-console-1.jpg",
+          image: "/products/retrolab-console-1.webp",
         },
         {
           titleAr: "RK3326 وبطاقة 64 جيجا",
@@ -205,7 +206,7 @@ ${COD_ES}
             "Rockchip RK3326 (Cortex-A35), Linux OS, 3000 mAh battery, and Wi-Fi. Storage on a 64 GB card (128 GB also available).",
           bodyEs:
             "Rockchip RK3326 (Cortex-A35), Linux, batería 3000 mAh y Wi-Fi. Memoria en tarjeta de 64 GB (también hay opción 128 GB).",
-          image: "/products/retrolab-console-1.jpg",
+          image: "/products/retrolab-console-1.webp",
         },
       ],
       benefitsAr: [

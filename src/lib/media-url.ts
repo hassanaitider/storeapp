@@ -16,6 +16,7 @@ export function needsUnoptimizedImage(src: string) {
     src.startsWith("blob:") ||
     src.startsWith("/api/media/") ||
     /\.gif($|\?)/i.test(src) ||
+    /-demo\.webp($|\?)/i.test(src) ||
     src.startsWith("/products/") ||
     src.startsWith("/uploads/")
   );

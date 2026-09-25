@@ -1,9 +1,8 @@
-import { GEO_NI } from "./latam-geo";
+import { GEO_NI } from "./geo-ni";
+
+export { usesNicaraguaCodCheckout } from "./cod-markets";
 
 /** Nicaragua — exclusive COD checkout (not shared with other markets). */
-export function usesNicaraguaCodCheckout(country: string): boolean {
-  return country.toUpperCase() === "NI";
-}
 
 export function nicaraguaDepartamentos(): string[] {
   return Object.keys(GEO_NI).sort((a, b) => a.localeCompare(b, "es"));

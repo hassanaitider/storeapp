@@ -24,11 +24,11 @@ const ELEVADOR_PRICES: Partial<Record<CountryCode, LocalPrice>> = {
 };
 
 const IMAGES = [
-  "/products/mattress-lifter-1.png",
-  "/products/mattress-lifter-2.png",
-  "/products/mattress-lifter-3.png",
-  "/products/mattress-lifter-4.jpg",
-  "/products/mattress-lifter-5.jpg",
+  "/products/mattress-lifter-1.webp",
+  "/products/mattress-lifter-2.webp",
+  "/products/mattress-lifter-3.webp",
+  "/products/mattress-lifter-4.webp",
+  "/products/mattress-lifter-5.webp",
 ];
 
 function buildElevador(country: CountryCode): Omit<
@@ -139,7 +139,7 @@ ${COD_ES}`.trim(),
             "The thin tip slides between mattress and frame. Press the handle and the mattress rises a few centimeters — enough space to tuck the sheet without strain.",
           bodyEs:
             "La punta delgada se desliza entre el colchón y la base. Al apoyar el asa, el colchón sube unos centímetros: espacio suficiente para meter la sábana sin esfuerzo.",
-          image: "/products/mattress-lifter-4.jpg",
+          image: "/products/mattress-lifter-4.webp",
         },
         {
           titleAr: "حماية أسفل الظهر والرقبة",
@@ -151,7 +151,7 @@ ${COD_ES}`.trim(),
             "Repeated manual lifting strains the spine. This tool shifts the effort to the wedge — less tension and more comfort in your daily bed-making routine.",
           bodyEs:
             "Levantar a mano una y otra vez carga la columna. Esta herramienta traslada el esfuerzo a la cuña: menos tensión y más comodidad en la rutina diaria de hacer la cama.",
-          image: "/products/mattress-lifter-3.png",
+          image: "/products/mattress-lifter-3.webp",
         },
         {
           titleAr: "يناسب معظم أنواع الأسرّة",
@@ -163,7 +163,7 @@ ${COD_ES}`.trim(),
             "Wood frames, upholstered bases, thick or standard mattresses — the universal design slides smoothly without scratching furniture or tearing fabric.",
           bodyEs:
             "Bases de madera, camas tapizadas, colchones gruesos o estándar: el diseño universal se desliza con suavidad sin rayar el mueble ni dañar las telas.",
-          image: "/products/mattress-lifter-2.png",
+          image: "/products/mattress-lifter-2.webp",
         },
         {
           titleAr: "أنيق وعملي في غرفة النوم",
@@ -175,7 +175,7 @@ ${COD_ES}`.trim(),
             "Translucent plastic in modern colors with a gold-tone handle accent. Looks like a stylish home accessory — not a bulky utility tool.",
           bodyEs:
             "Plástico translúcido en colores modernos con detalle dorado en el asa. Se ve como un accesorio elegante del hogar, no como una herramienta tosca.",
-          image: "/products/mattress-lifter-1.png",
+          image: "/products/mattress-lifter-1.webp",
         },
       ],
       benefitsAr: [

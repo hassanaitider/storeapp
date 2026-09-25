@@ -1,6 +1,9 @@
 import { currencyForCountry, getCountry, SPANISH_MARKET_CODES } from "./countries";
 import { DEFAULT_CURRENCY_RATES } from "./currency";
+import { MAG_POWERBANK_SLUG } from "./product-slugs";
 import type { CountryCode, Product } from "./types";
+
+export { MAG_POWERBANK_SLUG } from "./product-slugs";
 
 const COD_AR =
   "<p><strong>اطلب الآن</strong> — توصيل مجاني · الدفع عند الاستلام · استرداد خلال 30 يومًا.</p>";
@@ -78,15 +81,13 @@ MAG_BANK_PRICES.MX = {
 };
 
 const IMAGES = [
-  "/products/mag-powerbank-1.jpg",
-  "/products/mag-powerbank-2.jpg",
-  "/products/mag-powerbank-3.jpg",
-  "/products/mag-powerbank-4.jpg",
-  "/products/mag-powerbank-5.jpg",
-  "/products/mag-powerbank-6.jpg",
+  "/products/mag-powerbank-1.webp",
+  "/products/mag-powerbank-2.webp",
+  "/products/mag-powerbank-3.webp",
+  "/products/mag-powerbank-4.webp",
+  "/products/mag-powerbank-5.webp",
+  "/products/mag-powerbank-6.webp",
 ];
-
-export const MAG_POWERBANK_SLUG = "bateria-portatil-magnetica-7en1";
 
 function buildMagPowerBank(country: CountryCode): Omit<
   Product,
@@ -209,7 +210,7 @@ ${COD_ES}`.trim(),
             "No guessing. The screen shows remaining charge while you are out — you know if it still covers the rest of the day.",
           bodyEs:
             "Sin adivinar. La pantalla muestra la carga que queda mientras sales — sabes si te alcanza para el resto del día.",
-          image: "/products/mag-powerbank-1.jpg",
+          image: "/products/mag-powerbank-1.webp",
         },
         {
           titleAr: "مغناطيس للجوال وكابلات للجهاز الثاني",
@@ -221,7 +222,7 @@ ${COD_ES}`.trim(),
             "One piece snaps onto a compatible phone; the other carries four built-in cables. Use whichever matches the device in your hand.",
           bodyEs:
             "Una pieza se fija al móvil compatible; la otra trae cuatro cables integrados. Usas la que corresponde al aparato que llevas.",
-          image: "/products/mag-powerbank-2.jpg",
+          image: "/products/mag-powerbank-2.webp",
         },
         {
           titleAr: "شحن مغناطيسي حتى 15W",
@@ -233,7 +234,7 @@ ${COD_ES}`.trim(),
             "Set a compatible phone on the pad. It stays put while it charges at up to 15W — at a desk or on the go, with no loose cable.",
           bodyEs:
             "Apoya el móvil compatible. Queda sujeto mientras carga hasta 15W — en el escritorio o de camino, sin un cable suelto.",
-          image: "/products/mag-powerbank-3.jpg",
+          image: "/products/mag-powerbank-3.webp",
         },
         {
           titleAr: "ألوان متعددة، نفس القوة",
@@ -245,7 +246,7 @@ ${COD_ES}`.trim(),
             "White, blue, purple, or orange. Wired charging up to 22.5W and magnetic wireless up to 15W — type the color you want before you confirm.",
           bodyEs:
             "Blanco, azul, lila o naranja. Carga por cable de hasta 22.5W y magnética de hasta 15W — escribe el color que quieres antes de confirmar.",
-          image: "/products/mag-powerbank-4.jpg",
+          image: "/products/mag-powerbank-4.webp",
         },
         {
           titleAr: "أربعة كابلات مدمجة من الخلف",
@@ -257,7 +258,7 @@ ${COD_ES}`.trim(),
             "USB-C, Lightning, Micro-USB, and USB-A are already there. Wired output up to 22.5W. You do not pack a spare cable.",
           bodyEs:
             "USB-C, Lightning, Micro-USB y USB-A ya van en la batería. Salida por cable de hasta 22.5W. No llevas un cable extra en el bolso.",
-          image: "/products/mag-powerbank-5.jpg",
+          image: "/products/mag-powerbank-5.webp",
         },
         {
           titleAr: "آيفون وأندرويد في نفس الجهاز",
@@ -269,7 +270,7 @@ ${COD_ES}`.trim(),
             "Magnetic hold for a compatible phone, plus cables for everything else. Leave with one charger instead of three.",
           bodyEs:
             "Sujeción magnética para el móvil compatible y cables para el resto. Sales con un solo cargador, no con tres.",
-          image: "/products/mag-powerbank-6.jpg",
+          image: "/products/mag-powerbank-6.webp",
         },
       ],
       benefitsAr: [

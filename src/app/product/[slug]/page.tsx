@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useParams, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import {
@@ -38,34 +39,100 @@ import {
   ProductBriefDescription,
   ProductDetailSections,
 } from "@/components/shop/ProductLanding";
-import { ClipEarbudsStory } from "@/components/shop/ClipEarbudsStory";
-import { MagPowerBankStory } from "@/components/shop/MagPowerBankStory";
-import { MiniCameraStory } from "@/components/shop/MiniCameraStory";
-import { CLIP_EARBUDS_SLUG } from "@/lib/seed-latam-clip-earbuds";
-import { MAG_POWERBANK_SLUG } from "@/lib/seed-latam-mag-powerbank";
-import { MINI_CAMERA_SLUG } from "@/lib/seed-latam-mini-camera";
-import { ProductMediaGallery } from "@/components/shop/ProductMediaGallery";
+import {
+  CLIP_EARBUDS_SLUG,
+  MAG_POWERBANK_SLUG,
+  MINI_CAMERA_SLUG,
+} from "@/lib/product-slugs";
+import { ProductMediaGallery, preferredMediaIndex } from "@/components/shop/ProductMediaGallery";
 import {
   ProductQtyUpsell,
   selectedQtyTotalLocal,
 } from "@/components/shop/ProductQtyUpsell";
-import { LatamCodCheckout } from "@/components/shop/LatamCodCheckout";
-import { ArgentinaCodCheckout } from "@/components/shop/ArgentinaCodCheckout";
-import { MexicoCodCheckout } from "@/components/shop/MexicoCodCheckout";
-import { DominicanCodCheckout } from "@/components/shop/DominicanCodCheckout";
-import { EcuadorCodCheckout } from "@/components/shop/EcuadorCodCheckout";
-import { SalvadorCodCheckout } from "@/components/shop/SalvadorCodCheckout";
-import { HondurasCodCheckout } from "@/components/shop/HondurasCodCheckout";
-import { NicaraguaCodCheckout } from "@/components/shop/NicaraguaCodCheckout";
-import { usesLatamCodCheckout } from "@/lib/latam-geo";
-import { usesMexicoCodCheckout } from "@/lib/mexico-geo";
-import { usesDominicanCodCheckout } from "@/lib/dominican-geo";
-import { usesEcuadorCodCheckout } from "@/lib/ecuador-geo";
-import { usesSalvadorCodCheckout } from "@/lib/salvador-geo";
-import { usesHondurasCodCheckout } from "@/lib/honduras-geo";
-import { usesNicaraguaCodCheckout } from "@/lib/nicaragua-geo";
+import {
+  usesDominicanCodCheckout,
+  usesEcuadorCodCheckout,
+  usesHondurasCodCheckout,
+  usesLatamCodCheckout,
+  usesMexicoCodCheckout,
+  usesNicaraguaCodCheckout,
+  usesSalvadorCodCheckout,
+} from "@/lib/cod-markets";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order } from "@/lib/types";
+
+/** COD + story modules pull large geo trees — load only the active market/slug. */
+const LatamCodCheckout = dynamic(
+  () =>
+    import("@/components/shop/LatamCodCheckout").then((m) => m.LatamCodCheckout),
+  { ssr: false }
+);
+const ArgentinaCodCheckout = dynamic(
+  () =>
+    import("@/components/shop/ArgentinaCodCheckout").then(
+      (m) => m.ArgentinaCodCheckout
+    ),
+  { ssr: false }
+);
+const MexicoCodCheckout = dynamic(
+  () =>
+    import("@/components/shop/MexicoCodCheckout").then(
+      (m) => m.MexicoCodCheckout
+    ),
+  { ssr: false }
+);
+const DominicanCodCheckout = dynamic(
+  () =>
+    import("@/components/shop/DominicanCodCheckout").then(
+      (m) => m.DominicanCodCheckout
+    ),
+  { ssr: false }
+);
+const EcuadorCodCheckout = dynamic(
+  () =>
+    import("@/components/shop/EcuadorCodCheckout").then(
+      (m) => m.EcuadorCodCheckout
+    ),
+  { ssr: false }
+);
+const SalvadorCodCheckout = dynamic(
+  () =>
+    import("@/components/shop/SalvadorCodCheckout").then(
+      (m) => m.SalvadorCodCheckout
+    ),
+  { ssr: false }
+);
+const HondurasCodCheckout = dynamic(
+  () =>
+    import("@/components/shop/HondurasCodCheckout").then(
+      (m) => m.HondurasCodCheckout
+    ),
+  { ssr: false }
+);
+const NicaraguaCodCheckout = dynamic(
+  () =>
+    import("@/components/shop/NicaraguaCodCheckout").then(
+      (m) => m.NicaraguaCodCheckout
+    ),
+  { ssr: false }
+);
+const ClipEarbudsStory = dynamic(
+  () =>
+    import("@/components/shop/ClipEarbudsStory").then((m) => m.ClipEarbudsStory),
+  { ssr: false }
+);
+const MagPowerBankStory = dynamic(
+  () =>
+    import("@/components/shop/MagPowerBankStory").then(
+      (m) => m.MagPowerBankStory
+    ),
+  { ssr: false }
+);
+const MiniCameraStory = dynamic(
+  () =>
+    import("@/components/shop/MiniCameraStory").then((m) => m.MiniCameraStory),
+  { ssr: false }
+);
 
 export default function ProductPage() {
   return (
@@ -145,6 +212,11 @@ function ProductPageInner() {
   const formRef = useRef<HTMLFormElement>(null);
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
+
+  useEffect(() => {
+    if (!product) return;
+    setActiveImg(preferredMediaIndex(product.images));
+  }, [product?.id]);
   const [customColor, setCustomColor] = useState("");
   const [order, setOrder] = useState<Order | null>(null);
   const [form, setForm] = useState({

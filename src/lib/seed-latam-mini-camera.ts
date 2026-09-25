@@ -1,6 +1,9 @@
 import { currencyForCountry, getCountry, SPANISH_MARKET_CODES } from "./countries";
 import { DEFAULT_CURRENCY_RATES } from "./currency";
+import { MINI_CAMERA_SLUG } from "./product-slugs";
 import type { CountryCode, Product } from "./types";
+
+export { MINI_CAMERA_SLUG } from "./product-slugs";
 
 const COD_AR =
   "<p><strong>اطلب الآن</strong> — توصيل مجاني · الدفع عند الاستلام · استرداد خلال 30 يومًا.</p>";
@@ -80,8 +83,6 @@ const IMAGES = [
   "/products/mini-camera-4.webp",
   "/products/mini-camera-5.webp",
 ];
-
-export const MINI_CAMERA_SLUG = "mini-camara-corporal-1080p";
 
 function buildMiniCamera(country: CountryCode): Omit<
   Product,

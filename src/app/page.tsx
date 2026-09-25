@@ -99,7 +99,7 @@ export default function HomePage() {
               style={{ animationDelay: `${i * 60}ms` }}
             >
               <ProductImage
-                src={cat.image || "/categories/flag-ma.png"}
+                src={cat.image || "/categories/flag-ma.webp"}
                 alt={pickText(cat, "name", locale)}
                 fill
                 width={900}

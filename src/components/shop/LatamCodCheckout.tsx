@@ -15,7 +15,8 @@ import { formatLocalAmount } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
-import { codFormLabel, geoTreeForCountry } from "@/lib/latam-geo";
+import { geoTreeForLatamCod } from "@/lib/latam-cod-geo";
+import { codFormLabel } from "@/lib/latam-geo";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -80,7 +81,7 @@ export function LatamCodCheckout({
   onPlaceOrder,
 }: Props) {
   const currency = currencyForCountry(country);
-  const tree = geoTreeForCountry(country);
+  const tree = geoTreeForLatamCod(country);
   const countdown = useOfferCountdown(`${country}:${product.id}`);
   const liveProduct = useLiveProduct(product);
   const upsellOn = isCodQtyUpsellEnabled(liveProduct, country);

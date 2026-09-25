@@ -208,9 +208,7 @@ export const GEO_DO: DominicanGeoTree = {
 
 
 
-export function usesDominicanCodCheckout(country: string): boolean {
-  return country.toUpperCase() === "DO";
-}
+export { usesDominicanCodCheckout } from "./cod-markets";
 
 export function dominicanProvincias(): string[] {
   return Object.keys(GEO_DO).sort((a, b) => a.localeCompare(b, "es"));

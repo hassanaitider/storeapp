@@ -8,7 +8,9 @@ export function isGifUrl(url: string) {
   return (
     clean.endsWith(".gif") ||
     clean.includes("image/gif") ||
-    clean.includes("data:image/gif")
+    clean.includes("data:image/gif") ||
+    // Animated product demos converted from GIF → WebP
+    /-demo\.webp$/i.test(clean)
   );
 }
 
@@ -16,7 +18,7 @@ export function isGifUrl(url: string) {
 export function productCoverSrc(images: string[] | undefined | null): string {
   const list = (images ?? []).filter(Boolean);
   const still = list.find((u) => !isGifUrl(u));
-  return still || list[0] || "/products/car-vacuum.png";
+  return still || list[0] || "/products/car-vacuum.webp";
 }
 
 /** Default intrinsic ratio for product stills (reserves space before load). */
@@ -50,7 +52,7 @@ export function ProductImage({
   height = PRODUCT_MEDIA_HEIGHT,
 }: Props) {
   const [current, setCurrent] = useState(src);
-  const fallback = "/products/car-vacuum.png";
+  const fallback = "/products/car-vacuum.webp";
 
   return (
     // eslint-disable-next-line @next/next/no-img-element

@@ -487,9 +487,7 @@ export const GEO_EC: EcuadorGeoTree = {
 };
 
 
-export function usesEcuadorCodCheckout(country: string): boolean {
-  return country.toUpperCase() === "EC";
-}
+export { usesEcuadorCodCheckout } from "./cod-markets";
 
 export function ecuadorProvincias(): string[] {
   return Object.keys(GEO_EC).sort((a, b) => a.localeCompare(b, "es"));

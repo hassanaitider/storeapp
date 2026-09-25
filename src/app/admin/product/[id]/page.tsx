@@ -52,7 +52,7 @@ export default function EditProductPage() {
   const [descLang, setDescLang] = useState<"ar" | "en">("ar");
   const [categoryId, setCategoryId] = useState("");
   const [slug, setSlug] = useState("");
-  const [images, setImages] = useState<string[]>(["/products/car-vacuum.png"]);
+  const [images, setImages] = useState<string[]>(["/products/car-vacuum.webp"]);
   const [activeImg, setActiveImg] = useState(0);
   const [localPrice, setLocalPrice] = useState("99");
   const [inStock, setInStock] = useState(true);
@@ -123,7 +123,7 @@ export default function EditProductPage() {
     setImages(
       existing.images?.length
         ? [...existing.images]
-        : ["/products/car-vacuum.png"]
+        : ["/products/car-vacuum.webp"]
     );
     setActiveImg(0);
     setLocalPrice(String(Math.round(local * 1000) / 1000));
@@ -213,7 +213,7 @@ export default function EditProductPage() {
     const nextImages =
       images.filter(Boolean).length > 0
         ? images.filter(Boolean)
-        : ["/products/car-vacuum.png"];
+        : ["/products/car-vacuum.webp"];
 
     const plainAr = htmlToPlain(descriptionAr) || nameAr.trim();
     const plainEn = htmlToPlain(descriptionEn) || nameEn.trim();
