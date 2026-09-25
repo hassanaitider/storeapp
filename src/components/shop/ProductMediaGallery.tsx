@@ -218,6 +218,7 @@ export function ProductMediaGallery({
                   )}
                   decoding="async"
                   loading="eager"
+                  fetchPriority="high"
                 />
               </button>
               {discount > 0 && (

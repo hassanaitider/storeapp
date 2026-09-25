@@ -2,6 +2,7 @@
 
 import React, {
   createContext,
+  startTransition,
   useCallback,
   useContext,
   useEffect,
@@ -180,6 +181,18 @@ function mergeCategoriesWithSeed(stored: Category[] | undefined): Category[] {
  * Catalogs saved before Spanish shipped have a landing object with no *Es
  * fields; keeping the seed's Spanish copy stops it from being lost on hydrate.
  */
+/** Map legacy static assets to WebP after the public/ conversion. */
+function toWebpStaticUrl(url: string): string {
+  if (
+    !url.startsWith("/products/") &&
+    !url.startsWith("/categories/") &&
+    !url.startsWith("/brand/")
+  ) {
+    return url;
+  }
+  return url.replace(/\.(png|jpe?g|gif)(\?.*)?$/i, ".webp$2");
+}
+
 function mergeLanding(
   seed: ProductLanding | undefined,
   stored: ProductLanding | undefined
@@ -198,6 +211,9 @@ function mergeLanding(
       ...section,
       titleEs: section.titleEs || seed.sections[i]?.titleEs,
       bodyEs: section.bodyEs || seed.sections[i]?.bodyEs,
+      image: toWebpStaticUrl(
+        section.image || seed.sections[i]?.image || ""
+      ) || section.image || seed.sections[i]?.image,
     })),
     faq: stored.faq.map((item, i) => ({
       ...item,
@@ -218,6 +234,26 @@ function slugFlagSet(
   return set;
 }
 
+function mergeProductImages(seed: Product, stored: Product): string[] {
+  const seedImgs = (seed.images ?? [])
+    .map(toWebpStaticUrl)
+    .filter(isDurableMediaUrl);
+  const storedImgs = (stored.images ?? [])
+    .map(toWebpStaticUrl)
+    .filter(isDurableMediaUrl);
+  // Prefer seed gallery (WebP) for catalog SKUs; keep merchant uploads/remotes.
+  const extras = storedImgs.filter(
+    (u) =>
+      !seedImgs.includes(u) &&
+      (u.startsWith("/uploads/") ||
+        u.startsWith("https://") ||
+        u.startsWith("http://") ||
+        u.startsWith("data:"))
+  );
+  if (seedImgs.length) return [...seedImgs, ...extras];
+  return storedImgs.length ? storedImgs : seed.images ?? [];
+}
+
 function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   if (!stored?.length) return cloneSeedProducts();
   const allowedCats = new Set(SEED_CATEGORIES.map((c) => c.id));
@@ -228,8 +264,21 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   const merged = stored
     .map((p) => {
       const seed = seedById.get(p.id);
-      if (!seed) return p;
-      const durable = (p.images ?? []).filter(isDurableMediaUrl);
+      if (!seed) {
+        return {
+          ...p,
+          images: (p.images ?? []).map(toWebpStaticUrl),
+          landing: p.landing
+            ? {
+                ...p.landing,
+                sections: p.landing.sections.map((s) => ({
+                  ...s,
+                  image: s.image ? toWebpStaticUrl(s.image) : s.image,
+                })),
+              }
+            : p.landing,
+        };
+      }
       const elevadorMatch = elevadorPerMarket.exec(seed.id);
       const magMatch = /^prod-mag-powerbank-([a-z]{2})$/i.exec(seed.id);
       const retrolabMatch = /^prod-retrolab-([a-z]{2})$/i.exec(seed.id);
@@ -260,12 +309,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         detailsEn: p.detailsEn?.length ? p.detailsEn : seed.detailsEn,
         detailsEs: p.detailsEs?.length ? p.detailsEs : seed.detailsEs,
         landing: mergeLanding(seed.landing, p.landing),
-        images: (() => {
-          const seedImgs = (seed.images ?? []).filter(isDurableMediaUrl);
-          const extra = seedImgs.filter((u) => !durable.includes(u));
-          const combined = [...extra, ...durable];
-          return combined.length ? combined : seed.images;
-        })(),
+        images: mergeProductImages(seed, p),
         colors: [],
         customColorEnabled:
           typeof p.customColorEnabled === "boolean"
@@ -830,9 +874,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
         setCurrencyRateOverrides(next.currencyRates);
         stateRef.current = next;
-        setState(next);
-        storageReadyRef.current = true;
-        setStorageReady(true);
+        // Defer React commit so catalog merge does not inflate TBT on first paint
+        startTransition(() => {
+          setState(next);
+          storageReadyRef.current = true;
+          setStorageReady(true);
+        });
         // Mirror hydrate result WITHOUT bumping updatedAt. Stamping Date.now()
         // here made stale remote seed prices look "newer" than a concurrent
         // admin save and caused Save → price reverts for the merchant.

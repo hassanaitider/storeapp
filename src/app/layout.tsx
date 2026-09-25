@@ -9,20 +9,25 @@ import "./globals.css";
 
 const display = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["600"],
   variable: "--font-display",
+  display: "swap",
+  preload: false,
 });
 
 const sans = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   variable: "--font-sans",
+  display: "swap",
+  preload: false,
 });
 
 const arabic = Tajawal({
   subsets: ["arabic"],
-  weight: ["400", "500", "700", "800"],
+  weight: ["400", "500", "700"],
   variable: "--font-arabic",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
