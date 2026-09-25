@@ -1538,9 +1538,29 @@ export function StoreProvider({ children }: { children: ReactNode }) {
             Math.round(convertFromUSD(unitUSD, current.currency) * 100) / 100,
         };
       });
+      const purchaseValue =
+        Math.round(convertFromUSD(totalUSD, current.currency) * 100) / 100;
+
+      // Direct COD from product page (no cart step) — still emit AddToCart for Pixel funnel
+      if (itemsOverride?.length) {
+        const primary = items[0];
+        const primaryProduct = current.products.find(
+          (p) => p.id === primary?.productId
+        );
+        if (primary && primaryProduct) {
+          trackAddToCart({
+            contentId: primaryProduct.id,
+            contentName: primaryProduct.nameEn || primaryProduct.nameAr,
+            value: purchaseValue,
+            currency: current.currency,
+            quantity: items.reduce((n, i) => n + i.quantity, 0),
+          });
+        }
+      }
+
       trackPurchase({
         orderId: order.id,
-        value: Math.round(convertFromUSD(totalUSD, current.currency) * 100) / 100,
+        value: purchaseValue,
         currency: current.currency,
         contents,
       }, {

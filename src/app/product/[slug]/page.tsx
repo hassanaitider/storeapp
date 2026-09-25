@@ -34,7 +34,7 @@ import {
 } from "@/lib/pricing";
 import { pickText } from "@/lib/localized";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, lineTotalUSDForQty } from "@/lib/qty-upsell";
-import { trackViewContent } from "@/lib/meta-pixel";
+import { trackInitiateCheckout, trackViewContent } from "@/lib/meta-pixel";
 import {
   ProductBriefDescription,
   ProductDetailSections,
@@ -737,7 +737,25 @@ function ProductPageInner() {
           <button
             type="button"
             disabled={!product.inStock}
-            onClick={() => formRef.current?.requestSubmit()}
+            onClick={() => {
+              if (product.inStock) {
+                trackInitiateCheckout({
+                  value: orderTotalLocal,
+                  currency: marketCurrency,
+                  numItems: qty,
+                  contents: [
+                    {
+                      id: product.id,
+                      quantity: qty,
+                      item_price:
+                        Math.round((orderTotalLocal / Math.max(qty, 1)) * 100) /
+                        100,
+                    },
+                  ],
+                });
+              }
+              formRef.current?.requestSubmit();
+            }}
             className={cn(
               "shrink-0 rounded-2xl px-6 py-3.5 text-sm font-bold text-white shadow-lg transition disabled:opacity-50 sm:px-8",
               fufillsSticky
