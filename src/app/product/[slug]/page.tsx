@@ -159,7 +159,6 @@ function ProductPageInner() {
     country,
     getProduct,
     setViewCountry,
-    setCountry,
     placeOrder,
     categories,
     products,
@@ -175,12 +174,12 @@ function ProductPageInner() {
     const preferred = previewCountry ?? country;
     const inPreferred = getProduct(slug, preferred);
     if (inPreferred) return inPreferred;
-    // Exact id (admin / per-country LATAM row)
+    // Exact id (admin / per-country LATAM row) — never fall through to another market's slug twin
     const byId = products.find((p) => p.id === slug);
     if (byId) return byId;
-    // Shared slug in another market — open that listing (ads / deep links)
-    const bySlug = products.find((p) => p.slug === slug);
-    return bySlug;
+    // Public storefront: no cross-market slug fallback (keeps LATAM-only SKUs out of MENA)
+    if (!previewCountry) return undefined;
+    return getProduct(slug) ?? undefined;
   }, [getProduct, slug, previewCountry, country, products]);
 
   const showQtyUpsell = isCodQtyUpsellEnabled(
@@ -194,7 +193,8 @@ function ProductPageInner() {
     return () => setViewCountry(null);
   }, [previewCountry, setViewCountry]);
 
-  // Align storefront to the product's market so deep links work in every country
+  // If there is no country query, switch storefront to the product's market
+  // without a permanent manual lock (IP geo still wins on the next visit).
   useEffect(() => {
     if (!product || previewCountry) return;
     if (isProductAvailableIn(product, country, categories)) return;
@@ -205,9 +205,9 @@ function ProductPageInner() {
       fromCategory ??
       null;
     if (target && isStoreMarket(target) && target !== country) {
-      setCountry(target, true);
+      setViewCountry(target);
     }
-  }, [product, country, categories, previewCountry, setCountry]);
+  }, [product, country, categories, previewCountry, setViewCountry]);
 
   const formRef = useRef<HTMLFormElement>(null);
   const [qty, setQty] = useState(1);

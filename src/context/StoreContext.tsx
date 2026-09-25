@@ -263,6 +263,9 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   const seedById = new Map(SEED_PRODUCTS.map((p) => [p.id, p]));
   const upsellSlugs = slugFlagSet(stored, "qtyUpsellEnabled");
   const dropLegacyElevador = /^prod-mattress-lifter$/i;
+  /** RetroLab is LATAM-only — drop MENA rows accidentally seeded earlier */
+  const dropMenaRetrolab =
+    /^prod-retrolab-(ma|sa|ae|om|iq|ly|lb)$/i;
   const elevadorPerMarket = /^prod-mattress-lifter-([a-z]{2})$/i;
   const merged: Product[] = stored
     .map((p): Product => {
@@ -418,7 +421,8 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       (p) =>
         (!p.categoryId || allowedCats.has(p.categoryId)) &&
         !isRetiredStoreProduct(p) &&
-        !dropLegacyElevador.test(p.id)
+        !dropLegacyElevador.test(p.id) &&
+        !dropMenaRetrolab.test(p.id)
     );
   for (const seed of SEED_PRODUCTS) {
     if (isRetiredStoreProduct(seed)) continue;

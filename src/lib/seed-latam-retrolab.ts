@@ -1,8 +1,4 @@
-import {
-  currencyForCountry,
-  getCountry,
-  STORE_MARKET_CODES,
-} from "./countries";
+import { currencyForCountry, getCountry, SPANISH_MARKET_CODES } from "./countries";
 import { DEFAULT_CURRENCY_RATES } from "./currency";
 import { RETROLAB_SLUG } from "./product-slugs";
 import type { CountryCode, Product } from "./types";
@@ -26,7 +22,7 @@ type LocalPrice = {
 const RETRO_USD = 99;
 const RETRO_COMPARE_USD = 199;
 
-function usdToStoreLocal(country: CountryCode, usd: number): number {
+function usdToLatamLocal(country: CountryCode, usd: number): number {
   const code = currencyForCountry(country);
   if (code === "USD") return usd;
   const raw = usd * DEFAULT_CURRENCY_RATES[code];
@@ -37,11 +33,11 @@ function usdToStoreLocal(country: CountryCode, usd: number): number {
 }
 
 const RETRO_PRICES: Record<CountryCode, LocalPrice> = Object.fromEntries(
-  STORE_MARKET_CODES.map((country) => [
+  SPANISH_MARKET_CODES.map((country) => [
     country,
     {
-      price: usdToStoreLocal(country, RETRO_USD),
-      compare: usdToStoreLocal(country, RETRO_COMPARE_USD),
+      price: usdToLatamLocal(country, RETRO_USD),
+      compare: usdToLatamLocal(country, RETRO_COMPARE_USD),
       priceUSD: RETRO_USD,
       compareAtUSD: RETRO_COMPARE_USD,
     },
@@ -75,30 +71,6 @@ RETRO_PRICES.HN = {
 RETRO_PRICES.MX = {
   price: 1799,
   compare: 3599,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
-};
-RETRO_PRICES.MA = {
-  price: 999,
-  compare: 1999,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
-};
-RETRO_PRICES.SA = {
-  price: 379,
-  compare: 749,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
-};
-RETRO_PRICES.AE = {
-  price: 369,
-  compare: 729,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
-};
-RETRO_PRICES.OM = {
-  price: 39,
-  compare: 79,
   priceUSD: RETRO_USD,
   compareAtUSD: RETRO_COMPARE_USD,
 };
@@ -294,8 +266,8 @@ ${COD_ES}
   };
 }
 
-/** One listing per store market (MENA + LATAM). */
-export const LATAM_RETROLAB_PRODUCTS: Product[] = STORE_MARKET_CODES.map(
+/** One listing per Latin American Spanish market only. */
+export const LATAM_RETROLAB_PRODUCTS: Product[] = SPANISH_MARKET_CODES.map(
   (country) => {
     const local = RETRO_PRICES[country];
     if (!local) {
