@@ -1,6 +1,6 @@
-import { META_PIXEL_ID } from "@/lib/meta-config";
+import { META_PIXEL_ID, isMetaPixelConfigured } from "@/lib/meta-config";
 
-export { META_PIXEL_ID };
+export { META_PIXEL_ID, isMetaPixelConfigured };
 
 export type MetaContentItem = {
   id: string;
@@ -53,6 +53,7 @@ function sendCapi(input: {
   userData?: MetaUserHints;
 }) {
   if (typeof window === "undefined") return;
+  if (!isMetaPixelConfigured()) return;
   void fetch("/api/meta/capi", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -80,6 +81,7 @@ export function trackMeta(
   eventID?: string,
   userData?: MetaUserHints
 ) {
+  if (!isMetaPixelConfigured()) return "";
   const id = eventID || newEventId();
   if (typeof window !== "undefined" && typeof window.fbq === "function") {
     if (params) {
@@ -201,6 +203,7 @@ export function trackPurchase(
 
 /** Inline base code for <head> (init + PageView with eventID for CAPI dedupe) */
 export function metaPixelHeadSnippet(): string {
+  if (!isMetaPixelConfigured()) return "";
   return `
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?

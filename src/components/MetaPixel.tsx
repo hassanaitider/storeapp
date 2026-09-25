@@ -2,6 +2,7 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef } from "react";
+import { isMetaPixelConfigured } from "@/lib/meta-config";
 import { trackPageView } from "@/lib/meta-pixel";
 
 function scheduleIdle(fn: () => void) {
@@ -44,6 +45,8 @@ function MetaPixelPageView() {
   const first = useRef(true);
 
   useEffect(() => {
+    if (!isMetaPixelConfigured()) return;
+
     let cancelled = false;
 
     const run = async () => {
@@ -94,8 +97,10 @@ function MetaPixelPageView() {
   return null;
 }
 
-/** SPA PageView + CAPI pairing (base Pixel code loads via lazyOnload Script) */
+/** SPA PageView + CAPI pairing — inactive until a Pixel ID is configured */
 export function MetaPixel() {
+  if (!isMetaPixelConfigured()) return null;
+
   return (
     <Suspense fallback={null}>
       <MetaPixelPageView />

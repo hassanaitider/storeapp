@@ -1,12 +1,16 @@
 import Script from "next/script";
-import { META_PIXEL_ID } from "@/lib/meta-config";
+import {
+  META_PIXEL_ID,
+  isMetaPixelConfigured,
+} from "@/lib/meta-config";
 import { metaPixelHeadSnippet } from "@/lib/meta-pixel";
 
 /**
- * Meta Pixel base code — deferred until after window load so fbevents.js
- * does not compete with hydration / LCP on the main thread.
+ * Meta Pixel base code — only when NEXT_PUBLIC_META_PIXEL_ID is set.
  */
 export function MetaPixelHead() {
+  if (!isMetaPixelConfigured()) return null;
+
   return (
     <>
       <Script id="meta-pixel" strategy="lazyOnload">

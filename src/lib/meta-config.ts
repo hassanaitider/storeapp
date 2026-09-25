@@ -1,8 +1,12 @@
-/** Public Meta Pixel ID (safe for client) */
+/** Public Meta Pixel ID — set NEXT_PUBLIC_META_PIXEL_ID in Vercel / .env */
 export const META_PIXEL_ID =
-  process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "2098415630739868";
+  process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "";
 
-/** Server-only Conversions API token — set in Vercel / .env */
+export function isMetaPixelConfigured(): boolean {
+  return META_PIXEL_ID.length > 0;
+}
+
+/** Server-only Conversions API token — set META_CAPI_ACCESS_TOKEN in Vercel / .env */
 export function getMetaCapiAccessToken(): string | null {
   const token = process.env.META_CAPI_ACCESS_TOKEN?.trim();
   return token || null;
