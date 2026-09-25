@@ -1,6 +1,6 @@
-/** Public Meta Pixel ID — set NEXT_PUBLIC_META_PIXEL_ID in Vercel / .env */
+/** Public Meta Pixel ID (safe for client) */
 export const META_PIXEL_ID =
-  process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "";
+  process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || "964436486676478";
 
 export function isMetaPixelConfigured(): boolean {
   return META_PIXEL_ID.length > 0;

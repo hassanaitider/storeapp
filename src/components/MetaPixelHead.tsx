@@ -5,15 +5,13 @@ import {
 } from "@/lib/meta-config";
 import { metaPixelHeadSnippet } from "@/lib/meta-pixel";
 
-/**
- * Meta Pixel base code — only when NEXT_PUBLIC_META_PIXEL_ID is set.
- */
+/** Meta Pixel base code — loads after hydration (visible to Pixel Helper). */
 export function MetaPixelHead() {
   if (!isMetaPixelConfigured()) return null;
 
   return (
     <>
-      <Script id="meta-pixel" strategy="lazyOnload">
+      <Script id="meta-pixel" strategy="afterInteractive">
         {metaPixelHeadSnippet()}
       </Script>
       <noscript>
