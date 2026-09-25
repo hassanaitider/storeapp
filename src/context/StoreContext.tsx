@@ -207,14 +207,17 @@ function mergeLanding(
     benefitsEs: stored.benefitsEs?.length
       ? stored.benefitsEs
       : seed.benefitsEs,
-    sections: stored.sections.map((section, i) => ({
-      ...section,
-      titleEs: section.titleEs || seed.sections[i]?.titleEs,
-      bodyEs: section.bodyEs || seed.sections[i]?.bodyEs,
-      image: toWebpStaticUrl(
-        section.image || seed.sections[i]?.image || ""
-      ) || section.image || seed.sections[i]?.image,
-    })),
+    sections: stored.sections.map((section, i) => {
+      const rawImage = section.image || seed.sections[i]?.image;
+      return {
+        ...section,
+        titleEs: section.titleEs || seed.sections[i]?.titleEs,
+        bodyEs: section.bodyEs || seed.sections[i]?.bodyEs,
+        ...(rawImage
+          ? { image: toWebpStaticUrl(rawImage) || rawImage }
+          : {}),
+      };
+    }),
     faq: stored.faq.map((item, i) => ({
       ...item,
       questionEs: item.questionEs || seed.faq[i]?.questionEs,
@@ -261,8 +264,8 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   const upsellSlugs = slugFlagSet(stored, "qtyUpsellEnabled");
   const dropLegacyElevador = /^prod-mattress-lifter$/i;
   const elevadorPerMarket = /^prod-mattress-lifter-([a-z]{2})$/i;
-  const merged = stored
-    .map((p) => {
+  const merged: Product[] = stored
+    .map((p): Product => {
       const seed = seedById.get(p.id);
       if (!seed) {
         return {
@@ -273,7 +276,9 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
                 ...p.landing,
                 sections: p.landing.sections.map((s) => ({
                   ...s,
-                  image: s.image ? toWebpStaticUrl(s.image) : s.image,
+                  ...(s.image
+                    ? { image: toWebpStaticUrl(s.image) }
+                    : {}),
                 })),
               }
             : p.landing,
@@ -699,6 +704,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const catalogGenRef = useRef(0);
 
   useEffect(() => {
+    // Failsafe: never leave non-MA markets stuck on "loading" if IP geo hangs
+    const t = window.setTimeout(() => {
+      setGeoReady(true);
+      if (!storageReadyRef.current) {
+        storageReadyRef.current = true;
+        setStorageReady(true);
+      }
+    }, 3500);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
     stateRef.current = state;
   }, [state]);
 
@@ -777,7 +794,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const localAtStart = readLocalCatalog();
         let remote: PersistedCatalog | null = null;
         try {
-          const res = await fetch("/api/catalog", { cache: "no-store" });
+          const catalogAbort = new AbortController();
+          const catalogTimer = window.setTimeout(
+            () => catalogAbort.abort(),
+            3500
+          );
+          const res = await fetch("/api/catalog", {
+            cache: "no-store",
+            signal: catalogAbort.signal,
+          });
+          window.clearTimeout(catalogTimer);
           if (res.ok) {
             const json = (await res.json()) as {
               data?: PersistedCatalog | null;
@@ -785,7 +811,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
             if (json.data) remote = parseCatalogJson(JSON.stringify(json.data));
           }
         } catch {
-          /* offline / cold */
+          /* offline / cold / timeout — keep seed + local */
         }
 
         // Re-read local after await — admin may have saved during fetch
@@ -874,11 +900,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
         setCurrencyRateOverrides(next.currencyRates);
         stateRef.current = next;
-        // Defer React commit so catalog merge does not inflate TBT on first paint
+        storageReadyRef.current = true;
+        // Defer heavy React re-render; keep storageReady sync so geo/shop unblock
+        setStorageReady(true);
         startTransition(() => {
           setState(next);
-          storageReadyRef.current = true;
-          setStorageReady(true);
         });
         // Mirror hydrate result WITHOUT bumping updatedAt. Stamping Date.now()
         // here made stale remote seed prices look "newer" than a concurrent
@@ -1127,6 +1153,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const next = isStoreMarket(country) ? country : DEFAULT_COUNTRY;
       if (manual) {
         writeSessionManualMarket(next);
+        // Manual market pick must not wait on IP geo — unblock shop immediately
+        setGeoReady(true);
       }
       setViewCountryState(null);
       commit((s) => {

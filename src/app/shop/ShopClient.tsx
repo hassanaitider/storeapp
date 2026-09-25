@@ -62,7 +62,7 @@ export default function ShopClient() {
         ))}
       </div>
 
-      {!geoReady ? (
+      {!geoReady && filtered.length === 0 ? (
         <p className="mt-16 text-center text-[var(--muted)]">
           {t.common.loading}
         </p>

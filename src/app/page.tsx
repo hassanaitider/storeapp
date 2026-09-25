@@ -126,7 +126,7 @@ export default function HomePage() {
             {t.shop.featured}
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" key={locale + country}>
-            {!geoReady ? (
+            {!geoReady && featured.length === 0 ? (
               <p className="col-span-full text-center text-[var(--muted)]">
                 {t.common.loading}
               </p>
