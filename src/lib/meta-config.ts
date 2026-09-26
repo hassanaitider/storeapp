@@ -1,8 +1,8 @@
-/** Public Meta Pixel ID (safe for client) */
+/** Public Meta Pixel ID — أبو يحيى only (9644…). Never use 1751… (محمد). */
 export const META_PIXEL_ID =
   process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() ||
   process.env.FB_PIXEL_ID?.trim() ||
-  "1751775932774299";
+  "964436486676478";
 
 export function isMetaPixelConfigured(): boolean {
   return META_PIXEL_ID.length > 0;
@@ -20,14 +20,14 @@ export function getMetaCapiAccessToken(): string | null {
   return token || null;
 }
 
-/** Server Pixel ID for Graph API — FB_PIXEL_ID or public fallback */
+/** Server Pixel ID for Graph API */
 export function getFbPixelId(): string {
   return (
     process.env.FB_PIXEL_ID?.trim() ||
     process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() ||
-    "1751775932774299"
+    "964436486676478"
   );
 }
 
-/** Graph API version for CAPI (per Events Manager docs) */
+/** Graph API version for CAPI */
 export const META_GRAPH_API_VERSION = "v19.0";
