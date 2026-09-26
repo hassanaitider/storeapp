@@ -2,7 +2,7 @@
 export const META_PIXEL_ID =
   process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() ||
   process.env.FB_PIXEL_ID?.trim() ||
-  "964436486676478";
+  "1751775932774299";
 
 export function isMetaPixelConfigured(): boolean {
   return META_PIXEL_ID.length > 0;
@@ -25,7 +25,7 @@ export function getFbPixelId(): string {
   return (
     process.env.FB_PIXEL_ID?.trim() ||
     process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() ||
-    "964436486676478"
+    "1751775932774299"
   );
 }
 

@@ -128,7 +128,7 @@ export function trackPurchase(
   );
 }
 
-/** Head snippet: init only — PageView via trackBoth (MetaPixel) for Browser+Server */
+/** @deprecated base pixel lives in MetaPixel.tsx */
 export function metaPixelHeadSnippet(): string {
   if (!isMetaPixelConfigured()) return "";
   return `
@@ -141,5 +141,6 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '${META_PIXEL_ID}');
+fbq('track', 'PageView');
 `.trim();
 }
