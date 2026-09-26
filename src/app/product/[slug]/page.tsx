@@ -59,7 +59,7 @@ import {
   usesSalvadorCodCheckout,
 } from "@/lib/cod-markets";
 import { cn } from "@/lib/utils";
-import type { CountryCode, Order } from "@/lib/types";
+import type { CountryCode, Locale, Order } from "@/lib/types";
 
 /** COD + story modules pull large geo trees — load only the active market/slug. */
 const LatamCodCheckout = dynamic(
@@ -761,7 +761,7 @@ function ThankYouPurchase({
   t,
 }: {
   order: Order;
-  locale: string;
+  locale: Locale;
   t: ReturnType<typeof useT>;
 }) {
   const fired = useRef(false);

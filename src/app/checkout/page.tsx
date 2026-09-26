@@ -7,7 +7,7 @@ import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { formatPrice } from "@/lib/currency";
 import { trackInitiateCheckout, trackPurchase } from "@/lib/meta-pixel";
-import type { Order } from "@/lib/types";
+import type { Locale, Order } from "@/lib/types";
 
 export default function CheckoutPage() {
   const t = useT();
@@ -181,7 +181,7 @@ function CheckoutThankYou({
   t,
 }: {
   order: Order;
-  locale: string;
+  locale: Locale;
   t: ReturnType<typeof useT>;
 }) {
   const fired = useRef(false);
