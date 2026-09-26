@@ -54,6 +54,9 @@ export const metadata: Metadata = {
     icon: "/brand/smart-shop-logo.webp",
     apple: "/brand/smart-shop-logo.webp",
   },
+  other: {
+    "facebook-domain-verification": "eu527gqpfwfa8csk821sk99i9lfrz9",
+  },
 };
 
 export default function RootLayout({
