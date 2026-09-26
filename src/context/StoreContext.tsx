@@ -1234,12 +1234,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       });
       if (product) {
         const unitUSD = getProductPriceUSD(product, current.country);
-        const value = convertFromUSD(unitUSD * quantity, current.currency);
+        const valueUSD = Math.round(unitUSD * quantity * 100) / 100;
+        // Standard: fbq('track', 'AddToCart', {… currency: 'USD'})
         trackAddToCart({
           contentId: product.id,
           contentName: product.nameEn || product.nameAr,
-          value: Math.round(value * 100) / 100,
-          currency: current.currency,
+          value: valueUSD,
+          currency: "USD",
           quantity,
         });
       }
@@ -1534,34 +1535,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         return {
           id: item.productId,
           quantity: item.quantity,
-          item_price:
-            Math.round(convertFromUSD(unitUSD, current.currency) * 100) / 100,
+          item_price: Math.round(unitUSD * 100) / 100,
         };
       });
-      const purchaseValue =
-        Math.round(convertFromUSD(totalUSD, current.currency) * 100) / 100;
+      const purchaseValueUSD = Math.round(totalUSD * 100) / 100;
 
-      // Direct COD from product page (no cart step) — still emit AddToCart for Pixel funnel
-      if (itemsOverride?.length) {
-        const primary = items[0];
-        const primaryProduct = current.products.find(
-          (p) => p.id === primary?.productId
-        );
-        if (primary && primaryProduct) {
-          trackAddToCart({
-            contentId: primaryProduct.id,
-            contentName: primaryProduct.nameEn || primaryProduct.nameAr,
-            value: purchaseValue,
-            currency: current.currency,
-            quantity: items.reduce((n, i) => n + i.quantity, 0),
-          });
-        }
-      }
-
+      // Standard: fbq('track', 'Purchase', {value, currency: 'USD'})
       trackPurchase({
         orderId: order.id,
-        value: purchaseValue,
-        currency: current.currency,
+        value: purchaseValueUSD,
+        currency: "USD",
         contents,
       }, {
         phone: customer.phone,

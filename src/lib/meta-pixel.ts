@@ -1,5 +1,13 @@
 import { META_PIXEL_ID, isMetaPixelConfigured } from "@/lib/meta-config";
-import { genEventId, trackBoth, type TrackBothUserData } from "@/lib/fb";
+import {
+  genEventId,
+  trackBoth,
+  trackViewContent as fbViewContent,
+  trackAddToCart as fbAddToCart,
+  trackInitiateCheckout as fbInitiateCheckout,
+  trackPurchase as fbPurchase,
+  type TrackBothUserData,
+} from "@/lib/fb";
 
 export { META_PIXEL_ID, isMetaPixelConfigured, genEventId, trackBoth };
 export type { TrackBothUserData as MetaUserHints };
@@ -10,14 +18,10 @@ export type MetaContentItem = {
   item_price?: number;
 };
 
-/** @deprecated use genEventId */
 export function newEventId(): string {
   return genEventId();
 }
 
-/**
- * Browser Pixel + matching Conversions API event (same event_id → dedupe).
- */
 export function trackMeta(
   event: string,
   params?: Record<string, unknown>,
@@ -25,7 +29,7 @@ export function trackMeta(
   userData?: TrackBothUserData
 ) {
   if (!isMetaPixelConfigured()) return "";
-  return trackBoth(event, params ?? {}, { eventId, userData });
+  return trackBoth(event, params, { eventId, userData });
 }
 
 export function trackPageView(eventId?: string) {
@@ -44,103 +48,76 @@ export function event(
   return trackMeta(name, params, eventId);
 }
 
+/** Standard ViewContent — value in USD */
 export function trackViewContent(input: {
   contentId: string;
   contentName: string;
   value: number;
-  currency: string;
+  currency?: string;
 }) {
-  return trackMeta("ViewContent", {
-    content_ids: [input.contentId],
+  if (!isMetaPixelConfigured()) return "";
+  return fbViewContent({
     content_name: input.contentName,
+    content_ids: [input.contentId],
     content_type: "product",
     value: input.value,
-    currency: input.currency,
+    currency: "USD",
   });
 }
 
+/** Standard AddToCart — value in USD */
 export function trackAddToCart(input: {
   contentId: string;
-  contentName: string;
+  contentName?: string;
   value: number;
-  currency: string;
+  currency?: string;
   quantity?: number;
 }) {
-  const quantity = input.quantity ?? 1;
-  const unitPrice =
-    quantity > 0
-      ? Math.round((input.value / quantity) * 100) / 100
-      : input.value;
-  return trackMeta("AddToCart", {
+  if (!isMetaPixelConfigured()) return "";
+  return fbAddToCart({
     content_ids: [input.contentId],
+    value: input.value,
+    currency: "USD",
     content_name: input.contentName,
     content_type: "product",
-    value: input.value,
-    currency: input.currency,
-    contents: [
-      {
-        id: input.contentId,
-        quantity,
-        item_price: unitPrice,
-      },
-    ] satisfies MetaContentItem[],
   });
 }
 
-export function trackInitiateCheckout(input: {
-  value: number;
-  currency: string;
-  numItems: number;
-  contents: MetaContentItem[];
+/** Standard InitiateCheckout */
+export function trackInitiateCheckout(input?: {
+  value?: number;
+  currency?: string;
+  numItems?: number;
+  contents?: MetaContentItem[];
 }) {
-  return trackMeta("InitiateCheckout", {
+  if (!isMetaPixelConfigured()) return "";
+  if (!input) return fbInitiateCheckout();
+  return fbInitiateCheckout({
     value: input.value,
-    currency: input.currency,
+    currency: "USD",
     num_items: input.numItems,
-    content_type: "product",
-    contents: input.contents,
-    content_ids: input.contents.map((c) => c.id),
+    content_ids: input.contents?.map((c) => c.id),
   });
 }
 
+/** Standard Purchase — value in USD */
 export function trackPurchase(
   input: {
     orderId: string;
     value: number;
-    currency: string;
-    contents: MetaContentItem[];
+    currency?: string;
+    contents?: MetaContentItem[];
   },
   userData?: TrackBothUserData
 ) {
-  return trackMeta(
-    "Purchase",
+  if (!isMetaPixelConfigured()) return "";
+  return fbPurchase(
     {
       value: input.value,
-      currency: input.currency,
-      content_type: "product",
-      contents: input.contents,
-      content_ids: input.contents.map((c) => c.id),
-      num_items: input.contents.reduce((n, c) => n + c.quantity, 0),
+      currency: "USD",
+      content_ids: input.contents?.map((c) => c.id),
       order_id: input.orderId,
     },
-    input.orderId,
     userData
   );
-}
-
-/** @deprecated base pixel lives in MetaPixel.tsx */
-export function metaPixelHeadSnippet(): string {
-  if (!isMetaPixelConfigured()) return "";
-  return `
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '${META_PIXEL_ID}');
-fbq('track', 'PageView');
-`.trim();
 }

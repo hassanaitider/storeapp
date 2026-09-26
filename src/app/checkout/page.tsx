@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { HandCoins, CheckCircle2 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
-import { convertFromUSD, formatPrice } from "@/lib/currency";
-import { getProductPriceUSD } from "@/lib/pricing";
-import { trackInitiateCheckout } from "@/lib/meta-pixel";
+import { formatPrice } from "@/lib/currency";
+import { trackInitiateCheckout, trackPurchase } from "@/lib/meta-pixel";
 import type { Order } from "@/lib/types";
 
 export default function CheckoutPage() {
@@ -18,7 +17,6 @@ export default function CheckoutPage() {
     country,
     cart,
     cartTotalUSD,
-    products,
     placeOrder,
   } = useStore();
   const [order, setOrder] = useState<Order | null>(null);
@@ -28,49 +26,25 @@ export default function CheckoutPage() {
     city: "",
     address: "",
   });
+  const checkoutTracked = useRef(false);
 
   useEffect(() => {
-    if (order || cart.length === 0) return;
-    const contents = cart.map((item) => {
-      const product = products.find((p) => p.id === item.productId);
-      const unitUSD = product ? getProductPriceUSD(product, country) : 0;
-      return {
+    if (order || cart.length === 0 || checkoutTracked.current) return;
+    checkoutTracked.current = true;
+    // Standard: fbq('track', 'InitiateCheckout')
+    trackInitiateCheckout({
+      value: Math.round(cartTotalUSD * 100) / 100,
+      currency: "USD",
+      numItems: cart.reduce((n, i) => n + i.quantity, 0),
+      contents: cart.map((item) => ({
         id: item.productId,
         quantity: item.quantity,
-        item_price:
-          Math.round(convertFromUSD(unitUSD, currency) * 100) / 100,
-      };
+      })),
     });
-    trackInitiateCheckout({
-      value: Math.round(convertFromUSD(cartTotalUSD, currency) * 100) / 100,
-      currency,
-      numItems: cart.reduce((n, i) => n + i.quantity, 0),
-      contents,
-    });
-  }, [cart.length]);
+  }, [cart, cartTotalUSD, order]);
 
   if (order) {
-    return (
-      <div className="mx-auto max-w-lg px-4 py-24 text-center sm:px-6">
-        <CheckCircle2 className="mx-auto h-16 w-16 text-brand-600" />
-        <h1 className="mt-6 font-display text-4xl font-semibold text-ink-900">
-          {t.checkout.success}
-        </h1>
-        <p className="mt-3 text-[var(--muted)]">{t.checkout.successDesc}</p>
-        <p className="mt-6 rounded-xl bg-sand-100 px-4 py-3 text-sm font-medium text-ink-800">
-          {t.checkout.orderId}: <span className="font-mono">{order.id}</span>
-        </p>
-        <p className="mt-2 text-sm text-brand-700">
-          {formatPrice(order.totalUSD, order.currency, locale)} · COD
-        </p>
-        <Link
-          href="/"
-          className="mt-8 inline-flex rounded-full bg-brand-700 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-600"
-        >
-          {t.checkout.backHome}
-        </Link>
-      </div>
-    );
+    return <CheckoutThankYou order={order} locale={locale} t={t} />;
   }
 
   if (cart.length === 0) {
@@ -197,6 +171,55 @@ export default function CheckoutPage() {
           </p>
         </aside>
       </form>
+    </div>
+  );
+}
+
+function CheckoutThankYou({
+  order,
+  locale,
+  t,
+}: {
+  order: Order;
+  locale: string;
+  t: ReturnType<typeof useT>;
+}) {
+  const fired = useRef(false);
+  useEffect(() => {
+    if (fired.current) return;
+    fired.current = true;
+    // Standard: fbq('track', 'Purchase', {value, currency: 'USD'})
+    // Same order_id as placeOrder → Meta dedupes
+    trackPurchase({
+      orderId: order.id,
+      value: Math.round(order.totalUSD * 100) / 100,
+      currency: "USD",
+      contents: order.items.map((i) => ({
+        id: i.productId,
+        quantity: i.quantity,
+      })),
+    });
+  }, [order]);
+
+  return (
+    <div className="mx-auto max-w-lg px-4 py-24 text-center sm:px-6">
+      <CheckCircle2 className="mx-auto h-16 w-16 text-brand-600" />
+      <h1 className="mt-6 font-display text-4xl font-semibold text-ink-900">
+        {t.checkout.success}
+      </h1>
+      <p className="mt-3 text-[var(--muted)]">{t.checkout.successDesc}</p>
+      <p className="mt-6 rounded-xl bg-sand-100 px-4 py-3 text-sm font-medium text-ink-800">
+        {t.checkout.orderId}: <span className="font-mono">{order.id}</span>
+      </p>
+      <p className="mt-2 text-sm text-brand-700">
+        {formatPrice(order.totalUSD, order.currency, locale)} · COD
+      </p>
+      <Link
+        href="/"
+        className="mt-8 inline-flex rounded-full bg-brand-700 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-600"
+      >
+        {t.checkout.backHome}
+      </Link>
     </div>
   );
 }

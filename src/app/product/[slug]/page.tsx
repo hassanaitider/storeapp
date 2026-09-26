@@ -34,7 +34,7 @@ import {
 } from "@/lib/pricing";
 import { pickText } from "@/lib/localized";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, lineTotalUSDForQty } from "@/lib/qty-upsell";
-import { trackInitiateCheckout, trackViewContent } from "@/lib/meta-pixel";
+import { trackAddToCart, trackViewContent, trackPurchase } from "@/lib/meta-pixel";
 import {
   ProductBriefDescription,
   ProductDetailSections,
@@ -229,18 +229,18 @@ function ProductPageInner() {
   const viewContentKey = useRef<string | null>(null);
   useEffect(() => {
     if (!product) return;
-    const key = `${product.id}:${country}:${currency}`;
+    const key = product.id;
     if (viewContentKey.current === key) return;
     viewContentKey.current = key;
-    const unitUSD = getProductPriceUSD(product, country);
-    const value = convertFromUSD(unitUSD, currency);
+    const valueUSD = getProductPriceUSD(product, country);
+    // Standard: fbq('track', 'ViewContent', {… currency: 'USD'})
     trackViewContent({
       contentId: product.id,
       contentName: product.nameEn || product.nameAr,
-      value: Math.round(value * 100) / 100,
-      currency,
+      value: Math.round(valueUSD * 100) / 100,
+      currency: "USD",
     });
-  }, [product, country, currency]);
+  }, [product, country]);
 
   useEffect(() => {
     if (!product) return;
@@ -290,25 +290,11 @@ function ProductPageInner() {
 
   if (order) {
     return (
-      <div className="mx-auto max-w-lg px-4 py-24 text-center sm:px-6">
-        <CheckCircle2 className="mx-auto h-16 w-16 text-brand-600" />
-        <h1 className="product-hero-title mt-6 text-ink-900">
-          {t.checkout.success}
-        </h1>
-        <p className="product-lead mt-3">{t.checkout.successDesc}</p>
-        <p className="mt-6 rounded-xl bg-sand-100 px-4 py-3 text-sm font-medium text-ink-800">
-          {t.checkout.orderId}: <span className="font-mono">{order.id}</span>
-        </p>
-        <p className="mt-2 text-sm text-brand-700">
-          {formatPrice(order.totalUSD, order.currency, locale)} · COD
-        </p>
-        <Link
-          href="/"
-          className="mt-8 inline-flex rounded-full bg-brand-700 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-600"
-        >
-          {t.checkout.backHome}
-        </Link>
-      </div>
+      <ThankYouPurchase
+        order={order}
+        locale={locale}
+        t={t}
+      />
     );
   }
 
@@ -739,19 +725,13 @@ function ProductPageInner() {
             disabled={!product.inStock}
             onClick={() => {
               if (product.inStock) {
-                trackInitiateCheckout({
-                  value: orderTotalLocal,
-                  currency: marketCurrency,
-                  numItems: qty,
-                  contents: [
-                    {
-                      id: product.id,
-                      quantity: qty,
-                      item_price:
-                        Math.round((orderTotalLocal / Math.max(qty, 1)) * 100) /
-                        100,
-                    },
-                  ],
+                // Standard: fbq('track', 'AddToCart', {… currency: 'USD'})
+                trackAddToCart({
+                  contentId: product.id,
+                  contentName: product.nameEn || product.nameAr,
+                  value: Math.round(orderLineUSD * 100) / 100,
+                  currency: "USD",
+                  quantity: qty,
                 });
               }
               formRef.current?.requestSubmit();
@@ -771,6 +751,54 @@ function ProductPageInner() {
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ThankYouPurchase({
+  order,
+  locale,
+  t,
+}: {
+  order: Order;
+  locale: string;
+  t: ReturnType<typeof useT>;
+}) {
+  const fired = useRef(false);
+  useEffect(() => {
+    if (fired.current) return;
+    fired.current = true;
+    // Standard: fbq('track', 'Purchase', {value, currency: 'USD'})
+    trackPurchase({
+      orderId: order.id,
+      value: Math.round(order.totalUSD * 100) / 100,
+      currency: "USD",
+      contents: order.items.map((i) => ({
+        id: i.productId,
+        quantity: i.quantity,
+      })),
+    });
+  }, [order]);
+
+  return (
+    <div className="mx-auto max-w-lg px-4 py-24 text-center sm:px-6">
+      <CheckCircle2 className="mx-auto h-16 w-16 text-brand-600" />
+      <h1 className="product-hero-title mt-6 text-ink-900">
+        {t.checkout.success}
+      </h1>
+      <p className="product-lead mt-3">{t.checkout.successDesc}</p>
+      <p className="mt-6 rounded-xl bg-sand-100 px-4 py-3 text-sm font-medium text-ink-800">
+        {t.checkout.orderId}: <span className="font-mono">{order.id}</span>
+      </p>
+      <p className="mt-2 text-sm text-brand-700">
+        {formatPrice(order.totalUSD, order.currency, locale)} · COD
+      </p>
+      <Link
+        href="/"
+        className="mt-8 inline-flex rounded-full bg-brand-700 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-600"
+      >
+        {t.checkout.backHome}
+      </Link>
     </div>
   );
 }
