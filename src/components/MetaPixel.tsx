@@ -1,9 +1,9 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect } from "react";
 import { isMetaPixelConfigured } from "@/lib/meta-config";
-import { trackPageView } from "@/lib/meta-pixel";
+import { trackBoth } from "@/lib/fb";
 
 function scheduleIdle(fn: () => void) {
   if (typeof window === "undefined") return;
@@ -15,78 +15,46 @@ function scheduleIdle(fn: () => void) {
   }
 }
 
-/** Pixel uses lazyOnload — wait briefly for the head snippet's event id. */
-function waitForInitialPageViewId(ms = 10000): Promise<string | undefined> {
+/** Wait briefly so fbq('init') from head is ready before first trackBoth */
+function waitForFbq(ms = 5000): Promise<boolean> {
   return new Promise((resolve) => {
     if (typeof window === "undefined") {
-      resolve(undefined);
+      resolve(false);
       return;
     }
-    if (window.__metaInitialPageViewId) {
-      resolve(window.__metaInitialPageViewId);
+    if (typeof window.fbq === "function") {
+      resolve(true);
       return;
     }
     const start = Date.now();
     const timer = window.setInterval(() => {
-      if (window.__metaInitialPageViewId) {
+      if (typeof window.fbq === "function") {
         window.clearInterval(timer);
-        resolve(window.__metaInitialPageViewId);
+        resolve(true);
       } else if (Date.now() - start >= ms) {
         window.clearInterval(timer);
-        resolve(undefined);
+        resolve(false);
       }
-    }, 100);
+    }, 40);
   });
 }
 
 function MetaPixelPageView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const first = useRef(true);
 
   useEffect(() => {
     if (!isMetaPixelConfigured()) return;
 
     let cancelled = false;
 
-    const run = async () => {
-      if (first.current) {
-        first.current = false;
-        const initialId = await waitForInitialPageViewId();
-        if (cancelled) return;
-        if (initialId) {
-          void fetch("/api/meta/capi", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              eventName: "PageView",
-              eventId: initialId,
-              eventSourceUrl: window.location.href,
-              userData: {
-                fbp: document.cookie.match(/(?:^|; )_fbp=([^;]*)/)?.[1]
-                  ? decodeURIComponent(
-                      document.cookie.match(/(?:^|; )_fbp=([^;]*)/)![1]
-                    )
-                  : undefined,
-                fbc: document.cookie.match(/(?:^|; )_fbc=([^;]*)/)?.[1]
-                  ? decodeURIComponent(
-                      document.cookie.match(/(?:^|; )_fbc=([^;]*)/)![1]
-                    )
-                  : undefined,
-              },
-            }),
-            keepalive: true,
-          }).catch(() => {});
-        } else {
-          trackPageView();
-        }
-        return;
-      }
-      trackPageView();
-    };
-
     scheduleIdle(() => {
-      void run();
+      void (async () => {
+        await waitForFbq();
+        if (cancelled) return;
+        // Browser + Server PageView with shared event_id
+        trackBoth("PageView");
+      })();
     });
 
     return () => {
@@ -97,7 +65,7 @@ function MetaPixelPageView() {
   return null;
 }
 
-/** SPA PageView + CAPI pairing — inactive until a Pixel ID is configured */
+/** PageView on every route via trackBoth → Navigateur + Serveur */
 export function MetaPixel() {
   if (!isMetaPixelConfigured()) return null;
 

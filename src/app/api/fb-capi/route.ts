@@ -9,16 +9,13 @@ import { getMetaCapiAccessToken } from "@/lib/meta-config";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type Body = {
-  eventName?: string;
-  eventId?: string;
+type FbCapiBody = {
   event_name?: string;
   event_id?: string;
-  eventSourceUrl?: string;
   event_source_url?: string;
-  customData?: CapiCustomData;
-  custom_data?: CapiCustomData;
-  userData?: {
+  user_data?: {
+    fbp?: string;
+    fbc?: string;
     email?: string;
     phone?: string;
     firstName?: string;
@@ -26,10 +23,13 @@ type Body = {
     city?: string;
     country?: string;
     externalId?: string;
-    fbp?: string;
-    fbc?: string;
   };
-  user_data?: Body["userData"];
+  custom_data?: CapiCustomData;
+  eventName?: string;
+  eventId?: string;
+  eventSourceUrl?: string;
+  userData?: FbCapiBody["user_data"];
+  customData?: CapiCustomData;
 };
 
 function clientIp(request: Request): string | undefined {
@@ -42,34 +42,52 @@ function clientIp(request: Request): string | undefined {
   );
 }
 
-/** Legacy alias — prefer POST /api/fb-capi */
+function cookieFromRequest(request: Request, name: string): string | undefined {
+  const raw = request.headers.get("cookie") || "";
+  const match = raw.match(
+    new RegExp(`(?:^|;\\s*)${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=([^;]*)`)
+  );
+  return match?.[1] ? decodeURIComponent(match[1]) : undefined;
+}
+
+/**
+ * Facebook Conversions API — POST /api/fb-capi
+ * Production only (no test_event_code).
+ * Graph: v19.0 / {FB_PIXEL_ID}/events
+ */
 export async function POST(request: Request) {
   if (!getMetaCapiAccessToken()) {
     return NextResponse.json(
-      { ok: false, error: "capi_not_configured" },
+      {
+        ok: false,
+        error: "capi_not_configured",
+        hint: "Set FB_CAPI_TOKEN in .env.local and Vercel env, then redeploy",
+      },
       { status: 503 }
     );
   }
 
-  let body: Body;
+  let body: FbCapiBody;
   try {
-    body = (await request.json()) as Body;
+    body = (await request.json()) as FbCapiBody;
   } catch {
     return NextResponse.json({ ok: false, error: "bad_json" }, { status: 400 });
   }
 
-  const eventName = (body.eventName || body.event_name)?.trim();
-  const eventId = (body.eventId || body.event_id)?.trim();
+  const eventName = (body.event_name || body.eventName)?.trim();
+  const eventId = (body.event_id || body.eventId)?.trim();
   if (!eventName || !eventId) {
     return NextResponse.json(
-      { ok: false, error: "eventName and eventId required" },
+      { ok: false, error: "event_name and event_id required" },
       { status: 400 }
     );
   }
 
-  const rawUser = body.userData || body.user_data || {};
+  const rawUser = body.user_data || body.userData || {};
   const userData: CapiUserData = {
     ...rawUser,
+    fbp: rawUser.fbp || cookieFromRequest(request, "_fbp"),
+    fbc: rawUser.fbc || cookieFromRequest(request, "_fbc"),
     clientIpAddress: clientIp(request),
     clientUserAgent: request.headers.get("user-agent") || undefined,
   };
@@ -78,19 +96,22 @@ export async function POST(request: Request) {
     {
       eventName,
       eventId,
-      eventSourceUrl: body.eventSourceUrl || body.event_source_url,
+      eventSourceUrl: body.event_source_url || body.eventSourceUrl,
       userData,
-      customData: body.customData || body.custom_data,
+      customData: body.custom_data || body.customData,
     },
   ]);
 
   if (!result.ok) {
-    console.error("Meta CAPI error", result.status, result.body);
+    console.error("FB CAPI error", result.status, result.body);
     return NextResponse.json(
       { ok: false, error: "capi_failed", detail: result.body },
       { status: result.status || 502 }
     );
   }
 
-  return NextResponse.json({ ok: true, result: result.body });
+  return NextResponse.json({
+    ok: true,
+    facebook: result.body,
+  });
 }

@@ -1,6 +1,8 @@
 import { META_PIXEL_ID, isMetaPixelConfigured } from "@/lib/meta-config";
+import { genEventId, trackBoth, type TrackBothUserData } from "@/lib/fb";
 
-export { META_PIXEL_ID, isMetaPixelConfigured };
+export { META_PIXEL_ID, isMetaPixelConfigured, genEventId, trackBoth };
+export type { TrackBothUserData as MetaUserHints };
 
 export type MetaContentItem = {
   id: string;
@@ -8,113 +10,38 @@ export type MetaContentItem = {
   item_price?: number;
 };
 
-export type MetaUserHints = {
-  email?: string;
-  phone?: string;
-  firstName?: string;
-  lastName?: string;
-  city?: string;
-  country?: string;
-  externalId?: string;
-};
-
-declare global {
-  interface Window {
-    fbq?: (
-      command: string,
-      eventOrId: string,
-      params?: Record<string, unknown>,
-      options?: { eventID?: string }
-    ) => void;
-    _fbq?: unknown;
-    __metaInitialPageViewId?: string;
-  }
-}
-
+/** @deprecated use genEventId */
 export function newEventId(): string {
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
-    return crypto.randomUUID();
-  }
-  return `evt_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+  return genEventId();
 }
 
-function readCookie(name: string): string | undefined {
-  if (typeof document === "undefined") return undefined;
-  const match = document.cookie.match(
-    new RegExp(`(?:^|; )${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=([^;]*)`)
-  );
-  return match?.[1] ? decodeURIComponent(match[1]) : undefined;
-}
-
-function sendCapi(input: {
-  eventName: string;
-  eventId: string;
-  customData?: Record<string, unknown>;
-  userData?: MetaUserHints;
-}) {
-  if (typeof window === "undefined") return;
-  if (!isMetaPixelConfigured()) return;
-  void fetch("/api/meta/capi", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      eventName: input.eventName,
-      eventId: input.eventId,
-      eventSourceUrl: window.location.href,
-      customData: input.customData,
-      userData: {
-        ...(input.userData ?? {}),
-        fbp: readCookie("_fbp"),
-        fbc: readCookie("_fbc"),
-      },
-    }),
-    keepalive: true,
-  }).catch(() => {
-    /* best-effort */
-  });
-}
-
-/** Browser Pixel + matching Conversions API event (same event_id) */
+/**
+ * Browser Pixel + matching Conversions API event (same event_id → dedupe).
+ */
 export function trackMeta(
   event: string,
   params?: Record<string, unknown>,
-  eventID?: string,
-  userData?: MetaUserHints
+  eventId?: string,
+  userData?: TrackBothUserData
 ) {
   if (!isMetaPixelConfigured()) return "";
-  const id = eventID || newEventId();
-  if (typeof window !== "undefined" && typeof window.fbq === "function") {
-    if (params) {
-      window.fbq("track", event, params, { eventID: id });
-    } else {
-      window.fbq("track", event, {}, { eventID: id });
-    }
-  }
-  sendCapi({
-    eventName: event,
-    eventId: id,
-    customData: params,
-    userData,
-  });
-  return id;
+  return trackBoth(event, params ?? {}, { eventId, userData });
 }
 
 export function trackPageView(eventId?: string) {
   return trackMeta("PageView", undefined, eventId);
 }
 
-/** Alias / no-op-friendly name used by some Pixel snippets */
 export function pageview(eventId?: string) {
   return trackPageView(eventId);
 }
 
-/** Generic event alias — forwards to trackMeta */
 export function event(
   name: string,
   params?: Record<string, unknown>,
-  eventID?: string
+  eventId?: string
 ) {
-  return trackMeta(name, params, eventID);
+  return trackMeta(name, params, eventId);
 }
 
 export function trackViewContent(input: {
@@ -183,7 +110,7 @@ export function trackPurchase(
     currency: string;
     contents: MetaContentItem[];
   },
-  userData?: MetaUserHints
+  userData?: TrackBothUserData
 ) {
   return trackMeta(
     "Purchase",
@@ -201,7 +128,7 @@ export function trackPurchase(
   );
 }
 
-/** Inline base code for <head> (init + PageView with eventID for CAPI dedupe) */
+/** Head snippet: init only — PageView via trackBoth (MetaPixel) for Browser+Server */
 export function metaPixelHeadSnippet(): string {
   if (!isMetaPixelConfigured()) return "";
   return `
@@ -214,10 +141,5 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '${META_PIXEL_ID}');
-(function(){
-  var eid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('pv_' + Date.now());
-  window.__metaInitialPageViewId = eid;
-  fbq('track', 'PageView', {}, {eventID: eid});
-})();
 `.trim();
 }

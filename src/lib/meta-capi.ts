@@ -1,9 +1,8 @@
 import { createHash } from "crypto";
 import {
   META_GRAPH_API_VERSION,
-  META_PIXEL_ID,
+  getFbPixelId,
   getMetaCapiAccessToken,
-  getMetaTestEventCode,
 } from "@/lib/meta-config";
 
 export type CapiUserData = {
@@ -33,6 +32,7 @@ export type CapiCustomData = {
   }>;
   num_items?: number;
   order_id?: string;
+  [key: string]: unknown;
 };
 
 export type CapiEventInput = {
@@ -58,8 +58,7 @@ function hashIfPresent(value: string | undefined): string | undefined {
 }
 
 function normalizePhone(phone: string): string {
-  const digits = phone.replace(/\D/g, "");
-  return digits;
+  return phone.replace(/\D/g, "");
 }
 
 function buildUserData(user?: CapiUserData) {
@@ -92,13 +91,14 @@ function buildUserData(user?: CapiUserData) {
   return out;
 }
 
-/** Send one or more events to Meta Conversions API */
+/** Send one or more events to Meta Conversions API (production — no test_event_code) */
 export async function sendMetaCapiEvents(
   events: CapiEventInput[]
 ): Promise<{ ok: boolean; status: number; body: unknown }> {
   const accessToken = getMetaCapiAccessToken();
+  const pixelId = getFbPixelId();
   if (!accessToken) {
-    return { ok: false, status: 0, body: { error: "missing META_CAPI_ACCESS_TOKEN" } };
+    return { ok: false, status: 0, body: { error: "missing FB_CAPI_TOKEN" } };
   }
   if (!events.length) {
     return { ok: false, status: 400, body: { error: "no events" } };
@@ -114,15 +114,12 @@ export async function sendMetaCapiEvents(
     custom_data: ev.customData,
   }));
 
-  const payload: Record<string, unknown> = {
+  const payload = {
     data,
     access_token: accessToken,
   };
 
-  const testCode = getMetaTestEventCode();
-  if (testCode) payload.test_event_code = testCode;
-
-  const url = `https://graph.facebook.com/${META_GRAPH_API_VERSION}/${META_PIXEL_ID}/events`;
+  const url = `https://graph.facebook.com/${META_GRAPH_API_VERSION}/${pixelId}/events`;
 
   try {
     const res = await fetch(url, {
