@@ -179,10 +179,13 @@ function ProductPageInner() {
     // Exact id (admin / per-country LATAM row) — never fall through to another market's slug twin
     const byId = products.find((p) => p.id === slug);
     if (byId) return byId;
-    // Public storefront: no cross-market slug fallback (keeps LATAM-only SKUs out of MENA)
-    if (!previewCountry) return undefined;
-    return getProduct(slug) ?? undefined;
-  }, [getProduct, slug, previewCountry, country, products]);
+    if (previewCountry) return getProduct(slug) ?? undefined;
+    // Direct link from another market (ads, reviewers, admin abroad): open the
+    // product in its own market below. Listings still stay market-scoped.
+    // Wait for geo so a visitor is never moved off their own market.
+    if (!storageReady || !geoReady) return undefined;
+    return products.find((p) => p.slug === slug && p.availableIn?.length);
+  }, [getProduct, slug, previewCountry, country, products, storageReady, geoReady]);
 
   const showQtyUpsell = isCodQtyUpsellEnabled(
     product,
