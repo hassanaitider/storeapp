@@ -689,13 +689,13 @@ function ProductPageInner() {
         <ProductDetailSections product={product} locale={locale} />
       )}
 
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-sand-200/80 bg-white/95 shadow-[0_-8px_30px_rgba(14,34,29,0.08)] backdrop-blur-md">
-        <div className="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+      <div className="fixed bottom-0 left-0 z-50 w-screen max-w-[100vw] border-t border-sand-200/80 bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_30px_rgba(14,34,29,0.08)] backdrop-blur-md">
+        <div className="mx-auto flex w-full max-w-4xl items-center gap-2 px-3 py-2 sm:gap-3 sm:px-6 sm:py-3 lg:px-8">
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-ink-800">{name}</p>
+            <p className="truncate text-xs font-medium text-ink-800 sm:text-sm">{name}</p>
             <p
               className={cn(
-                "text-lg font-bold",
+                "truncate text-base font-bold sm:text-lg",
                 fufillsSticky ? "text-[#ff7a00]" : "product-price"
               )}
             >
@@ -737,7 +737,7 @@ function ProductPageInner() {
               formRef.current?.requestSubmit();
             }}
             className={cn(
-              "shrink-0 rounded-2xl px-6 py-3.5 text-sm font-bold text-white shadow-lg transition disabled:opacity-50 sm:px-8",
+              "shrink-0 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-lg transition disabled:opacity-50 sm:rounded-2xl sm:px-8 sm:py-3.5",
               fufillsSticky
                 ? "bg-gradient-to-b from-[#ff9a3d] to-[#ff6a00] hover:brightness-105"
                 : "bg-brand-700 hover:bg-brand-600"
