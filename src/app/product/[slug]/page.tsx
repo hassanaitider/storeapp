@@ -162,6 +162,8 @@ function ProductPageInner() {
     placeOrder,
     categories,
     products,
+    storageReady,
+    geoReady,
   } = useStore();
 
   const countryQuery = searchParams.get("country")?.toUpperCase() ?? "";
@@ -270,6 +272,22 @@ function ProductPageInner() {
     () => (product ? lineTotalUSDForQty(product, country, qty) : 0),
     [product, country, qty]
   );
+
+  if (!product && (!storageReady || !geoReady)) {
+    return (
+      <div className="mx-auto max-w-7xl px-4 py-24" aria-busy="true">
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
+          <div className="aspect-square animate-pulse rounded-3xl bg-sand-200/70" />
+          <div className="space-y-4">
+            <div className="h-8 w-3/4 animate-pulse rounded-lg bg-sand-200/70" />
+            <div className="h-6 w-1/3 animate-pulse rounded-lg bg-sand-200/70" />
+            <div className="h-24 animate-pulse rounded-2xl bg-sand-200/70" />
+            <div className="h-12 animate-pulse rounded-2xl bg-sand-200/70" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
