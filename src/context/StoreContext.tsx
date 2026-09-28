@@ -292,6 +292,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       const retrolabMatch = /^prod-retrolab-([a-z]{2})$/i.exec(seed.id);
       const miniCameraMatch = /^prod-mini-camera-([a-z]{2})$/i.exec(seed.id);
       const clipEarbudsMatch = /^prod-clip-earbuds-([a-z]{2})$/i.exec(seed.id);
+      const smartTagMatch = /^prod-smart-tag-([a-z]{2})$/i.exec(seed.id);
       const lockedMarket = elevadorMatch
         ? (elevadorMatch[1].toUpperCase() as CountryCode)
         : null;
@@ -389,7 +390,11 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       }
 
       if (
-        (magMatch || retrolabMatch || miniCameraMatch || clipEarbudsMatch) &&
+        (magMatch ||
+          retrolabMatch ||
+          miniCameraMatch ||
+          clipEarbudsMatch ||
+          smartTagMatch) &&
         seed.availableIn?.length
       ) {
         return {

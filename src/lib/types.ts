@@ -124,6 +124,8 @@ export interface ProductQtyOffer {
   labelAr?: string;
   labelEn?: string;
   labelEs?: string;
+  /** Overrides the generic "Compra N" line in the LATAM COD pack picker */
+  codLabelEs?: string;
   /** Highlight as recommended tier */
   popular?: boolean;
 }

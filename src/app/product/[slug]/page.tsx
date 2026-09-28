@@ -43,6 +43,7 @@ import {
   CLIP_EARBUDS_SLUG,
   MAG_POWERBANK_SLUG,
   MINI_CAMERA_SLUG,
+  SMART_TAG_SLUG,
 } from "@/lib/product-slugs";
 import { ProductMediaGallery, preferredMediaIndex } from "@/components/shop/ProductMediaGallery";
 import {
@@ -131,6 +132,10 @@ const MagPowerBankStory = dynamic(
 const MiniCameraStory = dynamic(
   () =>
     import("@/components/shop/MiniCameraStory").then((m) => m.MiniCameraStory),
+  { ssr: false }
+);
+const SmartTagStory = dynamic(
+  () => import("@/components/shop/SmartTagStory").then((m) => m.SmartTagStory),
   { ssr: false }
 );
 
@@ -706,6 +711,8 @@ function ProductPageInner() {
         <MiniCameraStory product={product} locale={locale} />
       ) : product.slug === CLIP_EARBUDS_SLUG ? (
         <ClipEarbudsStory product={product} locale={locale} />
+      ) : product.slug === SMART_TAG_SLUG ? (
+        <SmartTagStory product={product} locale={locale} />
       ) : (
         <ProductDetailSections product={product} locale={locale} />
       )}

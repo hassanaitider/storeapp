@@ -11,6 +11,7 @@ export type ResolvedQtyOffer = {
   savePercent: number;
   labelAr: string;
   labelEn: string;
+  codLabelEs?: string;
   popular: boolean;
 };
 
@@ -92,6 +93,7 @@ export function getProductQtyOffers(
       savePercent,
       labelAr: offer.labelAr?.trim() || qtyLabel,
       labelEn: offer.labelEn?.trim() || qtyLabel,
+      codLabelEs: offer.codLabelEs?.trim() || undefined,
       popular: Boolean(offer.popular),
     };
   });

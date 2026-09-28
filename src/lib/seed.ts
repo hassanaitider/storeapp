@@ -5,6 +5,7 @@ import { LATAM_CLIP_EARBUDS_PRODUCTS } from "./seed-latam-clip-earbuds";
 import { LATAM_MAG_POWERBANK_PRODUCTS } from "./seed-latam-mag-powerbank";
 import { LATAM_MINI_CAMERA_PRODUCTS } from "./seed-latam-mini-camera";
 import { LATAM_RETROLAB_PRODUCTS } from "./seed-latam-retrolab";
+import { LATAM_SMART_TAG_PRODUCTS } from "./seed-latam-smart-tag";
 import {
   isRetiredStoreProduct,
   UNIVERSAL_MARKET_PRODUCTS,
@@ -2501,6 +2502,7 @@ ${COD_EN}
   ...LATAM_RETROLAB_PRODUCTS,
   ...LATAM_MINI_CAMERA_PRODUCTS,
   ...LATAM_CLIP_EARBUDS_PRODUCTS,
+  ...LATAM_SMART_TAG_PRODUCTS,
   ...UNIVERSAL_MARKET_PRODUCTS,
 ];
 

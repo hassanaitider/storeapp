@@ -27,9 +27,10 @@ export function LatamCodQtyPacks({
         const selected = qty === offer.quantity;
         const disc = offer.savePercent ?? 0;
         const label =
-          offer.quantity === 1
+          offer.codLabelEs ??
+          (offer.quantity === 1
             ? "Compra 1 unidad"
-            : `Compra ${offer.quantity} · ahorra ${disc || 10}%`;
+            : `Compra ${offer.quantity} · ahorra ${disc || 10}%`);
 
         return (
           <button
