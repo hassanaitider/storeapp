@@ -397,6 +397,11 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           smartTagMatch) &&
         seed.availableIn?.length
       ) {
+        const seedMarkets = new Set<string>(seed.availableIn);
+        const ownMarkets = <T,>(m: Partial<Record<CountryCode, T>> | undefined) =>
+          Object.fromEntries(
+            Object.entries(m ?? {}).filter(([cc]) => seedMarkets.has(cc))
+          ) as Partial<Record<CountryCode, T>>;
         return {
           ...base,
           nameAr: seed.nameAr,
@@ -413,10 +418,9 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           categoryId: seed.categoryId,
           availableIn: [...seed.availableIn],
           slug: seed.slug,
-          priceUSD: seed.priceUSD,
-          compareAtUSD: seed.compareAtUSD,
-          marketPrices: { ...(seed.marketPrices ?? {}) },
-          marketComparePrices: { ...(seed.marketComparePrices ?? {}) },
+          // Admin prices win; seed only fills markets the admin never priced
+          marketPrices: ownMarkets(base.marketPrices),
+          marketComparePrices: ownMarkets(base.marketComparePrices),
         };
       }
 
