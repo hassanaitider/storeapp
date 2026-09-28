@@ -76,6 +76,30 @@ function resolveMime(file: File): string {
   return map[ext] || "application/octet-stream";
 }
 
+/** GIF keeps its animation path in the gallery; SVG/ICO are vector/icon formats. */
+function shouldConvertToWebp(mime: string): boolean {
+  if (!mime.startsWith("image/")) return false;
+  return !/(webp|gif|svg|x-icon)/.test(mime);
+}
+
+async function convertToWebp(buffer: Buffer): Promise<Buffer | null> {
+  try {
+    const sharp = (await import("sharp")).default;
+    return await sharp(buffer)
+      .rotate()
+      .resize({
+        width: 2000,
+        height: 2000,
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .webp({ quality: 85, effort: 4 })
+      .toBuffer();
+  } catch {
+    return null;
+  }
+}
+
 async function saveToTmp(
   filename: string,
   buffer: Buffer,
@@ -177,9 +201,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const mime = resolveMime(file);
-    const raw = Buffer.from(await file.arrayBuffer());
-    const ext = extFor(file, mime);
+    let mime = resolveMime(file);
+    let raw: Buffer = Buffer.from(await file.arrayBuffer());
+    let ext = extFor(file, mime);
+    if (shouldConvertToWebp(mime)) {
+      const webp = await convertToWebp(raw);
+      if (webp) {
+        raw = webp;
+        mime = "image/webp";
+        ext = ".webp";
+      }
+    }
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
     const onVercel = Boolean(process.env.VERCEL);
 

@@ -76,7 +76,7 @@ export default function EditCategoryPage() {
       slug: (slug || slugify(nameEn || nameAr)).trim(),
       image:
         image.trim() ||
-        "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80",
+        "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80&fm=webp",
       country: country || undefined,
     };
     if (!data.nameAr || !data.nameEn) {
