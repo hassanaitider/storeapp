@@ -53,10 +53,10 @@ TAG_PRICES.MX = { price: 899, compare: 1449, priceUSD: TAG_USD, compareAtUSD: TA
 
 /** First image is the storefront cover; the others are spread through the page */
 const IMAGES = [
-  "/products/smart-tag-1.webp",
-  "/products/smart-tag-2.webp",
+  "/products/smart-tag-es-1.webp",
+  "/products/smart-tag-es-2.webp",
   "/products/smart-tag-3.webp",
-  "/products/smart-tag-4.webp",
+  "/products/smart-tag-es-4.webp",
 ];
 
 function buildSmartTag(country: CountryCode): Omit<
@@ -192,7 +192,7 @@ ${COD_ES}`.trim(),
             "The tracker shows on your phone's map through the Apple and Google networks. Nearby? Tap “Find nearby” and play a sound until you find it.",
           bodyEs:
             "El rastreador aparece en el mapa de tu teléfono gracias a la red de Apple y de Google. ¿Estás cerca? Toca «Buscar cerca» y haz que suene hasta encontrarlo.",
-          image: "/products/smart-tag-2.webp",
+          image: "/products/smart-tag-es-2.webp",
         },
         {
           titleAr: "صغير جدًا — 32 مم فقط",
@@ -216,7 +216,7 @@ ${COD_ES}`.trim(),
             "Walk away without your keys or wallet and your phone alerts you with the last place it was seen, plus directions back to it.",
           bodyEs:
             "Si te alejas sin tus llaves o tu cartera, el teléfono te avisa con el último lugar donde se vio y te da indicaciones para volver.",
-          image: "/products/smart-tag-4.webp",
+          image: "/products/smart-tag-es-4.webp",
         },
       ],
       benefitsAr: [
