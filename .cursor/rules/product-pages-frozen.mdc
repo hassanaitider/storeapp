@@ -1,0 +1,17 @@
+---
+description: Product pages are frozen by the owner
+alwaysApply: true
+---
+
+# Product pages are frozen
+
+The owner froze all product pages. Do not modify them — prices, copy, images, layout, or formatting — until the owner explicitly says they can be changed again.
+
+This covers:
+- `src/app/product/[slug]/page.tsx`
+- `src/components/shop/SmartTagStory.tsx` and other product-page components in `src/components/shop/`
+- Product seed files in `src/lib/seed*.ts` (prices, names, descriptions, landing content)
+- Price formatting in `src/lib/currency.ts` and `src/lib/pricing.ts`
+- Product merge logic in `src/context/StoreContext.tsx`
+
+If a request would touch any of these, stop and ask the owner first.
