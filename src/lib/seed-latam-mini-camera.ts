@@ -64,7 +64,7 @@ CAM_PRICES.DO = {
   compareAtUSD: CAM_COMPARE_USD,
 };
 CAM_PRICES.HN = {
-  price: 1149,
+  price: 1199,
   compare: 1759,
   priceUSD: CAM_USD,
   compareAtUSD: CAM_COMPARE_USD,
@@ -74,6 +74,14 @@ CAM_PRICES.MX = {
   compare: 1269,
   priceUSD: CAM_USD,
   compareAtUSD: CAM_COMPARE_USD,
+};
+
+/**
+ * Former prices still sitting in saved catalogs. A stored copy holding one of
+ * these is stale, not an admin edit, so the current seed price wins.
+ */
+export const MINI_CAMERA_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]>> = {
+  HN: [1149],
 };
 
 const IMAGES = [

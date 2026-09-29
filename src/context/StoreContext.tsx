@@ -13,6 +13,7 @@ import React, {
 } from "react";
 import { SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed";
 import { isRetiredStoreProduct } from "@/lib/seed-universal-products";
+import { MINI_CAMERA_SUPERSEDED_PRICES } from "@/lib/seed-latam-mini-camera";
 import { SMART_TAG_SUPERSEDED_PRICES } from "@/lib/seed-latam-smart-tag";
 import { VIDEO_WALKIE_SUPERSEDED_PRICES } from "@/lib/seed-latam-video-walkie";
 import {
@@ -405,8 +406,13 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
             Object.entries(m ?? {}).filter(([cc]) => seedMarkets.has(cc))
           ) as Partial<Record<CountryCode, T>>;
         const marketPrices = ownMarkets(base.marketPrices);
-        if (smartTagMatch) {
-          for (const [cc, stale] of Object.entries(SMART_TAG_SUPERSEDED_PRICES)) {
+        const superseded = smartTagMatch
+          ? SMART_TAG_SUPERSEDED_PRICES
+          : miniCameraMatch
+            ? MINI_CAMERA_SUPERSEDED_PRICES
+            : null;
+        if (superseded) {
+          for (const [cc, stale] of Object.entries(superseded)) {
             const code = cc as CountryCode;
             const price = marketPrices[code];
             if (typeof price === "number" && stale?.includes(price)) {
