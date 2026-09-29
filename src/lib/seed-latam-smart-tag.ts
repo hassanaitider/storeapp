@@ -48,7 +48,7 @@ const TAG_PRICES: Record<CountryCode, LocalPrice> = Object.fromEntries(
 TAG_PRICES.AR = { price: 74900, compare: 119900, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 TAG_PRICES.CR = { price: 22290, compare: 35990, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 TAG_PRICES.DO = { price: 2890, compare: 4640, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
-TAG_PRICES.HN = { price: 1249, compare: 2019, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
+TAG_PRICES.HN = { price: 1299, compare: 2019, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 TAG_PRICES.MX = { price: 899, compare: 1449, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 
 /** First image is the storefront cover; the others are spread through the page */
