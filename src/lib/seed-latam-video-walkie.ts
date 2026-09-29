@@ -94,11 +94,11 @@ export const VIDEO_WALKIE_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[
 };
 
 const IMAGES = [
-  "/products/video-walkie-1.webp",
-  "/products/video-walkie-2.webp",
-  "/products/video-walkie-3.webp",
-  "/products/video-walkie-4.webp",
-  "/products/video-walkie-5.webp",
+  "/products/walkie-video-1.webp",
+  "/products/walkie-video-2.webp",
+  "/products/walkie-video-3.webp",
+  "/products/walkie-video-4.webp",
+  "/products/walkie-video-5.webp",
 ];
 
 export const VIDEO_WALKIE_SLUG = "walkie-talkie-video";
@@ -215,7 +215,7 @@ ${COD_ES}`.trim(),
           bodyAr: "ما كيبقاش صوت فقط. الشاشة تبين الوجه — للبيت، للحديقة، أو وقت الأكل.",
           bodyEn: "Not voice only. The screen shows their face — at home, in the yard, or at dinner time.",
           bodyEs: "No es solo voz. La pantalla muestra la cara — en casa, en el patio o a la hora de comer.",
-          image: "/products/video-walkie-4.webp",
+          image: "/products/walkie-video-4.webp",
         },
         {
           titleAr: "واي فاي ومدى حتى 500 م",
@@ -224,7 +224,7 @@ ${COD_ES}`.trim(),
           bodyAr: "تردد واي فاي، قدرة 0.5 واط، ومدى 150 إلى 500 متر. قنوات بلا حد.",
           bodyEn: "WiFi frequency, 0.5 W output, and 150 to 500 m range. Unlimited channels.",
           bodyEs: "Frecuencia WiFi, 0.5 W de salida y alcance de 150 a 500 m. Canales ilimitados.",
-          image: "/products/video-walkie-2.webp",
+          image: "/products/walkie-video-2.webp",
         },
       ],
       benefitsAr: [
