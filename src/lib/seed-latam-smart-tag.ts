@@ -55,7 +55,7 @@ TAG_PRICES.MX = { price: 899, compare: 1449, priceUSD: TAG_USD, compareAtUSD: TA
 export function smartTagOfferLabel(country: CountryCode, amount: number): string {
   const code = currencyForCountry(country);
   const n = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(amount);
-  return code === "USD" ? `$${n}` : `${getCurrency(code).symbol} ${n}`;
+  return code === "USD" ? `$${n}` : `${getCurrency(code).symbol}\u00A0${n}`;
 }
 
 /** First image is the storefront cover; the others are spread through the page */
