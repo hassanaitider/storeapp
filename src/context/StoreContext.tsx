@@ -13,6 +13,7 @@ import React, {
 } from "react";
 import { SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed";
 import { isRetiredStoreProduct } from "@/lib/seed-universal-products";
+import { MAG_POWERBANK_SUPERSEDED_PRICES } from "@/lib/seed-latam-mag-powerbank";
 import { MINI_CAMERA_SUPERSEDED_PRICES } from "@/lib/seed-latam-mini-camera";
 import { SMART_TAG_SUPERSEDED_PRICES } from "@/lib/seed-latam-smart-tag";
 import { VIDEO_WALKIE_SUPERSEDED_PRICES } from "@/lib/seed-latam-video-walkie";
@@ -410,7 +411,9 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           ? SMART_TAG_SUPERSEDED_PRICES
           : miniCameraMatch
             ? MINI_CAMERA_SUPERSEDED_PRICES
-            : null;
+            : magMatch
+              ? MAG_POWERBANK_SUPERSEDED_PRICES
+              : null;
         if (superseded) {
           for (const [cc, stale] of Object.entries(superseded)) {
             const code = cc as CountryCode;

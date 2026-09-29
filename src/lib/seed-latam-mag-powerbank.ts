@@ -46,7 +46,7 @@ const MAG_BANK_PRICES: Record<CountryCode, LocalPrice> = Object.fromEntries(
 ) as Record<CountryCode, LocalPrice>;
 
 MAG_BANK_PRICES.AR = {
-  price: 74400,
+  price: 74699,
   compare: 119900,
   priceUSD: MAG_USD,
   compareAtUSD: MAG_COMPARE_USD,
@@ -78,6 +78,14 @@ MAG_BANK_PRICES.MX = {
   compare: 1449,
   priceUSD: MAG_USD,
   compareAtUSD: MAG_COMPARE_USD,
+};
+
+/**
+ * Former prices still sitting in saved catalogs. A stored copy holding one of
+ * these is stale, not an admin edit, so the current seed price wins.
+ */
+export const MAG_POWERBANK_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]>> = {
+  AR: [74400],
 };
 
 const IMAGES = [
