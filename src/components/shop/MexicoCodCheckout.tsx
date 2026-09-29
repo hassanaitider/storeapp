@@ -15,10 +15,10 @@ import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
 import { useLiveProduct } from "@/context/StoreContext";
 import {
-  mexicoColonias,
-  mexicoEstados,
-  mexicoMunicipios,
-} from "@/lib/mexico-geo";
+  MEXICO_ESTADOS,
+  loadMexicoEstado,
+  type MexicoEstadoTree,
+} from "@/lib/mexico-geo-client";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -104,11 +104,29 @@ export function MexicoCodCheckout({
   const [colonia, setColonia] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
 
-  const estados = useMemo(() => mexicoEstados(), []);
-  const municipios = useMemo(() => mexicoMunicipios(estado), [estado]);
+  const estados = MEXICO_ESTADOS;
+  const [estadoTree, setEstadoTree] = useState<MexicoEstadoTree | null>(null);
+  useEffect(() => {
+    setEstadoTree(null);
+    if (!estado) return;
+    let cancelled = false;
+    loadMexicoEstado(estado)
+      .then((tree) => {
+        if (!cancelled) setEstadoTree(tree);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [estado]);
+  const municipios = useMemo(
+    () =>
+      Object.keys(estadoTree ?? {}).sort((a, b) => a.localeCompare(b, "es")),
+    [estadoTree]
+  );
   const colonias = useMemo(
-    () => mexicoColonias(estado, municipio),
-    [estado, municipio]
+    () => estadoTree?.[municipio] ?? [],
+    [estadoTree, municipio]
   );
 
   useEffect(() => {
@@ -234,7 +252,7 @@ export function MexicoCodCheckout({
           placeholder="Delegación / Municipio"
           options={municipios}
           required
-          disabled={!estado}
+          disabled={!estado || !estadoTree}
         />
         <SelectField
           value={colonia}
