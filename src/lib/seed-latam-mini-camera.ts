@@ -78,7 +78,6 @@ CAM_PRICES.MX = {
 
 const IMAGES = [
   "/products/mini-camera-2.webp",
-  "/products/mini-camera-1.webp",
   "/products/mini-camera-3.webp",
   "/products/mini-camera-4.webp",
   "/products/mini-camera-5.webp",
@@ -226,7 +225,6 @@ ${COD_ES}`.trim(),
             "Clip it to a pocket or clothing. The anti-shake clip keeps recording clearer while you walk or ride — voice recorder and sports camera in one.",
           bodyEs:
             "Engánchala al bolsillo o a la ropa. El clip antivibración mantiene la grabación más clara al caminar o pedalear — grabadora de voz y cámara deportiva a la vez.",
-          image: "/products/mini-camera-1.webp",
         },
         {
           titleAr: "عدسة دوّارة حتى 180°",
