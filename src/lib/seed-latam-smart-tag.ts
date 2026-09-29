@@ -1,5 +1,5 @@
 import { currencyForCountry, getCountry, SPANISH_MARKET_CODES } from "./countries";
-import { DEFAULT_CURRENCY_RATES } from "./currency";
+import { DEFAULT_CURRENCY_RATES, getCurrency } from "./currency";
 import { SMART_TAG_SLUG } from "./product-slugs";
 import type { CountryCode, Product } from "./types";
 
@@ -51,6 +51,13 @@ TAG_PRICES.DO = { price: 2890, compare: 4640, priceUSD: TAG_USD, compareAtUSD: T
 TAG_PRICES.HN = { price: 1299, compare: 2019, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 TAG_PRICES.MX = { price: 899, compare: 1449, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 
+/** Short local price for copy, e.g. `L 1,299` in Honduras or `$49` in USD markets */
+export function smartTagOfferLabel(country: CountryCode, amount: number): string {
+  const code = currencyForCountry(country);
+  const n = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(amount);
+  return code === "USD" ? `$${n}` : `${getCurrency(code).symbol} ${n}`;
+}
+
 /** First image is the storefront cover; the others are spread through the page */
 const IMAGES = [
   "/products/smart-tag-es-1.webp",
@@ -71,35 +78,36 @@ function buildSmartTag(country: CountryCode): Omit<
   | "compareAtUSD"
 > {
   const marketNameEs = getCountry(country).nameEs ?? getCountry(country).nameEn;
+  const offer = smartTagOfferLabel(country, TAG_PRICES[country].price);
   return {
-    nameAr: "2 متتبع ذكي بـ 49$ · يعمل مع iPhone (iOS) و Android",
-    nameEn: "2 Smart Trackers for $49 · Works with iPhone (iOS) & Android",
-    nameEs: "2 Rastreadores Inteligentes por $49 · Para iPhone (iOS) y Android",
+    nameAr: `2 متتبع ذكي بـ ${offer} · يعمل مع iPhone (iOS) و Android`,
+    nameEn: `2 Smart Trackers for ${offer} · Works with iPhone (iOS) & Android`,
+    nameEs: `2 Rastreadores Inteligentes por ${offer} · Para iPhone (iOS) y Android`,
     descriptionAr: `
-<h3>2 متتبع ذكي بـ 49$ — iPhone و Android</h3>
+<h3>2 متتبع ذكي بـ ${offer} — iPhone و Android</h3>
 <p>متتبع صغير (32 مم) يعمل مع تطبيق Apple Find My على iPhone ومع Find Hub على Android. علّقه على المفاتيح أو المحفظة أو الحقيبة، واعرف مكانه على الخريطة، شغّل صوتًا للعثور عليه، واستقبل تنبيهًا إذا نسيته.</p>
 <ul>
-<li>عبوة من قطعتين بـ 49$</li>
+<li>عبوة من قطعتين بـ ${offer}</li>
 <li>متوافق مع iPhone (Apple Find My) و Android (Find Hub)</li>
 <li>تنبيه عند النسيان + تشغيل صوت</li>
 <li>تصميم صغير 32 مم</li>
 </ul>
 ${COD_AR}`.trim(),
     descriptionEn: `
-<h3>2 smart trackers for $49 — iPhone and Android</h3>
+<h3>2 smart trackers for ${offer} — iPhone and Android</h3>
 <p>A tiny 32 mm tracker that works with Apple Find My on iPhone and Find Hub on Android. Attach it to keys, a wallet or a bag, see where it is on the map, play a sound to find it, and get an alert if you leave it behind.</p>
 <ul>
-<li>Pack of 2 for $49</li>
+<li>Pack of 2 for ${offer}</li>
 <li>Works with iPhone (Apple Find My) and Android (Find Hub)</li>
 <li>Left-behind alert + play sound</li>
 <li>Tiny 32 mm design</li>
 </ul>
 ${COD_EN}`.trim(),
     descriptionEs: `
-<h3>2 rastreadores inteligentes por $49 — iPhone y Android</h3>
+<h3>2 rastreadores inteligentes por ${offer} — iPhone y Android</h3>
 <p>Un rastreador pequeño (32 mm) que funciona con Apple Find My (Encontrar) en iPhone y con Find Hub en Android. Ponlo en tus llaves, cartera o mochila, mira dónde está en el mapa, haz que suene para encontrarlo y recibe una alerta si lo olvidas. Envío gratis a todo ${marketNameEs}.</p>
 <ul>
-<li>Pack de 2 rastreadores por $49</li>
+<li>Pack de 2 rastreadores por ${offer}</li>
 <li>Compatible con iPhone (Apple Find My) y Android (Find Hub)</li>
 <li>Alerta de olvido + reproducir sonido</li>
 <li>Diseño mini de 32 mm</li>
@@ -172,9 +180,9 @@ ${COD_ES}`.trim(),
     reviewCount: 312,
     createdAt: "2026-09-28T13:00:00.000Z",
     landing: {
-      headlineAr: "2 متتبع بـ 49$ · iPhone و Android",
-      headlineEn: "2 trackers for $49 · iPhone and Android",
-      headlineEs: `2 rastreadores por $49 — para iPhone y Android en ${marketNameEs}`,
+      headlineAr: `2 متتبع بـ ${offer} · iPhone و Android`,
+      headlineEn: `2 trackers for ${offer} · iPhone and Android`,
+      headlineEs: `2 rastreadores por ${offer} — para iPhone y Android en ${marketNameEs}`,
       introAr:
         "لا تضيّع مفاتيحك أو محفظتك أو حقيبتك مرة أخرى. يعمل مع Apple Find My على iPhone ومع Find Hub على Android — بدون اشتراك.",
       introEn:
@@ -220,21 +228,21 @@ ${COD_ES}`.trim(),
         },
       ],
       benefitsAr: [
-        "2 متتبع بـ 49$ فقط",
+        `2 متتبع بـ ${offer} فقط`,
         "يعمل مع iPhone (iOS) و Android",
         "بدون اشتراك شهري",
         "تنبيه عند النسيان وتشغيل صوت",
         "توصيل مجاني والدفع عند الاستلام",
       ],
       benefitsEn: [
-        "2 trackers for only $49",
+        `2 trackers for only ${offer}`,
         "Works with iPhone (iOS) and Android",
         "No monthly subscription",
         "Left-behind alert and play sound",
         "Free delivery and cash on delivery",
       ],
       benefitsEs: [
-        "2 rastreadores por solo $49",
+        `2 rastreadores por solo ${offer}`,
         "Funciona con iPhone (iOS) y Android",
         "Sin suscripción mensual",
         "Alerta de olvido y sonido para encontrarlo",
@@ -265,11 +273,11 @@ ${COD_ES}`.trim(),
           questionEn: "How many trackers come in the pack?",
           questionEs: "¿Cuántos rastreadores trae el pack?",
           answerAr:
-            "العبوة فيها 2 متتبع بـ 49$. إذا بغيتي 4، اختار عبوتين وتاخذ خصم 10%.",
+            `العبوة فيها 2 متتبع بـ ${offer}. إذا بغيتي 4، اختار عبوتين وتاخذ خصم 10%.`,
           answerEn:
-            "The pack has 2 trackers for $49. Want 4? Choose 2 packs and get 10% off.",
+            `The pack has 2 trackers for ${offer}. Want 4? Choose 2 packs and get 10% off.`,
           answerEs:
-            "El pack trae 2 rastreadores por $49. ¿Quieres 4? Elige 2 packs y ahorras 10%.",
+            `El pack trae 2 rastreadores por ${offer}. ¿Quieres 4? Elige 2 packs y ahorras 10%.`,
         },
         {
           questionAr: "على ماذا يمكن تعليقه؟",

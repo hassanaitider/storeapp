@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useT } from "@/hooks/useT";
 import { pickList, pickText } from "@/lib/localized";
+import { smartTagOfferLabel } from "@/lib/seed-latam-smart-tag";
 import type { Locale, Product } from "@/lib/types";
 import { ProductImage } from "@/components/shop/ProductImage";
 
@@ -71,6 +72,12 @@ export function SmartTagStory({
   const landing = product.landing;
   const details = pickList(product, "details", locale);
   const benefits = pickList(landing, "benefits", locale);
+  const market = product.availableIn?.[0];
+  const localPrice = market ? product.marketPrices?.[market] : undefined;
+  const offer =
+    market && typeof localPrice === "number"
+      ? smartTagOfferLabel(market, localPrice)
+      : `$${product.priceUSD}`;
 
   if (!landing) return null;
 
@@ -81,7 +88,12 @@ export function SmartTagStory({
           {loc(locale, "عرض خاص", "Special offer", "Oferta especial")}
         </p>
         <p className="mt-2 text-3xl font-extrabold sm:text-4xl">
-          {loc(locale, "2 متتبع بـ 49$", "2 trackers for $49", "2 rastreadores por $49")}
+          {loc(
+            locale,
+            `2 متتبع بـ ${offer}`,
+            `2 trackers for ${offer}`,
+            `2 rastreadores por ${offer}`
+          )}
         </p>
         <p className="mt-2 text-sm text-white/80">
           {loc(
