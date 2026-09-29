@@ -55,7 +55,7 @@ export function Header() {
             aria-label={t.common.language}
             value={locale}
             onChange={(e) => setLocale(e.target.value as Locale)}
-            className="w-[5rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[6.75rem] sm:text-sm"
+            className="w-[5.6rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[6.75rem] sm:text-sm"
           >
             <option value="ar">العربية</option>
             <option value="en">English</option>
