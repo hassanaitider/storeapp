@@ -66,7 +66,7 @@ WALKIE_PRICES.HN = {
   compareAtUSD: WALKIE_COMPARE_USD,
 };
 WALKIE_PRICES.MX = {
-  price: 799,
+  price: 999,
   compare: 1849,
   priceUSD: WALKIE_USD,
   compareAtUSD: WALKIE_COMPARE_USD,
@@ -90,7 +90,7 @@ const WALKIE_MARKET_COMPARE: Partial<Record<CountryCode, number>> =
  * these is stale, not an admin edit, so the current seed price wins.
  */
 export const VIDEO_WALKIE_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]>> = {
-  MX: [1099],
+  MX: [1099, 799],
 };
 
 const IMAGES = [
