@@ -435,6 +435,24 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         };
       }
 
+      // Walkie photos live in the seed; older saved catalogs point at removed files
+      if (/^prod-video-walkie-[a-z]{2}$/i.test(seed.id)) {
+        const seedSections = seed.landing?.sections ?? [];
+        return {
+          ...base,
+          images: [...(seed.images ?? [])],
+          landing: base.landing
+            ? {
+                ...base.landing,
+                sections: base.landing.sections.map((s, i) => ({
+                  ...s,
+                  image: seedSections[i]?.image ?? s.image,
+                })),
+              }
+            : base.landing,
+        };
+      }
+
       return base;
     })
     .filter(
