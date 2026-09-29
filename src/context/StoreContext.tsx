@@ -14,6 +14,7 @@ import React, {
 import { SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed";
 import { isRetiredStoreProduct } from "@/lib/seed-universal-products";
 import { SMART_TAG_SUPERSEDED_PRICES } from "@/lib/seed-latam-smart-tag";
+import { VIDEO_WALKIE_SUPERSEDED_PRICES } from "@/lib/seed-latam-video-walkie";
 import {
   currencyForCountry,
   DEFAULT_COUNTRY,
@@ -438,8 +439,17 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       // Walkie photos live in the seed; older saved catalogs point at removed files
       if (/^prod-video-walkie-[a-z]{2}$/i.test(seed.id)) {
         const seedSections = seed.landing?.sections ?? [];
+        const marketPrices = { ...base.marketPrices };
+        for (const [cc, stale] of Object.entries(VIDEO_WALKIE_SUPERSEDED_PRICES)) {
+          const code = cc as CountryCode;
+          const price = marketPrices[code];
+          if (typeof price === "number" && stale?.includes(price)) {
+            marketPrices[code] = seed.marketPrices?.[code];
+          }
+        }
         return {
           ...base,
+          marketPrices,
           images: [...(seed.images ?? [])],
           landing: base.landing
             ? {
