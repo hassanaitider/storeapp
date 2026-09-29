@@ -55,7 +55,7 @@ export function Header() {
             aria-label={t.common.language}
             value={locale}
             onChange={(e) => setLocale(e.target.value as Locale)}
-            className="rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:text-sm"
+            className="w-[5.75rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[6.75rem] sm:text-sm"
           >
             <option value="ar">العربية</option>
             <option value="en">English</option>
@@ -67,7 +67,7 @@ export function Header() {
             value={country}
             onChange={(e) => setCountry(e.target.value as CountryCode, true)}
             className={cn(
-              "max-w-[9.5rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:max-w-[12rem] sm:text-sm",
+              "w-[9.5rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[12rem] sm:text-sm",
               !geoReady && "opacity-60"
             )}
             title={
@@ -90,7 +90,7 @@ export function Header() {
               setCurrency(e.target.value as CurrencyCode, true)
             }
             className={cn(
-              "rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:text-sm",
+              "w-[6.75rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[7.75rem] sm:text-sm",
               !geoReady && "opacity-60"
             )}
             title={
