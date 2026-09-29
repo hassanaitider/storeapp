@@ -4,6 +4,14 @@ import { StoreProvider } from "@/context/StoreContext";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { MetaPixel } from "@/components/MetaPixel";
 import { SITE_URL } from "@/lib/site";
+import { headers } from "next/headers";
+import {
+  DEFAULT_COUNTRY,
+  isStoreMarket,
+  isValidCountry,
+  localeForCountry,
+} from "@/lib/countries";
+import type { CountryCode } from "@/lib/types";
 import "./globals.css";
 
 const display = Cormorant_Garamond({
@@ -59,17 +67,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+function readMarket(value: string | null): CountryCode | null {
+  const code = value?.toUpperCase() ?? "";
+  return isValidCountry(code) && isStoreMarket(code) ? code : null;
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const initialCountry =
+    readMarket(requestHeaders.get("x-store-market")) ?? DEFAULT_COUNTRY;
+  const initialViewCountry = readMarket(
+    requestHeaders.get("x-store-view-market")
+  );
+  const locale = localeForCountry(initialViewCountry ?? initialCountry);
+
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
       <body
         className={`${display.variable} ${sans.variable} ${arabic.variable} font-sans antialiased`}
       >
-        <StoreProvider>
+        <StoreProvider
+          initialCountry={initialCountry}
+          initialViewCountry={initialViewCountry}
+        >
           <MetaPixel />
           <SiteShell>{children}</SiteShell>
         </StoreProvider>

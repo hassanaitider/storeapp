@@ -199,9 +199,10 @@ function ProductPageInner() {
 
   // Ephemeral preview market — does not lock IP geo for the rest of the site
   useEffect(() => {
-    setViewCountry(previewCountry);
-    return () => setViewCountry(null);
+    if (previewCountry) setViewCountry(previewCountry);
   }, [previewCountry, setViewCountry]);
+
+  useEffect(() => () => setViewCountry(null), [setViewCountry]);
 
   // If there is no country query, switch storefront to the product's market
   // without a permanent manual lock (IP geo still wins on the next visit).

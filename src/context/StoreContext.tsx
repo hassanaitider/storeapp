@@ -751,14 +751,24 @@ function flushToServer(
     });
 }
 
-export function StoreProvider({ children }: { children: ReactNode }) {
+export function StoreProvider({
+  children,
+  initialCountry = DEFAULT_COUNTRY,
+  initialViewCountry = null,
+}: {
+  children: ReactNode;
+  initialCountry?: CountryCode;
+  initialViewCountry?: CountryCode | null;
+}) {
   const [state, setState] = useState<StoreState>(() =>
-    buildDefaults(DEFAULT_COUNTRY)
+    buildDefaults(initialCountry)
   );
   const [hydrated] = useState(true);
   const [storageReady, setStorageReady] = useState(false);
   const [geoReady, setGeoReady] = useState(false);
-  const [viewCountry, setViewCountryState] = useState<CountryCode | null>(null);
+  const [viewCountry, setViewCountryState] = useState<CountryCode | null>(
+    initialViewCountry
+  );
   const stateRef = useRef(state);
   const storageReadyRef = useRef(false);
   /** Bumps only on catalog mutations so geo/pref commits cannot abort hydrate */
@@ -1185,8 +1195,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!storageReady) return;
-    document.documentElement.lang = state.locale;
-    document.documentElement.dir = state.locale === "ar" ? "rtl" : "ltr";
     document.cookie = `geo-country=${state.country}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
   }, [state.locale, state.country, storageReady]);
 
@@ -1529,6 +1537,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     viewCountry && !state.localeManual
       ? localeForCountry(viewCountry)
       : state.locale;
+
+  // Follow the rendered locale, not state.locale: a mismatched <html dir>
+  // moves the scrollbar to the other side and shifts the whole page.
+  useEffect(() => {
+    document.documentElement.lang = displayLocale;
+    document.documentElement.dir = displayLocale === "ar" ? "rtl" : "ltr";
+  }, [displayLocale]);
 
   const marketProducts = useMemo(
     () =>

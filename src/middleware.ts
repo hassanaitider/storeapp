@@ -24,6 +24,17 @@ function applyDocumentCacheHeaders(
   );
 }
 
+/** Market a product URL renders in: `?country=` preview, else the per-country id suffix (`prod-x-hn`). */
+function productViewMarket(request: NextRequest): string | null {
+  const { pathname, searchParams } = request.nextUrl;
+  const match = pathname.match(/^\/product\/([^/]+)\/?$/);
+  if (!match) return null;
+  const query = searchParams.get("country")?.toUpperCase() ?? "";
+  if (query && isStoreMarket(query)) return query;
+  const suffix = decodeURIComponent(match[1]).match(/-([a-z]{2})$/i)?.[1]?.toUpperCase();
+  return suffix && isStoreMarket(suffix) ? suffix : null;
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -51,9 +62,6 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const response = NextResponse.next();
-  applyDocumentCacheHeaders(request, response, pathname);
-
   const existing = request.cookies.get("geo-country")?.value;
   // Do not short-circuit on cookie alone — CDN headers can refresh market
   const headerCountry =
@@ -62,6 +70,25 @@ export async function middleware(request: NextRequest) {
     "";
 
   const code = headerCountry.toUpperCase();
+
+  // First paint must already use the final market/locale, otherwise the
+  // RTL→LTR swap after hydration shifts the whole page (CLS).
+  const baseMarket = isValidCountry(code)
+    ? isStoreMarket(code)
+      ? code
+      : DEFAULT_COUNTRY
+    : existing && isValidCountry(existing.toUpperCase()) && isStoreMarket(existing.toUpperCase())
+      ? existing.toUpperCase()
+      : DEFAULT_COUNTRY;
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-store-market", baseMarket);
+  const viewMarket = productViewMarket(request);
+  if (viewMarket) requestHeaders.set("x-store-view-market", viewMarket);
+  else requestHeaders.delete("x-store-view-market");
+
+  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  applyDocumentCacheHeaders(request, response, pathname);
+
   if (isValidCountry(code)) {
     const market = isStoreMarket(code) ? code : DEFAULT_COUNTRY;
     if (existing !== market) {
