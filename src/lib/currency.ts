@@ -332,7 +332,10 @@ export function formatCodStylePrice(amount: number): string {
   return `$${formatted}`;
 }
 
-export const formatMexicoCodPrice = formatCodStylePrice;
+/** Mexico COD: pesos shown as `MX$ 899.00` so shoppers never read it as USD. */
+export function formatMexicoCodPrice(amount: number): string {
+  return formatLocalAmount(amount, "MXN", "es");
+}
 export const formatEcuadorCodPrice = formatCodStylePrice;
 export const formatSalvadorCodPrice = formatCodStylePrice;
 

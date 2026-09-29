@@ -58,6 +58,14 @@ export function smartTagOfferLabel(country: CountryCode, amount: number): string
   return code === "USD" ? `$${n}` : `${getCurrency(code).symbol}\u00A0${n}`;
 }
 
+/**
+ * Former seed prices that browsers cached before a price change. A stored copy
+ * holding one of these is stale, not an admin edit, so the current seed wins.
+ */
+export const SMART_TAG_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]>> = {
+  HN: [1249],
+};
+
 /** First image is the storefront cover; the others are spread through the page */
 const IMAGES = [
   "/products/smart-tag-es-1.webp",
