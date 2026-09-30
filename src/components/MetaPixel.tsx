@@ -6,7 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { trackBoth } from "@/lib/fb";
 
 /** Every fbq('track', …) is delivered to all pixels initialised here. */
-const PIXEL_IDS = ["964436486676478", "2873892479655779"];
+const PIXEL_IDS = ["964436486676478", "2098415630739868"];
 
 const PIXEL_SNIPPET = `
 !function(f,b,e,v,n,t,s)
