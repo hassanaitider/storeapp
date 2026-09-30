@@ -442,6 +442,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           // Admin prices win; seed only fills markets the admin never priced
           marketPrices,
           marketComparePrices: ownMarkets(base.marketComparePrices),
+          discountBadgePercent: seed.discountBadgePercent,
         };
       }
 

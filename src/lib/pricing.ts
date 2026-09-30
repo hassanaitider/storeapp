@@ -101,6 +101,9 @@ export function productDiscountPercent(
   product: Product,
   country: CountryCode
 ): number {
+  if (typeof product.discountBadgePercent === "number") {
+    return product.discountBadgePercent;
+  }
   const local = getProductLocalPrice(product, country);
   const compare = getProductCompareLocalPrice(product, country);
   if (!compare || compare <= local) return 0;

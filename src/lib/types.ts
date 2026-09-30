@@ -152,6 +152,8 @@ export interface Product {
    */
   marketPrices?: Partial<Record<CountryCode, number>>;
   marketComparePrices?: Partial<Record<CountryCode, number>>;
+  /** Fixed "Ahorra N%" badge; overrides the percent computed from compare prices */
+  discountBadgePercent?: number;
   /** If set, product only appears in these markets */
   availableIn?: CountryCode[];
   images: string[];

@@ -350,6 +350,7 @@ export const LATAM_MINI_CAMERA_PRODUCTS: Product[] = SPANISH_MARKET_CODES.map(
       compareAtUSD: CAM_COMPARE_USD,
       marketPrices: { [country]: local.price },
       marketComparePrices: { [country]: local.compare },
+      discountBadgePercent: 38,
     };
   }
 );
