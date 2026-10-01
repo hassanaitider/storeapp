@@ -4,7 +4,7 @@ import {
   type CapiCustomData,
   type CapiUserData,
 } from "@/lib/meta-capi";
-import { getMetaCapiAccessToken } from "@/lib/meta-config";
+import { getFbPixelId, getMetaCapiAccessToken } from "@/lib/meta-config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,6 +13,7 @@ type FbCapiBody = {
   event_name?: string;
   event_id?: string;
   event_source_url?: string;
+  pixel_id?: string;
   user_data?: {
     fbp?: string;
     fbc?: string;
@@ -72,6 +73,11 @@ export async function POST(request: Request) {
     body = (await request.json()) as FbCapiBody;
   } catch {
     return NextResponse.json({ ok: false, error: "bad_json" }, { status: 400 });
+  }
+
+  // The token belongs to one pixel; never forward another market's events to it.
+  if (body.pixel_id && body.pixel_id !== getFbPixelId()) {
+    return NextResponse.json({ ok: true, skipped: "other_pixel" });
   }
 
   const eventName = (body.event_name || body.eventName)?.trim();
