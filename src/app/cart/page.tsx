@@ -9,6 +9,7 @@ import {
   formatProductPrice,
 } from "@/lib/pricing";
 import { pickText } from "@/lib/localized";
+import { productPath } from "@/lib/product-path";
 import { cartItemLineLocal } from "@/lib/qty-upsell";
 import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
 
@@ -69,7 +70,7 @@ export default function CartPage() {
                 className="flex gap-4 rounded-2xl border border-sand-200 bg-white p-4 sm:gap-6 sm:p-5"
               >
                 <Link
-                  href={`/product/${product.slug}`}
+                  href={productPath(product, country)}
                   className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-sand-100 sm:h-28 sm:w-28"
                 >
                   <ProductImage
@@ -84,7 +85,7 @@ export default function CartPage() {
                 <div className="flex min-w-0 flex-1 flex-col">
                   <div className="flex items-start justify-between gap-3">
                     <Link
-                      href={`/product/${product.slug}`}
+                      href={productPath(product, country)}
                       className="font-display text-xl font-semibold text-ink-900 hover:text-brand-700"
                     >
                       {name}

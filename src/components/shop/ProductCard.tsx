@@ -9,6 +9,7 @@ import {
   productDiscountPercent,
 } from "@/lib/pricing";
 import { pickText } from "@/lib/localized";
+import { productPath } from "@/lib/product-path";
 import type { CountryCode, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
@@ -38,7 +39,7 @@ export function ProductCard({
       )}
     >
       <Link
-        href={`/product/${product.slug}`}
+        href={productPath(product, priceCountry)}
         className="relative aspect-[4/5] overflow-hidden bg-sand-100"
       >
         <ProductImage
@@ -62,7 +63,7 @@ export function ProductCard({
       </Link>
 
       <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <Link href={`/product/${product.slug}`}>
+        <Link href={productPath(product, priceCountry)}>
           <h3 className="font-display text-xl font-semibold text-ink-900 transition group-hover:text-brand-700 sm:text-2xl">
             {name}
           </h3>
@@ -91,7 +92,7 @@ export function ProductCard({
             {product.inStock ? t.shop.addToCart : t.shop.outOfStock}
           </button>
           <Link
-            href={`/product/${product.slug}`}
+            href={productPath(product, priceCountry)}
             className="rounded-xl border border-sand-300 px-3 py-2.5 text-sm font-medium text-ink-800 transition hover:border-brand-400 hover:text-brand-700"
           >
             {t.shop.viewProduct}

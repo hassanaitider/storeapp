@@ -24,9 +24,14 @@ function applyDocumentCacheHeaders(
   );
 }
 
-/** Market a product URL renders in: `?country=` preview, else the per-country id suffix (`prod-x-hn`). */
+/**
+ * Market a product URL renders in: `/{cc}/product/…`, else legacy `?country=`,
+ * else the per-country id suffix (`prod-x-hn`).
+ */
 function productViewMarket(request: NextRequest): string | null {
   const { pathname, searchParams } = request.nextUrl;
+  const prefixed = pathname.match(/^\/([a-z]{2})\/product\/[^/]+\/?$/i)?.[1]?.toUpperCase();
+  if (prefixed) return isStoreMarket(prefixed) ? prefixed : null;
   const match = pathname.match(/^\/product\/([^/]+)\/?$/);
   if (!match) return null;
   const query = searchParams.get("country")?.toUpperCase() ?? "";
@@ -59,6 +64,18 @@ export async function middleware(request: NextRequest) {
       url.pathname = "/admin";
       url.search = "";
       return NextResponse.redirect(url);
+    }
+  }
+
+  // Legacy /product/{x} whose market is known from the URL → /{cc}/product/{x}
+  const legacyProduct = pathname.match(/^\/product\/([^/]+)\/?$/);
+  if (legacyProduct) {
+    const market = productViewMarket(request);
+    if (market) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${market.toLowerCase()}/product/${legacyProduct[1]}`;
+      url.searchParams.delete("country");
+      return NextResponse.redirect(url, 308);
     }
   }
 
