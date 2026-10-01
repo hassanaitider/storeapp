@@ -96,6 +96,8 @@ interface StoreContextValue extends StoreState {
    */
   viewCountry: CountryCode | null;
   setViewCountry: (country: CountryCode | null) => void;
+  /** Market pinned to the visitor's IP country; other markets cannot be selected */
+  geoLockedCountry: CountryCode | null;
   /** Products visible in the visitor's market */
   marketProducts: Product[];
   /** Only the visitor's own regional category */
@@ -756,19 +758,35 @@ export function StoreProvider({
   children,
   initialCountry = DEFAULT_COUNTRY,
   initialViewCountry = null,
+  geoLockedCountry = null,
 }: {
   children: ReactNode;
   initialCountry?: CountryCode;
   initialViewCountry?: CountryCode | null;
+  geoLockedCountry?: CountryCode | null;
 }) {
+  const geoLock = geoLockedCountry;
+  const enforceGeoLock = useCallback(
+    (s: StoreState): StoreState => {
+      if (!geoLock || s.country === geoLock) return s;
+      return {
+        ...s,
+        country: geoLock,
+        countryManual: false,
+        currency: s.currencyManual ? s.currency : currencyForCountry(geoLock),
+        locale: s.localeManual ? s.locale : localeForCountry(geoLock),
+      };
+    },
+    [geoLock]
+  );
   const [state, setState] = useState<StoreState>(() =>
-    buildDefaults(initialCountry)
+    buildDefaults(geoLock ?? initialCountry)
   );
   const [hydrated] = useState(true);
   const [storageReady, setStorageReady] = useState(false);
   const [geoReady, setGeoReady] = useState(false);
   const [viewCountry, setViewCountryState] = useState<CountryCode | null>(
-    initialViewCountry
+    geoLock && initialViewCountry !== geoLock ? null : initialViewCountry
   );
   const stateRef = useRef(state);
   const storageReadyRef = useRef(false);
@@ -794,7 +812,7 @@ export function StoreProvider({
   const commit = useCallback((updater: (s: StoreState) => StoreState) => {
     // Apply + persist synchronously so Save + navigation cannot lose data
     const prev = stateRef.current;
-    const next = updater(prev);
+    const next = enforceGeoLock(updater(prev));
     if (next === prev) return true;
     const stamped: StoreState = { ...next };
     stateRef.current = stamped;
@@ -852,7 +870,7 @@ export function StoreProvider({
     }
     setState(stamped);
     return saved;
-  }, []);
+  }, [enforceGeoLock]);
 
   useEffect(() => {
     let cancelled = false;
@@ -970,6 +988,7 @@ export function StoreProvider({
           return;
         }
 
+        next = enforceGeoLock(next);
         setCurrencyRateOverrides(next.currencyRates);
         stateRef.current = next;
         storageReadyRef.current = true;
@@ -1221,6 +1240,7 @@ export function StoreProvider({
   const setCountry = useCallback(
     (country: CountryCode, manual = true) => {
       const next = isStoreMarket(country) ? country : DEFAULT_COUNTRY;
+      if (geoLock && next !== geoLock) return;
       if (manual) {
         writeSessionManualMarket(next);
         // Manual market pick must not wait on IP geo — unblock shop immediately
@@ -1250,7 +1270,7 @@ export function StoreProvider({
         };
       });
     },
-    [commit]
+    [commit, geoLock]
   );
 
   const setCurrencyRate = useCallback(
@@ -1521,22 +1541,27 @@ export function StoreProvider({
     return flushToServer(current, persisted);
   }, []);
 
-  const setViewCountry = useCallback((country: CountryCode | null) => {
-    setViewCountryState((prev) => {
-      if (country === prev) return prev;
-      if (country && !isStoreMarket(country)) return prev;
-      return country;
-    });
-  }, []);
+  const setViewCountry = useCallback(
+    (country: CountryCode | null) => {
+      setViewCountryState((prev) => {
+        if (country === prev) return prev;
+        if (country && !isStoreMarket(country)) return prev;
+        if (country && geoLock && country !== geoLock) return prev;
+        return country;
+      });
+    },
+    [geoLock]
+  );
 
-  const displayCountry = viewCountry ?? state.country;
+  const effectiveView = geoLock ?? viewCountry;
+  const displayCountry = effectiveView ?? state.country;
   const displayCurrency =
-    viewCountry && !state.currencyManual
-      ? currencyForCountry(viewCountry)
+    effectiveView && !state.currencyManual
+      ? currencyForCountry(effectiveView)
       : state.currency;
   const displayLocale =
-    viewCountry && !state.localeManual
-      ? localeForCountry(viewCountry)
+    effectiveView && !state.localeManual
+      ? localeForCountry(effectiveView)
       : state.locale;
 
   // Follow the rendered locale, not state.locale: a mismatched <html dir>
@@ -1671,6 +1696,7 @@ export function StoreProvider({
     geoReady,
     viewCountry,
     setViewCountry,
+    geoLockedCountry: geoLock,
     marketProducts,
     marketCategories,
     setLocale,

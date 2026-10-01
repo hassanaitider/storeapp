@@ -97,16 +97,17 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Geo-restriction: a visitor only sees their own market's products and categories.
+  // Crawlers (ad review) and a logged-in admin are never locked.
   const visitor = visitorMarket(request);
-  const requested = visitor ? requestedMarket(request) : null;
-  if (
+  const geoLock =
     visitor &&
-    requested &&
-    requested !== visitor &&
     !CRAWLER_UA.test(request.headers.get("user-agent") ?? "") &&
     !(await verifyAdminSessionEdge(request.cookies.get(ADMIN_COOKIE)?.value))
-  ) {
-    return NextResponse.redirect(geoAllowedUrl(request, requested, visitor), 307);
+      ? visitor
+      : null;
+  const requested = geoLock ? requestedMarket(request) : null;
+  if (geoLock && requested && requested !== geoLock) {
+    return NextResponse.redirect(geoAllowedUrl(request, requested, geoLock), 307);
   }
 
   // Protect admin UI (except login)
@@ -168,6 +169,8 @@ export async function middleware(request: NextRequest) {
   const viewMarket = productViewMarket(request);
   if (viewMarket) requestHeaders.set("x-store-view-market", viewMarket);
   else requestHeaders.delete("x-store-view-market");
+  if (geoLock) requestHeaders.set("x-store-geo-lock", geoLock);
+  else requestHeaders.delete("x-store-geo-lock");
 
   const response = NextResponse.next({ request: { headers: requestHeaders } });
   applyDocumentCacheHeaders(request, response, pathname);

@@ -80,10 +80,13 @@ export default async function RootLayout({
   const requestHeaders = await headers();
   const initialCountry =
     readMarket(requestHeaders.get("x-store-market")) ?? DEFAULT_COUNTRY;
+  const geoLockedCountry = readMarket(requestHeaders.get("x-store-geo-lock"));
   const initialViewCountry = readMarket(
     requestHeaders.get("x-store-view-market")
   );
-  const locale = localeForCountry(initialViewCountry ?? initialCountry);
+  const locale = localeForCountry(
+    geoLockedCountry ?? initialViewCountry ?? initialCountry
+  );
 
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} suppressHydrationWarning>
@@ -93,6 +96,7 @@ export default async function RootLayout({
         <StoreProvider
           initialCountry={initialCountry}
           initialViewCountry={initialViewCountry}
+          geoLockedCountry={geoLockedCountry}
         >
           <MetaPixel />
           <SiteShell>{children}</SiteShell>

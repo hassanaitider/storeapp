@@ -22,7 +22,11 @@ export function Header() {
     setCountry,
     cartCount,
     geoReady,
+    geoLockedCountry,
   } = useStore();
+  const selectableMarkets = geoLockedCountry
+    ? STORE_MARKETS.filter((c) => c.code === geoLockedCountry)
+    : STORE_MARKETS;
   const [open, setOpen] = useState(false);
   const currencyInfo = getCurrency(currency);
   const market = getCountry(country);
@@ -76,7 +80,7 @@ export function Header() {
                 : "Choose your market (country)"
             }
           >
-            {STORE_MARKETS.map((c) => (
+            {selectableMarkets.map((c) => (
               <option key={c.code} value={c.code}>
                 {c.flag} {locale === "ar" ? c.nameAr : c.nameEn}
               </option>
