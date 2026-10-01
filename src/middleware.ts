@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { DEFAULT_COUNTRY, isStoreMarket, isValidCountry } from "./lib/countries";
+import {
+  DEFAULT_COUNTRY,
+  isStoreMarket,
+  isSpanishMarket,
+  isValidCountry,
+} from "./lib/countries";
 import {
   ADMIN_COOKIE,
   verifyAdminSessionEdge,
@@ -40,8 +45,69 @@ function productViewMarket(request: NextRequest): string | null {
   return suffix && isStoreMarket(suffix) ? suffix : null;
 }
 
+/** Ad review / search crawlers must still reach every landing page. */
+const CRAWLER_UA =
+  /facebookexternalhit|facebot|meta-externalagent|googlebot|adsbot-google|google-inspectiontool|bingbot|tiktokbot|bytespider/i;
+
+/** Store market of the visitor's IP, or null when the edge did not provide one. */
+function visitorMarket(request: NextRequest): string | null {
+  const code = (
+    request.headers.get("x-vercel-ip-country") ||
+    request.headers.get("cf-ipcountry") ||
+    ""
+  ).toUpperCase();
+  if (!isValidCountry(code)) return null;
+  return isStoreMarket(code) ? code : DEFAULT_COUNTRY;
+}
+
+/** Market a URL is scoped to: product pages and `/shop?category=products-{cc}`. */
+function requestedMarket(request: NextRequest): string | null {
+  const { pathname, searchParams } = request.nextUrl;
+  if (pathname === "/shop" || pathname === "/shop/") {
+    const cc = searchParams.get("category")?.match(/^products-([a-z]{2})$/i)?.[1]?.toUpperCase();
+    return cc && isStoreMarket(cc) ? cc : null;
+  }
+  return productViewMarket(request);
+}
+
+/** Same page in the visitor's own market; cross-region products fall back to the home page. */
+function geoAllowedUrl(request: NextRequest, requested: string, visitor: string): URL {
+  const url = request.nextUrl.clone();
+  const { pathname } = url;
+  if (pathname.startsWith("/shop")) {
+    url.searchParams.set("category", `products-${visitor.toLowerCase()}`);
+    return url;
+  }
+  const slug = pathname.match(/\/product\/([^/]+)\/?$/)?.[1];
+  if (slug && isSpanishMarket(requested) && isSpanishMarket(visitor)) {
+    const ownSlug = slug.replace(
+      new RegExp(`-${requested.toLowerCase()}$`, "i"),
+      `-${visitor.toLowerCase()}`
+    );
+    url.pathname = `/${visitor.toLowerCase()}/product/${ownSlug}`;
+    url.searchParams.delete("country");
+    return url;
+  }
+  url.pathname = "/";
+  url.search = "";
+  return url;
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Geo-restriction: a visitor only sees their own market's products and categories.
+  const visitor = visitorMarket(request);
+  const requested = visitor ? requestedMarket(request) : null;
+  if (
+    visitor &&
+    requested &&
+    requested !== visitor &&
+    !CRAWLER_UA.test(request.headers.get("user-agent") ?? "") &&
+    !(await verifyAdminSessionEdge(request.cookies.get(ADMIN_COOKIE)?.value))
+  ) {
+    return NextResponse.redirect(geoAllowedUrl(request, requested, visitor), 307);
+  }
 
   // Protect admin UI (except login)
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
