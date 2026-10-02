@@ -531,16 +531,12 @@ ${COD_EN}
       reviews: [
         {
           name: "M***a",
-          countryAr: "الغابون",
-          countryEn: "Gabon",
           stars: 5,
           textAr: "منتج جيد جدًا، أنصح به.",
           textEn: "Very good product, I recommend it.",
         },
         {
           name: "J***g",
-          countryAr: "كندا",
-          countryEn: "Canada",
           stars: 5,
         },
       ],

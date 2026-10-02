@@ -192,9 +192,11 @@ export function ProductDetailSections({
                     <span className="text-sm font-bold text-ink-900" dir="ltr">
                       {review.name}
                     </span>
-                    <span className="text-xs text-[var(--muted)]">
-                      {locale === "ar" ? review.countryAr : review.countryEn}
-                    </span>
+                    {review.countryAr || review.countryEn ? (
+                      <span className="text-xs text-[var(--muted)]">
+                        {locale === "ar" ? review.countryAr : review.countryEn}
+                      </span>
+                    ) : null}
                   </div>
                   <div className="mt-1 flex gap-0.5" aria-label={`${review.stars}/5`}>
                     {Array.from({ length: 5 }, (_, s) => (

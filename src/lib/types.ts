@@ -109,8 +109,8 @@ export interface ProductLanding {
 /** Real buyer reviews of the same model, masked name as shown at the source */
 export interface ProductBuyerReview {
   name: string;
-  countryAr: string;
-  countryEn: string;
+  countryAr?: string;
+  countryEn?: string;
   stars: number;
   /** Omit when the buyer left stars only */
   textAr?: string;
