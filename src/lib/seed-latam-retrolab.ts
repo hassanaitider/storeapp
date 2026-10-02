@@ -180,7 +180,7 @@ ${COD_ES}
       introEs:
         "Unos 20.000 juegos, pantalla a color 640×480 y tarjeta de 64 GB — enciende y juega.",
       video: {
-        src: "/videos/r36s-console.mp4",
+        src: "/videos/r36s-console-sound.mp4",
         poster: "/videos/r36s-console-poster.webp",
       },
       sections: [
