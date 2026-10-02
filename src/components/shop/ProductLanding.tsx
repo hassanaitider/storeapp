@@ -8,6 +8,7 @@ import { isGifUrl } from "@/components/shop/ProductMediaGallery";
 import { ProductHtmlBody } from "@/components/shop/ProductHtmlBody";
 import { htmlToPlain } from "@/lib/rich-html";
 import { ProductImage, productCoverSrc } from "@/components/shop/ProductImage";
+import { AutoplayVideo } from "@/components/shop/MiniCameraStory";
 
 function mediaPack(images: string[] | undefined) {
   const list = images?.filter(Boolean) ?? [];
@@ -89,6 +90,21 @@ export function ProductDetailSections({
       <h2 className="product-section-title text-center text-ink-900 sm:text-start">
         {t.product.description}
       </h2>
+
+      {landing.video ? (
+        <section className="mx-auto max-w-3xl">
+          <h3 className="product-section-title text-ink-900">
+            {locale === "ar"
+              ? "شاهده عن قرب"
+              : locale === "es"
+                ? "Mírala de cerca"
+                : "See it up close"}
+          </h3>
+          <div className="mt-5 aspect-video w-full overflow-hidden rounded-[1.25rem] border border-sand-200 bg-ink-900 shadow-[0_12px_40px_rgba(14,34,29,0.08)]">
+            <AutoplayVideo src={landing.video.src} poster={landing.video.poster} />
+          </div>
+        </section>
+      ) : null}
 
       {gif ? (
         <section className="mx-auto max-w-3xl animate-fade-up space-y-4">

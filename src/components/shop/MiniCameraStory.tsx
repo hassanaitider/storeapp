@@ -62,7 +62,7 @@ const MODEL_REVIEWS = [
 ];
 
 /** Loads nothing until scrolled into view, then plays muted like a social clip. */
-function AutoplayVideo({ src, poster }: { src: string; poster: string }) {
+export function AutoplayVideo({ src, poster }: { src: string; poster: string }) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {

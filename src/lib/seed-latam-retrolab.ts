@@ -179,6 +179,10 @@ ${COD_ES}
         "About 20,000 games, a 640×480 color screen, and a 64 GB card — switch on and play.",
       introEs:
         "Unos 20.000 juegos, pantalla a color 640×480 y tarjeta de 64 GB — enciende y juega.",
+      video: {
+        src: "/videos/r36s-console.mp4",
+        poster: "/videos/r36s-console-poster.webp",
+      },
       sections: [
         {
           titleAr: "شاشة ملونة 3.5 إنش · 640×480",

@@ -104,6 +104,8 @@ export interface ProductLanding {
   benefitsEs?: string[];
   faq: ProductLandingFaq[];
   reviews?: ProductBuyerReview[];
+  /** Landscape product clip shown at the top of the description */
+  video?: { src: string; poster: string };
 }
 
 /** Real buyer reviews of the same model, masked name as shown at the source */
