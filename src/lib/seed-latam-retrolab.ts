@@ -76,7 +76,7 @@ RETRO_PRICES.MX = {
 };
 
 const IMAGES = [
-  "/products/retrolab-r36s-1.webp",
+  "/products/retrolab-r36s-hero.webp",
   "/products/retrolab-r36s-2.webp",
   "/products/retrolab-r36s-9.webp",
   "/products/retrolab-r36s-7-es.webp",
