@@ -40,11 +40,11 @@ const arabic = Tajawal({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Smart Shop | سمارت شوب",
+    default: "Smart Shop",
     template: "%s | Smart Shop",
   },
   description:
-    "متجر Smart Shop — متجر متنوع · توصيل مجاني · الدفع عند الاستلام · استرداد 30 يومًا",
+    "Smart Shop — boutique en ligne · Livraison gratuite · Paiement à la livraison · Retour sous 30 jours",
   alternates: {
     canonical: "/",
   },
@@ -52,10 +52,10 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Smart Shop",
-    locale: "ar_AR",
-    title: "Smart Shop | سمارت شوب",
+    locale: "fr_FR",
+    title: "Smart Shop",
     description:
-      "متجر Smart Shop — متجر متنوع · توصيل مجاني · الدفع عند الاستلام · استرداد 30 يومًا",
+      "Smart Shop — boutique en ligne · Livraison gratuite · Paiement à la livraison · Retour sous 30 jours",
     images: [{ url: "/brand/smart-shop-logo.webp" }],
   },
   icons: {
