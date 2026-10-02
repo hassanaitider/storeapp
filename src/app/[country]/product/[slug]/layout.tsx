@@ -20,12 +20,12 @@ export async function generateMetadata({
     ) ?? SEED_PRODUCTS.find((p) => p.slug === decodeURIComponent(slug));
   if (!product) return {};
   const spanish = isSpanishMarket(code);
-  const name = spanish ? product.nameEs ?? product.nameEn : product.nameAr;
+  const name = spanish ? product.nameEs ?? product.nameEn : "Smart Shop";
   const tagline = spanish
     ? "Envío gratis · Pago contra entrega"
-    : "توصيل مجاني · الدفع عند الاستلام";
+    : "Livraison gratuite · Paiement à la livraison";
   return {
-    title: `${name} — ${tagline}`,
+    title: spanish ? `${name} — ${tagline}` : { absolute: `${name} — ${tagline}` },
     openGraph: {
       title: name,
       images: product.images?.[0] ? [{ url: product.images[0] }] : undefined,
