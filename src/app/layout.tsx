@@ -56,11 +56,11 @@ export const metadata: Metadata = {
     title: "Smart Shop",
     description:
       "Smart Shop — boutique en ligne · Livraison gratuite · Paiement à la livraison · Retour sous 30 jours",
-    images: [{ url: "/brand/smart-shop-logo.webp" }],
+    images: [{ url: "/brand/smart-shop-og-fr.jpg", width: 1024, height: 558 }],
   },
   icons: {
-    icon: "/brand/smart-shop-logo.webp",
-    apple: "/brand/smart-shop-logo.webp",
+    icon: "/brand/smart-shop-logo-fr.webp",
+    apple: "/brand/smart-shop-logo-fr.webp",
   },
   other: {
     "facebook-domain-verification": "eu527gqpfwfa8csk821sk99i9lfrz9",
