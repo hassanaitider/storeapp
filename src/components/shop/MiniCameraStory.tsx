@@ -224,7 +224,7 @@ export function MiniCameraStory({
       )}
 
       {locale === "es" ? (
-        <section className="mx-auto max-w-3xl">
+        <section id="opiniones" className="mx-auto max-w-3xl scroll-mt-24">
           <h3 className="product-section-title text-ink-900">
             Opiniones de compradores de este mismo modelo
           </h3>

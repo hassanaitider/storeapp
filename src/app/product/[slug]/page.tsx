@@ -482,10 +482,16 @@ function ProductPageInner() {
                 />
               ))}
             </div>
-            <span>
-              {product.rating.toFixed(1)} · {product.reviewCount}{" "}
-              {t.product.reviews}
-            </span>
+            {product.slug === MINI_CAMERA_SLUG && locale === "es" ? (
+              <a href="#opiniones" className="underline underline-offset-2">
+                Ver opiniones
+              </a>
+            ) : (
+              <span>
+                {product.rating.toFixed(1)} · {product.reviewCount}{" "}
+                {t.product.reviews}
+              </span>
+            )}
           </div>
           <div className="flex flex-wrap items-baseline gap-2">
             <span className="product-price">

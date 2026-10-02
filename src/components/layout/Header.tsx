@@ -6,7 +6,7 @@ import { Menu, ShoppingBag, X } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { BrandLogo } from "@/components/layout/BrandLogo";
-import { STORE_MARKETS, getCountry } from "@/lib/countries";
+import { STORE_MARKETS, getCountry, isSpanishMarket } from "@/lib/countries";
 import { CURRENCIES, getCurrency } from "@/lib/currency";
 import type { CountryCode, CurrencyCode, Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -27,6 +27,8 @@ export function Header() {
   const selectableMarkets = geoLockedCountry
     ? STORE_MARKETS.filter((c) => c.code === geoLockedCountry)
     : STORE_MARKETS;
+  const latamShopper =
+    geoLockedCountry !== null && isSpanishMarket(geoLockedCountry);
   const [open, setOpen] = useState(false);
   const currencyInfo = getCurrency(currency);
   const market = getCountry(country);
@@ -55,16 +57,18 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <select
-            aria-label={t.common.language}
-            value={locale}
-            onChange={(e) => setLocale(e.target.value as Locale)}
-            className="w-[5.6rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[6.75rem] sm:text-sm"
-          >
-            <option value="ar">العربية</option>
-            <option value="en">English</option>
-            <option value="es">Español</option>
-          </select>
+          {latamShopper ? null : (
+            <select
+              aria-label={t.common.language}
+              value={locale}
+              onChange={(e) => setLocale(e.target.value as Locale)}
+              className="w-[5.6rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[6.75rem] sm:text-sm"
+            >
+              <option value="ar">العربية</option>
+              <option value="en">English</option>
+              <option value="es">Español</option>
+            </select>
+          )}
 
           <select
             aria-label={t.common.country}
@@ -82,33 +86,40 @@ export function Header() {
           >
             {selectableMarkets.map((c) => (
               <option key={c.code} value={c.code}>
-                {c.flag} {locale === "ar" ? c.nameAr : c.nameEn}
+                {c.flag}{" "}
+                {locale === "ar"
+                  ? c.nameAr
+                  : locale === "es"
+                    ? c.nameEs ?? c.nameEn
+                    : c.nameEn}
               </option>
             ))}
           </select>
 
-          <select
-            aria-label={t.common.currency}
-            value={currency}
-            onChange={(e) =>
-              setCurrency(e.target.value as CurrencyCode, true)
-            }
-            className={cn(
-              "hidden w-[7.75rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-sm font-medium text-ink-800 sm:block",
-              !geoReady && "opacity-60"
-            )}
-            title={
-              locale === "ar"
-                ? "اختر العملة يدوياً"
-                : "Choose currency manually"
-            }
-          >
-            {CURRENCIES.map((c) => (
-              <option key={c.code} value={c.code}>
-                {c.code} · {locale === "ar" ? c.symbol : c.code}
-              </option>
-            ))}
-          </select>
+          {latamShopper ? null : (
+            <select
+              aria-label={t.common.currency}
+              value={currency}
+              onChange={(e) =>
+                setCurrency(e.target.value as CurrencyCode, true)
+              }
+              className={cn(
+                "hidden w-[7.75rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-sm font-medium text-ink-800 sm:block",
+                !geoReady && "opacity-60"
+              )}
+              title={
+                locale === "ar"
+                  ? "اختر العملة يدوياً"
+                  : "Choose currency manually"
+              }
+            >
+              {CURRENCIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.code} · {locale === "ar" ? c.symbol : c.code}
+                </option>
+              ))}
+            </select>
+          )}
 
           <Link
             href="/cart"

@@ -1555,12 +1555,14 @@ export function StoreProvider({
 
   const effectiveView = geoLock ?? viewCountry;
   const displayCountry = effectiveView ?? state.country;
+  // LATAM shoppers get no language/currency picker, so an old manual choice must not stick.
+  const latamLock = geoLock !== null && isSpanishMarket(geoLock);
   const displayCurrency =
-    effectiveView && !state.currencyManual
+    effectiveView && (latamLock || !state.currencyManual)
       ? currencyForCountry(effectiveView)
       : state.currency;
   const displayLocale =
-    effectiveView && !state.localeManual
+    effectiveView && (latamLock || !state.localeManual)
       ? localeForCountry(effectiveView)
       : state.locale;
 

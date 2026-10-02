@@ -86,9 +86,9 @@ export const MINI_CAMERA_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]
 
 const IMAGES = [
   "/products/mini-camera-6.webp",
-  "/products/mini-camera-2.webp",
-  "/products/mini-camera-3.webp",
-  "/products/mini-camera-4.webp",
+  "/products/mini-camera-2-es.webp",
+  "/products/mini-camera-3-es.webp",
+  "/products/mini-camera-4-es.webp",
   "/products/mini-camera-5.webp",
   "/products/mini-camera-7.webp",
   "/products/mini-camera-8.webp",
@@ -231,7 +231,7 @@ ${COD_ES}`.trim(),
             "Clear quality for sports, commuting, or documenting your day. Noise reduction, a stable clip, and one-button video — recording to a microSD card.",
           bodyEs:
             "Calidad nítida para deporte, el trayecto o documentar tu día. Reducción de ruido, clip estable y grabación con un botón — graba en tarjeta microSD.",
-          image: "/products/mini-camera-2.webp",
+          image: "/products/mini-camera-2-es.webp",
         },
         {
           titleAr: "مشبك خلفي ثابت أوضح",
@@ -255,7 +255,7 @@ ${COD_ES}`.trim(),
             "Aim the lens at 0°, 90°, or 180° for the scene. IR LEDs under the lens handle night vision — the right angle without moving the whole unit.",
           bodyEs:
             "Apunta la lente a 0°, 90° o 180° según la escena. Los LEDs IR bajo la lente dan visión nocturna — el ángulo correcto sin mover todo el aparato.",
-          image: "/products/mini-camera-3.webp",
+          image: "/products/mini-camera-3-es.webp",
         },
         {
           titleAr: "تشغيل بزر واحد",
@@ -267,7 +267,7 @@ ${COD_ES}`.trim(),
             "Audio, video, and night vision — simple and intuitive. Side buttons for record/save, power switch, plus TF slot and mic ready to go.",
           bodyEs:
             "Audio, video y visión nocturna — simple e intuitivo. Botones laterales para grabar/guardar, interruptor ON/OFF, ranura TF y micrófono listos.",
-          image: "/products/mini-camera-4.webp",
+          image: "/products/mini-camera-4-es.webp",
         },
         {
           titleAr: "رؤية ليلية ومراقبة من الجوال",
