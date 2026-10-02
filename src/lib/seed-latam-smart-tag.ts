@@ -46,8 +46,8 @@ const TAG_PRICES: Record<CountryCode, LocalPrice> = Object.fromEntries(
 
 // Same local price points as the other LATAM listings, scaled to $49 / $79
 TAG_PRICES.AR = { price: 74900, compare: 119900, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
-TAG_PRICES.CR = { price: 22290, compare: 35990, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
-TAG_PRICES.DO = { price: 2890, compare: 4640, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
+TAG_PRICES.CR = { price: 22500, compare: 35990, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
+TAG_PRICES.DO = { price: 2950, compare: 4640, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 TAG_PRICES.HN = { price: 1299, compare: 2019, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 TAG_PRICES.MX = { price: 899, compare: 1449, priceUSD: TAG_USD, compareAtUSD: TAG_COMPARE_USD };
 
@@ -63,6 +63,8 @@ export function smartTagOfferLabel(country: CountryCode, amount: number): string
  * holding one of these is stale, not an admin edit, so the current seed wins.
  */
 export const SMART_TAG_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]>> = {
+  CR: [22290],
+  DO: [2890],
   HN: [1249],
 };
 
