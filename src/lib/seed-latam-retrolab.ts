@@ -44,35 +44,20 @@ const RETRO_PRICES: Record<CountryCode, LocalPrice> = Object.fromEntries(
   ])
 ) as Record<CountryCode, LocalPrice>;
 
-RETRO_PRICES.AR = {
-  price: 149900,
-  compare: 299900,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
+/** Hand-set local prices from before the 99 USD conversion; saved catalogs still carry them */
+export const RETROLAB_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]>> = {
+  AR: [149900],
+  CR: [44900],
+  DO: [5890],
+  HN: [2499],
+  MX: [1799],
 };
-RETRO_PRICES.CR = {
-  price: 44900,
-  compare: 89900,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
-};
-RETRO_PRICES.DO = {
-  price: 5890,
-  compare: 11890,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
-};
-RETRO_PRICES.HN = {
-  price: 2499,
-  compare: 4999,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
-};
-RETRO_PRICES.MX = {
-  price: 1799,
-  compare: 3599,
-  priceUSD: RETRO_USD,
-  compareAtUSD: RETRO_COMPARE_USD,
+export const RETROLAB_SUPERSEDED_COMPARE: Partial<Record<CountryCode, number[]>> = {
+  AR: [299900],
+  CR: [89900],
+  DO: [11890],
+  HN: [4999],
+  MX: [3599],
 };
 
 const IMAGES = [
