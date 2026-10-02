@@ -89,6 +89,10 @@ const IMAGES = [
   "/products/mini-camera-3.webp",
   "/products/mini-camera-4.webp",
   "/products/mini-camera-5.webp",
+  "/products/mini-camera-6.webp",
+  "/products/mini-camera-7.webp",
+  "/products/mini-camera-8.webp",
+  "/products/mini-camera-9.webp",
 ];
 
 function buildMiniCamera(country: CountryCode): Omit<
