@@ -44,7 +44,7 @@ const MODEL_REVIEWS = [
     name: "Anónimo",
     date: "28 sep 2026",
     stars: 5,
-    text: "La probé al aire libre. La calidad del video es suficientemente buena, clara a la luz del día. No tiene estabilización óptica, así que los videos pueden salir un poco temblorosos. Por lo demás, es práctica y cumple bien (ojo: no es 2K ni 4K).",
+    text: "La probé al aire libre. La calidad del video es suficientemente buena, clara a la luz del día. No tiene estabilización óptica, así que los videos pueden salir un poco temblorosos. Por lo demás, es práctica y cumple bien.",
   },
   {
     name: "V***e",
