@@ -118,7 +118,8 @@ function buildMiniCamera(country: CountryCode): Omit<
 <li>فيديو HD 1080P مع تقليل الضوضاء</li>
 <li>مشبك خلفي مضاد للاهتزاز</li>
 <li>عدسة دوّارة 0° · 90° · 180°</li>
-<li>رؤية ليلية · بطاقة TF قابلة للتوسيع</li>
+<li>رؤية ليلية · تسجيل على بطاقة microSD</li>
+<li>بطارية 700 mAh · تطبيق iOS / Android</li>
 </ul>
 ${COD_AR}`.trim(),
     descriptionEn: `
@@ -128,7 +129,8 @@ ${COD_AR}`.trim(),
 <li>HD 1080P video with noise reduction</li>
 <li>Anti-shake back clip for clearer footage</li>
 <li>Rotatable lens: 0° · 90° · 180°</li>
-<li>Night vision · expandable TF / microSD</li>
+<li>Night vision · records to microSD</li>
+<li>700 mAh battery · iOS / Android app</li>
 </ul>
 ${COD_EN}`.trim(),
     descriptionEs: `
@@ -138,7 +140,8 @@ ${COD_EN}`.trim(),
 <li>Video HD 1080P con reducción de ruido</li>
 <li>Clip antivibración para grabar más nítido</li>
 <li>Lente giratoria: 0° · 90° · 180°</li>
-<li>Visión nocturna · memoria TF expandible</li>
+<li>Visión nocturna · graba en tarjeta microSD</li>
+<li>Batería 700 mAh · app iOS / Android</li>
 </ul>
 ${COD_ES}`.trim(),
     detailsAr: [
@@ -148,7 +151,8 @@ ${COD_ES}`.trim(),
       "عدسة عالية الدقة قابلة للدوران حتى 180°",
       "رؤية ليلية بـ 6 مصابيح IR",
       "تشغيل بزر واحد: صوت / فيديو / ليل",
-      "فتحة بطاقة TF (microSD) قابلة للتوسيع",
+      "التسجيل على بطاقة microSD (بدون ذاكرة داخلية)",
+      "بطارية ليثيوم بوليمر عالية السعة 700 mAh",
       "ميكروفون مدمج · منفذ شحن",
     ],
     detailsEn: [
@@ -158,7 +162,8 @@ ${COD_ES}`.trim(),
       "Rotatable HD lens up to 180°",
       "Night vision with 6 IR LEDs",
       "One-button start: audio / video / night",
-      "Expandable TF (microSD) slot",
+      "Records to a microSD card (no internal memory)",
+      "High-capacity 700 mAh lithium-polymer battery",
       "Built-in mic · charging port",
     ],
     detailsEs: [
@@ -168,7 +173,8 @@ ${COD_ES}`.trim(),
       "Lente HD giratoria hasta 180°",
       "Visión nocturna con 6 LEDs IR",
       "Inicio con un botón: audio / video / noche",
-      "Ranura TF (microSD) expandible",
+      "Graba en tarjeta microSD (sin memoria interna)",
+      "Batería de litio-polímero de alta capacidad 700 mAh",
       "Micrófono integrado · puerto de carga",
     ],
     images: [...IMAGES],
@@ -220,11 +226,11 @@ ${COD_ES}`.trim(),
           titleEn: "HD 1080P video in a tiny body",
           titleEs: "Video HD 1080P en un cuerpo mini",
           bodyAr:
-            "جودة واضحة للرياضة، الطريق، أو توثيق يومك. تقليل الضوضاء، مشبك ثابت، وتشغيل فيديو بزر واحد — مع إمكانية توسيع الذاكرة ببطاقة TF.",
+            "جودة واضحة للرياضة، الطريق، أو توثيق يومك. تقليل الضوضاء، مشبك ثابت، وتشغيل فيديو بزر واحد — والتسجيل على بطاقة microSD.",
           bodyEn:
-            "Clear quality for sports, commuting, or documenting your day. Noise reduction, a stable clip, and one-button video — plus expandable TF storage.",
+            "Clear quality for sports, commuting, or documenting your day. Noise reduction, a stable clip, and one-button video — recording to a microSD card.",
           bodyEs:
-            "Calidad nítida para deporte, el trayecto o documentar tu día. Reducción de ruido, clip estable y grabación con un botón — más memoria TF expandible.",
+            "Calidad nítida para deporte, el trayecto o documentar tu día. Reducción de ruido, clip estable y grabación con un botón — graba en tarjeta microSD.",
           image: "/products/mini-camera-2.webp",
         },
         {
@@ -268,11 +274,11 @@ ${COD_ES}`.trim(),
           titleEn: "Night vision and phone monitoring",
           titleEs: "Visión nocturna y monitoreo desde el móvil",
           bodyAr:
-            "سجّل في الإضاءة المنخفضة مع IR، وراقب عبر التطبيق عند التوافق. كاميرا مصغرة تناسب الأمن الشخصي أو الاستخدام اليومي.",
+            "سجّل في الإضاءة المنخفضة مع IR، وراقب من جوالك عبر التطبيق — متوافق مع iOS وAndroid. كاميرا مصغرة تناسب الأمن الشخصي أو الاستخدام اليومي.",
           bodyEn:
-            "Record in low light with IR, and monitor via the app when supported. A mini camera built for personal security or everyday use.",
+            "Record in low light with IR, and monitor from your phone with the app — compatible with iOS and Android. A mini camera built for personal security or everyday use.",
           bodyEs:
-            "Graba con poca luz gracias a los IR y monitorea desde la app cuando es compatible. Mini cámara pensada para seguridad personal o uso diario.",
+            "Graba con poca luz gracias a los IR y monitorea desde tu celular con la app — compatible con iOS y Android. Mini cámara pensada para seguridad personal o uso diario.",
           image: "/products/mini-camera-5.webp",
         },
         {
@@ -292,21 +298,21 @@ ${COD_ES}`.trim(),
         "فيديو HD 1080P مع تقليل الضوضاء",
         "مشبك ثابت وعدسة دوّارة 180°",
         "رؤية ليلية وتشغيل بزر واحد",
-        "ذاكرة TF قابلة للتوسيع",
+        "بطارية 700 mAh · تطبيق iOS / Android",
         "توصيل مجاني والدفع عند الاستلام",
       ],
       benefitsEn: [
         "HD 1080P video with noise reduction",
         "Stable clip and rotatable 180° lens",
         "Night vision and one-button start",
-        "Expandable TF memory",
+        "700 mAh battery · iOS / Android app",
         "Free delivery and cash on delivery",
       ],
       benefitsEs: [
         "Video HD 1080P con reducción de ruido",
         "Clip estable y lente giratoria 180°",
         "Visión nocturna e inicio con un botón",
-        "Memoria TF expandible",
+        "Batería 700 mAh · app iOS / Android",
         "Envío gratis y pago contra entrega",
       ],
       faq: [
@@ -338,12 +344,30 @@ ${COD_ES}`.trim(),
             "Sí — LEDs IR bajo la lente con control de encendido/apagado.",
         },
         {
-          questionAr: "هل يمكن توسيع الذاكرة؟",
-          questionEn: "Can I expand the memory?",
-          questionEs: "¿Se puede ampliar la memoria?",
-          answerAr: "نعم، عبر فتحة بطاقة TF (microSD).",
-          answerEn: "Yes — via the TF (microSD) card slot.",
-          answerEs: "Sí — con la ranura para tarjeta TF (microSD).",
+          questionAr: "هل فيها ذاكرة داخلية؟",
+          questionEn: "Does it have internal memory?",
+          questionEs: "¿Tiene memoria interna?",
+          answerAr: "لا، تسجّل على بطاقة microSD تضعها في الفتحة المخصصة.",
+          answerEn: "No — it records to a microSD card that goes in the card slot.",
+          answerEs:
+            "No — graba en una tarjeta microSD que se coloca en la ranura.",
+        },
+        {
+          questionAr: "ما هي البطارية؟",
+          questionEn: "What battery does it have?",
+          questionEs: "¿Qué batería tiene?",
+          answerAr: "بطارية ليثيوم بوليمر عالية السعة 700 mAh، تُشحن بكابل USB المرفق.",
+          answerEn: "A high-capacity 700 mAh lithium-polymer battery, charged with the included USB cable.",
+          answerEs:
+            "Batería de litio-polímero de alta capacidad de 700 mAh, se carga con el cable USB incluido.",
+        },
+        {
+          questionAr: "هل تعمل مع الجوال؟",
+          questionEn: "Does it work with my phone?",
+          questionEs: "¿Funciona con mi celular?",
+          answerAr: "نعم، عبر التطبيق — متوافق مع iOS وAndroid.",
+          answerEn: "Yes — through the app, compatible with iOS and Android.",
+          answerEs: "Sí — con la app, compatible con iOS y Android.",
         },
         {
           questionAr: "كيف أدفع؟",
