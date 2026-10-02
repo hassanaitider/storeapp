@@ -42,7 +42,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-sand-200/80 glass">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8">
-        <BrandLogo size="sm" />
+        <BrandLogo size="sm" className={geoLockedCountry ? "shrink-0" : undefined} />
 
         <nav className="hidden items-center gap-7 md:flex">
           {links.map((l) => (
@@ -76,6 +76,7 @@ export function Header() {
             onChange={(e) => setCountry(e.target.value as CountryCode, true)}
             className={cn(
               "w-[7.25rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[12rem] sm:text-sm",
+              geoLockedCountry && "hidden sm:block",
               !geoReady && "opacity-60"
             )}
             title={
@@ -163,8 +164,14 @@ export function Header() {
             </Link>
           ))}
           <p className="px-3 pt-2 text-xs text-[var(--muted)]">
-            {locale === "ar" ? "سوقك" : "Market"}: {market.flag}{" "}
-            {locale === "ar" ? market.nameAr : market.nameEn} · {currency} (
+            {locale === "ar" ? "سوقك" : locale === "es" ? "Mercado" : "Market"}:{" "}
+            {market.flag}{" "}
+            {locale === "ar"
+              ? market.nameAr
+              : locale === "es"
+                ? market.nameEs ?? market.nameEn
+                : market.nameEn}{" "}
+            · {currency} (
             {currencyInfo.symbol})
           </p>
         </nav>

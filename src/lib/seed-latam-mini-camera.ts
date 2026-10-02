@@ -85,7 +85,7 @@ export const MINI_CAMERA_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]
 };
 
 const IMAGES = [
-  "/products/mini-camera-6.webp",
+  "/products/mini-camera-6-hero.webp",
   "/products/mini-camera-2-es.webp",
   "/products/mini-camera-3-es.webp",
   "/products/mini-camera-4-es.webp",
