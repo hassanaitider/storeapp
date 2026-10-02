@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Star } from "lucide-react";
 import { useT } from "@/hooks/useT";
 import { pickList, pickText } from "@/lib/localized";
 import type { Locale, Product } from "@/lib/types";
@@ -170,6 +170,56 @@ export function ProductDetailSections({
           </ul>
         </section>
       )}
+
+      {landing.reviews?.length ? (
+        <section id="opiniones" className="mx-auto max-w-3xl scroll-mt-24">
+          <h3 className="product-section-title text-ink-900">
+            {locale === "ar"
+              ? "آراء مشترين لنفس الموديل"
+              : locale === "es"
+                ? "Opiniones de compradores de este mismo modelo"
+                : "Reviews from buyers of this same model"}
+          </h3>
+          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+            {landing.reviews.map((review, i) => {
+              const text = locale === "ar" ? review.textAr : review.textEn;
+              return (
+                <li
+                  key={`${review.name}-${i}`}
+                  className="rounded-2xl border border-sand-200 bg-white p-4 shadow-[0_6px_20px_rgba(14,34,29,0.05)]"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-sm font-bold text-ink-900" dir="ltr">
+                      {review.name}
+                    </span>
+                    <span className="text-xs text-[var(--muted)]">
+                      {locale === "ar" ? review.countryAr : review.countryEn}
+                    </span>
+                  </div>
+                  <div className="mt-1 flex gap-0.5" aria-label={`${review.stars}/5`}>
+                    {Array.from({ length: 5 }, (_, s) => (
+                      <Star
+                        key={s}
+                        className={`h-4 w-4 ${
+                          s < review.stars
+                            ? "fill-amber-400 text-amber-400"
+                            : "text-sand-300"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <p className="product-body mt-2 text-sm text-ink-800">
+                    {text ??
+                      (locale === "ar"
+                        ? `تقييم ${review.stars} نجوم بدون تعليق.`
+                        : `${review.stars}-star rating, no comment.`)}
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : null}
 
       <section className="mx-auto max-w-3xl rounded-[1.25rem] bg-sand-100/90 px-5 py-8 sm:px-7">
         <h3 className="product-section-title">{t.product.shipping}</h3>

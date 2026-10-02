@@ -103,6 +103,18 @@ export interface ProductLanding {
   benefitsEn: string[];
   benefitsEs?: string[];
   faq: ProductLandingFaq[];
+  reviews?: ProductBuyerReview[];
+}
+
+/** Real buyer reviews of the same model, masked name as shown at the source */
+export interface ProductBuyerReview {
+  name: string;
+  countryAr: string;
+  countryEn: string;
+  stars: number;
+  /** Omit when the buyer left stars only */
+  textAr?: string;
+  textEn?: string;
 }
 
 /** Color option shown on the product page swatches */

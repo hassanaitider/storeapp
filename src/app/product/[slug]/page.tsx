@@ -486,6 +486,10 @@ function ProductPageInner() {
               <a href="#opiniones" className="underline underline-offset-2">
                 Ver opiniones
               </a>
+            ) : product.landing?.reviews?.length ? (
+              <a href="#opiniones" className="underline underline-offset-2">
+                {locale === "ar" ? "شاهد الآراء" : "See reviews"}
+              </a>
             ) : (
               <span>
                 {product.rating.toFixed(1)} · {product.reviewCount}{" "}
