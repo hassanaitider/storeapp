@@ -20,7 +20,7 @@ type LocalPrice = {
 };
 
 const RETRO_USD = 99;
-const RETRO_COMPARE_USD = 141;
+const RETRO_COMPARE_USD = 199;
 
 function usdToLatamLocal(country: CountryCode, usd: number): number {
   const code = currencyForCountry(country);
@@ -46,48 +46,34 @@ const RETRO_PRICES: Record<CountryCode, LocalPrice> = Object.fromEntries(
 
 RETRO_PRICES.AR = {
   price: 149900,
-  compare: 214900,
+  compare: 299900,
   priceUSD: RETRO_USD,
   compareAtUSD: RETRO_COMPARE_USD,
 };
 RETRO_PRICES.CR = {
   price: 44900,
-  compare: 64900,
+  compare: 89900,
   priceUSD: RETRO_USD,
   compareAtUSD: RETRO_COMPARE_USD,
 };
 RETRO_PRICES.DO = {
   price: 5890,
-  compare: 8390,
+  compare: 11890,
   priceUSD: RETRO_USD,
   compareAtUSD: RETRO_COMPARE_USD,
 };
 RETRO_PRICES.HN = {
   price: 2499,
-  compare: 3569,
+  compare: 4999,
   priceUSD: RETRO_USD,
   compareAtUSD: RETRO_COMPARE_USD,
 };
 RETRO_PRICES.MX = {
   price: 1799,
-  compare: 2569,
+  compare: 3599,
   priceUSD: RETRO_USD,
   compareAtUSD: RETRO_COMPARE_USD,
 };
-
-/** Compare prices from the earlier 50%-off listing; replaced with the 30% ones */
-export const RETROLAB_SUPERSEDED_COMPARE: Partial<Record<CountryCode, number[]>> =
-  Object.fromEntries(
-    SPANISH_MARKET_CODES.map((country) => [
-      country,
-      [usdToLatamLocal(country, 199)],
-    ])
-  );
-RETROLAB_SUPERSEDED_COMPARE.AR = [299900];
-RETROLAB_SUPERSEDED_COMPARE.CR = [89900];
-RETROLAB_SUPERSEDED_COMPARE.DO = [11890];
-RETROLAB_SUPERSEDED_COMPARE.HN = [4999];
-RETROLAB_SUPERSEDED_COMPARE.MX = [3599];
 
 const IMAGES = [
   "/products/retrolab-r36s-hero.webp",

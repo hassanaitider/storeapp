@@ -15,7 +15,6 @@ import { SEED_CATEGORIES, SEED_PRODUCTS } from "@/lib/seed";
 import { isRetiredStoreProduct } from "@/lib/seed-universal-products";
 import { MAG_POWERBANK_SUPERSEDED_PRICES } from "@/lib/seed-latam-mag-powerbank";
 import { MINI_CAMERA_SUPERSEDED_PRICES } from "@/lib/seed-latam-mini-camera";
-import { RETROLAB_SUPERSEDED_COMPARE } from "@/lib/seed-latam-retrolab";
 import { SMART_TAG_SUPERSEDED_PRICES } from "@/lib/seed-latam-smart-tag";
 import { VIDEO_WALKIE_SUPERSEDED_PRICES } from "@/lib/seed-latam-video-walkie";
 import {
@@ -426,16 +425,6 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
             }
           }
         }
-        const marketComparePrices = ownMarkets(base.marketComparePrices);
-        if (retrolabMatch) {
-          for (const [cc, stale] of Object.entries(RETROLAB_SUPERSEDED_COMPARE)) {
-            const code = cc as CountryCode;
-            const compare = marketComparePrices[code];
-            if (typeof compare === "number" && stale?.includes(compare)) {
-              marketComparePrices[code] = seed.marketComparePrices?.[code];
-            }
-          }
-        }
         return {
           ...base,
           nameAr: seed.nameAr,
@@ -454,7 +443,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           slug: seed.slug,
           // Admin prices win; seed only fills markets the admin never priced
           marketPrices,
-          marketComparePrices,
+          marketComparePrices: ownMarkets(base.marketComparePrices),
           discountBadgePercent: seed.discountBadgePercent,
         };
       }
