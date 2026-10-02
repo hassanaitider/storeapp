@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Check, ChevronDown, Star } from "lucide-react";
 import { useT } from "@/hooks/useT";
 import { pickList, pickText } from "@/lib/localized";
@@ -60,6 +61,39 @@ const MODEL_REVIEWS = [
   },
 ];
 
+/** Loads nothing until scrolled into view, then plays muted like a social clip. */
+function AutoplayVideo({ src, poster }: { src: string; poster: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) void video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      controls
+      preload="none"
+      className="h-full w-full object-cover"
+    />
+  );
+}
+
 function loc(locale: Locale, ar: string, en: string, es: string) {
   if (locale === "ar") return ar;
   if (locale === "es") return es;
@@ -82,6 +116,18 @@ export function MiniCameraStory({
 
   return (
     <div className="mt-14 space-y-14 sm:space-y-16">
+      <section className="mx-auto max-w-3xl">
+        <h3 className="product-section-title text-ink-900">
+          {loc(locale, "شاهدها عن قرب", "See it up close", "Mírala de cerca")}
+        </h3>
+        <div className="mx-auto mt-5 aspect-[9/16] w-full max-w-[22rem] overflow-hidden rounded-[1.25rem] border border-sand-200 bg-ink-900 shadow-[0_12px_40px_rgba(14,34,29,0.08)]">
+          <AutoplayVideo
+            src="/videos/mini-camera.mp4"
+            poster="/videos/mini-camera-poster.webp"
+          />
+        </div>
+      </section>
+
       <section className="mx-auto grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
         {STATS.map((stat) => (
           <div
