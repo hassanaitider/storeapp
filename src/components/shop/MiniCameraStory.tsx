@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Star } from "lucide-react";
 import { useT } from "@/hooks/useT";
 import { pickList, pickText } from "@/lib/localized";
 import type { Locale, Product } from "@/lib/types";
@@ -30,6 +30,33 @@ const STATS = [
     labelAr: "تشغيل سريع",
     labelEn: "one-click start",
     labelEs: "inicio rápido",
+  },
+];
+
+const MODEL_REVIEWS = [
+  {
+    name: "s***s",
+    date: "14 sep 2026",
+    stars: 5,
+    text: "El acabado de plástico es regular, pero funciona mejor de lo esperado. Un botón lateral enciende y apaga el audio y el video, y el del otro lado activa el modo infrarrojo.",
+  },
+  {
+    name: "Anónimo",
+    date: "28 sep 2026",
+    stars: 5,
+    text: "La probé al aire libre. La calidad del video es suficientemente buena, clara a la luz del día. No tiene estabilización óptica, así que los videos pueden salir un poco temblorosos. Por lo demás, es práctica y cumple bien (ojo: no es 2K ni 4K).",
+  },
+  {
+    name: "V***e",
+    date: "25 sep 2026",
+    stars: 5,
+    text: "Pequeña, ligera, pero se ve resistente. Ahora mismo se está cargando; primero la pruebo y luego les cuento. Si no vuelvo a escribir, es que todo bien y no hay de qué quejarse. (Incluye cable USB-C y manual).",
+  },
+  {
+    name: "Anónimo",
+    date: "18 sep 2026",
+    stars: 5,
+    text: "Recibida, todo venía muy bien empaquetado. Lista para configurarla.",
   },
 ];
 
@@ -195,6 +222,40 @@ export function MiniCameraStory({
           </ul>
         </section>
       )}
+
+      {locale === "es" ? (
+        <section className="mx-auto max-w-3xl">
+          <h3 className="product-section-title text-ink-900">
+            Opiniones de compradores de este mismo modelo
+          </h3>
+          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+            {MODEL_REVIEWS.map((review) => (
+              <li
+                key={`${review.name}-${review.date}`}
+                className="rounded-2xl border border-sand-200 bg-white p-4 shadow-[0_6px_20px_rgba(14,34,29,0.05)]"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm font-bold text-ink-900">{review.name}</span>
+                  <span className="text-xs text-[var(--muted)]">{review.date}</span>
+                </div>
+                <div className="mt-1 flex gap-0.5" aria-label={`${review.stars} de 5 estrellas`}>
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-4 w-4 ${
+                        i < review.stars
+                          ? "fill-amber-400 text-amber-400"
+                          : "text-sand-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <p className="product-body mt-2 text-sm text-ink-800">{review.text}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <section className="mx-auto max-w-3xl rounded-[1.25rem] bg-sand-100/90 px-5 py-8 sm:px-7">
         <h3 className="product-section-title">{t.product.shipping}</h3>
