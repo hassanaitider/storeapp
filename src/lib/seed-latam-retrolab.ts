@@ -70,7 +70,6 @@ const IMAGES = [
   "/products/retrolab-r36s-4.webp",
   "/products/retrolab-r36s-5.webp",
   "/products/retrolab-r36s-6.webp",
-  "/products/retrolab-console-1.webp",
 ];
 
 function buildRetroLab(country: CountryCode): Omit<
@@ -164,6 +163,7 @@ ${COD_ES}
       "Molde privado: sí",
     ],
     images: [...IMAGES],
+    customColorEnabled: true,
     inStock: true,
     featured: true,
     rating: 4.8,
@@ -272,6 +272,14 @@ ${COD_ES}
           answerAr: "نحو 20,000 لعبة مدمجة.",
           answerEn: "About 20,000 built-in games.",
           answerEs: "Unos 20.000 juegos integrados.",
+        },
+        {
+          questionAr: "هل يمكنني اختيار اللون؟",
+          questionEn: "Can I choose the color?",
+          questionEs: "¿Puedo elegir el color?",
+          answerAr: "نعم — اكتب اللون الذي تريده في نموذج الطلب.",
+          answerEn: "Yes — type the color you want in the order form.",
+          answerEs: "Sí — escribe el color que quieres en el formulario de pedido.",
         },
       ],
       reviews: [
