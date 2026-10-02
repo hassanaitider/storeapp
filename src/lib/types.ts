@@ -115,6 +115,7 @@ export interface ProductBuyerReview {
   /** Omit when the buyer left stars only */
   textAr?: string;
   textEn?: string;
+  textEs?: string;
 }
 
 /** Color option shown on the product page swatches */

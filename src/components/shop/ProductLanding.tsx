@@ -182,7 +182,12 @@ export function ProductDetailSections({
           </h3>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2">
             {landing.reviews.map((review, i) => {
-              const text = locale === "ar" ? review.textAr : review.textEn;
+              const text =
+                locale === "ar"
+                  ? review.textAr
+                  : locale === "es"
+                    ? review.textEs ?? review.textEn
+                    : review.textEn;
               return (
                 <li
                   key={`${review.name}-${i}`}

@@ -285,6 +285,36 @@ ${COD_ES}
           answerEs: "Unos 20.000 juegos integrados.",
         },
       ],
+      reviews: [
+        {
+          name: "I***a",
+          stars: 5,
+          textEn:
+            "This game system is great. Has tons of games already added. The battery lasts pretty long also. Great for someone that likes to game on the go. Perfect gift.",
+          textEs:
+            "Esta consola es genial. Trae muchísimos juegos ya instalados y la batería dura bastante. Ideal para quien le gusta jugar en cualquier lugar. Regalo perfecto.",
+        },
+        {
+          name: "M***e",
+          stars: 5,
+          textEn: "Awesome device — have a ton of fun playing on it!",
+          textEs: "Excelente consola — ¡me divierto muchísimo jugando con ella!",
+        },
+        {
+          name: "S***l",
+          stars: 5,
+          textEn:
+            "I bought this game as a birthday gift for my son. I just turned it on and was impressed by the color quality. I like that it's practical to take anywhere… I know he's going to love it; I recommend it.",
+          textEs:
+            "La compré como regalo de cumpleaños para mi hijo. La encendí y me impresionó la calidad del color. Me gusta que es práctica para llevar a todas partes… Sé que le va a encantar; la recomiendo.",
+        },
+        {
+          name: "L***a",
+          stars: 5,
+          textEn: "It's for my son's birthday. He loves it a lot.",
+          textEs: "Es para el cumpleaños de mi hijo. Le encanta.",
+        },
+      ],
     },
   };
 }
