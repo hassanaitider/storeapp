@@ -135,7 +135,6 @@ ${COD_ES}
       "~20,000 لعبة مدمجة",
       "ذاكرة: بطاقة 64 جيجا · تقبل بطاقات 64 أو 128 جيجا",
       "مادة: بلاستيك ABS",
-      "منشأ: Guangdong, China",
     ],
     detailsEn: [
       "FORYOBUD · R36S",
@@ -147,7 +146,6 @@ ${COD_ES}
       "~20,000 built-in games",
       "Memory: 64 GB card · accepts 64 or 128 GB cards",
       "ABS plastic",
-      "Origin: Guangdong, China",
     ],
     detailsEs: [
       "FORYOBUD · R36S",
@@ -159,7 +157,6 @@ ${COD_ES}
       "~20.000 juegos integrados",
       "Memoria: tarjeta de 64 GB · admite tarjetas de 64 o 128 GB",
       "Material: plástico ABS",
-      "Origen: Guangdong, China",
       "Molde privado: sí",
     ],
     images: [...IMAGES],
