@@ -75,7 +75,18 @@ RETRO_PRICES.MX = {
   compareAtUSD: RETRO_COMPARE_USD,
 };
 
-const IMAGES = ["/products/retrolab-console-1.webp"];
+const IMAGES = [
+  "/products/retrolab-r36s-1.webp",
+  "/products/retrolab-r36s-2.webp",
+  "/products/retrolab-r36s-9.webp",
+  "/products/retrolab-r36s-7-es.webp",
+  "/products/retrolab-r36s-8-es.webp",
+  "/products/retrolab-r36s-3.webp",
+  "/products/retrolab-r36s-4.webp",
+  "/products/retrolab-r36s-5.webp",
+  "/products/retrolab-r36s-6.webp",
+  "/products/retrolab-console-1.webp",
+];
 
 function buildRetroLab(country: CountryCode): Omit<
   Product,
@@ -194,7 +205,19 @@ ${COD_ES}
             "Clear color display at 640×480. Not a touchscreen — play with buttons and sticks.",
           bodyEs:
             "Pantalla a color nítida a 640×480. No es táctil — juegas con botones y sticks.",
-          image: "/products/retrolab-console-1.webp",
+          image: "/products/retrolab-r36s-7-es.webp",
+        },
+        {
+          titleAr: "عصا تحكم ثلاثية الأبعاد مزدوجة",
+          titleEn: "Dual 3D joysticks",
+          titleEs: "Doble joystick 3D",
+          bodyAr:
+            "صليب الاتجاهات مع عصاتي تحكم — اختر التحكم الأنسب لكل لعبة.",
+          bodyEn:
+            "A D-pad plus two analog sticks — pick the best controls for each game.",
+          bodyEs:
+            "Cruceta direccional y dos palancas analógicas — elige los mejores controles para cada juego.",
+          image: "/products/retrolab-r36s-8-es.webp",
         },
         {
           titleAr: "RK3326 وبطاقة 64 جيجا",
@@ -206,7 +229,7 @@ ${COD_ES}
             "Rockchip RK3326 (Cortex-A35), Linux OS, 3000 mAh battery, and Wi-Fi. Storage on a 64 GB card (128 GB also available).",
           bodyEs:
             "Rockchip RK3326 (Cortex-A35), Linux, batería 3000 mAh y Wi-Fi. Memoria en tarjeta de 64 GB (también hay opción 128 GB).",
-          image: "/products/retrolab-console-1.webp",
+          image: "/products/retrolab-r36s-2.webp",
         },
       ],
       benefitsAr: [
