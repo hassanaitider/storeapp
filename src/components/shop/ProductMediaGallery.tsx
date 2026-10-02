@@ -270,10 +270,14 @@ export function ProductMediaGallery({
         {activeUrl ? (
           <p className="product-caption mt-2">
             {locale === "ar"
-              ? "اضغط على الصورة أو الـ GIF لعرضها بوضوح بالحجم الكامل"
+              ? gifs.length
+                ? "اضغط على الصورة أو الـ GIF لعرضها بوضوح بالحجم الكامل"
+                : "اضغط على الصورة لعرضها بوضوح بالحجم الكامل"
               : locale === "es"
                 ? "Toca la imagen para verla en tamaño completo"
-                : "Tap the image or GIF to view it full size clearly"}
+                : gifs.length
+                  ? "Tap the image or GIF to view it full size clearly"
+                  : "Tap the image to view it full size clearly"}
           </p>
         ) : null}
       </section>

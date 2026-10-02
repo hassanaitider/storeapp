@@ -111,7 +111,7 @@ export function ProductDetailSections({
         const title = pickText(section, "title", locale);
         const body = pickText(section, "body", locale);
         const image =
-          stills[i] ?? section.image ?? stills[i % Math.max(stills.length, 1)] ?? cover;
+          section.image ?? stills[i] ?? stills[i % Math.max(stills.length, 1)] ?? cover;
         const paragraphs = body
           .split(/(?<=[.!?؟。])\s+/)
           .map((p) => p.trim())
@@ -130,7 +130,7 @@ export function ProductDetailSections({
               <p className="product-body mt-3 text-[var(--muted)]">{first}</p>
             </div>
             {image ? (
-              <StoryMedia src={image} alt={title} badge={`${i + 1}/3`} />
+              <StoryMedia src={image} alt={title} />
             ) : null}
             {rest ? (
               <p className="product-body px-1 text-[var(--muted)]">{rest}</p>

@@ -437,9 +437,9 @@ ${COD_EN}
       headlineAr: "طقم حمّام أسود مطفي… تنظيم كامل بدون ثقب",
       headlineEn: "Matte-black bathroom set — full organization, no drilling",
       introAr:
-        "حوّل زاوية الدش إلى مساحة مرتبة وأنيقة. رفّان زاوية كبيران مع حاملات للأسنان والمناشف والصابون — تركيب لاصق قوي بدون تخريب البلاط. اطلب الآن بـ 199 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+        "حوّل زاوية الدش إلى مساحة مرتبة وأنيقة. رفّان زاوية كبيران مع حاملات للأسنان والمناشف والصابون — تركيب لاصق قوي بدون تخريب البلاط. 🎁 هدية مجانية: رأس دش مع الطقم. اطلب الآن بـ 199 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
       introEn:
-        "Turn your shower corner into a clean, stylish space. Two large corner shelves plus holders for toothbrushes, towels, and soap — strong adhesive install with no tile damage. Order now for 199 MAD — free delivery and cash on delivery in Morocco.",
+        "Turn your shower corner into a clean, stylish space. Two large corner shelves plus holders for toothbrushes, towels, and soap — strong adhesive install with no tile damage. 🎁 Free gift: a shower head with the set. Order now for 199 MAD — free delivery and cash on delivery in Morocco.",
       sections: [
         {
           titleAr: "رفّا زاوية يستغلان كل سنتيمتر",
@@ -480,6 +480,7 @@ ${COD_EN}
       ],
       benefitsAr: [
         "طقم 5 قطع متكامل",
+        "هدية مجانية: رأس دش مع الطقم",
         "أسود مطفي عصري",
         "بدون ثقب — لاصق قوي",
         "تصريف ماء سريع",
@@ -488,6 +489,7 @@ ${COD_EN}
       ],
       benefitsEn: [
         "Complete 5-piece set",
+        "Free gift: shower head with the set",
         "Modern matte black",
         "No-drill strong adhesive",
         "Quick water drainage",
@@ -518,6 +520,12 @@ ${COD_EN}
             "5 قطع: رفّا زاوية، حامل فرشاة أسنان، رف مناشف، وصحن صابون مع خطافات.",
           answerEn:
             "5 pieces: two corner shelves, a toothbrush holder, a towel shelf, and a soap dish with hooks.",
+        },
+        {
+          questionAr: "هل توجد هدية مع الطلب؟",
+          questionEn: "Is there a gift?",
+          answerAr: "نعم — كل طلب يأتي مع رأس دش هدية مجانية.",
+          answerEn: "Yes — every order comes with a free shower head.",
         },
       ],
     },
