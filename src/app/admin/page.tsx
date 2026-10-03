@@ -209,16 +209,39 @@ function AdminDashboard() {
     }
   }, [searchParams, tab]);
 
+  const [serverOrders, setServerOrders] = useState<Order[]>([]);
+  useEffect(() => {
+    if (tab !== "orders" && tab !== "overview") return;
+    let cancelled = false;
+    fetch("/api/orders", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { orders?: Order[] } | null) => {
+        if (!cancelled && Array.isArray(data?.orders)) setServerOrders(data.orders);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [tab]);
+
+  const allOrders = useMemo(() => {
+    const byId = new Map<string, Order>();
+    for (const order of [...serverOrders, ...orders]) {
+      if (!byId.has(order.id)) byId.set(order.id, order);
+    }
+    return [...byId.values()].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }, [serverOrders, orders]);
+
   const pending = useMemo(
-    () => orders.filter((o) => o.status === "pending").length,
-    [orders]
+    () => allOrders.filter((o) => o.status === "pending").length,
+    [allOrders]
   );
 
   const ordersByCountry = useMemo(() => {
     const groups = new Map<string, Order[]>(
       STORE_MARKETS.map((market) => [market.code, []])
     );
-    for (const order of orders) {
+    for (const order of allOrders) {
       const code = (order.country ?? "").trim().toUpperCase() || "—";
       const list = groups.get(code);
       if (list) list.push(order);
@@ -227,7 +250,7 @@ function AdminDashboard() {
     return [...groups.entries()]
       .map(([code, list]) => ({ code, orders: list }))
       .sort((a, b) => b.orders.length - a.orders.length || a.code.localeCompare(b.code));
-  }, [orders]);
+  }, [allOrders]);
 
   const anyQtyUpsell = useMemo(
     () => products.some((p) => isCodQtyUpsellEnabled(p)),
@@ -442,7 +465,7 @@ function AdminDashboard() {
               {[
                 { label: t.admin.stats.products, value: products.length },
                 { label: t.admin.stats.categories, value: categories.length },
-                { label: t.admin.stats.orders, value: orders.length },
+                { label: t.admin.stats.orders, value: allOrders.length },
                 { label: t.admin.stats.pending, value: pending },
               ].map((s) => (
                 <div
@@ -1149,6 +1172,19 @@ function AdminDashboard() {
                           <p className="text-sm text-[var(--muted)]">
                             {o.customer.phone} · {o.country}
                           </p>
+                          <ul className="mt-2 text-sm font-medium text-ink-800">
+                            {o.items.map((item) => {
+                              const p = products.find((x) => x.id === item.productId);
+                              const label = p
+                                ? (locale === "ar" ? p.nameAr : locale === "es" ? p.nameEs ?? p.nameEn : p.nameEn)
+                                : item.productId;
+                              return (
+                                <li key={item.productId}>
+                                  {item.quantity} × {label}
+                                </li>
+                              );
+                            })}
+                          </ul>
                           {addressLine ? (
                             <p className="mt-2 text-sm text-ink-800">
                               {t.checkout.address}: {addressLine}

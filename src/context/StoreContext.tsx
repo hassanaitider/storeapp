@@ -1643,6 +1643,13 @@ export function StoreProvider({
         orders: [order, ...s.orders],
         cart: itemsOverride ? s.cart : [],
       }));
+      // keepalive lets the request finish even if the buyer closes the tab right away
+      void fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(order),
+        keepalive: true,
+      }).catch((err) => console.error("order upload failed", err));
       const contents = items.map((item) => {
         const product = current.products.find((p) => p.id === item.productId);
         const unitUSD = product
