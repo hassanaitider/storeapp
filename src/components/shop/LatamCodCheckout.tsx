@@ -102,11 +102,14 @@ export function LatamCodCheckout({
   const [poblado, setPoblado] = useState("");
   const [direccion, setDireccion] = useState("");
   const [referencia, setReferencia] = useState("");
+  const showPoblado = country !== "GT";
   const loc = {
     l1: "Departamento",
     l2: "Municipio",
     l3: "Poblado",
-    missing: "Selecciona departamento, municipio y poblado",
+    missing: showPoblado
+      ? "Selecciona departamento, municipio y poblado"
+      : "Selecciona departamento y municipio",
   };
 
   const departamentos = useMemo(
@@ -140,14 +143,14 @@ export function LatamCodCheckout({
       window.alert("Escribe el color que quieres");
       return;
     }
-    if (!departamento || !municipio || !poblado) {
+    if (!departamento || !municipio || (showPoblado && !poblado)) {
       window.alert(loc.missing);
       return;
     }
     const notesParts = [
       `${loc.l1}: ${departamento}`,
       `${loc.l2}: ${municipio}`,
-      `${loc.l3}: ${poblado}`,
+      showPoblado ? `${loc.l3}: ${poblado}` : "",
       referencia.trim() ? `Referencia: ${referencia.trim()}` : "",
       customColor.trim() ? `Color: ${customColor.trim()}` : "",
     ].filter(Boolean);
@@ -155,7 +158,9 @@ export function LatamCodCheckout({
     onPlaceOrder({
       name: name.trim(),
       phone: phone.trim(),
-      city: `${departamento} / ${municipio} / ${poblado}`,
+      city: showPoblado
+        ? `${departamento} / ${municipio} / ${poblado}`
+        : `${departamento} / ${municipio}`,
       address: direccion.trim(),
       notes: notesParts.join(" · "),
     });
@@ -226,14 +231,16 @@ export function LatamCodCheckout({
           required
           disabled={!departamento}
         />
-        <SelectField
-          value={poblado}
-          onChange={setPoblado}
-          placeholder={loc.l3}
-          options={poblados}
-          required
-          disabled={!municipio}
-        />
+        {showPoblado ? (
+          <SelectField
+            value={poblado}
+            onChange={setPoblado}
+            placeholder={loc.l3}
+            options={poblados}
+            required
+            disabled={!municipio}
+          />
+        ) : null}
 
         <IconField
           icon={<MapPin className="h-4 w-4" />}
