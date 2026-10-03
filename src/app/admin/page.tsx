@@ -29,6 +29,7 @@ import {
   getCountry,
   isSpanishMarket,
   isStoreMarket,
+  isValidCountry,
 } from "@/lib/countries";
 import { getProductLocalPrice, isProductAvailableIn, resolveProductMarket } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
@@ -212,6 +213,19 @@ function AdminDashboard() {
     () => orders.filter((o) => o.status === "pending").length,
     [orders]
   );
+
+  const ordersByCountry = useMemo(() => {
+    const groups = new Map<string, Order[]>();
+    for (const order of orders) {
+      const code = (order.country ?? "").trim().toUpperCase() || "—";
+      const list = groups.get(code);
+      if (list) list.push(order);
+      else groups.set(code, [order]);
+    }
+    return [...groups.entries()]
+      .map(([code, list]) => ({ code, orders: list }))
+      .sort((a, b) => b.orders.length - a.orders.length || a.code.localeCompare(b.code));
+  }, [orders]);
 
   const anyQtyUpsell = useMemo(
     () => products.some((p) => isCodQtyUpsellEnabled(p)),
@@ -1094,8 +1108,28 @@ function AdminDashboard() {
                   {locale === "ar" ? "لا توجد طلبات بعد" : "No orders yet"}
                 </p>
               ) : (
+                <div className="space-y-8">
+                  {ordersByCountry.map((group) => {
+                    const known = isValidCountry(group.code);
+                    const info = known ? getCountry(group.code) : null;
+                    const countryName = info
+                      ? locale === "ar"
+                        ? info.nameAr
+                        : locale === "es"
+                          ? info.nameEs ?? info.nameEn
+                          : info.nameEn
+                      : group.code;
+                    return (
+                <section key={group.code}>
+                  <h3 className="mb-3 flex items-center gap-2 border-b border-sand-200 pb-2 text-lg font-semibold">
+                    {info ? <span aria-hidden>{info.flag}</span> : null}
+                    <span>{countryName}</span>
+                    <span className="rounded-full bg-sand-100 px-2 py-0.5 text-xs font-bold text-ink-800">
+                      {group.orders.length}
+                    </span>
+                  </h3>
                 <div className="space-y-3">
-                  {orders.map((o) => {
+                  {group.orders.map((o) => {
                     const addressLine = formatOrderCustomerAddress(o.customer);
                     return (
                     <div
@@ -1134,6 +1168,10 @@ function AdminDashboard() {
                         </div>
                       </div>
                     </div>
+                    );
+                  })}
+                </div>
+                </section>
                     );
                   })}
                 </div>
