@@ -215,7 +215,9 @@ function AdminDashboard() {
   );
 
   const ordersByCountry = useMemo(() => {
-    const groups = new Map<string, Order[]>();
+    const groups = new Map<string, Order[]>(
+      STORE_MARKETS.map((market) => [market.code, []])
+    );
     for (const order of orders) {
       const code = (order.country ?? "").trim().toUpperCase() || "—";
       const list = groups.get(code);
@@ -1103,7 +1105,7 @@ function AdminDashboard() {
           {tab === "orders" && (
             <div>
               <h2 className="mb-6 text-xl font-semibold">{t.admin.orders}</h2>
-              {orders.length === 0 ? (
+              {ordersByCountry.length === 0 ? (
                 <p className="text-[var(--muted)]">
                   {locale === "ar" ? "لا توجد طلبات بعد" : "No orders yet"}
                 </p>
@@ -1128,6 +1130,11 @@ function AdminDashboard() {
                       {group.orders.length}
                     </span>
                   </h3>
+                {group.orders.length === 0 ? (
+                  <p className="text-sm text-[var(--muted)]">
+                    {locale === "ar" ? "لا توجد طلبات بعد" : locale === "es" ? "Sin pedidos todavía" : "No orders yet"}
+                  </p>
+                ) : null}
                 <div className="space-y-3">
                   {group.orders.map((o) => {
                     const addressLine = formatOrderCustomerAddress(o.customer);
