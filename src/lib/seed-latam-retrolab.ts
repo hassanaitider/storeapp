@@ -19,8 +19,11 @@ type LocalPrice = {
   compareAtUSD: number;
 };
 
-const RETRO_USD = 99;
-const RETRO_COMPARE_USD = 199;
+const RETRO_USD = 69;
+const RETRO_COMPARE_USD = 99;
+/** Previous seed price points; catalogs saved before the change still hold their local values */
+const FORMER_RETRO_USD = 99;
+const FORMER_RETRO_COMPARE_USD = 199;
 
 function usdToLatamLocal(country: CountryCode, usd: number): number {
   const code = currencyForCountry(country);
@@ -44,21 +47,39 @@ const RETRO_PRICES: Record<CountryCode, LocalPrice> = Object.fromEntries(
   ])
 ) as Record<CountryCode, LocalPrice>;
 
-/** Hand-set local prices from before the 99 USD conversion; saved catalogs still carry them */
-export const RETROLAB_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]>> = {
+/** Hand-set local prices from before the USD conversion; saved catalogs still carry them */
+const HAND_SET_PRICES: Partial<Record<CountryCode, number[]>> = {
   AR: [149900],
   CR: [44900],
   DO: [5890],
   HN: [2499],
   MX: [1799],
 };
-export const RETROLAB_SUPERSEDED_COMPARE: Partial<Record<CountryCode, number[]>> = {
+const HAND_SET_COMPARE: Partial<Record<CountryCode, number[]>> = {
   AR: [299900],
   CR: [89900],
   DO: [11890],
   HN: [4999],
   MX: [3599],
 };
+
+function withFormer(
+  handSet: Partial<Record<CountryCode, number[]>>,
+  formerUsd: number
+): Partial<Record<CountryCode, number[]>> {
+  return Object.fromEntries(
+    SPANISH_MARKET_CODES.map((country) => [
+      country,
+      [...(handSet[country] ?? []), usdToLatamLocal(country, formerUsd)],
+    ])
+  );
+}
+
+export const RETROLAB_SUPERSEDED_PRICES = withFormer(HAND_SET_PRICES, FORMER_RETRO_USD);
+export const RETROLAB_SUPERSEDED_COMPARE = withFormer(
+  HAND_SET_COMPARE,
+  FORMER_RETRO_COMPARE_USD
+);
 
 const IMAGES = [
   "/products/retrolab-r36s-hero.webp",
