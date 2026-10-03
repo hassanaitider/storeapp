@@ -105,6 +105,7 @@ function AdminDashboard() {
     categories,
     products,
     orders,
+    deleteOrder,
     currencyRates,
     setCurrencyRates,
     resetCurrencyRates,
@@ -223,6 +224,30 @@ function AdminDashboard() {
       cancelled = true;
     };
   }, [tab]);
+
+  const [deletingOrderId, setDeletingOrderId] = useState<string | null>(null);
+  const removeOrder = async (order: Order) => {
+    const ask =
+      locale === "ar"
+        ? `حذف طلب ${order.customer.name}؟`
+        : locale === "es"
+          ? `¿Eliminar el pedido de ${order.customer.name}?`
+          : `Delete the order from ${order.customer.name}?`;
+    if (!window.confirm(ask)) return;
+    setDeletingOrderId(order.id);
+    try {
+      const res = await fetch(`/api/orders?id=${encodeURIComponent(order.id)}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setServerOrders((list) => list.filter((o) => o.id !== order.id));
+      deleteOrder(order.id);
+    } catch {
+      window.alert(locale === "ar" ? "تعذر الحذف، حاول مرة أخرى" : "Could not delete, try again");
+    } finally {
+      setDeletingOrderId(null);
+    }
+  };
 
   const allOrders = useMemo(() => {
     const byId = new Map<string, Order>();
@@ -1208,6 +1233,15 @@ function AdminDashboard() {
                           <p className="text-xs uppercase tracking-wide text-brand-600">
                             COD · {o.status}
                           </p>
+                          <button
+                            type="button"
+                            onClick={() => void removeOrder(o)}
+                            disabled={deletingOrderId === o.id}
+                            className="mt-3 inline-flex items-center gap-1 rounded-xl border-2 border-red-300 bg-red-50 px-3 py-2 text-sm font-bold text-red-700 hover:bg-red-100 disabled:opacity-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            {locale === "ar" ? "حذف" : locale === "es" ? "Eliminar" : "Delete"}
+                          </button>
                         </div>
                       </div>
                     </div>

@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { del, list, put } from "@vercel/blob";
 import type { Order } from "./types";
 
 const ORDERS_PREFIX = "orders/";
@@ -27,6 +27,25 @@ export async function saveOrderBlob(order: Order): Promise<boolean> {
     token,
   });
   return true;
+}
+
+/** Returns how many blobs were removed (0 when the order only existed locally). */
+export async function deleteOrderBlob(id: string): Promise<number> {
+  const token = blobToken();
+  if (!token) return 0;
+  const matches: string[] = [];
+  let cursor: string | undefined;
+  do {
+    const page = await list({ prefix: ORDERS_PREFIX, cursor, limit: 1000, token });
+    for (const b of page.blobs) {
+      if (b.pathname.includes(`-${id}-`) || b.pathname.endsWith(`-${id}.json`)) {
+        matches.push(b.url);
+      }
+    }
+    cursor = page.hasMore ? page.cursor : undefined;
+  } while (cursor);
+  if (matches.length) await del(matches, { token });
+  return matches.length;
 }
 
 export async function listOrderBlobs(): Promise<Order[]> {

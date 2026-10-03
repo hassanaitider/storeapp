@@ -130,6 +130,7 @@ interface StoreContextValue extends StoreState {
     customer: Order["customer"],
     itemsOverride?: CartItem[]
   ) => Order;
+  deleteOrder: (id: string) => void;
   /** Wipe local data and restore seed catalog */
   resetStore: () => void;
   /** Force push current catalog to server (admin saves) */
@@ -1682,6 +1683,13 @@ export function StoreProvider({
     [commit]
   );
 
+  const deleteOrder = useCallback(
+    (id: string) => {
+      commit((s) => ({ ...s, orders: s.orders.filter((o) => o.id !== id) }));
+    },
+    [commit]
+  );
+
   const setUpsellEnabled = useCallback(
     (enabled: boolean) => {
       commit((s) => ({ ...s, upsellEnabled: enabled }));
@@ -1745,6 +1753,7 @@ export function StoreProvider({
     updateProduct,
     deleteProduct,
     placeOrder,
+    deleteOrder,
     resetStore,
     persistCatalog,
     upsellEnabled: state.upsellEnabled,

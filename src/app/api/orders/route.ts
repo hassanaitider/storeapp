@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 import { isValidCountry } from "@/lib/countries";
-import { listOrderBlobs, saveOrderBlob } from "@/lib/orders-blob";
+import { deleteOrderBlob, listOrderBlobs, saveOrderBlob } from "@/lib/orders-blob";
 import type { Order } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -77,9 +77,30 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+async function isAdmin() {
   const jar = await cookies();
-  if (!verifyAdminSessionToken(jar.get(ADMIN_COOKIE)?.value).ok) {
+  return verifyAdminSessionToken(jar.get(ADMIN_COOKIE)?.value).ok;
+}
+
+export async function DELETE(request: Request) {
+  if (!(await isAdmin())) {
+    return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+  }
+  const id = new URL(request.url).searchParams.get("id")?.trim() ?? "";
+  if (!/^[\w-]{1,64}$/.test(id)) {
+    return NextResponse.json({ ok: false, error: "bad id" }, { status: 400 });
+  }
+  try {
+    const removed = await deleteOrderBlob(id);
+    return NextResponse.json({ ok: true, removed });
+  } catch (err) {
+    console.error("order delete failed", err);
+    return NextResponse.json({ ok: false, error: "delete failed" }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  if (!(await isAdmin())) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   try {
