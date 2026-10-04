@@ -137,26 +137,19 @@ export function cartItemLineLocal(
 }
 
 /**
- * LATAM COD: 3 packs show by default. Old catalogs stored false on every
- * product — ignore that unless the merchant flipped the admin switch
- * (qtyUpsellLocked). Other markets stay off until qtyUpsellEnabled is true.
+ * Quantity packs show by default in every market. Old catalogs stored false
+ * on every product — ignore that unless the merchant flipped the admin switch
+ * (qtyUpsellLocked).
  */
 export function isCodQtyUpsellEnabled(
   product: Product | undefined,
-  country?: string
+  _country?: string
 ): boolean {
   if (!product) return false;
-  const latam =
-    (country ? usesLatamThreeQtyPacks(country) : false) ||
-    (product.availableIn ?? []).some((code) => usesLatamThreeQtyPacks(code));
-  if (latam) {
-    // Hide only after the merchant actually flipped the admin switch off.
-    if (product.qtyUpsellLocked === true && product.qtyUpsellEnabled === false) {
-      return false;
-    }
-    return true;
+  if (product.qtyUpsellLocked === true && product.qtyUpsellEnabled === false) {
+    return false;
   }
-  return product.qtyUpsellEnabled === true;
+  return true;
 }
 
 /**
