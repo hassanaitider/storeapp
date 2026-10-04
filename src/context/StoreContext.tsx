@@ -1578,10 +1578,15 @@ export function StoreProvider({
     effectiveView && (latamLock || !state.currencyManual)
       ? currencyForCountry(effectiveView)
       : state.currency;
-  const displayLocale =
+  const chosenLocale =
     effectiveView && (latamLock || !state.localeManual)
       ? localeForCountry(effectiveView)
       : state.locale;
+  // Spanish copy exists only for LATAM listings; elsewhere a leftover "es" choice shows mixed English.
+  const displayLocale =
+    chosenLocale === "es" && !isSpanishMarket(displayCountry)
+      ? localeForCountry(displayCountry)
+      : chosenLocale;
 
   // Follow the rendered locale, not state.locale: a mismatched <html dir>
   // moves the scrollbar to the other side and shifts the whole page.
