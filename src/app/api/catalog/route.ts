@@ -131,9 +131,15 @@ export async function GET() {
       { headers: { "Cache-Control": "no-store, max-age=0" } }
     );
   }
+  // Edge-cache the shared catalog so storefront visits don't each hit the function and Blob (Hobby quota).
   return NextResponse.json(
     { ok: true, data },
-    { headers: { "Cache-Control": "no-store, max-age=0" } }
+    {
+      headers: {
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Vercel-CDN-Cache-Control": "max-age=60, stale-while-revalidate=600",
+      },
+    }
   );
 }
 

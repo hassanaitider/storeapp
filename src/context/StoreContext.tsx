@@ -857,7 +857,8 @@ export function StoreProvider({
           updatedAt: Math.max(Date.now(), (localNow?.updatedAt || 0) + 1),
         };
         saved = flushToLocal(stamped, persisted);
-        if (storageReadyRef.current) {
+        // Only admin pages can save the shared catalog; shoppers' PUTs would just 401 and burn invocations.
+        if (storageReadyRef.current && window.location.pathname.startsWith("/admin")) {
           void flushToServer(stamped, persisted);
         }
       } else if (storageReadyRef.current) {
@@ -906,10 +907,15 @@ export function StoreProvider({
             () => catalogAbort.abort(),
             3500
           );
-          const res = await fetch("/api/catalog", {
-            cache: "no-store",
-            signal: catalogAbort.signal,
-          });
+          // Admin bypasses the edge cache so its own edits show at once.
+          const adminView = window.location.pathname.startsWith("/admin");
+          const res = await fetch(
+            adminView ? `/api/catalog?fresh=${Date.now()}` : "/api/catalog",
+            {
+              cache: adminView ? "no-store" : "default",
+              signal: catalogAbort.signal,
+            }
+          );
           window.clearTimeout(catalogTimer);
           if (res.ok) {
             const json = (await res.json()) as {
