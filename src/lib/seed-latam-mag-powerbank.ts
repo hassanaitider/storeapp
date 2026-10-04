@@ -53,7 +53,7 @@ MAG_BANK_PRICES.AR = {
 };
 
 MAG_BANK_PRICES.CR = {
-  price: 22000,
+  price: 22500,
   compare: 35490,
   priceUSD: MAG_USD,
   compareAtUSD: MAG_COMPARE_USD,
@@ -86,6 +86,7 @@ MAG_BANK_PRICES.MX = {
  */
 export const MAG_POWERBANK_SUPERSEDED_PRICES: Partial<Record<CountryCode, number[]>> = {
   AR: [74400],
+  CR: [22000],
 };
 
 const IMAGES = [
