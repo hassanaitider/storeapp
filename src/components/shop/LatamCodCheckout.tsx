@@ -112,9 +112,9 @@ export function LatamCodCheckout({
   const loc = {
     l1: "Departamento",
     l2: "Municipio",
-    l3: "Poblado",
+    l3: "Poblado/colonia",
     missing: showPoblado
-      ? "Selecciona departamento, municipio y poblado"
+      ? "Selecciona departamento, municipio y poblado/colonia"
       : "Selecciona departamento y municipio",
   };
 
