@@ -90,9 +90,9 @@ function buildSmartTag(country: CountryCode): Omit<
   const marketNameEs = getCountry(country).nameEs ?? getCountry(country).nameEn;
   const offer = smartTagOfferLabel(country, TAG_PRICES[country].price);
   return {
-    nameAr: `2 متتبع ذكي بـ ${offer} · يعمل مع iPhone (iOS) و Android`,
-    nameEn: `2 Smart Trackers for ${offer} · Works with iPhone (iOS) & Android`,
-    nameEs: `2 Rastreadores Inteligentes por ${offer} · Para iPhone (iOS) y Android`,
+    nameAr: `2 متتبع ذكي · يعمل مع iPhone (iOS) و Android`,
+    nameEn: `2 Smart Trackers · Works with iPhone (iOS) & Android`,
+    nameEs: `2 Rastreadores Inteligentes · Para iPhone (iOS) y Android`,
     descriptionAr: `
 <h3>2 متتبع ذكي بـ ${offer} — iPhone و Android</h3>
 <p>متتبع صغير (32 مم) يعمل مع تطبيق Apple Find My على iPhone ومع Find Hub على Android. علّقه على المفاتيح أو المحفظة أو الحقيبة، واعرف مكانه على الخريطة، شغّل صوتًا للعثور عليه، واستقبل تنبيهًا إذا نسيته.</p>
