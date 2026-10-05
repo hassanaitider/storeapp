@@ -6,7 +6,7 @@ import { Menu, ShoppingBag, X } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { BrandLogo } from "@/components/layout/BrandLogo";
-import { STORE_MARKETS, getCountry, isSpanishMarket } from "@/lib/countries";
+import { STORE_MARKETS, getCountry } from "@/lib/countries";
 import { CURRENCIES, getCurrency } from "@/lib/currency";
 import type { CountryCode, CurrencyCode, Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -27,8 +27,8 @@ export function Header() {
   const selectableMarkets = geoLockedCountry
     ? STORE_MARKETS.filter((c) => c.code === geoLockedCountry)
     : STORE_MARKETS;
-  const latamShopper =
-    geoLockedCountry !== null && isSpanishMarket(geoLockedCountry);
+  // Shoppers are locked to their IP market; only the admin (never locked) gets the pickers.
+  const lockedShopper = geoLockedCountry !== null;
   const [open, setOpen] = useState(false);
   const currencyInfo = getCurrency(currency);
   const market = getCountry(country);
@@ -57,7 +57,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {latamShopper ? null : (
+          {lockedShopper ? null : (
             <select
               aria-label={t.common.language}
               value={locale}
@@ -70,13 +70,13 @@ export function Header() {
             </select>
           )}
 
+          {lockedShopper ? null : (
           <select
             aria-label={t.common.country}
             value={country}
             onChange={(e) => setCountry(e.target.value as CountryCode, true)}
             className={cn(
               "w-[7.25rem] truncate rounded-md border border-sand-300 bg-white/80 px-2 py-1.5 text-xs font-medium text-ink-800 sm:w-[12rem] sm:text-sm",
-              geoLockedCountry && "hidden sm:block",
               !geoReady && "opacity-60"
             )}
             title={
@@ -96,8 +96,9 @@ export function Header() {
               </option>
             ))}
           </select>
+          )}
 
-          {latamShopper ? null : (
+          {lockedShopper ? null : (
             <select
               aria-label={t.common.currency}
               value={currency}

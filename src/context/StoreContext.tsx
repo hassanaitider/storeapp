@@ -1578,14 +1578,14 @@ export function StoreProvider({
 
   const effectiveView = geoLock ?? viewCountry;
   const displayCountry = effectiveView ?? state.country;
-  // LATAM shoppers get no language/currency picker, so an old manual choice must not stick.
-  const latamLock = geoLock !== null && isSpanishMarket(geoLock);
+  // Shoppers get no language/currency picker, so an old manual choice must not stick.
+  const shopperLock = geoLock !== null;
   const displayCurrency =
-    effectiveView && (latamLock || !state.currencyManual)
+    effectiveView && (shopperLock || !state.currencyManual)
       ? currencyForCountry(effectiveView)
       : state.currency;
   const chosenLocale =
-    effectiveView && (latamLock || !state.localeManual)
+    effectiveView && (shopperLock || !state.localeManual)
       ? localeForCountry(effectiveView)
       : state.locale;
   // Spanish copy exists only for LATAM listings; elsewhere a leftover "es" choice shows mixed English.
