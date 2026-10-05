@@ -13,6 +13,8 @@ import { selectedQtyTotalLocal } from "@/components/shop/ProductQtyUpsell";
 import { formatMexicoCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
+import { LatamWarrantyOption } from "@/components/shop/LatamWarrantyOption";
+import { warrantyUnitLocal } from "@/lib/latam-warranty";
 import { useLiveProduct } from "@/context/StoreContext";
 import {
   MEXICO_ESTADOS,
@@ -30,6 +32,8 @@ type Props = {
   customColor: string;
   onCustomColorChange: (value: string) => void;
   formRef: RefObject<HTMLFormElement | null>;
+  warranty: boolean;
+  onWarrantyChange: (value: boolean) => void;
   onPlaceOrder: (payload: {
     name: string;
     phone: string;
@@ -82,6 +86,8 @@ export function MexicoCodCheckout({
   onCustomColorChange,
   formRef,
   onPlaceOrder,
+  warranty,
+  onWarrantyChange,
 }: Props) {
   const countdown = useOfferCountdown(`${country}:${product.id}`);
   const liveProduct = useLiveProduct(product);
@@ -137,7 +143,9 @@ export function MexicoCodCheckout({
     setColonia("");
   }, [municipio]);
 
-  const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
+  const totalLocal =
+    selectedQtyTotalLocal(product, country, "es", qty) +
+    (warranty ? warrantyUnitLocal(country) * qty : 0);
   const totalLabel = formatMexicoCodPrice(totalLocal);
 
   const onSubmit = (e: FormEvent) => {
@@ -269,6 +277,13 @@ export function MexicoCodCheckout({
           placeholder="Código postal"
           required
           autoComplete="postal-code"
+        />
+
+        <LatamWarrantyOption
+          country={country}
+          qty={qty}
+          checked={warranty}
+          onChange={onWarrantyChange}
         />
 
         <div className="flex items-center justify-between gap-3 rounded-xl bg-[#121c2d] px-4 py-3.5 text-white">

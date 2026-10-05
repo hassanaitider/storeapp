@@ -15,6 +15,8 @@ import { formatLocalAmount } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
+import { LatamWarrantyOption } from "@/components/shop/LatamWarrantyOption";
+import { warrantyUnitLocal } from "@/lib/latam-warranty";
 import { geoTreeForLatamCod } from "@/lib/latam-cod-geo";
 import { codFormLabel } from "@/lib/latam-geo";
 import type { CountryCode, Product } from "@/lib/types";
@@ -28,6 +30,8 @@ type Props = {
   customColor: string;
   onCustomColorChange: (value: string) => void;
   formRef: RefObject<HTMLFormElement | null>;
+  warranty: boolean;
+  onWarrantyChange: (value: boolean) => void;
   onPlaceOrder: (payload: {
     name: string;
     phone: string;
@@ -79,6 +83,8 @@ export function LatamCodCheckout({
   onCustomColorChange,
   formRef,
   onPlaceOrder,
+  warranty,
+  onWarrantyChange,
 }: Props) {
   const currency = currencyForCountry(country);
   const tree = geoTreeForLatamCod(country);
@@ -133,7 +139,9 @@ export function LatamCodCheckout({
     setPoblado("");
   }, [municipio]);
 
-  const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
+  const totalLocal =
+    selectedQtyTotalLocal(product, country, "es", qty) +
+    (warranty ? warrantyUnitLocal(country) * qty : 0);
   const totalLabel = formatLocalAmount(totalLocal, currency, "es");
 
   const onSubmit = (e: FormEvent) => {
@@ -256,6 +264,13 @@ export function LatamCodCheckout({
           onChange={setReferencia}
           placeholder="Color casa / Barrio, sector y referencia"
           required
+        />
+
+        <LatamWarrantyOption
+          country={country}
+          qty={qty}
+          checked={warranty}
+          onChange={onWarrantyChange}
         />
 
         {/* Total bar */}

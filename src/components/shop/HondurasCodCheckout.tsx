@@ -14,6 +14,8 @@ import { formatHondurasCodPrice } from "@/lib/currency";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, selectCodQtyPacks } from "@/lib/qty-upsell";
 import { useLiveProduct } from "@/context/StoreContext";
 import { LatamCodQtyPacks } from "@/components/shop/LatamCodQtyPacks";
+import { LatamWarrantyOption } from "@/components/shop/LatamWarrantyOption";
+import { warrantyUnitLocal } from "@/lib/latam-warranty";
 import {
   hondurasMunicipios,
   hondurasProvincias,
@@ -29,6 +31,8 @@ type Props = {
   customColor: string;
   onCustomColorChange: (value: string) => void;
   formRef: RefObject<HTMLFormElement | null>;
+  warranty: boolean;
+  onWarrantyChange: (value: boolean) => void;
   onPlaceOrder: (payload: {
     name: string;
     phone: string;
@@ -81,6 +85,8 @@ export function HondurasCodCheckout({
   onCustomColorChange,
   formRef,
   onPlaceOrder,
+  warranty,
+  onWarrantyChange,
 }: Props) {
   const countdown = useOfferCountdown(`${country}:${product.id}`);
   const liveProduct = useLiveProduct(product);
@@ -111,7 +117,9 @@ export function HondurasCodCheckout({
     setMunicipio("");
   }, [departamento]);
 
-  const totalLocal = selectedQtyTotalLocal(product, country, "es", qty);
+  const totalLocal =
+    selectedQtyTotalLocal(product, country, "es", qty) +
+    (warranty ? warrantyUnitLocal(country) * qty : 0);
   const totalLabel = formatHondurasCodPrice(totalLocal);
 
   const onSubmit = (e: FormEvent) => {
@@ -224,6 +232,13 @@ export function HondurasCodCheckout({
           options={municipios}
           required
           disabled={!departamento}
+        />
+
+        <LatamWarrantyOption
+          country={country}
+          qty={qty}
+          checked={warranty}
+          onChange={onWarrantyChange}
         />
 
         <div className="flex items-center justify-between gap-3 rounded-xl bg-[#121c2d] px-4 py-3.5 text-white">

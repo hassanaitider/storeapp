@@ -34,6 +34,7 @@ import {
 } from "@/lib/pricing";
 import { pickText } from "@/lib/localized";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, lineTotalUSDForQty } from "@/lib/qty-upsell";
+import { WARRANTY_USD_PER_UNIT, warrantyOrderNote } from "@/lib/latam-warranty";
 import { trackAddToCart, trackViewContent, trackPurchase } from "@/lib/meta-pixel";
 import {
   ProductBriefDescription,
@@ -229,6 +230,7 @@ function ProductPageInner() {
     setActiveImg(preferredMediaIndex(product.images));
   }, [product?.id]);
   const [customColor, setCustomColor] = useState("");
+  const [warranty, setWarranty] = useState(false);
   const [order, setOrder] = useState<Order | null>(null);
   const [form, setForm] = useState({
     name: "",
@@ -377,8 +379,18 @@ function ProductPageInner() {
     notes?: string;
   }) => {
     if (!product.inStock) return;
-    const created = placeOrder(payload, [
-      { productId: product.id, quantity: qty, lineTotalUSD: orderLineUSD },
+    const withWarranty = warranty
+      ? {
+          ...payload,
+          notes: [payload.notes, warrantyOrderNote(country, qty)].filter(Boolean).join(" · "),
+        }
+      : payload;
+    const created = placeOrder(withWarranty, [
+      {
+        productId: product.id,
+        quantity: qty,
+        lineTotalUSD: orderLineUSD + (warranty ? WARRANTY_USD_PER_UNIT * qty : 0),
+      },
     ]);
     setOrder(created);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -541,6 +553,8 @@ function ProductPageInner() {
           onCustomColorChange={setCustomColor}
           formRef={formRef}
           onPlaceOrder={submitLatamCod}
+          warranty={warranty}
+          onWarrantyChange={setWarranty}
         />
       ) : mexicoCod ? (
         <MexicoCodCheckout
@@ -552,6 +566,8 @@ function ProductPageInner() {
           onCustomColorChange={setCustomColor}
           formRef={formRef}
           onPlaceOrder={submitLatamCod}
+          warranty={warranty}
+          onWarrantyChange={setWarranty}
         />
       ) : dominicanCod ? (
         <DominicanCodCheckout
@@ -563,6 +579,8 @@ function ProductPageInner() {
           onCustomColorChange={setCustomColor}
           formRef={formRef}
           onPlaceOrder={submitLatamCod}
+          warranty={warranty}
+          onWarrantyChange={setWarranty}
         />
       ) : ecuadorCod ? (
         <EcuadorCodCheckout
@@ -574,6 +592,8 @@ function ProductPageInner() {
           onCustomColorChange={setCustomColor}
           formRef={formRef}
           onPlaceOrder={submitLatamCod}
+          warranty={warranty}
+          onWarrantyChange={setWarranty}
         />
       ) : salvadorCod ? (
         <SalvadorCodCheckout
@@ -585,6 +605,8 @@ function ProductPageInner() {
           onCustomColorChange={setCustomColor}
           formRef={formRef}
           onPlaceOrder={submitLatamCod}
+          warranty={warranty}
+          onWarrantyChange={setWarranty}
         />
       ) : hondurasCod ? (
         <HondurasCodCheckout
@@ -596,6 +618,8 @@ function ProductPageInner() {
           onCustomColorChange={setCustomColor}
           formRef={formRef}
           onPlaceOrder={submitLatamCod}
+          warranty={warranty}
+          onWarrantyChange={setWarranty}
         />
       ) : nicaraguaCod ? (
         <NicaraguaCodCheckout
@@ -607,6 +631,8 @@ function ProductPageInner() {
           onCustomColorChange={setCustomColor}
           formRef={formRef}
           onPlaceOrder={submitLatamCod}
+          warranty={warranty}
+          onWarrantyChange={setWarranty}
         />
       ) : latamCod ? (
         <LatamCodCheckout
@@ -618,6 +644,8 @@ function ProductPageInner() {
           onCustomColorChange={setCustomColor}
           formRef={formRef}
           onPlaceOrder={submitLatamCod}
+          warranty={warranty}
+          onWarrantyChange={setWarranty}
         />
       ) : (
       <div
