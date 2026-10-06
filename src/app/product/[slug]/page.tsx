@@ -9,6 +9,7 @@ import {
   HandCoins,
   Star,
   CheckCircle2,
+  RotateCcw,
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
@@ -745,6 +746,21 @@ function ProductPageInner() {
           >
             {product.inStock ? t.checkout.placeOrder : t.shop.outOfStock}
           </button>
+          <ul className="grid grid-cols-3 gap-2 pt-1 text-center text-[11px] font-semibold text-brand-800 sm:text-xs">
+            {[
+              { icon: HandCoins, label: t.trust.cod },
+              { icon: Truck, label: t.trust.freeShipping },
+              { icon: RotateCcw, label: t.trust.returns },
+            ].map(({ icon: Icon, label }) => (
+              <li
+                key={label}
+                className="flex flex-col items-center gap-1 rounded-xl bg-brand-50 px-2 py-2.5"
+              >
+                <Icon className="h-5 w-5 text-brand-700" />
+                <span>{label}</span>
+              </li>
+            ))}
+          </ul>
         </form>
       </div>
       )}
