@@ -78,10 +78,12 @@ export function ProductCard({
             </span>
           )}
         </div>
-        <p className="mt-1 text-xs text-brand-600">
-          ★ {product.rating.toFixed(1)} · {product.reviewCount}{" "}
-          {t.product.reviews}
-        </p>
+        {product.reviewCount > 0 ? (
+          <p className="mt-1 text-xs text-brand-600">
+            ★ {product.rating.toFixed(1)} · {product.reviewCount}{" "}
+            {t.product.reviews}
+          </p>
+        ) : null}
         <div className="mt-auto flex gap-2 pt-4">
           <button
             type="button"

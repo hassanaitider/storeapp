@@ -480,6 +480,7 @@ function ProductPageInner() {
           {name}
         </h1>
         <div className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+          {product.reviewCount > 0 || product.landing?.reviews?.length ? (
           <div className="flex items-center gap-2 text-sm text-brand-700">
             <div className="flex">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -513,6 +514,7 @@ function ProductPageInner() {
               </span>
             )}
           </div>
+          ) : null}
           <div className="flex flex-wrap items-baseline gap-2">
             <span className="product-price">
               {formatProductPrice(product, country, locale)}

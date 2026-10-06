@@ -543,6 +543,176 @@ ${COD_EN}
     },
   },
   {
+    id: "prod-dashcam-3cam-ma",
+    slug: "dashcam-3-cameras-ecran-4-pouces",
+    nameAr: "كاميرا سيارة 3 عدسات — شاشة 4 بوصة Full HD 1080P",
+    nameEn: "3-Lens Car Dash Cam — 4\" Screen Full HD 1080P",
+    descriptionAr: `
+<h3>3 كاميرات تحمي سيارتك من الأمام والداخل والخلف</h3>
+<p>كاميرا سيارة احترافية بـ <strong>3 عدسات</strong>: أمامية بزاوية عريضة <strong>170°</strong>، داخلية بزاوية <strong>120°</strong>، وكاميرا خلفية للركن. شاشة <strong>IPS 4 بوصة</strong> واضحة، تسجيل <strong>Full HD 1080P</strong>، وحساس G-sensor يحفظ الفيديو تلقائيًا عند أي اصطدام.</p>
+<ul>
+<li>تسجيل الأمام والداخل في نفس الوقت + كاميرا خلفية</li>
+<li>عند الرجوع للخلف تتحول الشاشة تلقائيًا لصورة الكاميرا الخلفية مع خطوط المساعدة</li>
+<li>G-sensor: حفظ وقفل الفيديو عند الاصطدام حتى لا يُمسح</li>
+<li>تسجيل متواصل (Loop): عند امتلاء بطاقة TF يحذف أقدم الملفات ويكمل التسجيل</li>
+<li>مراقبة الركن وكشف الحركة: يبدأ التسجيل تلقائيًا</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>3 cameras protecting your car — front, cabin and rear</h3>
+<p>A professional <strong>3-lens</strong> dash cam: <strong>170°</strong> wide-angle front lens, <strong>120°</strong> cabin lens and a rear parking camera. Clear <strong>4" IPS</strong> screen, <strong>Full HD 1080P</strong> recording, and a G-sensor that automatically saves footage on impact.</p>
+<ul>
+<li>Front and cabin recorded at the same time + rear camera</li>
+<li>When reversing, the screen switches to the rear camera with guide lines</li>
+<li>G-sensor: locks the clip on impact so it is never overwritten</li>
+<li>Loop recording: when the TF card is full, the oldest files are replaced</li>
+<li>Parking monitoring and motion detection start recording automatically</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "3 عدسات: أمامية 170° + داخلية 120° + كاميرا خلفية",
+      "شاشة IPS HD مقاس 4.0 بوصة",
+      "تسجيل Full HD 1080P",
+      "فتحة عدسة كبيرة F2.0 لنفاذية ضوء عالية",
+      "رؤية ليلية في الأماكن المظلمة مع قليل من الضوء",
+      "G-sensor لحفظ الفيديو عند الاصطدام",
+      "تسجيل متواصل (Loop) على بطاقة TF",
+      "كشف الحركة ومراقبة الركن",
+      "مادة ABS متينة",
+    ],
+    detailsEn: [
+      "3 lenses: 170° front + 120° cabin + rear camera",
+      "4.0\" IPS HD screen",
+      "Full HD 1080P recording",
+      "Large F2.0 aperture for high light intake",
+      "Night vision in dark areas with some light",
+      "G-sensor saves footage on impact",
+      "Loop recording on TF card",
+      "Motion detection and parking monitoring",
+      "Durable ABS body",
+    ],
+    priceUSD: 39.9,
+    compareAtUSD: 59.9,
+    marketPrices: { MA: 399 },
+    marketComparePrices: { MA: 599 },
+    availableIn: ["MA"],
+    images: [
+      "/products/dashcam-3cam-main.jpg",
+      "/products/dashcam-3cam-1.webp",
+      "/products/dashcam-3cam-2.webp",
+      "/products/dashcam-3cam-3.webp",
+      "/products/dashcam-3cam-4.webp",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 0,
+    reviewCount: 0,
+    categoryId: "cat-MA",
+    createdAt: "2026-10-06T00:00:00.000Z",
+    landing: {
+      headlineAr: "كاميرا سيارة 3 عدسات… دليلك في أي حادث",
+      headlineEn: "3-lens dash cam — your proof in any accident",
+      introAr:
+        "سجّل الطريق أمامك وداخل السيارة وخلفها في نفس الوقت. شاشة 4 بوصة، جودة Full HD 1080P، وحفظ تلقائي للفيديو عند الاصطدام. اطلب الآن بـ 399 درهم فقط بدل 599 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+      introEn:
+        "Record the road ahead, the cabin and the rear at the same time. 4\" screen, Full HD 1080P quality and automatic saving on impact. Order now for only 399 MAD instead of 599 MAD — free delivery and cash on delivery in Morocco.",
+      sections: [
+        {
+          titleAr: "3 عدسات: أمام، داخل، وخلف",
+          titleEn: "3 lenses: front, cabin and rear",
+          bodyAr:
+            "العدسة الأمامية بزاوية 170° والداخلية بزاوية 120° تسجلان في نفس الوقت، والكاميرا الخلفية تكمل الحماية. اختر وضع العرض الذي يناسبك على الشاشة: الأمام والخلف معًا أو داخل السيارة وخارجها في نفس التسجيل.",
+          bodyEn:
+            "The 170° front lens and 120° cabin lens record at the same time, and the rear camera completes the coverage. Pick the screen layout you like: front and rear together, or inside and outside the car in one recording.",
+          image: "/products/dashcam-3cam-1.webp",
+        },
+        {
+          titleAr: "مساعد الرجوع للخلف",
+          titleEn: "Reversing assistant",
+          bodyAr:
+            "عند الرجوع للخلف تتحول الشاشة تلقائيًا لصورة الكاميرا الخلفية بالشاشة الكاملة مع خطوط المساعدة — ركن أسهل وأكثر أمانًا.",
+          bodyEn:
+            "When you reverse, the screen automatically switches to the full-screen rear camera view with guide lines — easier, safer parking.",
+          image: "/products/dashcam-3cam-4.webp",
+        },
+        {
+          titleAr: "G-sensor وتسجيل متواصل",
+          titleEn: "G-sensor and loop recording",
+          bodyAr:
+            "عند أي اصطدام يحفظ الـ G-sensor الفيديو ويقفله تلقائيًا حتى لا يُكتب فوقه. وعند امتلاء بطاقة TF يحذف الجهاز أقدم الملفات ويواصل التسجيل طوال الوقت.",
+          bodyEn:
+            "On impact, the G-sensor saves and locks the clip so it is never overwritten. When the TF card is full, the oldest files are deleted and recording continues.",
+          image: "/products/dashcam-3cam-3.webp",
+        },
+        {
+          titleAr: "شاشة 4 بوصة وأزرار بسيطة",
+          titleEn: "4\" screen and simple buttons",
+          bodyAr:
+            "شاشة IPS HD مقاس 4 بوصة تعرض صورة واضحة، وفتحة عدسة F2.0 تلتقط ضوءًا أكثر لصورة حقيقية حتى في الإضاءة الضعيفة. مراقبة الركن وكشف الحركة يبدآن التسجيل تلقائيًا عند أي حركة أو صدمة.",
+          bodyEn:
+            "A 4\" IPS HD screen shows a clear picture, and the F2.0 aperture lets in more light for true-to-life footage even in low light. Parking monitoring and motion detection start recording automatically on any movement or bump.",
+          image: "/products/dashcam-3cam-2.webp",
+        },
+      ],
+      benefitsAr: [
+        "3 كاميرات: أمام + داخل + خلف",
+        "جودة Full HD 1080P",
+        "زاوية عريضة 170°",
+        "حفظ تلقائي عند الاصطدام",
+        "مساعد الرجوع للخلف",
+        "مراقبة الركن وكشف الحركة",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "3 cameras: front + cabin + rear",
+        "Full HD 1080P quality",
+        "170° wide angle",
+        "Auto-save on impact",
+        "Reversing assistant",
+        "Parking monitoring and motion detection",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "هل الكاميرا الخلفية موجودة مع الجهاز؟",
+          questionEn: "Is the rear camera included?",
+          answerAr:
+            "نعم — الطقم فيه الجهاز بالشاشة والكاميرا الأمامية والداخلية، مع الكاميرا الخلفية وكابلاتها والحامل وشاحن السيارة.",
+          answerEn:
+            "Yes — the set includes the screen unit with front and cabin cameras, plus the rear camera with its cables, the mount and the car charger.",
+        },
+        {
+          questionAr: "هل تسجل في الليل؟",
+          questionEn: "Does it record at night?",
+          answerAr:
+            "نعم — تعطي صورة واضحة في الأماكن المظلمة مثل مواقف السيارات ما دام هناك قليل من الضوء.",
+          answerEn:
+            "Yes — it gives a clear picture in dark places like car parks as long as there is some light.",
+        },
+        {
+          questionAr: "ماذا يحدث عند امتلاء بطاقة الذاكرة؟",
+          questionEn: "What happens when the memory card is full?",
+          answerAr:
+            "التسجيل المتواصل يحذف أقدم الملفات تلقائيًا ويكمل التسجيل، أما فيديوهات الاصطدام فتبقى محفوظة بفضل الـ G-sensor.",
+          answerEn:
+            "Loop recording deletes the oldest files automatically and keeps recording, while impact clips stay locked thanks to the G-sensor.",
+        },
+        {
+          questionAr: "هل التركيب صعب؟",
+          questionEn: "Is installation difficult?",
+          answerAr:
+            "لا — ثبّت الجهاز بالحامل على الزجاج الأمامي ووصّله بشاحن السيارة، ثم ركّب الكاميرا الخلفية في الخلف.",
+          answerEn:
+            "No — fix the unit on the windshield with the mount, plug it into the car charger, then fit the rear camera at the back.",
+        },
+      ],
+    },
+  },
+  {
     id: "prod-car-vacuum",
     slug: "cordless-car-vacuum",
     nameAr: "مكنسة سيارة لاسلكية",
