@@ -599,7 +599,7 @@ ${COD_EN}
     marketComparePrices: { MA: 599 },
     availableIn: ["MA"],
     images: [
-      "/products/dashcam-3cam-main.jpg",
+      "/products/dashcam-3cam-main.webp",
       "/products/dashcam-3cam-1.webp",
       "/products/dashcam-3cam-2.webp",
       "/products/dashcam-3cam-3.webp",
