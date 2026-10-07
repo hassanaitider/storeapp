@@ -755,16 +755,15 @@ ${COD_EN}
     ],
     priceUSD: 49,
     compareAtUSD: 69,
-    marketPrices: { MA: 199, SA: 189, AE: 179, OM: 19.5, IQ: 26000, LY: 110 },
+    marketPrices: { SA: 189, AE: 179, OM: 19.5, IQ: 26000, LY: 110 },
     marketComparePrices: {
-      MA: 279,
       SA: 259,
       AE: 249,
       OM: 26.9,
       IQ: 39000,
       LY: 165,
     },
-    availableIn: ["MA", "SA", "AE", "OM", "IQ", "LY"],
+    availableIn: ["SA", "AE", "OM", "IQ", "LY"],
     images: [
       "/products/car-vacuum-demo.webp",
       "/products/car-vacuum.webp",
