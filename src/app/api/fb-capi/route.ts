@@ -5,6 +5,7 @@ import {
   type CapiUserData,
 } from "@/lib/meta-capi";
 import { getFbPixelId, getMetaCapiAccessToken } from "@/lib/meta-config";
+import { normalizeCapiUserData } from "./user-data";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -90,13 +91,16 @@ export async function POST(request: Request) {
   }
 
   const rawUser = body.user_data || body.userData || {};
-  const userData: CapiUserData = {
-    ...rawUser,
-    fbp: rawUser.fbp || cookieFromRequest(request, "_fbp"),
-    fbc: rawUser.fbc || cookieFromRequest(request, "_fbc"),
-    clientIpAddress: clientIp(request),
-    clientUserAgent: request.headers.get("user-agent") || undefined,
-  };
+  const userData: CapiUserData = normalizeCapiUserData(
+    {
+      ...rawUser,
+      fbp: rawUser.fbp || cookieFromRequest(request, "_fbp"),
+      fbc: rawUser.fbc || cookieFromRequest(request, "_fbc"),
+      clientIpAddress: clientIp(request),
+      clientUserAgent: request.headers.get("user-agent") || undefined,
+    },
+    request
+  );
 
   const result = await sendMetaCapiEvents([
     {
