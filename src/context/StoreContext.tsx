@@ -268,6 +268,8 @@ function mergeProductImages(seed: Product, stored: Product): string[] {
   return storedImgs.length ? storedImgs : seed.images ?? [];
 }
 
+const SEED_CONTENT_IDS = new Set(["prod-steam-iron-ma", "prod-dashcam-3cam-ma"]);
+
 function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   if (!stored?.length) return cloneSeedProducts();
   const allowedCats = new Set(SEED_CATEGORIES.map((c) => c.id));
@@ -372,6 +374,16 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         slug: p.slug?.trim() ? p.slug : seed.slug,
         qtyOffers: p.qtyOffers?.length ? p.qtyOffers : seed.qtyOffers,
       };
+
+      // Content for these SKUs lives in the seed; shoppers' cached copies must not keep old packs/photos.
+      if (SEED_CONTENT_IDS.has(seed.id)) {
+        return {
+          ...base,
+          qtyOffers: seed.qtyOffers,
+          landing: seed.landing,
+          images: [...(seed.images ?? [])],
+        };
+      }
 
       // Per-country Elevador rows must stay pinned to their market — a wrong
       // category dropdown was making Costa Rica preview open another listing.
