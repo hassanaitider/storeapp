@@ -766,7 +766,7 @@ ${COD_EN}
     customColorEnabled: false,
     qtyOffers: [
       { quantity: 1, discountPercent: 0 },
-      { quantity: 2, marketPrices: { MA: 299 }, popular: true },
+      { quantity: 2, marketPrices: { MA: 394 }, popular: true },
     ],
     inStock: true,
     featured: true,
@@ -778,9 +778,9 @@ ${COD_EN}
       headlineAr: "ملابسك مكوية في دقائق… بدون طاولة",
       headlineEn: "Wrinkle-free clothes in minutes — no board needed",
       introAr:
-        "مكواة بخار محمولة تزيل التجاعيد من القميص والبدلة وهي معلّقة. صغيرة، خفيفة، وتدخل في أي درج أو حقيبة سفر. قطعة بـ 219 درهم، وقطعتين بـ 299 درهم فقط — توصيل مجاني والدفع عند الاستلام في المغرب.",
+        "مكواة بخار محمولة تزيل التجاعيد من القميص والبدلة وهي معلّقة. صغيرة، خفيفة، وتدخل في أي درج أو حقيبة سفر. قطعة بـ 219 درهم، وقطعتين بـ 394 درهم فقط — توصيل مجاني والدفع عند الاستلام في المغرب.",
       introEn:
-        "A handheld steam iron that smooths shirts and suits while they hang. Small, light, and fits any drawer or travel bag. 219 MAD for one, or 2 for only 299 MAD — free delivery and cash on delivery in Morocco.",
+        "A handheld steam iron that smooths shirts and suits while they hang. Small, light, and fits any drawer or travel bag. 219 MAD for one, or 2 for only 394 MAD — free delivery and cash on delivery in Morocco.",
       sections: [
         {
           titleAr: "بخار قوي للملابس المعلّقة",
@@ -833,7 +833,7 @@ ${COD_EN}
         "صفيحة كي للياقات والأزرار",
         "لكل أنواع الملابس",
         "صغيرة وسهلة السفر",
-        "قطعتين بـ 299 درهم فقط",
+        "قطعتين بـ 394 درهم فقط",
         "توصيل مجاني والدفع عند الاستلام",
       ],
       benefitsEn: [
@@ -841,7 +841,7 @@ ${COD_EN}
         "Ironing plate for collars and buttons",
         "For all kinds of clothes",
         "Small and travel-friendly",
-        "2 for only 299 MAD",
+        "2 for only 394 MAD",
         "Free delivery and COD",
       ],
       faq: [
@@ -862,8 +862,8 @@ ${COD_EN}
         {
           questionAr: "شحال الثمن ديال جوج؟",
           questionEn: "How much for two?",
-          answerAr: "قطعة بـ 219 درهم، وقطعتين بـ 299 درهم فقط.",
-          answerEn: "One for 219 MAD, or two for only 299 MAD.",
+          answerAr: "قطعة بـ 219 درهم، وقطعتين بـ 394 درهم فقط.",
+          answerEn: "One for 219 MAD, or two for only 394 MAD.",
         },
       ],
     },
