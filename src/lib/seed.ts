@@ -713,6 +713,162 @@ ${COD_EN}
     },
   },
   {
+    id: "prod-steam-iron-ma",
+    slug: "mini-fer-vapeur-portable",
+    nameAr: "مكواة بخار محمولة — كي سريع بدون طاولة",
+    nameEn: "Handheld Steam Iron — Quick Ironing, No Board Needed",
+    descriptionAr: `
+<h3>وداعًا للتجاعيد… في دقائق وبدون طاولة كي</h3>
+<p>مكواة بخار صغيرة باليد: <strong>بخار قوي</strong> يزيل التجاعيد من الملابس وهي معلّقة، و<strong>صفيحة كي</strong> للكي المباشر. مقدمة مدببة توصل للياقة وبين الأزرار، وحجم صغير يدخل في الدرج أو حقيبة السفر.</p>
+<ul>
+<li>بخار للملابس المعلّقة — بدون طاولة كي</li>
+<li>صفيحة كي بمقدمة مدببة للياقات والأزرار</li>
+<li>مناسبة للبدلة، القميص، القطن والكتان</li>
+<li>تصميم صغير وخفيف — سهل التخزين والسفر</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Goodbye wrinkles — in minutes, no ironing board</h3>
+<p>A compact handheld steam iron: <strong>strong steam</strong> smooths clothes while they hang, plus an <strong>ironing plate</strong> for direct pressing. The pointed tip reaches collars and between buttons, and it is small enough for a drawer or travel bag.</p>
+<ul>
+<li>Steam hanging clothes — no ironing board</li>
+<li>Pointed ironing plate for collars and buttons</li>
+<li>Works on suits, shirts, cotton and linen</li>
+<li>Small and light — easy to store and travel with</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "بخار للملابس المعلّقة + صفيحة للكي المباشر",
+      "مقدمة مدببة للياقات وبين الأزرار",
+      "مناسبة للبدلة، القميص، القطن والكتان، والقطن الخالص",
+      "حجم صغير يدخل في الدرج وحقيبة السفر",
+    ],
+    detailsEn: [
+      "Steam for hanging clothes + plate for direct ironing",
+      "Pointed tip for collars and between buttons",
+      "For suits, shirts, cotton & linen, and pure cotton",
+      "Small enough for a drawer or travel bag",
+    ],
+    priceUSD: 21.9,
+    compareAtUSD: 21.9,
+    marketPrices: { MA: 219 },
+    availableIn: ["MA"],
+    images: [
+      "/products/steam-iron-main.webp",
+      "/products/steam-iron-1.webp",
+      "/products/steam-iron-2.webp",
+      "/products/steam-iron-3.webp",
+      "/products/steam-iron-4.webp",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    qtyOffers: [
+      { quantity: 1, discountPercent: 0 },
+      { quantity: 2, marketPrices: { MA: 299 }, popular: true },
+    ],
+    inStock: true,
+    featured: true,
+    rating: 0,
+    reviewCount: 0,
+    categoryId: "cat-MA",
+    createdAt: "2026-10-08T00:00:00.000Z",
+    landing: {
+      headlineAr: "ملابسك مكوية في دقائق… بدون طاولة",
+      headlineEn: "Wrinkle-free clothes in minutes — no board needed",
+      introAr:
+        "مكواة بخار محمولة تزيل التجاعيد من القميص والبدلة وهي معلّقة. صغيرة، خفيفة، وتدخل في أي درج أو حقيبة سفر. قطعة بـ 219 درهم، وقطعتين بـ 299 درهم فقط — توصيل مجاني والدفع عند الاستلام في المغرب.",
+      introEn:
+        "A handheld steam iron that smooths shirts and suits while they hang. Small, light, and fits any drawer or travel bag. 219 MAD for one, or 2 for only 299 MAD — free delivery and cash on delivery in Morocco.",
+      sections: [
+        {
+          titleAr: "بخار قوي للملابس المعلّقة",
+          titleEn: "Strong steam for hanging clothes",
+          bodyAr:
+            "علّق القميص ومرّر المكواة — البخار يزيل التجاعيد بسرعة بدون طاولة كي وبدون تعب.",
+          bodyEn:
+            "Hang the shirt and pass the iron over it — the steam removes wrinkles fast, no board and no hassle.",
+          image: "/products/steam-iron-main.webp",
+        },
+        {
+          titleAr: "قبل وبعد",
+          titleEn: "Before and after",
+          bodyAr:
+            "من قميص مكرمش إلى قميص مرتب وجاهز للخروج في دقائق.",
+          bodyEn:
+            "From a crumpled shirt to a neat one, ready to go out in minutes.",
+          image: "/products/steam-iron-2.webp",
+        },
+        {
+          titleAr: "لكل أنواع الملابس",
+          titleEn: "For every kind of clothing",
+          bodyAr:
+            "البدلة، القميص، القطن والكتان، والقطن الخالص — مكواة وحدة لكل ملابسك.",
+          bodyEn:
+            "Suits, shirts, cotton & linen, and pure cotton — one iron for all your clothes.",
+          image: "/products/steam-iron-1.webp",
+        },
+        {
+          titleAr: "مقدمة مدببة للتفاصيل",
+          titleEn: "Pointed tip for the details",
+          bodyAr:
+            "صفيحة الكي بمقدمة مدببة تغطي مساحة أكبر وتوصل للياقة وبين الأزرار بسهولة.",
+          bodyEn:
+            "The ironing plate's pointed tip covers more area and easily reaches collars and between buttons.",
+          image: "/products/steam-iron-3.webp",
+        },
+        {
+          titleAr: "صغيرة… تدخل في الدرج",
+          titleEn: "Small enough for a drawer",
+          bodyAr:
+            "تخزّنها في الدرج أو تاخذها معك في السفر — دائمًا جاهزة.",
+          bodyEn:
+            "Store it in a drawer or take it on trips — always ready.",
+          image: "/products/steam-iron-4.webp",
+        },
+      ],
+      benefitsAr: [
+        "كي بالبخار بدون طاولة",
+        "صفيحة كي للياقات والأزرار",
+        "لكل أنواع الملابس",
+        "صغيرة وسهلة السفر",
+        "قطعتين بـ 299 درهم فقط",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "Steam ironing without a board",
+        "Ironing plate for collars and buttons",
+        "For all kinds of clothes",
+        "Small and travel-friendly",
+        "2 for only 299 MAD",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "واش خاصني طاولة الكي؟",
+          questionEn: "Do I need an ironing board?",
+          answerAr:
+            "لا — تقدر تكوي الملابس وهي معلّقة بالبخار، أو تستعمل صفيحة الكي مباشرة على الثوب.",
+          answerEn:
+            "No — steam clothes while they hang, or use the ironing plate directly on the fabric.",
+        },
+        {
+          questionAr: "على أي ملابس تخدم؟",
+          questionEn: "Which clothes does it work on?",
+          answerAr: "البدلة، القميص، القطن والكتان، والقطن الخالص.",
+          answerEn: "Suits, shirts, cotton & linen, and pure cotton.",
+        },
+        {
+          questionAr: "شحال الثمن ديال جوج؟",
+          questionEn: "How much for two?",
+          answerAr: "قطعة بـ 219 درهم، وقطعتين بـ 299 درهم فقط.",
+          answerEn: "One for 219 MAD, or two for only 299 MAD.",
+        },
+      ],
+    },
+  },
+  {
     id: "prod-car-vacuum",
     slug: "cordless-car-vacuum",
     nameAr: "مكنسة سيارة لاسلكية",
