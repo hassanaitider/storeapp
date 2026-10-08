@@ -756,7 +756,7 @@ ${COD_EN}
     marketPrices: { MA: 219 },
     availableIn: ["MA"],
     images: [
-      "/products/steam-iron-main.webp",
+      "/products/steam-iron-cover.webp",
       "/products/steam-iron-1.webp",
       "/products/steam-iron-2.webp",
       "/products/steam-iron-3.webp",
@@ -783,13 +783,13 @@ ${COD_EN}
         "A handheld steam iron that smooths shirts and suits while they hang. Small, light, and fits any drawer or travel bag. 219 MAD for one, or 2 for only 394 MAD — free delivery and cash on delivery in Morocco.",
       sections: [
         {
-          titleAr: "بخار قوي للملابس المعلّقة",
-          titleEn: "Strong steam for hanging clothes",
+          titleAr: "صفيحة من سبيكة السيراميك",
+          titleEn: "Alloy ceramic plate",
           bodyAr:
-            "علّق القميص ومرّر المكواة — البخار يزيل التجاعيد بسرعة بدون طاولة كي وبدون تعب.",
+            "صفيحة سيراميك بثقوب للبخار تنزلق بسهولة على الثوب — كي مباشر يزيل التجاعيد بسرعة وبدون تعب.",
           bodyEn:
-            "Hang the shirt and pass the iron over it — the steam removes wrinkles fast, no board and no hassle.",
-          image: "/products/steam-iron-main.webp",
+            "A ceramic plate with steam holes glides easily over fabric — direct ironing that removes wrinkles fast and effortlessly.",
+          image: "/products/steam-iron-cover.webp",
         },
         {
           titleAr: "قبل وبعد",
