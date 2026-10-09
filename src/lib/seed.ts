@@ -869,6 +869,173 @@ ${COD_EN}
     },
   },
   {
+    id: "prod-back-belt-ma",
+    slug: "ceinture-lombaire-dos",
+    nameAr: "حزام دعم أسفل الظهر — ضغط مزدوج قابل للتعديل",
+    nameEn: "Lower Back Support Belt — Adjustable Double Compression",
+    descriptionAr: `
+<h3>ظهرك مدعوم… فالخدمة، فالدار، وفالطريق</h3>
+<p>حزام لدعم أسفل الظهر بـ<strong>ضغط مزدوج قابل للتعديل</strong>: أشرطة جانبية متقاطعة تشدّ الحزام على قدّك، ودعامات خلفية تحافظ على استقامة الظهر. قماش مثقّب يدخل الهواء، خفيف ويتلبس تحت الحوايج.</p>
+<ul>
+<li>ضغط مزدوج بأشرطة متقاطعة قابلة للتعديل</li>
+<li>دعامات خلفية تساعد على استقامة الظهر</li>
+<li>قماش مثقّب يتنفس — مريح طول النهار</li>
+<li>إغلاق لاصق سريع — تلبسو وتحيدو فثواني</li>
+</ul>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Your back supported — at work, at home, on the go</h3>
+<p>A lower back support belt with <strong>adjustable double compression</strong>: crossed side straps tighten it to your size, and back stays help keep your back straight. Perforated breathable fabric, light enough to wear under clothes.</p>
+<ul>
+<li>Double compression with adjustable crossed straps</li>
+<li>Back stays help keep your back straight</li>
+<li>Breathable perforated fabric — comfortable all day</li>
+<li>Quick hook-and-loop closure — on and off in seconds</li>
+</ul>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "ضغط مزدوج بأشرطة جانبية متقاطعة",
+      "دعامات خلفية لدعم أسفل الظهر",
+      "قماش مثقّب يتنفس",
+      "إغلاق لاصق قابل للتعديل حسب القد",
+      "يتلبس تحت الحوايج",
+    ],
+    detailsEn: [
+      "Double compression with crossed side straps",
+      "Back stays for lower back support",
+      "Breathable perforated fabric",
+      "Adjustable hook-and-loop closure",
+      "Wearable under clothes",
+    ],
+    priceUSD: 24.9,
+    compareAtUSD: 24.9,
+    marketPrices: { MA: 249 },
+    availableIn: ["MA"],
+    images: [
+      "/products/back-belt-main.webp",
+      "/products/back-belt-1.webp",
+      "/products/back-belt-2.webp",
+      "/products/back-belt-3.webp",
+      "/products/back-belt-4.webp",
+      "/products/back-belt-5.webp",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    qtyOffers: [{ quantity: 1, discountPercent: 0 }],
+    qtyUpsellLocked: true,
+    qtyUpsellEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 0,
+    reviewCount: 0,
+    categoryId: "cat-MA",
+    createdAt: "2026-10-09T00:00:00.000Z",
+    landing: {
+      headlineAr: "دعم قوي لأسفل الظهر… طول النهار",
+      headlineEn: "Strong lower back support — all day long",
+      introAr:
+        "حزام بضغط مزدوج قابل للتعديل كيدعم أسفل الظهر ويساعد على استقامته، سواء كنتي كتهز الثقيل، كتخدم فالدار، ولا واقف بزاف. خفيف، كيتنفس، ويتلبس تحت الحوايج. الثمن 249 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+      introEn:
+        "An adjustable double-compression belt that supports your lower back and helps keep it straight — whether you lift heavy loads, do housework, or stand for long hours. Light, breathable, and wearable under clothes. 249 MAD — free delivery and cash on delivery in Morocco.",
+      sections: [
+        {
+          titleAr: "ضغط مزدوج قابل للتعديل",
+          titleEn: "Adjustable double compression",
+          bodyAr:
+            "أشرطة جانبية متقاطعة كتشدّ الحزام على قدّك وكتعطي دعم ثابت لأسفل الظهر — كتتحكم فالضغط كيف بغيتي.",
+          bodyEn:
+            "Crossed side straps tighten the belt to your size for steady lower back support — you control the compression.",
+          image: "/products/back-belt-1.webp",
+        },
+        {
+          titleAr: "دعامات خلفية لاستقامة الظهر",
+          titleEn: "Back stays for a straighter back",
+          bodyAr:
+            "دعامات فالجهة الخلفية كتساعد على الحفاظ على وضعية مستقيمة، وقماش مثقّب كيدخل الهواء باش تبقى مرتاح.",
+          bodyEn:
+            "Stays in the back panel help maintain an upright posture, and perforated fabric lets air through so you stay comfortable.",
+          image: "/products/back-belt-main.webp",
+        },
+        {
+          titleAr: "فالخدمة وهز الثقيل",
+          titleEn: "At work and when lifting",
+          bodyAr:
+            "كيعطيك دعم إضافي ملي كتهز الكراطن ولا الحوايج الثقال.",
+          bodyEn:
+            "Extra support when you carry boxes or heavy loads.",
+          image: "/products/back-belt-2.webp",
+        },
+        {
+          titleAr: "فشغل الدار",
+          titleEn: "For housework",
+          bodyAr:
+            "التصبين، الجفاف، والتحناي — الحزام كيبقى ثابت ومريح وانتي كتخدمي.",
+          bodyEn:
+            "Laundry, cleaning, and bending — the belt stays in place and comfortable while you work.",
+          image: "/products/back-belt-3.webp",
+        },
+        {
+          titleAr: "إغلاق سهل وسريع",
+          titleEn: "Easy, quick closure",
+          bodyAr:
+            "إغلاق لاصق عريض — تلبسو وتعدّلو وتحيدو فثواني.",
+          bodyEn:
+            "Wide hook-and-loop closure — put it on, adjust, and take it off in seconds.",
+          image: "/products/back-belt-4.webp",
+        },
+        {
+          titleAr: "خفيف ومريح طول النهار",
+          titleEn: "Light and comfortable all day",
+          bodyAr:
+            "فالجردة، فالسوق، ولا فالطريق — خفيف وما كيضايقكش.",
+          bodyEn:
+            "In the garden, at the market, or on the road — light and unobtrusive.",
+          image: "/products/back-belt-5.webp",
+        },
+      ],
+      benefitsAr: [
+        "ضغط مزدوج قابل للتعديل",
+        "دعامات خلفية لاستقامة الظهر",
+        "قماش مثقّب يتنفس",
+        "يتلبس تحت الحوايج",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "Adjustable double compression",
+        "Back stays for upright posture",
+        "Breathable perforated fabric",
+        "Wearable under clothes",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "واش كيتلبس تحت الحوايج؟",
+          questionEn: "Can I wear it under clothes?",
+          answerAr: "إيه — خفيف ورقيق، كيتلبس تحت التيشورت ولا القميجة.",
+          answerEn: "Yes — it is light and slim enough to wear under a T-shirt or shirt.",
+        },
+        {
+          questionAr: "كيفاش نعدّل الضغط؟",
+          questionEn: "How do I adjust the compression?",
+          answerAr:
+            "سدّ الحزام بالإغلاق اللاصق، ومن بعد جرّ الأشرطة الجانبية حتى توصل للضغط اللي مرتاح فيه.",
+          answerEn:
+            "Close the belt with the hook-and-loop fastener, then pull the side straps until the compression feels right.",
+        },
+        {
+          questionAr: "واش كيعوّض الطبيب؟",
+          questionEn: "Does it replace a doctor?",
+          answerAr:
+            "لا — هو حزام دعم للاستعمال اليومي. إلا كان عندك ألم قوي ولا مستمر، شاور الطبيب.",
+          answerEn:
+            "No — it is a support belt for daily use. If you have strong or persistent pain, see a doctor.",
+        },
+      ],
+    },
+  },
+  {
     id: "prod-car-vacuum",
     slug: "cordless-car-vacuum",
     nameAr: "مكنسة سيارة لاسلكية",

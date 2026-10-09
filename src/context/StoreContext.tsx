@@ -268,7 +268,11 @@ function mergeProductImages(seed: Product, stored: Product): string[] {
   return storedImgs.length ? storedImgs : seed.images ?? [];
 }
 
-const SEED_CONTENT_IDS = new Set(["prod-steam-iron-ma", "prod-dashcam-3cam-ma"]);
+const SEED_CONTENT_IDS = new Set([
+  "prod-steam-iron-ma",
+  "prod-dashcam-3cam-ma",
+  "prod-back-belt-ma",
+]);
 
 function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   if (!stored?.length) return cloneSeedProducts();
@@ -382,6 +386,12 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           qtyOffers: seed.qtyOffers,
           landing: seed.landing,
           images: [...(seed.images ?? [])],
+          ...(seed.qtyUpsellLocked
+            ? {
+                qtyUpsellLocked: true,
+                qtyUpsellEnabled: seed.qtyUpsellEnabled === true,
+              }
+            : {}),
         };
       }
 
