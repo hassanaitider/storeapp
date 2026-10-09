@@ -383,6 +383,10 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       if (SEED_CONTENT_IDS.has(seed.id)) {
         return {
           ...base,
+          priceUSD: seed.priceUSD,
+          compareAtUSD: seed.compareAtUSD,
+          marketPrices: { ...(seed.marketPrices ?? {}) },
+          marketComparePrices: { ...(seed.marketComparePrices ?? {}) },
           qtyOffers: seed.qtyOffers,
           landing: seed.landing,
           images: [...(seed.images ?? [])],
