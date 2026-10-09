@@ -923,9 +923,11 @@ ${COD_EN}
     ],
     colors: [],
     customColorEnabled: false,
-    qtyOffers: [{ quantity: 1, discountPercent: 0 }],
-    qtyUpsellLocked: true,
-    qtyUpsellEnabled: false,
+    qtyOffers: [
+      { quantity: 1, discountPercent: 0 },
+      { quantity: 2, marketPrices: { MA: 449 }, popular: true },
+      { quantity: 3, marketPrices: { MA: 599 } },
+    ],
     inStock: true,
     featured: true,
     rating: 0,
@@ -936,9 +938,9 @@ ${COD_EN}
       headlineAr: "دعم قوي لأسفل الظهر… طول النهار",
       headlineEn: "Strong lower back support — all day long",
       introAr:
-        "حزام بضغط مزدوج قابل للتعديل كيدعم أسفل الظهر ويساعد على استقامته، سواء كنتي كتهز الثقيل، كتخدم فالدار، ولا واقف بزاف. خفيف، كيتنفس، ويتلبس تحت الحوايج. الثمن 249 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+        "حزام بضغط مزدوج قابل للتعديل كيدعم أسفل الظهر ويساعد على استقامته، سواء كنتي كتهز الثقيل، كتخدم فالدار، ولا واقف بزاف. خفيف، كيتنفس، ويتلبس تحت الحوايج. قطعة بـ 249 درهم، جوج بـ 449 درهم، و3 بـ 599 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
       introEn:
-        "An adjustable double-compression belt that supports your lower back and helps keep it straight — whether you lift heavy loads, do housework, or stand for long hours. Light, breathable, and wearable under clothes. 249 MAD — free delivery and cash on delivery in Morocco.",
+        "An adjustable double-compression belt that supports your lower back and helps keep it straight — whether you lift heavy loads, do housework, or stand for long hours. Light, breathable, and wearable under clothes. 249 MAD for one, 449 MAD for two, 599 MAD for three — free delivery and cash on delivery in Morocco.",
       sections: [
         {
           titleAr: "ضغط مزدوج قابل للتعديل",

@@ -390,12 +390,10 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           qtyOffers: seed.qtyOffers,
           landing: seed.landing,
           images: [...(seed.images ?? [])],
-          ...(seed.qtyUpsellLocked
-            ? {
-                qtyUpsellLocked: true,
-                qtyUpsellEnabled: seed.qtyUpsellEnabled === true,
-              }
-            : {}),
+          qtyUpsellLocked: seed.qtyUpsellLocked === true,
+          qtyUpsellEnabled: seed.qtyUpsellLocked
+            ? seed.qtyUpsellEnabled === true
+            : true,
         };
       }
 
@@ -633,6 +631,7 @@ function applyCatalogDisplayFlags(
   if (!catalog?.products?.length) return products;
   const byId = new Map(catalog.products.map((p) => [p.id, p]));
   return products.map((p) => {
+    if (SEED_CONTENT_IDS.has(p.id)) return p;
     const row = byId.get(p.id);
     const merged: Product = {
       ...p,
