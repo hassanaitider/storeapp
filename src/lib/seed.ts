@@ -593,9 +593,9 @@ ${COD_EN}
       "Motion detection and parking monitoring",
       "Durable ABS body",
     ],
-    priceUSD: 39.9,
+    priceUSD: 34.9,
     compareAtUSD: 59.9,
-    marketPrices: { MA: 399 },
+    marketPrices: { MA: 349 },
     marketComparePrices: { MA: 599 },
     availableIn: ["MA"],
     images: [
@@ -617,9 +617,9 @@ ${COD_EN}
       headlineAr: "كاميرا سيارة 3 عدسات… دليلك في أي حادث",
       headlineEn: "3-lens dash cam — your proof in any accident",
       introAr:
-        "سجّل الطريق أمامك وداخل السيارة وخلفها في نفس الوقت. شاشة 4 بوصة، جودة Full HD 1080P، وحفظ تلقائي للفيديو عند الاصطدام. اطلب الآن بـ 399 درهم فقط بدل 599 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+        "سجّل الطريق أمامك وداخل السيارة وخلفها في نفس الوقت. شاشة 4 بوصة، جودة Full HD 1080P، وحفظ تلقائي للفيديو عند الاصطدام. اطلب الآن بـ 349 درهم فقط بدل 599 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
       introEn:
-        "Record the road ahead, the cabin and the rear at the same time. 4\" screen, Full HD 1080P quality and automatic saving on impact. Order now for only 399 MAD instead of 599 MAD — free delivery and cash on delivery in Morocco.",
+        "Record the road ahead, the cabin and the rear at the same time. 4\" screen, Full HD 1080P quality and automatic saving on impact. Order now for only 349 MAD instead of 599 MAD — free delivery and cash on delivery in Morocco.",
       sections: [
         {
           titleAr: "3 عدسات: أمام، داخل، وخلف",
