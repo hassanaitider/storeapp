@@ -4,7 +4,7 @@ import {
   type CapiCustomData,
   type CapiUserData,
 } from "@/lib/meta-capi";
-import { getFbPixelId, getMetaCapiAccessToken } from "@/lib/meta-config";
+import { getCapiTarget } from "@/lib/meta-config";
 import { normalizeCapiUserData } from "./user-data";
 
 export const runtime = "nodejs";
@@ -58,17 +58,6 @@ function cookieFromRequest(request: Request, name: string): string | undefined {
  * Graph: v19.0 / {FB_PIXEL_ID}/events
  */
 export async function POST(request: Request) {
-  if (!getMetaCapiAccessToken()) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "capi_not_configured",
-        hint: "Set FB_CAPI_TOKEN in .env.local and Vercel env, then redeploy",
-      },
-      { status: 503 }
-    );
-  }
-
   let body: FbCapiBody;
   try {
     body = (await request.json()) as FbCapiBody;
@@ -76,9 +65,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "bad_json" }, { status: 400 });
   }
 
-  // The token belongs to one pixel; never forward another market's events to it.
-  if (body.pixel_id && body.pixel_id !== getFbPixelId()) {
-    return NextResponse.json({ ok: true, skipped: "other_pixel" });
+  // Each token belongs to one pixel; events only ever go to their own pixel.
+  const target = getCapiTarget(body.pixel_id);
+  if (!target) {
+    return NextResponse.json({ ok: true, skipped: "no_token_for_pixel" });
   }
 
   const eventName = (body.event_name || body.eventName)?.trim();
@@ -110,7 +100,7 @@ export async function POST(request: Request) {
       userData,
       customData: body.custom_data || body.customData,
     },
-  ]);
+  ], target);
 
   if (!result.ok) {
     console.error("FB CAPI error", result.status, result.body);

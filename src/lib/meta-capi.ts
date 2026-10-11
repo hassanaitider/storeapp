@@ -3,6 +3,7 @@ import {
   META_GRAPH_API_VERSION,
   getFbPixelId,
   getMetaCapiAccessToken,
+  type CapiTarget,
 } from "@/lib/meta-config";
 
 export type CapiUserData = {
@@ -93,10 +94,11 @@ function buildUserData(user?: CapiUserData) {
 
 /** Send one or more events to Meta Conversions API (production — no test_event_code) */
 export async function sendMetaCapiEvents(
-  events: CapiEventInput[]
+  events: CapiEventInput[],
+  target?: CapiTarget
 ): Promise<{ ok: boolean; status: number; body: unknown }> {
-  const accessToken = getMetaCapiAccessToken();
-  const pixelId = getFbPixelId();
+  const accessToken = target?.accessToken ?? getMetaCapiAccessToken();
+  const pixelId = target?.pixelId ?? getFbPixelId();
   if (!accessToken) {
     return { ok: false, status: 0, body: { error: "missing FB_CAPI_TOKEN" } };
   }

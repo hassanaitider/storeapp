@@ -3,7 +3,7 @@
  * Always Standard events (trackSingle), never trackCustom.
  */
 
-import { LATAM_PIXEL_ID, getActivePixelId } from "@/lib/meta-pixels";
+import { getActivePixelId } from "@/lib/meta-pixels";
 
 export function getFbpFbc(): { fbp?: string; fbc?: string } {
   if (typeof document === "undefined") return {};
@@ -102,8 +102,6 @@ export function trackBoth(
   ensurePixel(fbq, pixelId);
   fbq("trackSingle", pixelId, eventName, params ?? {}, { eventID: eventId });
 
-  // Server CAPI only holds the LATAM pixel's token
-  if (pixelId !== LATAM_PIXEL_ID) return eventId;
   void fetch("/api/fb-capi", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

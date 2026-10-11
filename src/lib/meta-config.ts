@@ -29,5 +29,22 @@ export function getFbPixelId(): string {
   );
 }
 
+/** Arab-markets pixel (Morocco, Gulf…); its CAPI token lives in FB_CAPI_TOKEN_ARAB. */
+export const ARAB_CAPI_PIXEL_ID = "2098415630739868";
+
+export type CapiTarget = { pixelId: string; accessToken: string };
+
+/** Pixel + token pair for a browser pixel ID; null when that pixel has no server token. */
+export function getCapiTarget(pixelId?: string | null): CapiTarget | null {
+  const id = pixelId?.trim() || getFbPixelId();
+  if (id === ARAB_CAPI_PIXEL_ID) {
+    const token = process.env.FB_CAPI_TOKEN_ARAB?.trim();
+    return token ? { pixelId: id, accessToken: token } : null;
+  }
+  if (id !== getFbPixelId()) return null;
+  const token = getMetaCapiAccessToken();
+  return token ? { pixelId: id, accessToken: token } : null;
+}
+
 /** Graph API version for CAPI */
 export const META_GRAPH_API_VERSION = "v19.0";
