@@ -268,11 +268,16 @@ function mergeProductImages(seed: Product, stored: Product): string[] {
   return storedImgs.length ? storedImgs : seed.images ?? [];
 }
 
-const SEED_CONTENT_IDS = new Set([
+const SEED_CONTENT_ID_LIST = new Set([
   "prod-steam-iron-ma",
   "prod-dashcam-3cam-ma",
   "prod-back-belt-ma",
 ]);
+
+const SEED_CONTENT_IDS = {
+  has: (id: string) =>
+    SEED_CONTENT_ID_LIST.has(id) || /^prod-chair-cover-[a-z]{2}$/i.test(id),
+};
 
 function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
   if (!stored?.length) return cloneSeedProducts();
@@ -390,6 +395,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           qtyOffers: seed.qtyOffers,
           landing: seed.landing,
           images: [...(seed.images ?? [])],
+          customColorEnabled: Boolean(seed.customColorEnabled),
           qtyUpsellLocked: seed.qtyUpsellLocked === true,
           qtyUpsellEnabled: seed.qtyUpsellLocked
             ? seed.qtyUpsellEnabled === true
@@ -531,10 +537,11 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
       const slug = (seed.slug || "").trim();
       merged.push({
         ...seed,
-        qtyUpsellEnabled:
-          (slug ? upsellSlugs.has(slug) : false) ||
-          seed.qtyUpsellEnabled === true ||
-          usesLatamThreeQtyPacks(seed.availableIn?.[0] || ""),
+        qtyUpsellEnabled: seed.qtyUpsellLocked
+          ? seed.qtyUpsellEnabled === true
+          : (slug ? upsellSlugs.has(slug) : false) ||
+            seed.qtyUpsellEnabled === true ||
+            usesLatamThreeQtyPacks(seed.availableIn?.[0] || ""),
       });
     }
   }
