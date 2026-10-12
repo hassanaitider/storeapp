@@ -1108,7 +1108,7 @@ ${COD_EN}
       headlineAr: "باك المناعة ديال الشتا — 3 مكملات طبيعية كيكملو بعضياتهم",
       headlineEn: "Winter Immunity Pack — 3 natural supplements that work together",
       introAr:
-        "مع البرد، الجسم كيحتاج دعم إضافي. جمعنا ليك ريشي وسبيرولينا وزنجبيل فباك واحد: كل واحد عندو دور ديالو، وبجوج كيعطيو جسمك الدعم اللي خاصو فالشتا. 3 علب بـ 299 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+        "مع البرد، الجسم كيحتاج دعم إضافي. جمعنا ليك ريشي وسبيرولينا وزنجبيل فباك واحد: كل واحد عندو دور ديالو، ومجموعين كيعطيو جسمك الدعم اللي خاصو فالشتا. 3 علب بـ 299 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
       introEn:
         "When it gets cold, your body needs extra support. We put Reishi, Spirulina and Ginger in one pack: each has its own role, and together they give your body the support it needs in winter. 3 bottles for 299 MAD — free delivery and cash on delivery in Morocco.",
       sections: [
