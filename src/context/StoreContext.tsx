@@ -272,6 +272,7 @@ const SEED_CONTENT_ID_LIST = new Set([
   "prod-steam-iron-ma",
   "prod-dashcam-3cam-ma",
   "prod-back-belt-ma",
+  "prod-immunity-pack-ma",
 ]);
 
 const SEED_CONTENT_IDS = {

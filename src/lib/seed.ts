@@ -1039,6 +1039,168 @@ ${COD_EN}
     },
   },
   {
+    id: "prod-immunity-pack-ma",
+    slug: "pack-immunite-hiver",
+    nameAr: "باك المناعة ديال الشتا — ريشي + سبيرولينا + زنجبيل",
+    nameEn: "Winter Immunity Pack — Reishi + Spirulina + Ginger",
+    descriptionAr: `
+<h3>البرد بدا… واش جسمك واجد؟</h3>
+<p>باك فيه <strong>3 مكملات طبيعية</strong> كيكملو بعضياتهم: <strong>ريشي</strong> و<strong>سبيرولينا</strong> و<strong>زنجبيل</strong>. كل علبة فيها 30 كبسولة، نباتية 100% وبلا غلوتين.</p>
+<ul>
+<li>ريشي: كيدعم المناعة، كيعاون تنقص التوتر وتنعس مزيان</li>
+<li>سبيرولينا: غذاء غني بالبروتين والحديد، كتدعم دفاعات الجسم</li>
+<li>زنجبيل: كيسهل الهضم، كيدعم المناعة وكيدفي الجسم فالبرد</li>
+<li>3 علب × 30 كبسولة</li>
+</ul>
+<p><small>مكمل غذائي — ماشي دواء وما كيعوضش نظام غذائي متوازن. إلا كنتي حاملة، مرضعة، ولا كتاخد شي دواء، شاور الطبيب قبل الاستعمال.</small></p>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Winter is here — is your body ready?</h3>
+<p>A pack of <strong>3 natural supplements</strong> that work together: <strong>Reishi</strong>, <strong>Spirulina</strong> and <strong>Ginger</strong>. 30 capsules per bottle, 100% plant-based and gluten-free.</p>
+<ul>
+<li>Reishi: supports immunity, helps reduce stress and sleep better</li>
+<li>Spirulina: a food rich in protein and iron that supports the body's defenses</li>
+<li>Ginger: eases digestion, supports immunity and warms the body in the cold</li>
+<li>3 bottles × 30 capsules</li>
+</ul>
+<p><small>Dietary supplement — not a medicine and not a substitute for a balanced diet. If you are pregnant, breastfeeding or taking medication, ask your doctor before use.</small></p>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "الباك: 3 علب — ريشي، سبيرولينا، زنجبيل",
+      "30 كبسولة فكل علبة",
+      "نباتي 100%",
+      "بلا غلوتين",
+      "مكمل غذائي — ماشي دواء",
+    ],
+    detailsEn: [
+      "Pack: 3 bottles — Reishi, Spirulina, Ginger",
+      "30 capsules per bottle",
+      "100% plant-based",
+      "Gluten-free",
+      "Dietary supplement — not a medicine",
+    ],
+    priceUSD: 29.9,
+    compareAtUSD: 29.9,
+    marketPrices: { MA: 299 },
+    availableIn: ["MA"],
+    images: [
+      "/products/immunity-pack-main.webp",
+      "/products/immunity-pack-1.webp",
+      "/products/immunity-pack-reishi.webp",
+      "/products/immunity-pack-spirulina.webp",
+      "/products/immunity-pack-ginger.webp",
+      "/products/immunity-pack-real.webp",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    qtyOffers: [{ quantity: 1, discountPercent: 0 }],
+    qtyUpsellLocked: true,
+    qtyUpsellEnabled: false,
+    inStock: true,
+    featured: true,
+    rating: 0,
+    reviewCount: 0,
+    categoryId: "cat-MA",
+    createdAt: "2026-10-12T00:00:00.000Z",
+    landing: {
+      headlineAr: "باك المناعة ديال الشتا — 3 مكملات طبيعية كيكملو بعضياتهم",
+      headlineEn: "Winter Immunity Pack — 3 natural supplements that work together",
+      introAr:
+        "مع البرد، الجسم كيحتاج دعم إضافي. جمعنا ليك ريشي وسبيرولينا وزنجبيل فباك واحد: كل واحد عندو دور ديالو، وبجوج كيعطيو جسمك الدعم اللي خاصو فالشتا. 3 علب بـ 299 درهم — توصيل مجاني والدفع عند الاستلام في المغرب.",
+      introEn:
+        "When it gets cold, your body needs extra support. We put Reishi, Spirulina and Ginger in one pack: each has its own role, and together they give your body the support it needs in winter. 3 bottles for 299 MAD — free delivery and cash on delivery in Morocco.",
+      sections: [
+        {
+          titleAr: "علاش هاد الباك؟",
+          titleEn: "Why this pack?",
+          bodyAr:
+            "فالشتا، البرد والتعب كيكثرو. هاد 3 مكملات كيكملو بعضياتهم: ريشي للمناعة والراحة، سبيرولينا للتغذية والطاقة، وزنجبيل للهضم والدفا.",
+          bodyEn:
+            "In winter, cold and fatigue add up. These 3 supplements complement each other: Reishi for immunity and rest, Spirulina for nutrition and energy, and Ginger for digestion and warmth.",
+          image: "/products/immunity-pack-1.webp",
+        },
+        {
+          titleAr: "1. ريشي — المناعة والراحة",
+          titleEn: "1. Reishi — immunity and rest",
+          bodyAr:
+            "فطر ريشي معروف من قرون فالطب التقليدي الآسيوي. كيدعم المناعة، كيعاونك تنقص التوتر، وكيعاونك تنعس مزيان — وهادشي مهم باش الجسم يقاوم فالشتا.",
+          bodyEn:
+            "Reishi mushroom has been used for centuries in traditional Asian practice. It supports immunity, helps you reduce stress and sleep better — key for a body that has to keep up in winter.",
+          image: "/products/immunity-pack-reishi.webp",
+        },
+        {
+          titleAr: "2. سبيرولينا — غذاء خارق",
+          titleEn: "2. Spirulina — a superfood",
+          bodyAr:
+            "طحلب غني بالبروتين والحديد. كتدعم دفاعات الجسم وكتعطيك طاقة طبيعية فالأيام اللي كتحس فيها بالعيا.",
+          bodyEn:
+            "An algae rich in protein and iron. It supports the body's defenses and gives natural energy on days you feel worn out.",
+          image: "/products/immunity-pack-spirulina.webp",
+        },
+        {
+          titleAr: "3. زنجبيل — الدفا والهضم",
+          titleEn: "3. Ginger — warmth and digestion",
+          bodyAr:
+            "الزنجبيل كيسهل الهضم، كيدعم المناعة، وكيدفي الجسم فالبرد، مع طاقة طبيعية طول النهار.",
+          bodyEn:
+            "Ginger eases digestion, supports immunity and warms the body in the cold, with natural energy through the day.",
+          image: "/products/immunity-pack-ginger.webp",
+        },
+        {
+          titleAr: "المنتوج حقيقي",
+          titleEn: "The real product",
+          bodyAr:
+            "علب حقيقية كتوصلك للدار: 30 كبسولة فكل علبة، نباتي 100% وبلا غلوتين.",
+          bodyEn:
+            "Real bottles delivered to your door: 30 capsules each, 100% plant-based and gluten-free.",
+          image: "/products/immunity-pack-real.webp",
+        },
+      ],
+      benefitsAr: [
+        "3 مكملات طبيعية فباك واحد",
+        "كيدعمو المناعة فالشتا",
+        "طاقة طبيعية وهضم مريح",
+        "نباتي 100% وبلا غلوتين",
+        "3 علب × 30 كبسولة بـ 299 درهم",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "3 natural supplements in one pack",
+        "Support immunity in winter",
+        "Natural energy and easy digestion",
+        "100% plant-based and gluten-free",
+        "3 bottles × 30 capsules for 299 MAD",
+        "Free delivery and COD",
+      ],
+      faq: [
+        {
+          questionAr: "شنو كاين فالباك؟",
+          questionEn: "What's in the pack?",
+          answerAr: "3 علب: ريشي، سبيرولينا، وزنجبيل — 30 كبسولة فكل علبة.",
+          answerEn: "3 bottles: Reishi, Spirulina and Ginger — 30 capsules each.",
+        },
+        {
+          questionAr: "كيفاش نستعملو؟",
+          questionEn: "How do I take it?",
+          answerAr:
+            "تبّع الطريقة والكمية المكتوبة على كل علبة، وما تفوتش الكمية اليومية المنصوح بها.",
+          answerEn:
+            "Follow the directions and dose printed on each bottle, and do not exceed the recommended daily amount.",
+        },
+        {
+          questionAr: "واش هو دواء؟",
+          questionEn: "Is it a medicine?",
+          answerAr:
+            "لا — هو مكمل غذائي طبيعي. إلا كنتي حاملة، مرضعة، كتاخد شي دواء، ولا عندك مرض مزمن، شاور الطبيب قبل الاستعمال.",
+          answerEn:
+            "No — it is a natural dietary supplement. If you are pregnant, breastfeeding, taking medication or have a chronic condition, ask your doctor before use.",
+        },
+      ],
+    },
+  },
+  {
     id: "prod-car-vacuum",
     slug: "cordless-car-vacuum",
     nameAr: "مكنسة سيارة لاسلكية",
