@@ -1082,8 +1082,9 @@ ${COD_EN}
       "Dietary supplement — not a medicine",
     ],
     priceUSD: 29.9,
-    compareAtUSD: 29.9,
+    compareAtUSD: 49.9,
     marketPrices: { MA: 299 },
+    marketComparePrices: { MA: 499 },
     availableIn: ["MA"],
     images: [
       "/products/immunity-pack-main.webp",
