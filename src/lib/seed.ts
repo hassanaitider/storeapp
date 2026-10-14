@@ -2,6 +2,7 @@ import { STORE_MARKETS } from "./countries";
 import type { Category, Product } from "./types";
 import { withSpanishCopy } from "./seed-es";
 import { LATAM_CHAIR_COVER_PRODUCTS } from "./seed-latam-chair-cover";
+import { SCREWDRIVER_PRODUCTS } from "./seed-screwdriver";
 import { LATAM_CLIP_EARBUDS_PRODUCTS } from "./seed-latam-clip-earbuds";
 import { LATAM_MAG_POWERBANK_PRODUCTS } from "./seed-latam-mag-powerbank";
 import { LATAM_MINI_CAMERA_PRODUCTS } from "./seed-latam-mini-camera";
@@ -3186,6 +3187,7 @@ ${COD_EN}
   ...LATAM_SMART_TAG_PRODUCTS,
   ...LATAM_VIDEO_WALKIE_PRODUCTS,
   ...LATAM_CHAIR_COVER_PRODUCTS,
+  ...SCREWDRIVER_PRODUCTS,
   ...UNIVERSAL_MARKET_PRODUCTS,
 ];
 

@@ -277,7 +277,9 @@ const SEED_CONTENT_ID_LIST = new Set([
 
 const SEED_CONTENT_IDS = {
   has: (id: string) =>
-    SEED_CONTENT_ID_LIST.has(id) || /^prod-chair-cover-[a-z]{2}$/i.test(id),
+    SEED_CONTENT_ID_LIST.has(id) ||
+    /^prod-chair-cover-[a-z]{2}$/i.test(id) ||
+    /^prod-screwdriver-(ly|lb)$/i.test(id),
 };
 
 function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {

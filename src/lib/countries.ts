@@ -71,7 +71,7 @@ export const COUNTRIES: CountryInfo[] = [
     nameAr: "لبنان",
     nameEn: "Lebanon",
     nameEs: "Líbano",
-    currency: "LBP",
+    currency: "USD",
     flag: "🇱🇧",
     dial: "+961",
   },
