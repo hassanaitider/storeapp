@@ -9,6 +9,10 @@ const COD_EN =
 
 const IMAGES = [
   "/products/screwdriver-kit.webp",
+  "/products/screwdriver-fold.webp",
+  "/products/screwdriver-kit2.webp",
+  "/products/screwdriver-straight.webp",
+  "/products/screwdriver-bits.webp",
   "/products/screwdriver-2.webp",
   "/products/screwdriver-3.webp",
 ];
@@ -37,6 +41,7 @@ function buildScrewdriver(m: Market): Product {
 <p>مفك كهربائي لاسلكي قابل للشحن، يأتي في حقيبة منظمة مع مجموعة رؤوس ولقم متنوعة ووصلة مرنة للأماكن الضيقة. ركّب الأثاث، شدّ المفصلات، وصلّح أجهزتك بسرعة وبدون تعب.</p>
 <ul>
 <li>لاسلكي وقابل للشحن — اشتغل في أي مكان</li>
+<li>يتحوّل بزاوية 180° من وضع مستقيم إلى وضع مسدس</li>
 <li>زر اتجاهين: ربط وفك بضغطة واحدة</li>
 <li>وصلة مرنة توصل للزوايا الضيقة</li>
 <li>مجموعة رؤوس ولقم متنوعة لأغلب البراغي</li>
@@ -48,6 +53,7 @@ ${COD_AR}`.trim(),
 <p>A rechargeable cordless screwdriver in an organized case with assorted bits, sockets and a flexible extension for tight spots. Assemble furniture, tighten hinges and fix your devices quickly and effortlessly.</p>
 <ul>
 <li>Cordless and rechargeable — work anywhere</li>
+<li>Rotates 180° from straight to pistol grip</li>
 <li>Forward/reverse button: tighten or loosen in one press</li>
 <li>Flexible extension reaches tight corners</li>
 <li>Assorted bits and sockets for most screws</li>
@@ -56,7 +62,10 @@ ${COD_AR}`.trim(),
 ${COD_EN}`.trim(),
     detailsAr: [
       "مفك كهربائي لاسلكي قابل للشحن",
-      "كابل شحن مرفق",
+      "بطارية ليثيوم — شحن عبر USB (كابل مرفق)",
+      "وضعين: مستقيم ومسدس (دوران 180°)",
+      "إضاءة LED لمكان العمل",
+      "رأس سداسي 6.35 ملم",
       "زر اتجاهين (ربط / فك)",
       "وصلة مرنة للأماكن الضيقة",
       "مجموعة رؤوس ولقم متنوعة",
@@ -64,7 +73,10 @@ ${COD_EN}`.trim(),
     ],
     detailsEn: [
       "Rechargeable cordless screwdriver",
-      "Charging cable included",
+      "Lithium battery — USB charging (cable included)",
+      "Two modes: straight and pistol grip (180° rotation)",
+      "LED work light",
+      "6.35 mm hex chuck",
       "Forward / reverse button",
       "Flexible extension for tight spots",
       "Assorted bits and sockets",
@@ -97,12 +109,31 @@ ${COD_EN}`.trim(),
           image: "/products/screwdriver-kit.webp",
         },
         {
+          titleAr: "أداتان في أداة واحدة: مستقيم أو مسدس",
+          titleEn: "Two tools in one: straight or pistol grip",
+          bodyAr:
+            "اضغط الزر ولفّ الجسم 180° — وضع مستقيم للأماكن الضيقة والدقيقة، ووضع مسدس لقوة وراحة أكثر في الشغل الطويل.",
+          bodyEn:
+            "Press the button and rotate the body 180° — straight mode for tight, precise spots, pistol mode for more power and comfort on longer jobs.",
+          image: "/products/screwdriver-fold.webp",
+        },
+        {
           titleAr: "تركيب الأثاث والمفصلات بسهولة",
           titleEn: "Furniture and hinges made easy",
           bodyAr:
             "ركّب الخزائن والرفوف، وشدّ مفصلات الأبواب في ثواني بدل دقائق من الشغل اليدوي.",
           bodyEn:
             "Assemble cabinets and shelves and tighten door hinges in seconds instead of minutes of manual work.",
+          image: "/products/screwdriver-kit2.webp",
+        },
+        {
+          titleAr: "رؤوس لكل أنواع البراغي",
+          titleEn: "Bits for every type of screw",
+          bodyAr:
+            "رؤوس مسطحة، صليبية، سداسية ونجمية — مع شاحن USB ووصلة مرنة، كل شيء جاهز من أول يوم.",
+          bodyEn:
+            "Flat, Phillips, hex and Torx bits — with a USB charging cable and a flexible extension, everything is ready from day one.",
+          image: "/products/screwdriver-bits.webp",
         },
         {
           titleAr: "وصلة مرنة للأماكن الصعبة",
@@ -128,10 +159,13 @@ ${COD_EN}`.trim(),
           bodyAr:
             "قبضة مطاطية لا تنزلق، وزر لتبديل الاتجاه بين الربط والفك بلمسة واحدة.",
           bodyEn:
-            "A non-slip rubber grip and a button to switch between tightening and loosening in one touch.",        },
+            "A non-slip rubber grip and a button to switch between tightening and loosening in one touch.",
+          image: "/products/screwdriver-straight.webp",
+        },
       ],
       benefitsAr: [
         "لاسلكي وقابل للشحن",
+        "وضعين: مستقيم ومسدس",
         "طقم كامل في حقيبة",
         "وصلة مرنة للزوايا الضيقة",
         "رؤوس ولقم لأغلب البراغي",
@@ -139,6 +173,7 @@ ${COD_EN}`.trim(),
       ],
       benefitsEn: [
         "Cordless and rechargeable",
+        "Two modes: straight and pistol grip",
         "Complete kit in a case",
         "Flexible extension for tight corners",
         "Bits and sockets for most screws",
