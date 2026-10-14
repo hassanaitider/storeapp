@@ -1,6 +1,6 @@
 import type { Product } from "./types";
 
-/** Removed from the catalog: windshield umbrella, neck fan, Elevador, sling bag, rolling cart. */
+/** Removed from the catalog: windshield umbrella, neck fan, Elevador, sling bag, rolling cart, steam iron. */
 export function isRetiredStoreProduct(p: {
   id?: string;
   slug?: string;
@@ -17,7 +17,8 @@ export function isRetiredStoreProduct(p: {
     id.includes("car-windshield-umbrella") ||
     id.includes("prod-neck-fan") ||
     id === "prod-fashion-sling" ||
-    id === "prod-rolling-cart"
+    id === "prod-rolling-cart" ||
+    id === "prod-steam-iron-ma"
   ) {
     return true;
   }
@@ -27,7 +28,8 @@ export function isRetiredStoreProduct(p: {
     slug.includes("rechargeable-neck-fan") ||
     slug === "elevador-de-colchon" ||
     slug === "anti-theft-usb-sling-bag" ||
-    slug === "3-tier-rolling-storage-cart"
+    slug === "3-tier-rolling-storage-cart" ||
+    slug === "mini-fer-vapeur-portable"
   ) {
     return true;
   }
