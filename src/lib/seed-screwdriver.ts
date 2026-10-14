@@ -8,6 +8,7 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
+  "/products/screwdriver-kit.webp",
   "/products/screwdriver-2.webp",
   "/products/screwdriver-3.webp",
 ];
@@ -93,6 +94,7 @@ ${COD_EN}`.trim(),
             "كل قطعة في مكانها: المفك، الرؤوس، اللقم، الوصلة المرنة وكابل الشحن. تجد ما تحتاجه بسرعة وتحمله معك أينما ذهبت.",
           bodyEn:
             "Every piece has its place: screwdriver, bits, sockets, flexible extension and charging cable. Find what you need fast and take it anywhere.",
+          image: "/products/screwdriver-kit.webp",
         },
         {
           titleAr: "تركيب الأثاث والمفصلات بسهولة",
