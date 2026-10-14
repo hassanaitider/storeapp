@@ -10,7 +10,6 @@ const COD_EN =
 const IMAGES = [
   "/products/screwdriver-2.webp",
   "/products/screwdriver-3.webp",
-  "/products/screwdriver-4.webp",
 ];
 
 type Market = { country: CountryCode; price: number; priceUSD: number; label: string };
@@ -127,9 +126,7 @@ ${COD_EN}`.trim(),
           bodyAr:
             "قبضة مطاطية لا تنزلق، وزر لتبديل الاتجاه بين الربط والفك بلمسة واحدة.",
           bodyEn:
-            "A non-slip rubber grip and a button to switch between tightening and loosening in one touch.",
-          image: "/products/screwdriver-4.webp",
-        },
+            "A non-slip rubber grip and a button to switch between tightening and loosening in one touch.",        },
       ],
       benefitsAr: [
         "لاسلكي وقابل للشحن",
