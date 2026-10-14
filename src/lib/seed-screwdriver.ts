@@ -106,6 +106,7 @@ ${COD_EN}`.trim(),
             "كل قطعة في مكانها: المفك، الرؤوس، اللقم، الوصلة المرنة وكابل الشحن. تجد ما تحتاجه بسرعة وتحمله معك أينما ذهبت.",
           bodyEn:
             "Every piece has its place: screwdriver, bits, sockets, flexible extension and charging cable. Find what you need fast and take it anywhere.",
+          image: "",
         },
         {
           titleAr: "أداتان في أداة واحدة: مستقيم أو مسدس",
@@ -114,6 +115,7 @@ ${COD_EN}`.trim(),
             "اضغط الزر ولفّ الجسم 180° — وضع مستقيم للأماكن الضيقة والدقيقة، ووضع مسدس لقوة وراحة أكثر في الشغل الطويل.",
           bodyEn:
             "Press the button and rotate the body 180° — straight mode for tight, precise spots, pistol mode for more power and comfort on longer jobs.",
+          image: "",
         },
         {
           titleAr: "تركيب الأثاث والمفصلات بسهولة",
@@ -122,6 +124,7 @@ ${COD_EN}`.trim(),
             "ركّب الخزائن والرفوف، وشدّ مفصلات الأبواب في ثواني بدل دقائق من الشغل اليدوي.",
           bodyEn:
             "Assemble cabinets and shelves and tighten door hinges in seconds instead of minutes of manual work.",
+          image: "",
         },
         {
           titleAr: "رؤوس لكل أنواع البراغي",
@@ -130,6 +133,7 @@ ${COD_EN}`.trim(),
             "رؤوس مسطحة، صليبية، سداسية ونجمية — مع شاحن USB ووصلة مرنة، كل شيء جاهز من أول يوم.",
           bodyEn:
             "Flat, Phillips, hex and Torx bits — with a USB charging cable and a flexible extension, everything is ready from day one.",
+          image: "",
         },
         {
           titleAr: "وصلة مرنة للأماكن الصعبة",
@@ -138,6 +142,7 @@ ${COD_EN}`.trim(),
             "الوصلة المرنة تنحني وتوصل للبراغي في الزوايا الضيقة وخلف الأثاث، حيث لا يصل المفك العادي.",
           bodyEn:
             "The flexible extension bends to reach screws in tight corners and behind furniture where a regular screwdriver can't go.",
+          image: "",
         },
         {
           titleAr: "من الكمبيوتر للدراجة",
@@ -146,6 +151,7 @@ ${COD_EN}`.trim(),
             "رؤوس صغيرة ودقيقة لتصليح الأجهزة، ولقم أقوى لتركيب الدراجات والألعاب — أداة واحدة لكل الاستعمالات.",
           bodyEn:
             "Small precision bits for device repairs and stronger sockets for bikes and toys — one tool for every job.",
+          image: "",
         },
         {
           titleAr: "قبضة مريحة وزر اتجاهين",
@@ -154,6 +160,7 @@ ${COD_EN}`.trim(),
             "قبضة مطاطية لا تنزلق، وزر لتبديل الاتجاه بين الربط والفك بلمسة واحدة.",
           bodyEn:
             "A non-slip rubber grip and a button to switch between tightening and loosening in one touch.",
+          image: "",
         },
       ],
       benefitsAr: [
