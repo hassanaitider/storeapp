@@ -274,6 +274,7 @@ const SEED_CONTENT_ID_LIST = new Set([
   "prod-dashcam-3cam-ma",
   "prod-back-belt-ma",
   "prod-immunity-pack-ma",
+  "prod-baby-chair-ma",
 ]);
 
 const SEED_CONTENT_IDS = {
