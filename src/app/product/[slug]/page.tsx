@@ -230,12 +230,15 @@ function ProductPageInner() {
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
 
+  const [customColor, setCustomColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [warranty, setWarranty] = useState(false);
+
   useEffect(() => {
     if (!product) return;
     setActiveImg(preferredMediaIndex(product.images));
+    setSelectedSize("");
   }, [product?.id]);
-  const [customColor, setCustomColor] = useState("");
-  const [warranty, setWarranty] = useState(false);
   const [order, setOrder] = useState<Order | null>(null);
   const [form, setForm] = useState({
     name: "",
@@ -356,19 +359,31 @@ function ProductPageInner() {
       window.alert(t.product.writeYourColorRequired);
       return;
     }
+    if (product.sizes?.length && !selectedSize) {
+      window.alert(t.product.chooseSizeRequired);
+      return;
+    }
     const colorLabel = customColor.trim();
     const moroccoSimple = country === "MA";
+    const noteParts = [
+      selectedSize
+        ? locale === "ar"
+          ? `المقاس: ${selectedSize}`
+          : `Size: ${selectedSize}`
+        : "",
+      colorLabel
+        ? locale === "ar"
+          ? `اللون: ${colorLabel}`
+          : `Color: ${colorLabel}`
+        : "",
+    ].filter(Boolean);
     const created = placeOrder(
       {
         name: form.name.trim(),
         phone: form.phone.trim(),
         city: form.city.trim(),
         address: moroccoSimple ? form.city.trim() : form.address.trim(),
-        notes: colorLabel
-          ? locale === "ar"
-            ? `اللون: ${colorLabel}`
-            : `Color: ${colorLabel}`
-          : undefined,
+        notes: noteParts.length ? noteParts.join(" · ") : undefined,
       },
       [{ productId: product.id, quantity: qty, lineTotalUSD: orderLineUSD }]
     );
@@ -688,6 +703,48 @@ function ProductPageInner() {
               className="mt-3 w-full rounded-xl border border-sand-300 bg-white px-4 py-3 text-sm font-medium text-ink-900 outline-none ring-brand-600/30 placeholder:text-[var(--muted)] focus:border-brand-500 focus:ring-2"
             />
           </label>
+        ) : null}
+
+        {product.sizes?.length ? (
+          <div className="mt-5">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="product-section-title text-lg sm:text-xl">
+                {t.product.chooseSize}
+              </h2>
+              {selectedSize ? (
+                <p className="text-sm text-[var(--muted)]">
+                  {t.product.selectedSize}:{" "}
+                  <span className="font-bold text-brand-800">{selectedSize}</span>
+                </p>
+              ) : null}
+            </div>
+            <div
+              className="mt-3 flex flex-wrap gap-2"
+              role="listbox"
+              aria-label={t.product.chooseSize}
+            >
+              {product.sizes.map((size) => {
+                const pressed = selectedSize === size;
+                return (
+                  <button
+                    key={size}
+                    type="button"
+                    role="option"
+                    aria-selected={pressed}
+                    onClick={() => setSelectedSize(size)}
+                    className={cn(
+                      "min-w-[3.25rem] rounded-xl border-2 px-4 py-2.5 text-sm font-bold transition",
+                      pressed
+                        ? "border-brand-700 bg-brand-700 text-white shadow-sm"
+                        : "border-sand-300 bg-white text-ink-800 hover:border-brand-500"
+                    )}
+                  >
+                    {size}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         ) : null}
 
         {/* Volume discount — shown only when enabled in admin */}

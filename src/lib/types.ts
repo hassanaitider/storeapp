@@ -187,6 +187,8 @@ export interface Product {
   colors?: ProductColor[];
   /** When true, customer can type their preferred color on the product page */
   customColorEnabled?: boolean;
+  /** Clothing / belt sizes shown as required buttons on the product page */
+  sizes?: string[];
   /** When true, 1/2/3 quantity offers show on the product page */
   qtyUpsellEnabled?: boolean;
   /**

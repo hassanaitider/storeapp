@@ -925,6 +925,7 @@ ${COD_EN}
     ],
     colors: [],
     customColorEnabled: false,
+    sizes: ["M", "L", "XL", "XXL"],
     qtyOffers: [
       { quantity: 1, discountPercent: 0 },
       { quantity: 2, marketPrices: { MA: 449 }, popular: true },
@@ -1026,6 +1027,14 @@ ${COD_EN}
           questionEn: "Can I wear it under clothes?",
           answerAr: "إيه — خفيف ورقيق، كيتلبس تحت التيشورت ولا القميجة.",
           answerEn: "Yes — it is light and slim enough to wear under a T-shirt or shirt.",
+        },
+        {
+          questionAr: "شنو المقاسات المتوفرة؟",
+          questionEn: "What sizes are available?",
+          answerAr:
+            "متوفر بـ 4 مقاسات: M، L، XL و XXL. اختَر المقاس فصفحة الطلب، والحزام قابل للتعديل بالأشرطة باش يجي على قدّك.",
+          answerEn:
+            "Available in 4 sizes: M, L, XL and XXL. Pick your size on the order form — the belt is adjustable with the straps for a snug fit.",
         },
         {
           questionAr: "كيفاش نعدّل الضغط؟",
