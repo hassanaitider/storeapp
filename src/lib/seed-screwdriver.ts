@@ -11,10 +11,10 @@ const IMAGES = [
   "/products/screwdriver-kit.webp",
   "/products/screwdriver-fold.webp",
   "/products/screwdriver-kit2.webp",
-  "/products/screwdriver-straight.webp",
+  "/products/screwdriver-straight-sq.webp",
   "/products/screwdriver-bits.webp",
-  "/products/screwdriver-2.webp",
-  "/products/screwdriver-3.webp",
+  "/products/screwdriver-2-sq.webp",
+  "/products/screwdriver-3-sq.webp",
 ];
 
 type Market = { country: CountryCode; price: number; priceUSD: number; label: string };
@@ -94,6 +94,13 @@ ${COD_EN}`.trim(),
     reviewCount: 0,
     createdAt: "2026-10-09T00:00:00.000Z",
     landing: {
+      style: "pro",
+      highlights: [
+        { icon: "battery", titleAr: "لاسلكي وقابل للشحن", titleEn: "Cordless & rechargeable" },
+        { icon: "wrench", titleAr: "وضعين: مستقيم ومسدس", titleEn: "Straight & pistol modes" },
+        { icon: "light", titleAr: "إضاءة LED", titleEn: "LED work light" },
+        { icon: "package", titleAr: "طقم كامل في حقيبة", titleEn: "Full kit in a case" },
+      ],
       headlineAr: "مفك كهربائي لاسلكي — طقم احترافي لكل أعمال البيت",
       headlineEn: "Cordless electric screwdriver — a pro kit for every home job",
       introAr: `ودّع المفك اليدوي والتعب. طقم كامل في حقيبة واحدة: مفك لاسلكي قابل للشحن، رؤوس ولقم متنوعة، ووصلة مرنة. مثالي للأثاث، الأبواب، الأجهزة والدراجات. السعر ${m.label} فقط — توصيل مجاني والدفع عند الاستلام.`,
@@ -142,7 +149,7 @@ ${COD_EN}`.trim(),
             "الوصلة المرنة تنحني وتوصل للبراغي في الزوايا الضيقة وخلف الأثاث، حيث لا يصل المفك العادي.",
           bodyEn:
             "The flexible extension bends to reach screws in tight corners and behind furniture where a regular screwdriver can't go.",
-          image: "/products/screwdriver-2.webp",
+          image: "/products/screwdriver-2-sq.webp",
         },
         {
           titleAr: "من الكمبيوتر للدراجة",
@@ -151,7 +158,7 @@ ${COD_EN}`.trim(),
             "رؤوس صغيرة ودقيقة لتصليح الأجهزة، ولقم أقوى لتركيب الدراجات والألعاب — أداة واحدة لكل الاستعمالات.",
           bodyEn:
             "Small precision bits for device repairs and stronger sockets for bikes and toys — one tool for every job.",
-          image: "/products/screwdriver-3.webp",
+          image: "/products/screwdriver-3-sq.webp",
         },
         {
           titleAr: "قبضة مريحة وزر اتجاهين",
@@ -160,7 +167,7 @@ ${COD_EN}`.trim(),
             "قبضة مطاطية لا تنزلق، وزر لتبديل الاتجاه بين الربط والفك بلمسة واحدة.",
           bodyEn:
             "A non-slip rubber grip and a button to switch between tightening and loosening in one touch.",
-          image: "/products/screwdriver-straight.webp",
+          image: "/products/screwdriver-straight-sq.webp",
         },
       ],
       benefitsAr: [

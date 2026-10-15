@@ -41,6 +41,7 @@ import {
   ProductBriefDescription,
   ProductDetailSections,
 } from "@/components/shop/ProductLanding";
+import { ProIntro, ProLanding } from "@/components/shop/ProLanding";
 import {
   CLIP_EARBUDS_SLUG,
   MAG_POWERBANK_SLUG,
@@ -545,7 +546,11 @@ function ProductPageInner() {
 
       {/* 3) Brief description */}
       <div className="mt-10 animate-fade-up" style={{ animationDelay: "120ms" }}>
-        <ProductBriefDescription product={product} locale={locale} />
+        {product.landing?.style === "pro" ? (
+          <ProIntro product={product} locale={locale} />
+        ) : (
+          <ProductBriefDescription product={product} locale={locale} />
+        )}
       </div>
 
       {/* Buy / COD blocks — AR, MX, DO, EC, SV, HN, NI modules are market-exclusive */}
@@ -777,6 +782,8 @@ function ProductPageInner() {
         <ClipEarbudsStory product={product} locale={locale} />
       ) : product.slug === SMART_TAG_SLUG ? (
         <SmartTagStory product={product} locale={locale} />
+      ) : product.landing?.style === "pro" ? (
+        <ProLanding product={product} locale={locale} />
       ) : (
         <ProductDetailSections product={product} locale={locale} />
       )}

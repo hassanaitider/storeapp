@@ -48,8 +48,8 @@ const IMAGES = [
   "/products/chair-cover-1.webp",
   "/products/chair-cover-2.webp",
   "/products/chair-cover-3.webp",
-  "/products/chair-cover-4.webp",
-  "/products/chair-cover-5.webp",
+  "/products/chair-cover-4-sq.webp",
+  "/products/chair-cover-5-sq.webp",
 ];
 
 function buildChairCover(country: CountryCode): Omit<
@@ -141,6 +141,13 @@ ${COD_ES}`.trim(),
     reviewCount: 0,
     createdAt: "2026-10-11T00:00:00.000Z",
     landing: {
+      style: "pro",
+      highlights: [
+        { icon: "package", titleAr: "عبوة 3 أغطية", titleEn: "Pack of 3 covers", titleEs: "Pack de 3 fundas" },
+        { icon: "palette", titleAr: "اختر اللون", titleEn: "Pick your color", titleEs: "Elige tu color" },
+        { icon: "sparkles", titleAr: "قماش مرن", titleEn: "Stretch fabric", titleEs: "Tela elástica" },
+        { icon: "shield", titleAr: "تحمي من البقع", titleEn: "Stain protection", titleEs: "Protege de manchas" },
+      ],
       headlineAr: `3 أغطية كراسي بـ ${offer} · اختر اللون`,
       headlineEn: `3 chair covers for ${offer} · choose your color`,
       headlineEs: `3 fundas para sillas por ${offer} — elige tu color en ${marketNameEs}`,
@@ -209,7 +216,7 @@ ${COD_ES}`.trim(),
             "Great for homes with kids: it protects the chair, and you can take the cover off to wash it.",
           bodyEs:
             "Ideal si tienes niños: protege la silla y la funda se quita fácil para lavarla.",
-          image: "/products/chair-cover-4.webp",
+          image: "/products/chair-cover-4-sq.webp",
         },
       ],
       benefitsAr: [

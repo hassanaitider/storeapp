@@ -937,6 +937,13 @@ ${COD_EN}
     categoryId: "cat-MA",
     createdAt: "2026-10-09T00:00:00.000Z",
     landing: {
+      style: "pro",
+      highlights: [
+        { icon: "shield", titleAr: "ضغط مزدوج قابل للتعديل", titleEn: "Adjustable double compression" },
+        { icon: "ruler", titleAr: "دعامات خلفية للاستقامة", titleEn: "Back stays for posture" },
+        { icon: "wind", titleAr: "قماش مثقّب يتنفس", titleEn: "Breathable fabric" },
+        { icon: "feather", titleAr: "خفيف تحت الحوايج", titleEn: "Light under clothes" },
+      ],
       headlineAr: "دعم قوي لأسفل الظهر… طول النهار",
       headlineEn: "Strong lower back support — all day long",
       introAr:
@@ -1109,6 +1116,13 @@ ${COD_EN}
     categoryId: "cat-MA",
     createdAt: "2026-10-12T00:00:00.000Z",
     landing: {
+      style: "pro",
+      highlights: [
+        { icon: "leaf", titleAr: "3 مكملات طبيعية", titleEn: "3 natural supplements" },
+        { icon: "shield", titleAr: "كيدعم المناعة فالشتا", titleEn: "Supports winter immunity" },
+        { icon: "sparkles", titleAr: "غني بالعناصر الغذائية", titleEn: "Rich in nutrients" },
+        { icon: "package", titleAr: "باك واحد كامل", titleEn: "One complete pack" },
+      ],
       headlineAr: "باك المناعة ديال الشتا — 3 مكملات طبيعية كيكملو بعضياتهم",
       headlineEn: "Winter Immunity Pack — 3 natural supplements that work together",
       introAr:

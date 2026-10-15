@@ -106,6 +106,17 @@ export interface ProductLanding {
   reviews?: ProductBuyerReview[];
   /** Landscape product clip shown at the top of the description */
   video?: { src: string; poster: string };
+  /** "pro" renders the landing-page layout (icon highlights, alternating blocks, CTA bands) */
+  style?: "pro";
+  /** Icon cards under the intro — icon is a key of PRO_ICONS in ProLanding */
+  highlights?: ProductLandingHighlight[];
+}
+
+export interface ProductLandingHighlight {
+  icon: string;
+  titleAr: string;
+  titleEn: string;
+  titleEs?: string;
 }
 
 /** Real buyer reviews of the same model, masked name as shown at the source */
