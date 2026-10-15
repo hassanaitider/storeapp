@@ -223,6 +223,8 @@ export interface Order {
   totalUSD: number;
   createdAt: string;
   status: "pending" | "confirmed" | "shipped" | "delivered";
+  /** Set while the order sits in the admin trash */
+  deletedAt?: string;
 }
 
 export interface CurrencyInfo {

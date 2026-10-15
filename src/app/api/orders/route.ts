@@ -2,7 +2,13 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 import { isValidCountry } from "@/lib/countries";
-import { deleteOrderBlob, listOrderBlobs, saveOrderBlob } from "@/lib/orders-blob";
+import {
+  deleteOrderBlob,
+  listOrderBlobs,
+  listTrashedOrderBlobs,
+  restoreOrderBlob,
+  saveOrderBlob,
+} from "@/lib/orders-blob";
 import type { Order } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -99,12 +105,34 @@ export async function DELETE(request: Request) {
   }
 }
 
-export async function GET() {
+/** Restores an order from the trash: PATCH /api/orders?id=… */
+export async function PATCH(request: Request) {
+  if (!(await isAdmin())) {
+    return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
+  }
+  const id = new URL(request.url).searchParams.get("id")?.trim() ?? "";
+  if (!/^[\w-]{1,64}$/.test(id)) {
+    return NextResponse.json({ ok: false, error: "bad id" }, { status: 400 });
+  }
+  try {
+    const order = await restoreOrderBlob(id);
+    if (!order) {
+      return NextResponse.json({ ok: false, error: "not in trash" }, { status: 404 });
+    }
+    return NextResponse.json({ ok: true, order });
+  } catch (err) {
+    console.error("order restore failed", err);
+    return NextResponse.json({ ok: false, error: "restore failed" }, { status: 500 });
+  }
+}
+
+export async function GET(request: Request) {
   if (!(await isAdmin())) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
   try {
-    const orders = await listOrderBlobs();
+    const trash = new URL(request.url).searchParams.get("trash") === "1";
+    const orders = trash ? await listTrashedOrderBlobs() : await listOrderBlobs();
     return NextResponse.json(
       { ok: true, orders },
       { headers: { "Cache-Control": "no-store, max-age=0" } }

@@ -229,10 +229,10 @@ function AdminDashboard() {
   const removeOrder = async (order: Order) => {
     const ask =
       locale === "ar"
-        ? `حذف طلب ${order.customer.name}؟`
+        ? `حذف طلب ${order.customer.name}؟ (يمكنك استرجاعه من سلة المحذوفات)`
         : locale === "es"
-          ? `¿Eliminar el pedido de ${order.customer.name}?`
-          : `Delete the order from ${order.customer.name}?`;
+          ? `¿Eliminar el pedido de ${order.customer.name}? (podrás restaurarlo desde la papelera)`
+          : `Delete the order from ${order.customer.name}? (you can restore it from the trash)`;
     if (!window.confirm(ask)) return;
     setDeletingOrderId(order.id);
     try {
@@ -246,6 +246,46 @@ function AdminDashboard() {
       window.alert(locale === "ar" ? "تعذر الحذف، حاول مرة أخرى" : "Could not delete, try again");
     } finally {
       setDeletingOrderId(null);
+    }
+  };
+
+  const [showTrash, setShowTrash] = useState(false);
+  const [trashOrders, setTrashOrders] = useState<Order[] | null>(null);
+  const [restoringOrderId, setRestoringOrderId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!showTrash) return;
+    let cancelled = false;
+    setTrashOrders(null);
+    fetch("/api/orders?trash=1", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { orders?: Order[] } | null) => {
+        if (!cancelled) setTrashOrders(Array.isArray(data?.orders) ? data.orders : []);
+      })
+      .catch(() => {
+        if (!cancelled) setTrashOrders([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [showTrash]);
+
+  const restoreOrder = async (order: Order) => {
+    setRestoringOrderId(order.id);
+    try {
+      const res = await fetch(`/api/orders?id=${encodeURIComponent(order.id)}`, {
+        method: "PATCH",
+      });
+      const data = (await res.json().catch(() => null)) as { order?: Order } | null;
+      if (!res.ok || !data?.order) throw new Error(String(res.status));
+      const restored = data.order;
+      setTrashOrders((list) => (list ?? []).filter((o) => o.id !== order.id));
+      setServerOrders((list) => [restored, ...list.filter((o) => o.id !== restored.id)]);
+    } catch {
+      window.alert(
+        locale === "ar" ? "تعذر الاسترجاع، حاول مرة أخرى" : "Could not restore, try again"
+      );
+    } finally {
+      setRestoringOrderId(null);
     }
   };
 
@@ -1152,8 +1192,79 @@ function AdminDashboard() {
 
           {tab === "orders" && (
             <div>
-              <h2 className="mb-6 text-xl font-semibold">{t.admin.orders}</h2>
-              {ordersByCountry.length === 0 ? (
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+                <h2 className="text-xl font-semibold">
+                  {showTrash
+                    ? locale === "ar"
+                      ? "سلة المحذوفات"
+                      : locale === "es"
+                        ? "Papelera"
+                        : "Trash"
+                    : t.admin.orders}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setShowTrash((v) => !v)}
+                  className="inline-flex items-center gap-1 rounded-xl border border-sand-300 px-3 py-2 text-sm font-semibold hover:bg-sand-50"
+                >
+                  {showTrash ? null : <Trash2 className="h-4 w-4" />}
+                  {showTrash
+                    ? locale === "ar"
+                      ? "← الرجوع للطلبات"
+                      : locale === "es"
+                        ? "← Volver a pedidos"
+                        : "← Back to orders"
+                    : locale === "ar"
+                      ? "سلة المحذوفات"
+                      : locale === "es"
+                        ? "Papelera"
+                        : "Trash"}
+                </button>
+              </div>
+              {showTrash ? (
+                trashOrders === null ? (
+                  <p className="text-[var(--muted)]">…</p>
+                ) : trashOrders.length === 0 ? (
+                  <p className="text-[var(--muted)]">
+                    {locale === "ar" ? "السلة فارغة" : locale === "es" ? "La papelera está vacía" : "Trash is empty"}
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    {trashOrders.map((o) => (
+                      <div
+                        key={o.id}
+                        className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-sand-200 bg-white p-4 opacity-90"
+                      >
+                        <div>
+                          <p className="font-semibold">{o.customer.name}</p>
+                          <p className="text-sm text-[var(--muted)]">
+                            {o.customer.phone} · {o.country}
+                          </p>
+                          <p className="mt-1 text-xs text-[var(--muted)]">
+                            {new Date(o.createdAt).toLocaleString(locale === "ar" ? "fr-FR" : "en-US")}
+                            {o.deletedAt
+                              ? ` · ${locale === "ar" ? "حُذف" : "deleted"} ${new Date(o.deletedAt).toLocaleString(locale === "ar" ? "fr-FR" : "en-US")}`
+                              : ""}
+                          </p>
+                        </div>
+                        <div className="text-end">
+                          <p className="font-bold text-brand-800">
+                            {formatPrice(o.totalUSD, o.currency, locale)}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => void restoreOrder(o)}
+                            disabled={restoringOrderId === o.id}
+                            className="mt-3 inline-flex items-center gap-1 rounded-xl border-2 border-brand-300 bg-brand-50 px-3 py-2 text-sm font-bold text-brand-800 hover:bg-brand-100 disabled:opacity-50"
+                          >
+                            {locale === "ar" ? "استرجاع" : locale === "es" ? "Restaurar" : "Restore"}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )
+              ) : ordersByCountry.length === 0 ? (
                 <p className="text-[var(--muted)]">
                   {locale === "ar" ? "لا توجد طلبات بعد" : "No orders yet"}
                 </p>
