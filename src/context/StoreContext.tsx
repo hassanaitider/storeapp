@@ -55,6 +55,7 @@ import {
   trackAddToCart,
   trackPurchase,
 } from "@/lib/meta-pixel";
+import { flushPendingOrders, uploadOrder } from "@/lib/order-upload";
 import {
   CATALOG_STORAGE_KEY,
   LEGACY_STORAGE_KEYS,
@@ -1632,6 +1633,10 @@ export function StoreProvider({
   // Follow the rendered locale, not state.locale: a mismatched <html dir>
   // moves the scrollbar to the other side and shifts the whole page.
   useEffect(() => {
+    flushPendingOrders();
+  }, []);
+
+  useEffect(() => {
     document.documentElement.lang = displayLocale;
     document.documentElement.dir = displayLocale === "ar" ? "rtl" : "ltr";
   }, [displayLocale]);
@@ -1690,13 +1695,7 @@ export function StoreProvider({
         orders: [order, ...s.orders],
         cart: itemsOverride ? s.cart : [],
       }));
-      // keepalive lets the request finish even if the buyer closes the tab right away
-      void fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(order),
-        keepalive: true,
-      }).catch((err) => console.error("order upload failed", err));
+      uploadOrder(order);
       const contents = items.map((item) => {
         const product = current.products.find((p) => p.id === item.productId);
         const unitUSD = product
