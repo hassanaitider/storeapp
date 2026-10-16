@@ -1134,10 +1134,13 @@ export function StoreProvider({
 
       const readCode = (raw: string | undefined): CountryCode | null => {
         const code = raw?.toUpperCase();
-        if (code && isValidCountry(code) && isStoreMarket(code)) {
-          return code as CountryCode;
+        if (!code || code === "XX" || code === "T1" || !/^[A-Z]{2}$/.test(code)) {
+          return null;
         }
-        return null;
+        // Store markets keep their market; Sudan/Egypt/… map to default (SA)
+        // so client geo never leaves them on a Libya/LATAM landing.
+        if (isStoreMarket(code)) return code as CountryCode;
+        return DEFAULT_COUNTRY;
       };
 
       try {

@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies, headers } from "next/headers";
-import {
-  DEFAULT_COUNTRY,
-  isStoreMarket,
-  isValidCountry,
-} from "@/lib/countries";
+import { DEFAULT_COUNTRY, isStoreMarket } from "@/lib/countries";
 import type { CountryCode } from "@/lib/types";
 
 type GeoSource =
@@ -14,16 +10,19 @@ type GeoSource =
   | "cookie"
   | "default";
 
-function normalizeCountry(raw: string | null | undefined): CountryCode | null {
+/** Any ISO country code from CDN/IP — not limited to COUNTRIES in the catalog. */
+function normalizeCountry(raw: string | null | undefined): string | null {
   if (!raw) return null;
   const code = raw.trim().toUpperCase();
-  if (!isValidCountry(code)) return null;
-  return code as CountryCode;
+  if (!code || code === "XX" || code === "T1" || !/^[A-Z]{2}$/.test(code)) {
+    return null;
+  }
+  return code;
 }
 
-/** Map any detected ISO country to an active store market when possible. */
-function toStoreMarket(code: CountryCode): CountryCode {
-  return isStoreMarket(code) ? code : DEFAULT_COUNTRY;
+/** Map any detected ISO country to an active store market. */
+function toStoreMarket(code: string): CountryCode {
+  return isStoreMarket(code) ? (code as CountryCode) : DEFAULT_COUNTRY;
 }
 
 function clientIp(headerStore: Headers): string | null {
@@ -57,7 +56,7 @@ function isPrivateIp(ip: string): boolean {
   return false;
 }
 
-async function lookupCountryByIp(ip: string): Promise<CountryCode | null> {
+async function lookupCountryByIp(ip: string): Promise<string | null> {
   if (isPrivateIp(ip)) return null;
 
   const controller = new AbortController();
@@ -124,7 +123,7 @@ export async function GET() {
       cookieStore.get("geo-country")?.value
     );
 
-    let detected: CountryCode | null = null;
+    let detected: string | null = null;
     let source: GeoSource = "default";
 
     if (fromHeader) {

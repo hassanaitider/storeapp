@@ -49,15 +49,34 @@ function productViewMarket(request: NextRequest): string | null {
 const CRAWLER_UA =
   /facebookexternalhit|facebot|meta-externalagent|googlebot|adsbot-google|google-inspectiontool|bingbot|tiktokbot|bytespider/i;
 
-/** Store market of the visitor's IP, or null when the edge did not provide one. */
+/**
+ * Store market of the visitor's IP, or null when the edge did not provide one.
+ * Any real country is locked: store markets → themselves; everyone else
+ * (Sudan, Egypt, …) → DEFAULT_COUNTRY so they cannot open Libya/LATAM ads.
+ */
 function visitorMarket(request: NextRequest): string | null {
   const code = (
     request.headers.get("x-vercel-ip-country") ||
     request.headers.get("cf-ipcountry") ||
     ""
   ).toUpperCase();
-  if (!isValidCountry(code)) return null;
+  // Vercel: XX = unknown, T1 = Tor
+  if (!code || code === "XX" || code === "T1" || !/^[A-Z]{2}$/.test(code)) {
+    return null;
+  }
   return isStoreMarket(code) ? code : DEFAULT_COUNTRY;
+}
+
+function ipCountryCode(request: NextRequest): string {
+  return (
+    request.headers.get("x-vercel-ip-country") ||
+    request.headers.get("cf-ipcountry") ||
+    ""
+  ).toUpperCase();
+}
+
+function isUsableIpCountry(code: string): boolean {
+  return Boolean(code) && code !== "XX" && code !== "T1" && /^[A-Z]{2}$/.test(code);
 }
 
 /** Market a URL is scoped to: product pages and `/shop?category=products-{cc}`. */
@@ -148,16 +167,11 @@ export async function middleware(request: NextRequest) {
 
   const existing = request.cookies.get("geo-country")?.value;
   // Do not short-circuit on cookie alone — CDN headers can refresh market
-  const headerCountry =
-    request.headers.get("x-vercel-ip-country") ||
-    request.headers.get("cf-ipcountry") ||
-    "";
-
-  const code = headerCountry.toUpperCase();
+  const code = ipCountryCode(request);
 
   // First paint must already use the final market/locale, otherwise the
   // RTL→LTR swap after hydration shifts the whole page (CLS).
-  const baseMarket = isValidCountry(code)
+  const baseMarket = isUsableIpCountry(code)
     ? isStoreMarket(code)
       ? code
       : DEFAULT_COUNTRY
@@ -175,7 +189,7 @@ export async function middleware(request: NextRequest) {
   const response = NextResponse.next({ request: { headers: requestHeaders } });
   applyDocumentCacheHeaders(request, response, pathname);
 
-  if (isValidCountry(code)) {
+  if (isUsableIpCountry(code)) {
     const market = isStoreMarket(code) ? code : DEFAULT_COUNTRY;
     if (existing !== market) {
       response.cookies.set("geo-country", market, {
