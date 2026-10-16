@@ -2,6 +2,9 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 import { isValidCountry } from "@/lib/countries";
+import { sendMetaCapiEvents } from "@/lib/meta-capi";
+import { getCapiTarget } from "@/lib/meta-config";
+import { pixelIdForCountry } from "@/lib/meta-pixels";
 import {
   deleteOrderBlob,
   listOrderBlobs,
@@ -9,12 +12,90 @@ import {
   restoreOrderBlob,
   saveOrderBlob,
 } from "@/lib/orders-blob";
-import type { Order } from "@/lib/types";
+import type { CountryCode, Order } from "@/lib/types";
+import { normalizeCapiUserData } from "@/app/api/fb-capi/user-data";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const MAX_BODY_CHARS = 20_000;
+
+function cookieFromRequest(request: Request, name: string): string | undefined {
+  const raw = request.headers.get("cookie") || "";
+  const match = raw.match(
+    new RegExp(`(?:^|;\\s*)${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=([^;]*)`)
+  );
+  return match?.[1] ? decodeURIComponent(match[1]) : undefined;
+}
+
+function clientIp(request: Request): string | undefined {
+  const xf = request.headers.get("x-forwarded-for");
+  if (xf) return xf.split(",")[0]?.trim();
+  return (
+    request.headers.get("x-real-ip") ||
+    request.headers.get("cf-connecting-ip") ||
+    undefined
+  );
+}
+
+/**
+ * Always send Purchase via CAPI when the order is saved — same event_id as the
+ * browser pixel so Meta dedupes. Survives ad blockers / closed tabs / aborted keepalive.
+ */
+async function sendOrderPurchaseCapi(
+  request: Request,
+  order: Order,
+  meta?: { fbp?: string; fbc?: string; eventSourceUrl?: string }
+) {
+  const pixelId = pixelIdForCountry(order.country as CountryCode);
+  const target = getCapiTarget(pixelId);
+  if (!target) {
+    console.error("order CAPI skipped: no_token_for_pixel", pixelId, order.id);
+    return;
+  }
+  const nameParts = order.customer.name.trim().split(/\s+/);
+  const userData = normalizeCapiUserData(
+    {
+      phone: order.customer.phone,
+      firstName: nameParts[0],
+      lastName: nameParts.slice(1).join(" ") || undefined,
+      city: order.customer.city,
+      country: order.country,
+      externalId: order.id,
+      fbp: meta?.fbp || cookieFromRequest(request, "_fbp"),
+      fbc: meta?.fbc || cookieFromRequest(request, "_fbc"),
+      clientIpAddress: clientIp(request),
+      clientUserAgent: request.headers.get("user-agent") || undefined,
+    },
+    request
+  );
+  const result = await sendMetaCapiEvents(
+    [
+      {
+        eventName: "Purchase",
+        eventId: order.id,
+        eventSourceUrl: meta?.eventSourceUrl,
+        userData,
+        customData: {
+          value: Math.round(order.totalUSD * 100) / 100,
+          currency: "USD",
+          order_id: order.id,
+          content_ids: order.items.map((i) => i.productId),
+          content_type: "product",
+          contents: order.items.map((i) => ({
+            id: i.productId,
+            quantity: i.quantity,
+          })),
+          num_items: order.items.reduce((n, i) => n + i.quantity, 0),
+        },
+      },
+    ],
+    target
+  );
+  if (!result.ok) {
+    console.error("order CAPI Purchase failed", order.id, result.status, result.body);
+  }
+}
 
 function text(value: unknown, max = 500): string | undefined {
   return typeof value === "string" ? value.slice(0, max) : undefined;
@@ -67,7 +148,10 @@ export async function POST(request: Request) {
     if (!raw || raw.length > MAX_BODY_CHARS) {
       return NextResponse.json({ ok: false, error: "bad payload" }, { status: 400 });
     }
-    const order = sanitizeOrder(JSON.parse(raw) as Partial<Order>);
+    const parsed = JSON.parse(raw) as Partial<Order> & {
+      metaPixel?: { fbp?: string; fbc?: string; eventSourceUrl?: string };
+    };
+    const order = sanitizeOrder(parsed);
     if (!order) {
       return NextResponse.json({ ok: false, error: "bad payload" }, { status: 400 });
     }
@@ -76,6 +160,10 @@ export async function POST(request: Request) {
       console.error("order not persisted: BLOB_READ_WRITE_TOKEN missing", order.id);
       return NextResponse.json({ ok: false, error: "storage unavailable" }, { status: 503 });
     }
+    // Fire-and-forget: never block or fail the order on Meta errors
+    void sendOrderPurchaseCapi(request, order, parsed.metaPixel).catch((err) =>
+      console.error("order CAPI unexpected", order.id, err)
+    );
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("order save failed", err);

@@ -3,17 +3,37 @@ import type { Order } from "./types";
 const QUEUE_KEY = "smartshop.pendingOrders";
 const RETRY_DELAYS_MS = [0, 2000, 5000, 10000, 20000];
 
-function readQueue(): Order[] {
+type QueuedOrder = Order & {
+  metaPixel?: { fbp?: string; fbc?: string; eventSourceUrl?: string };
+};
+
+function readCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(
+    new RegExp(`(?:^|; )${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=([^;]*)`)
+  );
+  return match?.[1] ? decodeURIComponent(match[1]) : undefined;
+}
+
+function metaFromBrowser(): QueuedOrder["metaPixel"] {
+  return {
+    fbp: readCookie("_fbp"),
+    fbc: readCookie("_fbc"),
+    eventSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
+  };
+}
+
+function readQueue(): QueuedOrder[] {
   try {
     const raw = window.localStorage.getItem(QUEUE_KEY);
-    const list = raw ? (JSON.parse(raw) as Order[]) : [];
+    const list = raw ? (JSON.parse(raw) as QueuedOrder[]) : [];
     return Array.isArray(list) ? list.filter((o) => o?.id) : [];
   } catch {
     return [];
   }
 }
 
-function writeQueue(list: Order[]) {
+function writeQueue(list: QueuedOrder[]) {
   try {
     if (list.length) window.localStorage.setItem(QUEUE_KEY, JSON.stringify(list));
     else window.localStorage.removeItem(QUEUE_KEY);
@@ -22,7 +42,7 @@ function writeQueue(list: Order[]) {
   }
 }
 
-function enqueue(order: Order) {
+function enqueue(order: QueuedOrder) {
   writeQueue([...readQueue().filter((o) => o.id !== order.id), order]);
 }
 
@@ -31,12 +51,16 @@ function dequeue(id: string) {
 }
 
 /** "ok" = saved, "rejected" = server refused the payload (retrying won't help), "failed" = network/server error */
-async function postOrder(order: Order): Promise<"ok" | "rejected" | "failed"> {
+async function postOrder(order: QueuedOrder): Promise<"ok" | "rejected" | "failed"> {
   try {
+    const { metaPixel, ...rest } = order;
     const res = await fetch("/api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(order),
+      body: JSON.stringify({
+        ...rest,
+        metaPixel: metaPixel ?? metaFromBrowser(),
+      }),
       keepalive: true,
     });
     if (res.ok) return "ok";
@@ -48,7 +72,7 @@ async function postOrder(order: Order): Promise<"ok" | "rejected" | "failed"> {
 
 const inFlight = new Set<string>();
 
-async function uploadWithRetry(order: Order) {
+async function uploadWithRetry(order: QueuedOrder) {
   if (inFlight.has(order.id)) return;
   inFlight.add(order.id);
   try {
@@ -73,8 +97,9 @@ async function uploadWithRetry(order: Order) {
  */
 export function uploadOrder(order: Order) {
   if (typeof window === "undefined") return;
-  enqueue(order);
-  void uploadWithRetry(order);
+  const queued: QueuedOrder = { ...order, metaPixel: metaFromBrowser() };
+  enqueue(queued);
+  void uploadWithRetry(queued);
 }
 
 /** Re-sends orders that never reached the server on a previous visit. */
