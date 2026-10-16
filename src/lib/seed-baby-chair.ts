@@ -9,7 +9,6 @@ const COD_EN =
 
 const IMAGES = [
   "/products/baby-chair-main.webp",
-  "/products/baby-chair-1.webp",
   "/products/baby-chair-5.webp",
   "/products/baby-chair-4.webp",
   "/products/baby-chair-2.webp",
@@ -109,7 +108,7 @@ ${COD_EN}`.trim(),
             "الصحن كيتفك بسهولة باش تغسليه، والحقيبة السوداء كتخليك تاخدي الكرسي معاك بلا تعب.",
           bodyEn:
             "The tray comes off easily to wash, and the black bag lets you carry the chair without hassle.",
-          image: "/products/baby-chair-1.webp",
+          image: "/products/baby-chair-5.webp",
         },
         {
           titleAr: "كيطوي فثواني ويوفر البلاصة",
