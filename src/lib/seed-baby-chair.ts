@@ -94,7 +94,7 @@ ${COD_EN}`.trim(),
         "No need for a heavy high chair. This one folds in seconds, has a feeding tray and a safety harness, and comes with a carrying bag for home, the park, or travel. Only 275 MAD — free delivery and cash on delivery in Morocco.",
       sections: [
         {
-          titleAr: "البيض كياكل مريح… وأنتي مطمئنة",
+          titleAr: "البيبي كياكل مريح… وأنتي مطمئنة",
           titleEn: "Baby eats comfortably — you stay at ease",
           bodyAr:
             "صحن واسع وظهر مرتفع، والبيبي كايجلس مثبت بالحزام. مثالي للوجبة أو للسناك فأي بلاصة فالدار.",
