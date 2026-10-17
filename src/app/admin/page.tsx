@@ -15,6 +15,7 @@ import {
   RotateCcw,
   Gift,
   Globe,
+  Download,
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
@@ -32,6 +33,7 @@ import {
   isValidCountry,
 } from "@/lib/countries";
 import { getProductLocalPrice, isProductAvailableIn, resolveProductMarket } from "@/lib/pricing";
+import { downloadOrdersCsv } from "@/lib/orders-csv";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Order, ProductQtyOffer } from "@/lib/types";
 import {
@@ -1202,24 +1204,41 @@ function AdminDashboard() {
                         : "Trash"
                     : t.admin.orders}
                 </h2>
-                <button
-                  type="button"
-                  onClick={() => setShowTrash((v) => !v)}
-                  className="inline-flex items-center gap-1 rounded-xl border border-sand-300 px-3 py-2 text-sm font-semibold hover:bg-sand-50"
-                >
-                  {showTrash ? null : <Trash2 className="h-4 w-4" />}
-                  {showTrash
-                    ? locale === "ar"
-                      ? "← الرجوع للطلبات"
-                      : locale === "es"
-                        ? "← Volver a pedidos"
-                        : "← Back to orders"
-                    : locale === "ar"
-                      ? "سلة المحذوفات"
-                      : locale === "es"
-                        ? "Papelera"
-                        : "Trash"}
-                </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  {!showTrash ? (
+                    <button
+                      type="button"
+                      disabled={allOrders.length === 0}
+                      onClick={() => downloadOrdersCsv(allOrders)}
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-sand-300 bg-white px-3 py-2 text-sm font-semibold hover:bg-sand-50 disabled:opacity-40"
+                    >
+                      <Download className="h-4 w-4" />
+                      {locale === "ar"
+                        ? "تصدير CSV"
+                        : locale === "es"
+                          ? "Exportar CSV"
+                          : "Export CSV"}
+                    </button>
+                  ) : null}
+                  <button
+                    type="button"
+                    onClick={() => setShowTrash((v) => !v)}
+                    className="inline-flex items-center gap-1 rounded-xl border border-sand-300 px-3 py-2 text-sm font-semibold hover:bg-sand-50"
+                  >
+                    {showTrash ? null : <Trash2 className="h-4 w-4" />}
+                    {showTrash
+                      ? locale === "ar"
+                        ? "← الرجوع للطلبات"
+                        : locale === "es"
+                          ? "← Volver a pedidos"
+                          : "← Back to orders"
+                      : locale === "ar"
+                        ? "سلة المحذوفات"
+                        : locale === "es"
+                          ? "Papelera"
+                          : "Trash"}
+                  </button>
+                </div>
               </div>
               {showTrash ? (
                 trashOrders === null ? (
