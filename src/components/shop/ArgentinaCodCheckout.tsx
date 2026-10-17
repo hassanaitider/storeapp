@@ -170,7 +170,7 @@ export function ArgentinaCodCheckout({
   return (
     <div
       id="order"
-      className="scroll-mt-28 overflow-hidden rounded-2xl border border-[#e8e8e8] bg-white shadow-[0_10px_40px_rgba(18,28,45,0.08)]"
+      className="mt-10 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e8e8e8] bg-white shadow-[0_10px_40px_rgba(18,28,45,0.08)]"
     >
       {/* Dark header — Argentina COD */}
       <div className="bg-[#121c2d] px-4 pb-5 pt-5 sm:px-5">

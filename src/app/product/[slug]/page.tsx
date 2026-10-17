@@ -465,9 +465,16 @@ function ProductPageInner() {
     nicaraguaCod ||
     latamCod;
   const moroccoSimpleCheckout = country === "MA";
+  /** Checkout beside first photo — Arab markets only; LATAM keeps stacked layout */
+  const arabCheckoutBesidePhoto = !fufillsSticky;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-28 pt-8 sm:px-6 lg:px-8">
+    <div
+      className={cn(
+        "mx-auto px-4 pb-28 pt-8 sm:px-6 lg:px-8",
+        arabCheckoutBesidePhoto ? "max-w-6xl" : "max-w-4xl"
+      )}
+    >
       <nav className="mb-6 text-sm text-[var(--muted)]">
         <Link href="/" className="hover:text-brand-700">
           {t.nav.home}
@@ -548,291 +555,322 @@ function ProductPageInner() {
         </div>
       </header>
 
-      {/* Photo + checkout first — side by side on desktop, stacked on mobile */}
-      <div className="mt-6 grid items-start gap-6 animate-fade-up lg:mt-8 lg:grid-cols-2 lg:gap-8">
-        <div className="min-w-0">
-          <ProductMediaGallery
-            product={product}
-            locale={locale}
-            activeImg={activeImg}
-            onSelect={setActiveImg}
-            discount={discount}
-          />
-        </div>
-
-        <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-      {/* Buy / COD blocks — AR, MX, DO, EC, SV, HN, NI modules are market-exclusive */}
-      {argentinaCod ? (
-        <ArgentinaCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-          warranty={warranty}
-          onWarrantyChange={setWarranty}
-        />
-      ) : mexicoCod ? (
-        <MexicoCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-          warranty={warranty}
-          onWarrantyChange={setWarranty}
-        />
-      ) : dominicanCod ? (
-        <DominicanCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-          warranty={warranty}
-          onWarrantyChange={setWarranty}
-        />
-      ) : ecuadorCod ? (
-        <EcuadorCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-          warranty={warranty}
-          onWarrantyChange={setWarranty}
-        />
-      ) : salvadorCod ? (
-        <SalvadorCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-          warranty={warranty}
-          onWarrantyChange={setWarranty}
-        />
-      ) : hondurasCod ? (
-        <HondurasCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-          warranty={warranty}
-          onWarrantyChange={setWarranty}
-        />
-      ) : nicaraguaCod ? (
-        <NicaraguaCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-          warranty={warranty}
-          onWarrantyChange={setWarranty}
-        />
-      ) : latamCod ? (
-        <LatamCodCheckout
-          product={product}
-          country={country}
-          qty={qty}
-          onQtyChange={setQty}
-          customColor={customColor}
-          onCustomColorChange={setCustomColor}
-          formRef={formRef}
-          onPlaceOrder={submitLatamCod}
-          warranty={warranty}
-          onWarrantyChange={setWarranty}
-        />
-      ) : (
-      <div
-        id="order"
-        className="scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
-      >
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-800">
-          <span className="inline-flex items-center gap-1.5">
-            <Truck className="h-4 w-4 text-brand-600" />
-            {t.trust.freeShipping}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <HandCoins className="h-4 w-4 text-brand-600" />
-            {t.trust.cod}
-          </span>
-        </div>
-
-        {product.customColorEnabled ? (
-          <label className="mt-5 block">
-            <span className="product-section-title text-lg sm:text-xl">
-              {t.product.writeYourColor}
-            </span>
-            <input
-              type="text"
-              value={customColor}
-              onChange={(e) => setCustomColor(e.target.value)}
-              placeholder={t.product.writeYourColorHint}
-              required
-              className="mt-3 w-full rounded-xl border border-sand-300 bg-white px-4 py-3 text-sm font-medium text-ink-900 outline-none ring-brand-600/30 placeholder:text-[var(--muted)] focus:border-brand-500 focus:ring-2"
+      {arabCheckoutBesidePhoto ? (
+        /* Arab: photo + checkout side by side first */
+        <div className="mt-6 grid items-start gap-6 animate-fade-up lg:mt-8 lg:grid-cols-2 lg:gap-8">
+          <div className="min-w-0">
+            <ProductMediaGallery
+              product={product}
+              locale={locale}
+              activeImg={activeImg}
+              onSelect={setActiveImg}
+              discount={discount}
             />
-          </label>
-        ) : null}
-
-        {product.sizes?.length ? (
-          <div className="mt-5">
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="product-section-title text-lg sm:text-xl">
-                {t.product.chooseSize}
-              </h2>
-              {selectedSize ? (
-                <p className="text-sm text-[var(--muted)]">
-                  {t.product.selectedSize}:{" "}
-                  <span className="font-bold text-brand-800">{selectedSize}</span>
-                </p>
-              ) : null}
-            </div>
+          </div>
+          <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
             <div
-              className="mt-3 flex flex-wrap gap-2"
-              role="listbox"
-              aria-label={t.product.chooseSize}
+              id="order"
+              className="scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
             >
-              {product.sizes.map((size) => {
-                const pressed = selectedSize === size;
-                return (
-                  <button
-                    key={size}
-                    type="button"
-                    role="option"
-                    aria-selected={pressed}
-                    onClick={() => setSelectedSize(size)}
-                    className={cn(
-                      "min-w-[3.25rem] rounded-xl border-2 px-4 py-2.5 text-sm font-bold transition",
-                      pressed
-                        ? "border-brand-700 bg-brand-700 text-white shadow-sm"
-                        : "border-sand-300 bg-white text-ink-800 hover:border-brand-500"
-                    )}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-800">
+                <span className="inline-flex items-center gap-1.5">
+                  <Truck className="h-4 w-4 text-brand-600" />
+                  {t.trust.freeShipping}
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <HandCoins className="h-4 w-4 text-brand-600" />
+                  {t.trust.cod}
+                </span>
+              </div>
+
+              {product.customColorEnabled ? (
+                <label className="mt-5 block">
+                  <span className="product-section-title text-lg sm:text-xl">
+                    {t.product.writeYourColor}
+                  </span>
+                  <input
+                    type="text"
+                    value={customColor}
+                    onChange={(e) => setCustomColor(e.target.value)}
+                    placeholder={t.product.writeYourColorHint}
+                    required
+                    className="mt-3 w-full rounded-xl border border-sand-300 bg-white px-4 py-3 text-sm font-medium text-ink-900 outline-none ring-brand-600/30 placeholder:text-[var(--muted)] focus:border-brand-500 focus:ring-2"
+                  />
+                </label>
+              ) : null}
+
+              {product.sizes?.length ? (
+                <div className="mt-5">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h2 className="product-section-title text-lg sm:text-xl">
+                      {t.product.chooseSize}
+                    </h2>
+                    {selectedSize ? (
+                      <p className="text-sm text-[var(--muted)]">
+                        {t.product.selectedSize}:{" "}
+                        <span className="font-bold text-brand-800">
+                          {selectedSize}
+                        </span>
+                      </p>
+                    ) : null}
+                  </div>
+                  <div
+                    className="mt-3 flex flex-wrap gap-2"
+                    role="listbox"
+                    aria-label={t.product.chooseSize}
                   >
-                    {size}
-                  </button>
-                );
-              })}
+                    {product.sizes.map((size) => {
+                      const pressed = selectedSize === size;
+                      return (
+                        <button
+                          key={size}
+                          type="button"
+                          role="option"
+                          aria-selected={pressed}
+                          onClick={() => setSelectedSize(size)}
+                          className={cn(
+                            "min-w-[3.25rem] rounded-xl border-2 px-4 py-2.5 text-sm font-bold transition",
+                            pressed
+                              ? "border-brand-700 bg-brand-700 text-white shadow-sm"
+                              : "border-sand-300 bg-white text-ink-800 hover:border-brand-500"
+                          )}
+                        >
+                          {size}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
+
+              {showQtyUpsell ? (
+                <ProductQtyUpsell
+                  product={product}
+                  country={country}
+                  locale={locale}
+                  selectedQty={qty}
+                  onSelect={setQty}
+                  className="mt-5"
+                />
+              ) : null}
+
+              <form ref={formRef} onSubmit={onSubmit} className="mt-5 space-y-4">
+                <h2 className="product-section-title text-lg">
+                  {t.checkout.title}
+                </h2>
+
+                <Field
+                  label={t.checkout.name}
+                  required
+                  value={form.name}
+                  onChange={(v) => setForm((f) => ({ ...f, name: v }))}
+                />
+                <Field
+                  label={t.checkout.phone}
+                  required
+                  type="tel"
+                  value={form.phone}
+                  onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
+                />
+                <Field
+                  label={t.checkout.city}
+                  required
+                  value={form.city}
+                  onChange={(v) => setForm((f) => ({ ...f, city: v }))}
+                />
+                {!moroccoSimpleCheckout ? (
+                  <Field
+                    label={t.checkout.address}
+                    required
+                    value={form.address}
+                    onChange={(v) => setForm((f) => ({ ...f, address: v }))}
+                  />
+                ) : null}
+
+                <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
+                  <span className="font-semibold text-ink-800">
+                    {t.cart.total}
+                    {showQtyUpsell ? (
+                      <span className="ms-1 font-normal text-[var(--muted)]">
+                        · {qtyLabel}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="product-price text-base">
+                    {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
+                  </span>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={!product.inStock}
+                  className="inline-flex w-full items-center justify-center rounded-2xl bg-brand-700 px-6 py-4 text-sm font-bold text-white transition hover:bg-brand-600 disabled:opacity-50"
+                >
+                  {product.inStock ? t.checkout.placeOrder : t.shop.outOfStock}
+                </button>
+                <ul className="grid grid-cols-3 gap-2 pt-1 text-center text-[11px] font-semibold text-brand-800 sm:text-xs">
+                  {[
+                    { icon: HandCoins, label: t.trust.cod },
+                    { icon: Truck, label: t.trust.freeShipping },
+                    { icon: RotateCcw, label: t.trust.returns },
+                  ].map(({ icon: Icon, label }) => (
+                    <li
+                      key={label}
+                      className="flex flex-col items-center gap-1 rounded-xl bg-brand-50 px-2 py-2.5"
+                    >
+                      <Icon className="h-5 w-5 text-brand-700" />
+                      <span>{label}</span>
+                    </li>
+                  ))}
+                </ul>
+              </form>
             </div>
           </div>
-        ) : null}
-
-        {/* Volume discount — shown only when enabled in admin */}
-        {showQtyUpsell ? (
-          <ProductQtyUpsell
-            product={product}
-            country={country}
-            locale={locale}
-            selectedQty={qty}
-            onSelect={setQty}
-            className="mt-5"
-          />
-        ) : null}
-
-        <form ref={formRef} onSubmit={onSubmit} className="mt-5 space-y-4">
-          <h2 className="product-section-title text-lg">{t.checkout.title}</h2>
-
-          <Field
-            label={t.checkout.name}
-            required
-            value={form.name}
-            onChange={(v) => setForm((f) => ({ ...f, name: v }))}
-          />
-          <Field
-            label={t.checkout.phone}
-            required
-            type="tel"
-            value={form.phone}
-            onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
-          />
-          <Field
-            label={t.checkout.city}
-            required
-            value={form.city}
-            onChange={(v) => setForm((f) => ({ ...f, city: v }))}
-          />
-          {!moroccoSimpleCheckout ? (
-            <Field
-              label={t.checkout.address}
-              required
-              value={form.address}
-              onChange={(v) => setForm((f) => ({ ...f, address: v }))}
-            />
-          ) : null}
-
-          <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
-            <span className="font-semibold text-ink-800">
-              {t.cart.total}
-              {showQtyUpsell ? (
-                <span className="ms-1 font-normal text-[var(--muted)]">
-                  · {qtyLabel}
-                </span>
-              ) : null}
-            </span>
-            <span className="product-price text-base">
-              {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
-            </span>
-          </div>
-
-          <button
-            type="submit"
-            disabled={!product.inStock}
-            className="inline-flex w-full items-center justify-center rounded-2xl bg-brand-700 px-6 py-4 text-sm font-bold text-white transition hover:bg-brand-600 disabled:opacity-50"
-          >
-            {product.inStock ? t.checkout.placeOrder : t.shop.outOfStock}
-          </button>
-          <ul className="grid grid-cols-3 gap-2 pt-1 text-center text-[11px] font-semibold text-brand-800 sm:text-xs">
-            {[
-              { icon: HandCoins, label: t.trust.cod },
-              { icon: Truck, label: t.trust.freeShipping },
-              { icon: RotateCcw, label: t.trust.returns },
-            ].map(({ icon: Icon, label }) => (
-              <li
-                key={label}
-                className="flex flex-col items-center gap-1 rounded-xl bg-brand-50 px-2 py-2.5"
-              >
-                <Icon className="h-5 w-5 text-brand-700" />
-                <span>{label}</span>
-              </li>
-            ))}
-          </ul>
-        </form>
-      </div>
-      )}
         </div>
-      </div>
+      ) : (
+        <>
+          <div
+            className="mt-8 animate-fade-up"
+            style={{ animationDelay: "80ms" }}
+          >
+            <ProductMediaGallery
+              product={product}
+              locale={locale}
+              activeImg={activeImg}
+              onSelect={setActiveImg}
+              discount={discount}
+            />
+          </div>
+          <div
+            className="mt-10 animate-fade-up"
+            style={{ animationDelay: "120ms" }}
+          >
+            {product.landing?.style === "pro" ? (
+              <ProIntro product={product} locale={locale} />
+            ) : (
+              <ProductBriefDescription product={product} locale={locale} />
+            )}
+          </div>
+          {argentinaCod ? (
+            <ArgentinaCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
+              warranty={warranty}
+              onWarrantyChange={setWarranty}
+            />
+          ) : mexicoCod ? (
+            <MexicoCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
+              warranty={warranty}
+              onWarrantyChange={setWarranty}
+            />
+          ) : dominicanCod ? (
+            <DominicanCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
+              warranty={warranty}
+              onWarrantyChange={setWarranty}
+            />
+          ) : ecuadorCod ? (
+            <EcuadorCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
+              warranty={warranty}
+              onWarrantyChange={setWarranty}
+            />
+          ) : salvadorCod ? (
+            <SalvadorCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
+              warranty={warranty}
+              onWarrantyChange={setWarranty}
+            />
+          ) : hondurasCod ? (
+            <HondurasCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
+              warranty={warranty}
+              onWarrantyChange={setWarranty}
+            />
+          ) : nicaraguaCod ? (
+            <NicaraguaCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
+              warranty={warranty}
+              onWarrantyChange={setWarranty}
+            />
+          ) : (
+            <LatamCodCheckout
+              product={product}
+              country={country}
+              qty={qty}
+              onQtyChange={setQty}
+              customColor={customColor}
+              onCustomColorChange={setCustomColor}
+              formRef={formRef}
+              onPlaceOrder={submitLatamCod}
+              warranty={warranty}
+              onWarrantyChange={setWarranty}
+            />
+          )}
+        </>
+      )}
 
-      {/* Brief description — below the buy fold */}
-      <div className="mt-10 animate-fade-up" style={{ animationDelay: "120ms" }}>
-        {product.landing?.style === "pro" ? (
-          <ProIntro product={product} locale={locale} />
-        ) : (
-          <ProductBriefDescription product={product} locale={locale} />
-        )}
-      </div>
+      {arabCheckoutBesidePhoto ? (
+        <div
+          className="mt-10 animate-fade-up"
+          style={{ animationDelay: "120ms" }}
+        >
+          {product.landing?.style === "pro" ? (
+            <ProIntro product={product} locale={locale} />
+          ) : (
+            <ProductBriefDescription product={product} locale={locale} />
+          )}
+        </div>
+      ) : null}
 
       {/* Detailed description: image → text → image → text */}
       {product.slug === MAG_POWERBANK_SLUG ? (
