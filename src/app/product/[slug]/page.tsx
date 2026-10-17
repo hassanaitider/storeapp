@@ -467,7 +467,7 @@ function ProductPageInner() {
   const moroccoSimpleCheckout = country === "MA";
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl px-4 pb-28 pt-8 sm:px-6 lg:px-8">
       <nav className="mb-6 text-sm text-[var(--muted)]">
         <Link href="/" className="hover:text-brand-700">
           {t.nav.home}
@@ -548,26 +548,19 @@ function ProductPageInner() {
         </div>
       </header>
 
-      {/* 2) Main product image (+ gallery thumbs) */}
-      <div className="mt-8 animate-fade-up" style={{ animationDelay: "80ms" }}>
-        <ProductMediaGallery
-          product={product}
-          locale={locale}
-          activeImg={activeImg}
-          onSelect={setActiveImg}
-          discount={discount}
-        />
-      </div>
+      {/* Photo + checkout first — side by side on desktop, stacked on mobile */}
+      <div className="mt-6 grid items-start gap-6 animate-fade-up lg:mt-8 lg:grid-cols-2 lg:gap-8">
+        <div className="min-w-0">
+          <ProductMediaGallery
+            product={product}
+            locale={locale}
+            activeImg={activeImg}
+            onSelect={setActiveImg}
+            discount={discount}
+          />
+        </div>
 
-      {/* 3) Brief description */}
-      <div className="mt-10 animate-fade-up" style={{ animationDelay: "120ms" }}>
-        {product.landing?.style === "pro" ? (
-          <ProIntro product={product} locale={locale} />
-        ) : (
-          <ProductBriefDescription product={product} locale={locale} />
-        )}
-      </div>
-
+        <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
       {/* Buy / COD blocks — AR, MX, DO, EC, SV, HN, NI modules are market-exclusive */}
       {argentinaCod ? (
         <ArgentinaCodCheckout
@@ -676,7 +669,7 @@ function ProductPageInner() {
       ) : (
       <div
         id="order"
-        className="mt-10 scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
+        className="scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
       >
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-800">
           <span className="inline-flex items-center gap-1.5">
@@ -829,8 +822,19 @@ function ProductPageInner() {
         </form>
       </div>
       )}
+        </div>
+      </div>
 
-      {/* 4) Detailed description: image → text → image → text */}
+      {/* Brief description — below the buy fold */}
+      <div className="mt-10 animate-fade-up" style={{ animationDelay: "120ms" }}>
+        {product.landing?.style === "pro" ? (
+          <ProIntro product={product} locale={locale} />
+        ) : (
+          <ProductBriefDescription product={product} locale={locale} />
+        )}
+      </div>
+
+      {/* Detailed description: image → text → image → text */}
       {product.slug === MAG_POWERBANK_SLUG ? (
         <MagPowerBankStory product={product} locale={locale} />
       ) : product.slug === MINI_CAMERA_SLUG ? (
