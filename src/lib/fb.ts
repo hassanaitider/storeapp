@@ -173,20 +173,47 @@ export function trackInitiateCheckout(data?: {
   });
 }
 
+const savedOrderIds = new Set<string>();
+const pendingPurchases = new Map<string, () => string>();
+
+/** Browser Purchase waits until the order is actually stored. */
+export function markOrderSaved(orderId: string) {
+  if (!orderId) return;
+  savedOrderIds.add(orderId);
+  const send = pendingPurchases.get(orderId);
+  if (!send) return;
+  pendingPurchases.delete(orderId);
+  send();
+}
+
+/** Server refused the order — do not send a Purchase for it. */
+export function dropPendingPurchase(orderId: string) {
+  if (!orderId) return;
+  pendingPurchases.delete(orderId);
+}
+
 export function trackPurchase(data: {
   value: number;
   currency?: string;
   content_ids?: string[];
   order_id?: string;
 }, userData?: TrackBothUserData) {
-  return trackBoth(
-    "Purchase",
-    {
-      value: data.value,
-      currency: data.currency ?? "USD",
-      ...(data.content_ids ? { content_ids: data.content_ids } : {}),
-      ...(data.order_id ? { order_id: data.order_id } : {}),
-    },
-    { eventId: data.order_id, userData }
-  );
+  const send = () =>
+    trackBoth(
+      "Purchase",
+      {
+        value: data.value,
+        currency: data.currency ?? "USD",
+        ...(data.content_ids ? { content_ids: data.content_ids } : {}),
+        ...(data.order_id ? { order_id: data.order_id } : {}),
+      },
+      { eventId: data.order_id, userData }
+    );
+
+  const orderId = data.order_id;
+  if (!orderId) return send();
+  if (savedOrderIds.has(orderId)) return send();
+  // Keep the call that includes customer data (phone) over the thank-you repeat.
+  if (!pendingPurchases.has(orderId) || userData) pendingPurchases.set(orderId, send);
+  return orderId;
 }

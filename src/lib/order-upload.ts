@@ -1,3 +1,4 @@
+import { dropPendingPurchase, markOrderSaved } from "./fb";
 import type { Order } from "./types";
 
 const QUEUE_KEY = "smartshop.pendingOrders";
@@ -79,8 +80,14 @@ async function uploadWithRetry(order: QueuedOrder) {
     for (const delay of RETRY_DELAYS_MS) {
       if (delay) await new Promise((r) => setTimeout(r, delay));
       const result = await postOrder(order);
-      if (result === "ok" || result === "rejected") {
-        if (result === "rejected") console.error("order rejected by server", order.id);
+      if (result === "ok") {
+        markOrderSaved(order.id);
+        dequeue(order.id);
+        return;
+      }
+      if (result === "rejected") {
+        console.error("order rejected by server", order.id);
+        dropPendingPurchase(order.id);
         dequeue(order.id);
         return;
       }
