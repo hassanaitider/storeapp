@@ -63,6 +63,7 @@ export function ProductImage({
       height={height}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
+      fetchPriority={priority ? "high" : "auto"}
       onError={() => {
         if (current !== fallback) setCurrent(fallback);
       }}

@@ -3,6 +3,7 @@ import { Cormorant_Garamond, DM_Sans, Tajawal } from "next/font/google";
 import { StoreProvider } from "@/context/StoreContext";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { MetaPixel } from "@/components/MetaPixel";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import { SITE_URL } from "@/lib/site";
 import { headers } from "next/headers";
 import {
@@ -99,6 +100,7 @@ export default async function RootLayout({
           geoLockedCountry={geoLockedCountry}
         >
           <MetaPixel />
+          <ServiceWorkerRegister />
           <SiteShell>{children}</SiteShell>
         </StoreProvider>
       </body>
