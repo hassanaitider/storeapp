@@ -1209,7 +1209,7 @@ function AdminDashboard() {
                     <button
                       type="button"
                       disabled={allOrders.length === 0}
-                      onClick={() => downloadOrdersCsv(allOrders)}
+                      onClick={() => downloadOrdersCsv(allOrders, products)}
                       className="inline-flex items-center gap-1.5 rounded-xl border border-sand-300 bg-white px-3 py-2 text-sm font-semibold hover:bg-sand-50 disabled:opacity-40"
                     >
                       <Download className="h-4 w-4" />

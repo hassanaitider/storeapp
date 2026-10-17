@@ -1,4 +1,4 @@
-import type { Order } from "./types";
+import type { Order, Product } from "./types";
 
 function csvEscape(value: string | number | undefined | null): string {
   const raw = value == null ? "" : String(value);
@@ -6,16 +6,9 @@ function csvEscape(value: string | number | undefined | null): string {
   return raw;
 }
 
-function itemSummary(order: Order): string {
-  return order.items
-    .map((i) => `${i.productId}×${i.quantity}`)
-    .join(" · ");
-}
-
-function addressLine(c: Order["customer"]): string {
+function addressOnly(c: Order["customer"]): string {
   return [
     c.address,
-    c.city,
     c.neighborhood,
     c.district,
     c.state,
@@ -25,61 +18,54 @@ function addressLine(c: Order["customer"]): string {
     .join(", ");
 }
 
-const HEADERS = [
-  "id",
-  "createdAt",
-  "status",
-  "country",
-  "currency",
-  "totalUSD",
-  "name",
-  "phone",
-  "city",
-  "address",
-  "state",
-  "neighborhood",
-  "district",
-  "postalCode",
-  "nationalId",
-  "notes",
-  "items",
-] as const;
-
-/** Builds a UTF-8 CSV (with BOM) for Excel / Google Sheets. */
-export function ordersToCsv(orders: Order[]): string {
-  const rows = [...orders]
-    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-    .map((o) =>
-      [
-        o.id,
-        o.createdAt,
-        o.status,
-        o.country,
-        o.currency,
-        o.totalUSD,
-        o.customer.name,
-        o.customer.phone,
-        o.customer.city,
-        addressLine(o.customer),
-        o.customer.state ?? "",
-        o.customer.neighborhood ?? "",
-        o.customer.district ?? "",
-        o.customer.postalCode ?? "",
-        o.customer.nationalId ?? "",
-        o.customer.notes ?? "",
-        itemSummary(o),
-      ]
-        .map(csvEscape)
-        .join(",")
-    );
-  return `\uFEFF${HEADERS.join(",")}\n${rows.join("\n")}\n`;
+function skuForItem(
+  productId: string,
+  quantity: number,
+  byId: Map<string, Product>
+): string {
+  const p = byId.get(productId);
+  const sku = (p?.slug || productId).trim();
+  return quantity > 1 ? `${sku} x${quantity}` : sku;
 }
 
-export function downloadOrdersCsv(orders: Order[], filename?: string) {
+/**
+ * Simple delivery sheet: Nom | Numéro | Ville | Adresse | SKU
+ * One row per order (SKUs joined with " · " when several items).
+ */
+export function ordersToCsv(
+  orders: Order[],
+  products: Product[] = []
+): string {
+  const byId = new Map(products.map((p) => [p.id, p]));
+  const headers = ["Nom", "Numéro", "Ville", "Adresse", "SKU"];
+  const rows = [...orders]
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .map((o) => {
+      const sku = o.items
+        .map((i) => skuForItem(i.productId, i.quantity, byId))
+        .join(" · ");
+      return [
+        o.customer.name.trim(),
+        o.customer.phone.trim(),
+        o.customer.city.trim(),
+        addressOnly(o.customer),
+        sku,
+      ]
+        .map(csvEscape)
+        .join(",");
+    });
+  return `\uFEFF${headers.join(",")}\n${rows.join("\n")}\n`;
+}
+
+export function downloadOrdersCsv(
+  orders: Order[],
+  products: Product[] = [],
+  filename?: string
+) {
   if (typeof window === "undefined") return;
   const stamp = new Date().toISOString().slice(0, 10);
-  const name = filename ?? `smartshop-orders-${stamp}.csv`;
-  const blob = new Blob([ordersToCsv(orders)], {
+  const name = filename ?? `commandes-${stamp}.csv`;
+  const blob = new Blob([ordersToCsv(orders, products)], {
     type: "text/csv;charset=utf-8",
   });
   const url = URL.createObjectURL(blob);
