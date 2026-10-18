@@ -25,8 +25,8 @@ const IMAGES = [
 type Market = { country: CountryCode; price: number; priceUSD: number; label: string };
 
 const MARKETS: Market[] = [
-  { country: "MA", price: 179, priceUSD: 17.9, label: "179 درهم" },
-  { country: "LY", price: 129, priceUSD: 23.45, label: "129 د.ل" },
+  { country: "MA", price: 199, priceUSD: 19.9, label: "199 درهم" },
+  { country: "LY", price: 269, priceUSD: 48.9, label: "269 د.ل" },
 ];
 
 function buildBrushCleaner(m: Market): Product {
