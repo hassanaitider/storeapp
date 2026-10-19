@@ -8,6 +8,7 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
+  "/products/hand-neck-massager-demo.webp",
   "/products/hand-neck-massager-1.webp",
   "/products/hand-neck-massager-2.webp",
   "/products/hand-neck-massager-3.webp",
