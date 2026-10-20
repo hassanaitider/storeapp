@@ -403,14 +403,13 @@ export function ProductMediaGallery({
                     className="absolute inset-0"
                     aria-label={`GIF ${index + 1}`}
                   >
-                    <Image
+                    {/* Native img so animated GIF/WebP actually plays */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
                       src={url}
                       alt=""
-                      fill
-                      unoptimized
-                      loading="lazy"
-                      className="object-contain p-1"
-                      sizes="(max-width:640px) 45vw, 200px"
+                      className="absolute inset-0 h-full w-full object-contain p-1"
+                      decoding="async"
                     />
                   </button>
                   <span className="pointer-events-none absolute start-2 top-2 rounded bg-ink-900/75 px-1.5 py-0.5 text-[10px] font-bold text-white">

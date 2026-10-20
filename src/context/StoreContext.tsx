@@ -202,7 +202,8 @@ function toWebpStaticUrl(url: string): string {
   ) {
     return url;
   }
-  return url.replace(/\.(png|jpe?g|gif)(\?.*)?$/i, ".webp$2");
+  // Keep real GIFs as GIF — rewriting to .webp kills animation.
+  return url.replace(/\.(png|jpe?g)(\?.*)?$/i, ".webp$2");
 }
 
 function mergeLanding(
@@ -275,6 +276,7 @@ const SEED_CONTENT_ID_LIST = new Set([
   "prod-back-belt-ma",
   "prod-immunity-pack-ma",
   "prod-baby-chair-ma",
+  "prod-hand-neck-massager-ma",
 ]);
 
 const SEED_CONTENT_IDS = {
