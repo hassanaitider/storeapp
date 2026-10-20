@@ -1,6 +1,10 @@
 import type { Product } from "./types";
 
-/** Removed from the catalog: windshield umbrella, neck fan, Elevador, sling bag, rolling cart, steam iron. */
+/**
+ * Removed from the catalog: windshield umbrella, neck fan, Elevador, sling bag,
+ * rolling cart, steam iron, and the old multi-market neck/shoulder massager
+ * (prod-neck-massager @ 179 MAD) — not the Morocco hand massager at 329 MAD.
+ */
 export function isRetiredStoreProduct(p: {
   id?: string;
   slug?: string;
@@ -18,7 +22,8 @@ export function isRetiredStoreProduct(p: {
     id.includes("prod-neck-fan") ||
     id === "prod-fashion-sling" ||
     id === "prod-rolling-cart" ||
-    id === "prod-steam-iron-ma"
+    id === "prod-steam-iron-ma" ||
+    id === "prod-neck-massager"
   ) {
     return true;
   }
@@ -29,7 +34,8 @@ export function isRetiredStoreProduct(p: {
     slug === "elevador-de-colchon" ||
     slug === "anti-theft-usb-sling-bag" ||
     slug === "3-tier-rolling-storage-cart" ||
-    slug === "mini-fer-vapeur-portable"
+    slug === "mini-fer-vapeur-portable" ||
+    slug === "neck-shoulder-massager"
   ) {
     return true;
   }
@@ -40,7 +46,8 @@ export function isRetiredStoreProduct(p: {
     nameAr.includes("مروحية الرقبة") ||
     nameAr.includes("مروحة الرقبة") ||
     nameAr.includes("حقيبة كتف") ||
-    nameAr.includes("عربة تخزين متنقلة")
+    nameAr.includes("عربة تخزين متنقلة") ||
+    nameAr.includes("جهاز تدليك رقبة")
   ) {
     return true;
   }
@@ -49,6 +56,7 @@ export function isRetiredStoreProduct(p: {
   if (nameEn.includes("anti-theft") && nameEn.includes("sling")) return true;
   if (nameEn.includes("rolling storage cart")) return true;
   if (nameEn === "mattress lifter") return true;
+  if (nameEn === "neck & shoulder massager") return true;
   if (nameEs === "elevador de colchón") return true;
   return false;
 }
