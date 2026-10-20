@@ -153,15 +153,14 @@ button {
   color: #21483e;
 }
 
-/* صور / GIF واضحة بالحجم الكامل — بدون قص أو ضبابية */
+/* صور / GIF تملأ الإطار — object-cover باش ما يبقاش فراغ أبيض */
 .media-full {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
-  /* Reserve space from HTML width/height before the file loads (CLS) */
   aspect-ratio: 1 / 1;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
@@ -170,6 +169,8 @@ button {
 }
 
 .media-full--gif {
+  /* GIFs stay fully visible (no crop) */
+  object-fit: contain;
   image-rendering: auto;
 }
 

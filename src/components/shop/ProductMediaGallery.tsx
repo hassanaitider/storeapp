@@ -193,10 +193,10 @@ export function ProductMediaGallery({
           )}
         >
           {activeUrl ? (
-            <div className="relative flex h-full w-full items-center justify-center p-3 sm:p-4">
+            <div className="absolute inset-0">
               <button
                 type="button"
-                className="block w-full cursor-zoom-in border-0 bg-transparent p-0"
+                className="absolute inset-0 block h-full w-full cursor-zoom-in border-0 bg-transparent p-0"
                 onClick={() => setLightboxOpen(true)}
                 aria-label={
                   locale === "ar"
@@ -213,7 +213,7 @@ export function ProductMediaGallery({
                   width={1200}
                   height={1200}
                   className={cn(
-                    "media-full max-h-[min(90vh,56rem)] w-full",
+                    "media-full h-full w-full",
                     activeIsGif && "media-full--gif"
                   )}
                   decoding="async"
@@ -335,7 +335,7 @@ export function ProductMediaGallery({
                       sizes="(max-width:640px) 25vw, 160px"
                       unoptimized={needsUnoptimizedImage(url)}
                       loading="lazy"
-                      className="object-contain p-1"
+                      className="object-cover"
                     />
                   </button>
                   {canEdit ? (

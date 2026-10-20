@@ -136,7 +136,7 @@ export function ProLanding({ product, locale }: { product: Product; locale: Loca
                     alt={title}
                     width={1000}
                     height={1000}
-                    className="h-full w-full object-contain"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               ) : null}
