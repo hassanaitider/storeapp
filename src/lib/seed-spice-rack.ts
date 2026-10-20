@@ -8,14 +8,14 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
-  "/products/spice-rack-1.webp",
-  "/products/spice-rack-5.webp",
-  "/products/spice-rack-8.webp",
-  "/products/spice-rack-7.webp",
-  "/products/spice-rack-4.webp",
-  "/products/spice-rack-2.webp",
-  "/products/spice-rack-3.webp",
-  "/products/spice-rack-6.webp",
+  "/products/spice-rack-1-lg.webp",
+  "/products/spice-rack-5-lg.webp",
+  "/products/spice-rack-8-lg.webp",
+  "/products/spice-rack-7-lg.webp",
+  "/products/spice-rack-4-lg.webp",
+  "/products/spice-rack-2-lg.webp",
+  "/products/spice-rack-3-lg.webp",
+  "/products/spice-rack-6-lg.webp",
 ];
 
 /** Morocco only — 12-jar two-tier spice organizer */
@@ -104,7 +104,7 @@ ${COD_EN}`.trim(),
             "طابقين، علب شفافة، ورف فوق للمنظم. الزيت، الملح، والحبهارات فالطبخة قدامك.",
           bodyEn:
             "Two tiers, clear jars, and a shelf on top. Oil, salt and spices stay right where you cook.",
-          image: "/products/spice-rack-1.webp",
+          image: "/products/spice-rack-1-lg.webp",
         },
         {
           titleAr: "12 علبة… كل وحدة باسمها",
@@ -113,7 +113,7 @@ ${COD_EN}`.trim(),
             "العلب شفافة باش تبان الكمية، والملصقات كتخليك تسمّي الكمون، الفلفل، القرفة… بلا لخبطة.",
           bodyEn:
             "Clear jars show how much is left, and labels let you name cumin, pepper, cinnamon… without mix-ups.",
-          image: "/products/spice-rack-2.webp",
+          image: "/products/spice-rack-2-lg.webp",
         },
         {
           titleAr: "مقبض قوي وغطاء سهل",
@@ -122,7 +122,7 @@ ${COD_EN}`.trim(),
             "كتسحبي العلبة بمقبض مريح، وكتفتحي الغطاء بضغطة باش تزيدي التوابل أو تاخذي بمعلقة.",
           bodyEn:
             "Pull the jar with a comfortable handle, and open the lid with a press to refill or scoop with the spoon.",
-          image: "/products/spice-rack-7.webp",
+          image: "/products/spice-rack-7-lg.webp",
         },
         {
           titleAr: "معلقة صغيرة داخل كل علبة",
@@ -131,7 +131,7 @@ ${COD_EN}`.trim(),
             "ما تحتاجيش تقلّب على معلقة فالدرج — كل علبة كتجي مع معلقة باش الكمية تكون مضبوطة.",
           bodyEn:
             "No more hunting for a spoon in the drawer — each jar comes with one so portions stay neat.",
-          image: "/products/spice-rack-8.webp",
+          image: "/products/spice-rack-8-lg.webp",
         },
         {
           titleAr: "رف فوق للمنظم",
@@ -140,7 +140,7 @@ ${COD_EN}`.trim(),
             "حطّي فوقو زجاجات الزيت، الصوص، ولا نبتة صغيرة — بلاصة إضافية بلا ما تاخدي مساحة من الطبلة.",
           bodyEn:
             "Place oil bottles, sauces or a small plant on top — extra space without taking more of the counter.",
-          image: "/products/spice-rack-5.webp",
+          image: "/products/spice-rack-5-lg.webp",
         },
         {
           titleAr: "تصميم يمشي مع الكوزينة العصرية",
@@ -149,7 +149,7 @@ ${COD_EN}`.trim(),
             "رمادي أنيق مع علب شفافة — مرتّب، نظيف، وسهل التنظيف بمسحة بسيطة.",
           bodyEn:
             "Sleek grey with clear jars — tidy, clean, and easy to wipe down.",
-          image: "/products/spice-rack-4.webp",
+          image: "/products/spice-rack-4-lg.webp",
         },
       ],
       benefitsAr: [
