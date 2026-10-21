@@ -102,7 +102,7 @@ ${COD_EN}`.trim(),
             "الشاشة الرقمية كاتورّيك درجة الحرارة بسهولة — بلا ما تفتح الحقيبة كل مرة.",
           bodyEn:
             "The digital screen shows the temperature at a glance — no need to open the bag every time.",
-          image: "/products/insulin-cooler-1.webp",
+          image: "/products/insulin-cooler-6.webp",
         },
         {
           titleAr: "قشرة صلبة… وحجم محمول",
@@ -111,7 +111,7 @@ ${COD_EN}`.trim(),
             "EVA متينة تحمي المحتوى، وحجم صغير كيدخل فالشنطة أو كيتحمّل بالحزام.",
           bodyEn:
             "Durable EVA protects what’s inside, in a compact size that fits a bag or hangs from the strap.",
-          image: "/products/insulin-cooler-6.webp",
+          image: "/products/insulin-cooler-7.webp",
         },
         {
           titleAr: "تنظيم داخلي واضح",
@@ -147,7 +147,7 @@ ${COD_EN}`.trim(),
             "فالدار، فالمكتب، ولا فالطريق — حقيبة وحدة مع شاشة وحزام.",
           bodyEn:
             "At home, at the office, or on the road — one bag with a screen and a strap.",
-          image: "/products/insulin-cooler-2.webp",
+          image: "/products/insulin-cooler-3.webp",
         },
       ],
       benefitsAr: [
