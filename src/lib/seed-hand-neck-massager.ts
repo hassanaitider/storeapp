@@ -27,10 +27,10 @@ export const HAND_NECK_MASSAGER_PRODUCTS: Product[] = [
     slug: HAND_NECK_MASSAGER_SLUG,
     categoryId: "cat-MA",
     availableIn: ["MA"],
-    priceUSD: 32.9,
-    compareAtUSD: 32.9,
-    marketPrices: { MA: 329 },
-    marketComparePrices: { MA: 329 },
+    priceUSD: 29.9,
+    compareAtUSD: 29.9,
+    marketPrices: { MA: 299 },
+    marketComparePrices: { MA: 299 },
     nameAr: "مساج العنق اللاسلكي — يد سيليكون بأحزمة",
     nameEn: "Cordless Hand-Shaped Neck Massager",
     descriptionAr: `
@@ -95,9 +95,9 @@ ${COD_EN}`.trim(),
       headlineAr: "مساج العنق اللاسلكي — استرخي بعد يوم طويل",
       headlineEn: "Cordless neck massager — unwind after a long day",
       introAr:
-        "بعد الجلوس الطويل أو القيادة، العنق والكتف كيحتاجو استراحة. هاد الجهاز بشكل يد، بأصابع سيليكون وحزام تثبيت — تشغّليه وتخلّيه يخدم. الثمن 329 درهم فقط — توصيل مجاني والدفع عند الاستلام فالمغرب.",
+        "بعد الجلوس الطويل أو القيادة، العنق والكتف كيحتاجو استراحة. هاد الجهاز بشكل يد، بأصابع سيليكون وحزام تثبيت — تشغّليه وتخلّيه يخدم. الثمن 299 درهم فقط — توصيل مجاني والدفع عند الاستلام فالمغرب.",
       introEn:
-        "After long sitting or driving, the neck and shoulders deserve a break. This hand-shaped device has silicone fingers and a strap — turn it on and let it work. Only 329 MAD — free delivery and cash on delivery in Morocco.",
+        "After long sitting or driving, the neck and shoulders deserve a break. This hand-shaped device has silicone fingers and a strap — turn it on and let it work. Only 299 MAD — free delivery and cash on delivery in Morocco.",
       sections: [
         {
           titleAr: "طقم كامل جاهز من الصندوق",
@@ -199,8 +199,8 @@ ${COD_EN}`.trim(),
         {
           questionAr: "كيف ندفع؟",
           questionEn: "How do I pay?",
-          answerAr: "كتدفع 329 درهم عند الاستلام، والتوصيل مجاني فالمغرب.",
-          answerEn: "You pay 329 MAD on delivery, and delivery is free in Morocco.",
+          answerAr: "كتدفع 299 درهم عند الاستلام، والتوصيل مجاني فالمغرب.",
+          answerEn: "You pay 299 MAD on delivery, and delivery is free in Morocco.",
         },
       ],
     },

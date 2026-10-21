@@ -278,6 +278,7 @@ const SEED_CONTENT_ID_LIST = new Set([
   "prod-baby-chair-ma",
   "prod-hand-neck-massager-ma",
   "prod-spice-rack-ma",
+  "prod-insulin-cooler-ma",
 ]);
 
 const SEED_CONTENT_IDS = {
