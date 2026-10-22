@@ -16,5 +16,7 @@ export function setActivePixelCountry(country: CountryCode): void {
 }
 
 export function getActivePixelId(): string | null {
-  return activePixelId;
+  // Never skip Purchase: if country wasn't set yet, default to Arab pixel
+  // (Morocco / Gulf). LATAM pages always call setActivePixelCountry first.
+  return activePixelId ?? ARAB_PIXEL_ID;
 }

@@ -5,15 +5,34 @@
 
 import { getActivePixelId } from "@/lib/meta-pixels";
 
+function readCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(
+    new RegExp(`(?:^|; )${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=([^;]*)`)
+  );
+  return match?.[1] ? decodeURIComponent(match[1]) : undefined;
+}
+
+/** Persist fbclid → _fbc so Ads can attribute Purchase (autoConfig is off). */
+export function ensureFbClickId(): void {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const fbclid = params.get("fbclid")?.trim();
+    if (!fbclid) return;
+    const existing = readCookie("_fbc");
+    if (existing && existing.includes(fbclid)) return;
+    const fbc = `fb.1.${Date.now()}.${fbclid}`;
+    const maxAge = 60 * 60 * 24 * 90;
+    document.cookie = `_fbc=${encodeURIComponent(fbc)}; path=/; max-age=${maxAge}; SameSite=Lax`;
+  } catch {
+    /* ignore */
+  }
+}
+
 export function getFbpFbc(): { fbp?: string; fbc?: string } {
-  if (typeof document === "undefined") return {};
-  const read = (name: string): string | undefined => {
-    const match = document.cookie.match(
-      new RegExp(`(?:^|; )${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}=([^;]*)`)
-    );
-    return match?.[1] ? decodeURIComponent(match[1]) : undefined;
-  };
-  return { fbp: read("_fbp"), fbc: read("_fbc") };
+  ensureFbClickId();
+  return { fbp: readCookie("_fbp"), fbc: readCookie("_fbc") };
 }
 
 export function genEventId(): string {

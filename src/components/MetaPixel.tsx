@@ -3,7 +3,7 @@
 import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
-import { trackBoth } from "@/lib/fb";
+import { ensureFbClickId, trackBoth } from "@/lib/fb";
 import { pixelIdForCountry, setActivePixelCountry } from "@/lib/meta-pixels";
 
 function MetaPixelSpaPageView() {
@@ -11,6 +11,7 @@ function MetaPixelSpaPageView() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    ensureFbClickId();
     trackBoth("PageView");
   }, [pathname, searchParams]);
 
@@ -23,6 +24,10 @@ export function MetaPixel() {
   // Set during render so child/page effects (PageView, ViewContent) already see the market.
   setActivePixelCountry(country);
   const pixelId = pixelIdForCountry(country);
+
+  useEffect(() => {
+    ensureFbClickId();
+  }, []);
 
   return (
     <>

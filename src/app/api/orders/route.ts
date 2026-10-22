@@ -160,10 +160,16 @@ export async function POST(request: Request) {
       console.error("order not persisted: BLOB_READ_WRITE_TOKEN missing", order.id);
       return NextResponse.json({ ok: false, error: "storage unavailable" }, { status: 503 });
     }
-    // Fire-and-forget: never block or fail the order on Meta errors
-    void sendOrderPurchaseCapi(request, order, parsed.metaPixel).catch((err) =>
-      console.error("order CAPI unexpected", order.id, err)
-    );
+    // Await CAPI briefly — on Vercel, void after return often never runs.
+    // Cap wait so a slow Meta never blocks the buyer's confirmation.
+    try {
+      await Promise.race([
+        sendOrderPurchaseCapi(request, order, parsed.metaPixel),
+        new Promise<void>((resolve) => setTimeout(resolve, 4000)),
+      ]);
+    } catch (err) {
+      console.error("order CAPI unexpected", order.id, err);
+    }
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("order save failed", err);
