@@ -1,0 +1,352 @@
+{
+  "generatedAt": "2026-09-16T22:42:03.794Z",
+  "markets": {
+    "MX": {
+      "file": "src/lib/mexico-geo.ts",
+      "export": "GEO_MX",
+      "checkout": "MexicoCodCheckout",
+      "hierarchyUI": [
+        "Estado",
+        "Delegación / Municipio",
+        "Colonia"
+      ],
+      "counts": {
+        "level1": 32,
+        "level2": 2457,
+        "level3": 2482,
+        "stubCentroOnly": 2449
+      },
+      "level1": [
+        "Aguascalientes",
+        "Baja California",
+        "Baja California Sur",
+        "Campeche",
+        "Chiapas",
+        "Chihuahua",
+        "Coahuila de Zaragoza",
+        "Colima",
+        "Distrito Federal",
+        "Durango",
+        "Guanajuato",
+        "Guerrero",
+        "Hidalgo",
+        "Jalisco",
+        "México",
+        "Michoacán de Ocampo",
+        "Morelos",
+        "Nayarit",
+        "Nuevo León",
+        "Oaxaca",
+        "Puebla",
+        "Querétaro de Arteaga",
+        "Quintana Roo",
+        "San Luis Potosí",
+        "Sinaloa",
+        "Sonora",
+        "Tabasco",
+        "Tamaulipas",
+        "Tlaxcala",
+        "Veracruz de Ignacio de la Llave",
+        "Yucatán",
+        "Zacatecas"
+      ]
+    },
+    "AR": {
+      "file": "src/lib/argentina-geo.ts",
+      "export": "GEO_AR",
+      "checkout": "ArgentinaCodCheckout",
+      "hierarchyUI": [
+        "Provincia",
+        "localidad"
+      ],
+      "counts": {
+        "level1": 24,
+        "level2": 2377,
+        "level3": 0,
+        "stubCentroOnly": 0
+      },
+      "level1": [
+        "Buenos Aires",
+        "Catamarca",
+        "Chaco",
+        "Chubut",
+        "Ciudad de Buenos Aires",
+        "Córdoba",
+        "Corrientes",
+        "Entre Ríos",
+        "Formosa",
+        "Jujuy",
+        "La Pampa",
+        "La Rioja",
+        "Mendoza",
+        "Misiones",
+        "Neuquén",
+        "Río negro",
+        "Salta",
+        "San Juan",
+        "San Luis",
+        "Santa Cruz",
+        "Santa Fe",
+        "Santiago del Estero",
+        "Tierra del Fuego",
+        "Tucumán"
+      ]
+    },
+    "DO": {
+      "file": "src/lib/dominican-geo.ts",
+      "export": "GEO_DO",
+      "checkout": "DominicanCodCheckout",
+      "hierarchyUI": [
+        "Provincia",
+        "Municipio/Ciudad"
+      ],
+      "counts": {
+        "level1": 32,
+        "level2": 155,
+        "level3": 0,
+        "stubCentroOnly": 0
+      },
+      "level1": [
+        "Distrito Nacional",
+        "Provincia Azua",
+        "Provincia Baoruco",
+        "Provincia Barahona",
+        "Provincia Dajabón",
+        "Provincia Duarte",
+        "Provincia El Seibo",
+        "Provincia Elías Piña",
+        "Provincia Espaillat",
+        "Provincia Hato Mayor",
+        "Provincia Hermanas Mirabal",
+        "Provincia Independencia",
+        "Provincia La Altagracia",
+        "Provincia La Romana",
+        "Provincia La Vega",
+        "Provincia María Trinidad Sánchez",
+        "Provincia Monseñor Nouel",
+        "Provincia Monte Cristi",
+        "Provincia Monte Plata",
+        "Provincia Pedernales",
+        "Provincia Peravia",
+        "Provincia Puerto Plata",
+        "Provincia Samaná",
+        "Provincia San Cristóbal",
+        "Provincia San José de Ocoa",
+        "Provincia San Juan",
+        "Provincia San Pedro de Macorís",
+        "Provincia Sánchez Ramírez",
+        "Provincia Santiago",
+        "Provincia Santiago Rodríguez",
+        "Provincia Santo Domingo",
+        "Provincia Valverde"
+      ]
+    },
+    "EC": {
+      "file": "src/lib/ecuador-geo.ts",
+      "export": "GEO_EC",
+      "checkout": "EcuadorCodCheckout",
+      "hierarchyUI": [
+        "Provincia",
+        "Ciudad (parroquias)"
+      ],
+      "counts": {
+        "level1": 24,
+        "level2": 1095,
+        "level3": 0,
+        "stubCentroOnly": 0
+      },
+      "level1": [
+        "Azuay",
+        "Bolívar",
+        "Cañar",
+        "Carchi",
+        "Chimborazo",
+        "Cotopaxi",
+        "El Oro",
+        "Esmeraldas",
+        "Galápagos",
+        "Guayas",
+        "Imbabura",
+        "Loja",
+        "Los Ríos",
+        "Manabí",
+        "Morona Santiago",
+        "Napo",
+        "Orellana",
+        "Pastaza",
+        "Pichincha",
+        "Santa Elena",
+        "Santo Domingo de los Tsáchilas",
+        "Sucumbíos",
+        "Tungurahua",
+        "Zamora Chinchipe"
+      ]
+    },
+    "GT": {
+      "file": "src/lib/latam-geo.ts",
+      "export": "GEO_GT",
+      "checkout": "LatamCodCheckout",
+      "hierarchyUI": [
+        "Departamento",
+        "Municipio",
+        "Poblado"
+      ],
+      "counts": {
+        "level1": 22,
+        "level2": 342,
+        "level3": 342,
+        "stubCentroOnly": 342
+      },
+      "level1": [
+        "Alta Verapaz",
+        "Baja Verapaz",
+        "Chimaltenango",
+        "Chiquimula",
+        "El Progreso",
+        "Escuintla",
+        "Guatemala",
+        "Huehuetenango",
+        "Izabal",
+        "Jalapa",
+        "Jutiapa",
+        "Petén",
+        "Quetzaltenango",
+        "Quiché",
+        "Retalhuleu",
+        "Sacatepéquez",
+        "San Marcos",
+        "Santa Rosa",
+        "Sololá",
+        "Suchitepéquez",
+        "Totonicapán",
+        "Zacapa"
+      ]
+    },
+    "CR": {
+      "file": "src/lib/latam-geo.ts",
+      "export": "GEO_CR",
+      "checkout": "LatamCodCheckout",
+      "hierarchyUI": [
+        "Provincia",
+        "Cantón",
+        "Distrito/Poblado"
+      ],
+      "counts": {
+        "level1": 7,
+        "level2": 84,
+        "level3": 492,
+        "stubCentroOnly": 0
+      },
+      "level1": [
+        "Alajuela",
+        "Cartago",
+        "Guanacaste",
+        "Heredia",
+        "Limón",
+        "Puntarenas",
+        "San José"
+      ]
+    },
+    "HN": {
+      "file": "src/lib/latam-geo.ts",
+      "export": "GEO_HN",
+      "checkout": "HondurasCodCheckout",
+      "hierarchyUI": [
+        "Departamento",
+        "Ciudad/Municipio"
+      ],
+      "counts": {
+        "level1": 18,
+        "level2": 298,
+        "level3": 298,
+        "stubCentroOnly": 298
+      },
+      "level1": [
+        "Atlantida",
+        "Choluteca",
+        "Colon",
+        "Comayagua",
+        "Copan",
+        "Cortes",
+        "El Paraiso",
+        "Francisco Morazan",
+        "Gracias a Dios",
+        "Intibuca",
+        "Islas de La Bahia",
+        "La Paz",
+        "Lempira",
+        "Ocotepeque",
+        "Olancho",
+        "Santa Barbara",
+        "Valle",
+        "Yoro"
+      ]
+    },
+    "SV": {
+      "file": "src/lib/latam-geo.ts",
+      "export": "GEO_SV",
+      "checkout": "SalvadorCodCheckout",
+      "hierarchyUI": [
+        "Provincia(=Departamento)",
+        "Ciudad/Municipio"
+      ],
+      "counts": {
+        "level1": 14,
+        "level2": 266,
+        "level3": 266,
+        "stubCentroOnly": 266
+      },
+      "level1": [
+        "Ahuachapán",
+        "Cabañas",
+        "Chalatenango",
+        "Cuscatlán",
+        "La Libertad",
+        "La Paz",
+        "La Unión",
+        "Morazán",
+        "San Miguel",
+        "San Salvador",
+        "San Vicente",
+        "Santa Ana",
+        "Sonsonate",
+        "Usulután"
+      ]
+    },
+    "NI": {
+      "file": "src/lib/latam-geo.ts",
+      "export": "GEO_NI",
+      "checkout": "NicaraguaCodCheckout",
+      "hierarchyUI": [
+        "Departamento",
+        "Municipio",
+        "Barrio/Sector"
+      ],
+      "counts": {
+        "level1": 17,
+        "level2": 153,
+        "level3": 153,
+        "stubCentroOnly": 153
+      },
+      "level1": [
+        "Boaco",
+        "Carazo",
+        "Chinandega",
+        "Chontales",
+        "Estelí",
+        "Granada",
+        "Jinotega",
+        "León",
+        "Madriz",
+        "Managua",
+        "Masaya",
+        "Matagalpa",
+        "Nueva Segovia",
+        "Región Autónoma Costa Caribe Norte",
+        "Región Autónoma de la Costa Caribe Sur",
+        "Río San Juan",
+        "Rivas"
+      ]
+    }
+  }
+}
