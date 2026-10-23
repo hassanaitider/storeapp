@@ -8,6 +8,7 @@ import { BRUSH_CLEANER_PRODUCTS } from "./seed-brush-cleaner";
 import { HAND_NECK_MASSAGER_PRODUCTS } from "./seed-hand-neck-massager";
 import { SPICE_RACK_PRODUCTS } from "./seed-spice-rack";
 import { INSULIN_COOLER_PRODUCTS } from "./seed-insulin-cooler";
+import { MATERNITY_BELT_PRODUCTS } from "./seed-maternity-belt";
 import { LATAM_CLIP_EARBUDS_PRODUCTS } from "./seed-latam-clip-earbuds";
 import { LATAM_MAG_POWERBANK_PRODUCTS } from "./seed-latam-mag-powerbank";
 import { LATAM_MINI_CAMERA_PRODUCTS } from "./seed-latam-mini-camera";
@@ -3221,6 +3222,7 @@ ${COD_EN}
   ...HAND_NECK_MASSAGER_PRODUCTS,
   ...SPICE_RACK_PRODUCTS,
   ...INSULIN_COOLER_PRODUCTS,
+  ...MATERNITY_BELT_PRODUCTS,
   ...UNIVERSAL_MARKET_PRODUCTS,
 ];
 
