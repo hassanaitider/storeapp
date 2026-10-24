@@ -8,12 +8,12 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
-  "/products/hand-neck-massager-1.webp",
-  "/products/hand-neck-massager-2.webp",
-  "/products/hand-neck-massager-3.webp",
-  "/products/hand-neck-massager-4.webp",
-  "/products/hand-neck-massager-5.webp",
-  "/products/hand-neck-massager-6.webp",
+  "/products/hand-neck-massager-hero.webp",
+  "/products/hand-neck-massager-a.webp",
+  "/products/hand-neck-massager-b.webp",
+  "/products/hand-neck-massager-c.webp",
+  "/products/hand-neck-massager-d.webp",
+  "/products/hand-neck-massager-e.webp",
 ];
 
 /** Morocco only — cordless hand-shaped neck massager */
@@ -102,7 +102,7 @@ ${COD_EN}`.trim(),
             "الحزام يثبّت الجهاز على العنق والكتف. تشغّليه وترتاحي — تقراي، تتفرجي، ولا ترتاحي.",
           bodyEn:
             "The strap holds the device on the neck and shoulder. Turn it on and rest — read, watch, or unwind.",
-          image: "/products/hand-neck-massager-1.webp",
+          image: "/products/hand-neck-massager-hero.webp",
         },
         {
           titleAr: "مساج احترافي كل يوم",
@@ -111,7 +111,7 @@ ${COD_EN}`.trim(),
             "يد تحاكي المساج اليدوي بأصابع سيليكون، دفء أحمر، وتشغيل بزر واحد — راحة بعد يوم طويل.",
           bodyEn:
             "Bionic silicone fingers, red-light warmth, and one-touch control — relief after a long day.",
-          image: "/products/hand-neck-massager-2.webp",
+          image: "/products/hand-neck-massager-a.webp",
         },
         {
           titleAr: "8 أصابع فوق العنق… وإبهام على الكتف",
@@ -120,7 +120,7 @@ ${COD_EN}`.trim(),
             "الأصابع كتعجن العنق من فوق، والإبهام كيرفع ويضغط عضلة الترابيز — دعم واضح للعنق والكتف.",
           bodyEn:
             "Fingers knead the upper neck while the thumbs lift and press the trapezius — clear neck and shoulder support.",
-          image: "/products/hand-neck-massager-3.webp",
+          image: "/products/hand-neck-massager-b.webp",
         },
         {
           titleAr: "ضغط عميق على نقاط العنق والكتف",
@@ -129,7 +129,7 @@ ${COD_EN}`.trim(),
             "كيغطي مناطق السكالين، الرافعة للكتف، والترابيز — مساج مركّز باش يخفّف التوتر.",
           bodyEn:
             "It covers the scalenes, levator scapulae, and trapezius — focused massage to ease tension.",
-          image: "/products/hand-neck-massager-4.webp",
+          image: "/products/hand-neck-massager-c.webp",
         },
         {
           titleAr: "خفيف، سيليكون غذائي، ودفء أحمر",
@@ -138,7 +138,7 @@ ${COD_EN}`.trim(),
             "جسم خفيف، مادة سيليكون ناعمة، ضغط حراري أحمر، ويد تحاكي المساج اليدوي — تشغيل بسيط بزر.",
           bodyEn:
             "A light body, soft silicone, red-light heat, and a bionic hand — simple one-touch operation.",
-          image: "/products/hand-neck-massager-5.webp",
+          image: "/products/hand-neck-massager-d.webp",
         },
         {
           titleAr: "للاستعمال المتعدد… وين ما كاين التوتر",
@@ -147,7 +147,7 @@ ${COD_EN}`.trim(),
             "على العنق والكتف وأنتِ كتستعملي التيليفون، ولا على الرجل على وسادة ناعمة — نفس الجهاز.",
           bodyEn:
             "On the neck and shoulders while you use your phone, or on the leg over a soft pad — same device.",
-          image: "/products/hand-neck-massager-6.webp",
+          image: "/products/hand-neck-massager-e.webp",
         },
       ],
       benefitsAr: [
