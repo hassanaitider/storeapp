@@ -8,16 +8,12 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
-  "/products/hand-neck-massager-demo.gif",
   "/products/hand-neck-massager-1.webp",
   "/products/hand-neck-massager-2.webp",
   "/products/hand-neck-massager-3.webp",
   "/products/hand-neck-massager-4.webp",
   "/products/hand-neck-massager-5.webp",
-  "/products/hand-neck-massager-7.webp",
   "/products/hand-neck-massager-6.webp",
-  "/products/hand-neck-massager-8.webp",
-  "/products/hand-neck-massager-9.webp",
 ];
 
 /** Morocco only — cordless hand-shaped neck massager */
@@ -100,67 +96,58 @@ ${COD_EN}`.trim(),
         "After long sitting or driving, the neck and shoulders deserve a break. This hand-shaped device has silicone fingers and a strap — turn it on and let it work. Only 299 MAD — free delivery and cash on delivery in Morocco.",
       sections: [
         {
-          titleAr: "طقم كامل جاهز من الصندوق",
-          titleEn: "A complete kit out of the box",
+          titleAr: "استرخاء في الدار… بلا ما تمسكيه",
+          titleEn: "Relax at home — hands free",
           bodyAr:
-            "الجهاز، الحزام، كابل الشحن، ودليل بسيط. تركّبيه في دقائق وتبداي الجلسة في الدار.",
+            "الحزام يثبّت الجهاز على العنق والكتف. تشغّليه وترتاحي — تقراي، تتفرجي، ولا ترتاحي.",
           bodyEn:
-            "The device, the strap, a charging cable and a simple guide. Set it up in minutes and start at home.",
+            "The strap holds the device on the neck and shoulder. Turn it on and rest — read, watch, or unwind.",
           image: "/products/hand-neck-massager-1.webp",
         },
         {
-          titleAr: "يثبت على العنق… وأنتِ مرتاحة",
-          titleEn: "Holds on the neck — you stay comfortable",
+          titleAr: "مساج احترافي كل يوم",
+          titleEn: "Professional massage every day",
           bodyAr:
-            "الحزام الجلدي يثبّت الجهاز على العنق. ما تحتاجيش تمسكيه — تقراي، تتفرجي، ولا ترتاحي.",
+            "يد تحاكي المساج اليدوي بأصابع سيليكون، دفء أحمر، وتشغيل بزر واحد — راحة بعد يوم طويل.",
           bodyEn:
-            "The leather strap holds the device on the neck. No need to hold it — read, watch, or rest.",
+            "Bionic silicone fingers, red-light warmth, and one-touch control — relief after a long day.",
           image: "/products/hand-neck-massager-2.webp",
         },
         {
-          titleAr: "فوق العنق أو تحت الكتف",
-          titleEn: "Over the neck or under the shoulder",
+          titleAr: "8 أصابع فوق العنق… وإبهام على الكتف",
+          titleEn: "8 fingers on the neck — thumbs on the trapezius",
           bodyAr:
-            "وجه الأصابع لفوق أو لتحت حسب البلاصة اللي بغيتي ترتاحي فيها. نفس الجهاز، وضعين.",
+            "الأصابع كتعجن العنق من فوق، والإبهام كيرفع ويضغط عضلة الترابيز — دعم واضح للعنق والكتف.",
           bodyEn:
-            "Point the fingers up or down depending on where you want to unwind. Same device, two positions.",
-          image: "/products/hand-neck-massager-7.webp",
+            "Fingers knead the upper neck while the thumbs lift and press the trapezius — clear neck and shoulder support.",
+          image: "/products/hand-neck-massager-3.webp",
         },
         {
-          titleAr: "أصابع سيليكون ناعمة",
-          titleEn: "Soft silicone fingers",
+          titleAr: "ضغط عميق على نقاط العنق والكتف",
+          titleEn: "Deep press on neck and shoulder points",
           bodyAr:
-            "8 أصابع مرنة كتحاكي ضغط أطراف الأصابع. ناعمة على البشرة، وثابتة على المنطقة.",
+            "كيغطي مناطق السكالين، الرافعة للكتف، والترابيز — مساج مركّز باش يخفّف التوتر.",
           bodyEn:
-            "8 flexible fingers that mimic fingertip pressure. Soft on the skin, steady on the area.",
+            "It covers the scalenes, levator scapulae, and trapezius — focused massage to ease tension.",
+          image: "/products/hand-neck-massager-4.webp",
+        },
+        {
+          titleAr: "خفيف، سيليكون غذائي، ودفء أحمر",
+          titleEn: "Light, food-grade silicone, red-light heat",
+          bodyAr:
+            "جسم خفيف، مادة سيليكون ناعمة، ضغط حراري أحمر، ويد تحاكي المساج اليدوي — تشغيل بسيط بزر.",
+          bodyEn:
+            "A light body, soft silicone, red-light heat, and a bionic hand — simple one-touch operation.",
           image: "/products/hand-neck-massager-5.webp",
         },
         {
-          titleAr: "دفء لطيف أثناء الجلسة",
-          titleEn: "Gentle warmth during the session",
+          titleAr: "للاستعمال المتعدد… وين ما كاين التوتر",
+          titleEn: "Multi-purpose — wherever it hurts",
           bodyAr:
-            "الدفء كيزيد الإحساس بالراحة — خاصة ملي تكوني جالسة بزاف قدام الشاشة أو فالطريق.",
+            "على العنق والكتف وأنتِ كتستعملي التيليفون، ولا على الرجل على وسادة ناعمة — نفس الجهاز.",
           bodyEn:
-            "Warmth adds to the comfort — especially after long screen time or a drive.",
+            "On the neck and shoulders while you use your phone, or on the leg over a soft pad — same device.",
           image: "/products/hand-neck-massager-6.webp",
-        },
-        {
-          titleAr: "تفاصيل متقونة",
-          titleEn: "Thoughtful details",
-          bodyAr:
-            "حزام ناعم، أزرار بسيطة، قماش مريح، وأصابع سيليكون. كل حاجة فبلاصتها.",
-          bodyEn:
-            "A soft strap, simple buttons, comfortable fabric, and silicone fingers. Everything in its place.",
-          image: "/products/hand-neck-massager-8.webp",
-        },
-        {
-          titleAr: "خفيف… تاخديه وين ما بغيتي",
-          titleEn: "Light — take it anywhere",
-          bodyAr:
-            "لاسلكي وقابل للشحن. حطّيه فالدار، فالمكتب، ولا فالسفر. كابل USB-C مرفق.",
-          bodyEn:
-            "Cordless and rechargeable. Use it at home, at the desk, or when you travel. USB-C cable included.",
-          image: "/products/hand-neck-massager-9.webp",
         },
       ],
       benefitsAr: [
