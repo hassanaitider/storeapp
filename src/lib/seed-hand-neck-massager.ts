@@ -8,7 +8,7 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
-  "/products/hand-neck-massager-first.webp",
+  "/products/hand-neck-massager-lead.webp",
   "/products/hand-neck-massager-a.webp",
   "/products/hand-neck-massager-b.webp",
   "/products/hand-neck-massager-c.webp",
@@ -102,7 +102,7 @@ ${COD_EN}`.trim(),
             "الحزام يثبّت الجهاز على العنق والكتف. تشغّليه وترتاحي — تقراي، تتفرجي، ولا ترتاحي.",
           bodyEn:
             "The strap holds the device on the neck and shoulder. Turn it on and rest — read, watch, or unwind.",
-          image: "/products/hand-neck-massager-cover.webp",
+          image: "/products/hand-neck-massager-lead.webp",
         },
         {
           titleAr: "مساج احترافي كل يوم",
