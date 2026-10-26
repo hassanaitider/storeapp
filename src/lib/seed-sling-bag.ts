@@ -7,9 +7,10 @@ const COD_AR =
 const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
+const COVER = "/products/sling-bag-hero-v4.webp";
 const IMAGES = [
+  "/products/sling-bag-demo.gif", // motion first on product page
   "/products/sling-bag-hero-v4.webp",
-  "/products/sling-bag-demo.gif",
   "/products/sling-bag-8.webp", // USB + phone on strap
   "/products/sling-bag-3.webp", // lock + multi-function
   "/products/sling-bag-4.webp", // interior organization
@@ -72,6 +73,7 @@ ${COD_EN}`.trim(),
       "Padded adjustable strap",
     ],
     images: [...IMAGES],
+    coverImage: COVER,
     colors: [
       {
         id: "noir-or",
@@ -138,7 +140,7 @@ ${COD_EN}`.trim(),
             "منفذ USB خارجي + جيب على الحزام — وصل الباوربانك من الداخل وشحن التيليفون وأنت كتمشي.",
           bodyEn:
             "External USB port + strap pocket — plug a power bank inside and charge your phone on the go.",
-          image: "/products/sling-bag-8.webp",
+          image: "/products/sling-bag-demo.gif",
         },
         {
           titleAr: "قفل برقم سري… ومتعددة الوظائف",
