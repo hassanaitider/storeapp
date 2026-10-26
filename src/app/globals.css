@@ -184,10 +184,10 @@ button {
 
 .media-slot--hero {
   aspect-ratio: 1 / 1;
-  /* Square that fits above sticky bar — avoid clipping the product */
+  /* First paint: full product above sticky order bar */
   width: 100%;
-  max-width: min(100%, 24rem);
-  max-height: min(48vh, 24rem);
+  max-width: min(100%, min(34vh, 16rem));
+  max-height: min(34vh, 16rem);
   margin-inline: auto;
 }
 
