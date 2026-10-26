@@ -353,7 +353,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
         detailsEs: p.detailsEs?.length ? p.detailsEs : seed.detailsEs,
         landing: mergeLanding(seed.landing, p.landing),
         images: mergeProductImages(seed, p),
-        colors: [],
+        colors: seed.colors?.length ? [...seed.colors] : p.colors?.length ? [...p.colors] : [],
         customColorEnabled:
           typeof p.customColorEnabled === "boolean"
             ? p.customColorEnabled
@@ -407,6 +407,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           qtyOffers: seed.qtyOffers,
           landing: seed.landing,
           images: [...(seed.images ?? [])],
+          colors: seed.colors?.length ? [...seed.colors] : [],
           customColorEnabled: Boolean(seed.customColorEnabled),
           sizes: seed.sizes ? [...seed.sizes] : undefined,
           qtyUpsellLocked: seed.qtyUpsellLocked === true,

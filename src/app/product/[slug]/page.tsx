@@ -49,6 +49,7 @@ import {
   SMART_TAG_SLUG,
 } from "@/lib/product-slugs";
 import { ProductMediaGallery, preferredMediaIndex } from "@/components/shop/ProductMediaGallery";
+import { ColorSwatches } from "@/components/shop/ColorSwatches";
 import {
   ProductQtyUpsell,
   selectedQtyTotalLocal,
@@ -231,6 +232,7 @@ function ProductPageInner() {
   const [activeImg, setActiveImg] = useState(0);
 
   const [customColor, setCustomColor] = useState("");
+  const [selectedColorId, setSelectedColorId] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState("");
   const [warranty, setWarranty] = useState(false);
 
@@ -238,6 +240,7 @@ function ProductPageInner() {
     if (!product) return;
     setActiveImg(preferredMediaIndex(product.images));
     setSelectedSize("");
+    setSelectedColorId(product.colors?.[0]?.id ?? null);
   }, [product?.id]);
   const [order, setOrder] = useState<Order | null>(null);
   const [form, setForm] = useState({
@@ -359,11 +362,24 @@ function ProductPageInner() {
       window.alert(t.product.writeYourColorRequired);
       return;
     }
+    const swatchColors = product.colors ?? [];
+    const pickedSwatch =
+      swatchColors.find((c) => c.id === selectedColorId) ?? swatchColors[0];
+    if (swatchColors.length && !pickedSwatch) {
+      window.alert(t.product.chooseColorRequired);
+      return;
+    }
     if (product.sizes?.length && !selectedSize) {
       window.alert(t.product.chooseSizeRequired);
       return;
     }
-    const colorLabel = customColor.trim();
+    const colorLabel =
+      customColor.trim() ||
+      (pickedSwatch
+        ? locale === "ar"
+          ? pickedSwatch.nameAr
+          : pickedSwatch.nameEn
+        : "");
     const moroccoSimple = country === "MA";
     const noteParts = [
       selectedSize
@@ -582,6 +598,15 @@ function ProductPageInner() {
                   {t.trust.cod}
                 </span>
               </div>
+
+              {product.colors?.length ? (
+                <ColorSwatches
+                  colors={product.colors}
+                  locale={locale}
+                  selectedId={selectedColorId}
+                  onSelect={setSelectedColorId}
+                />
+              ) : null}
 
               {product.customColorEnabled ? (
                 <label className="mt-5 block">

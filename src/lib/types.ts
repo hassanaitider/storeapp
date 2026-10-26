@@ -138,6 +138,10 @@ export interface ProductColor {
   nameEn: string;
   /** CSS color value, e.g. #1f3d36 */
   hex: string;
+  /** Optional second tone (e.g. bag side panel) */
+  accentHex?: string;
+  /** Visual swatch shape — bag silhouette for two-tone bags */
+  swatchShape?: "circle" | "bag";
 }
 
 /** Quantity-based upsell tiers on the same product page */
