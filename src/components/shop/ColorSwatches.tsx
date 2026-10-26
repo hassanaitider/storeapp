@@ -33,7 +33,7 @@ export function ColorSwatches({
           <p className="product-caption">
             {t.product.selectedColor}:{" "}
             <span className="font-bold text-brand-800">
-              {locale === "ar" ? selected.nameAr : selected.nameEn}
+              {colorLabel(selected, locale)}
             </span>
           </p>
         )}
@@ -96,7 +96,7 @@ export function ColorSwatches({
                   pressed ? "text-brand-800" : "text-[var(--muted)]"
                 )}
               >
-                {locale === "ar" ? c.nameAr : c.nameEn}
+                {colorLabel(c, locale)}
               </span>
             </button>
           );
@@ -150,6 +150,14 @@ function BagSwatchIcon({
       <rect x="17.5" y="36" width="3.5" height="5" rx="0.8" fill="#111" />
     </svg>
   );
+}
+
+/** Morocco: Arabic + French on the same label (nameEn holds FR for these SKUs). */
+function colorLabel(c: ProductColor, locale: Locale) {
+  if (locale === "ar" && c.nameEn && c.nameEn !== c.nameAr) {
+    return `${c.nameAr} · ${c.nameEn}`;
+  }
+  return locale === "ar" ? c.nameAr : c.nameEn;
 }
 
 function isLightHex(hex: string) {

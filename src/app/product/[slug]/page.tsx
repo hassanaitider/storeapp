@@ -376,9 +376,11 @@ function ProductPageInner() {
     const colorLabel =
       customColor.trim() ||
       (pickedSwatch
-        ? locale === "ar"
-          ? pickedSwatch.nameAr
-          : pickedSwatch.nameEn
+        ? locale === "ar" && pickedSwatch.nameEn
+          ? `${pickedSwatch.nameAr} · ${pickedSwatch.nameEn}`
+          : locale === "ar"
+            ? pickedSwatch.nameAr
+            : pickedSwatch.nameEn
         : "");
     const moroccoSimple = country === "MA";
     const noteParts = [
