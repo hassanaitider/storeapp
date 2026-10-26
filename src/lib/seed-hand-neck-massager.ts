@@ -9,10 +9,10 @@ const COD_EN =
 
 const IMAGES = [
   "/products/hand-neck-massager-b.webp",
+  "/products/hand-neck-massager-e.webp",
   "/products/hand-neck-massager-main.webp",
   "/products/hand-neck-massager-c.webp",
   "/products/hand-neck-massager-d.webp",
-  "/products/hand-neck-massager-e.webp",
 ];
 
 /** Morocco only — cordless hand-shaped neck massager */
@@ -128,7 +128,7 @@ ${COD_EN}`.trim(),
             "كيغطي مناطق السكالين، الرافعة للكتف، والترابيز — مساج مركّز باش يخفّف التوتر.",
           bodyEn:
             "It covers the scalenes, levator scapulae, and trapezius — focused massage to ease tension.",
-          image: "/products/hand-neck-massager-c.webp",
+          image: "/products/hand-neck-massager-d.webp",
         },
         {
           titleAr: "خفيف، سيليكون غذائي، ودفء أحمر",
@@ -137,7 +137,7 @@ ${COD_EN}`.trim(),
             "جسم خفيف، مادة سيليكون ناعمة، ضغط حراري أحمر، ويد تحاكي المساج اليدوي — تشغيل بسيط بزر.",
           bodyEn:
             "A light body, soft silicone, red-light heat, and a bionic hand — simple one-touch operation.",
-          image: "/products/hand-neck-massager-d.webp",
+          image: "/products/hand-neck-massager-main.webp",
         },
         {
           titleAr: "للاستعمال المتعدد… وين ما كاين التوتر",
