@@ -1,9 +1,10 @@
 import type { Product } from "./types";
 
 /**
- * Removed from the catalog: windshield umbrella, neck fan, Elevador, sling bag,
- * rolling cart, steam iron, and the old multi-market neck/shoulder massager
- * (prod-neck-massager @ 179 MAD) — not the Morocco hand massager at 329 MAD.
+ * Removed from the catalog: windshield umbrella, neck fan, Elevador, old sling
+ * (prod-fashion-sling only), rolling cart, steam iron, and the old multi-market
+ * neck/shoulder massager (prod-neck-massager @ 179 MAD) — not the Morocco hand
+ * massager, and not the new Morocco sling bag (prod-sling-bag-ma).
  */
 export function isRetiredStoreProduct(p: {
   id?: string;
@@ -17,6 +18,10 @@ export function isRetiredStoreProduct(p: {
   const nameAr = p.nameAr ?? "";
   const nameEn = (p.nameEn ?? "").toLowerCase();
   const nameEs = (p.nameEs ?? "").trim().toLowerCase();
+  // Keep the live Morocco sling bag
+  if (id === "prod-sling-bag-ma" || slug === "sacoche-antitheft-usb") {
+    return false;
+  }
   if (
     id.includes("car-windshield-umbrella") ||
     id.includes("prod-neck-fan") ||
@@ -45,7 +50,6 @@ export function isRetiredStoreProduct(p: {
     nameAr.includes("مروحة رقبة") ||
     nameAr.includes("مروحية الرقبة") ||
     nameAr.includes("مروحة الرقبة") ||
-    nameAr.includes("حقيبة كتف") ||
     nameAr.includes("عربة تخزين متنقلة") ||
     nameAr.includes("جهاز تدليك رقبة")
   ) {
@@ -53,7 +57,6 @@ export function isRetiredStoreProduct(p: {
   }
   if (nameEn.includes("windshield") && nameEn.includes("umbrella")) return true;
   if (nameEn.includes("neck fan")) return true;
-  if (nameEn.includes("anti-theft") && nameEn.includes("sling")) return true;
   if (nameEn.includes("rolling storage cart")) return true;
   if (nameEn === "mattress lifter") return true;
   if (nameEn === "neck & shoulder massager") return true;
