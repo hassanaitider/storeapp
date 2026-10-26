@@ -8,16 +8,16 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
-  "/products/sling-bag-1-offer.webp",
+  "/products/sling-bag-1.webp",
   "/products/sling-bag-demo.gif",
-  "/products/sling-bag-2-offer.webp",
-  "/products/sling-bag-3-offer.webp",
-  "/products/sling-bag-4-offer.webp",
-  "/products/sling-bag-5-offer.webp",
-  "/products/sling-bag-6-offer.webp",
-  "/products/sling-bag-7-offer.webp",
-  "/products/sling-bag-8-offer.webp",
-  "/products/sling-bag-9-offer.webp",
+  "/products/sling-bag-2.webp",
+  "/products/sling-bag-3.webp",
+  "/products/sling-bag-4.webp",
+  "/products/sling-bag-5.webp",
+  "/products/sling-bag-6.webp",
+  "/products/sling-bag-7.webp",
+  "/products/sling-bag-8.webp",
+  "/products/sling-bag-9.webp",
 ];
 
 /** Morocco only — anti-theft USB sling / crossbody bag */
@@ -28,32 +28,31 @@ export const SLING_BAG_PRODUCTS: Product[] = [
     categoryId: "cat-MA",
     availableIn: ["MA"],
     priceUSD: 19.9,
-    compareAtUSD: 29.9,
+    compareAtUSD: 19.9,
     marketPrices: { MA: 199 },
-    marketComparePrices: { MA: 299 },
-    discountBadgePercent: 33,
-    nameAr: "حقيبة كتف ذكية مضادة للسرقة — منفذ USB · عرض محدود",
-    nameEn: "Anti-Theft Smart Sling Bag — USB Port · Limited Offer",
+    marketComparePrices: { MA: 199 },
+    nameAr: "حقيبة كتف ذكية مضادة للسرقة — منفذ USB",
+    nameEn: "Anti-Theft Smart Sling Bag — USB Port",
     descriptionAr: `
-<h3>عرض محدود… حقيبة أنيقة + قفل + شحن USB</h3>
+<h3>حقيبة أنيقة + قفل + شحن USB</h3>
 <p>حقيبة كتف / صدر مضادة للسرقة: قفل برقم سري، منفذ شحن USB خارجي، قماش مقاوم للماء، وتنظيم داخلي للهاتف والباوربانك والسماعات. خفيفة ومريحة للمدينة والسفر.</p>
 <ul>
 <li>قفل أمان برقم سري ضد السرقة</li>
 <li>منفذ شحن USB — وصل الباوربانك من الداخل</li>
 <li>قماش مقاوم للماء + سحاب مرن</li>
 <li>حزام مبطّن مريح + جيب على الحزام</li>
-<li><strong>عرض محدود</strong> — 199 درهم فقط فالمغرب</li>
+<li>199 درهم فقط فالمغرب</li>
 </ul>
 ${COD_AR}`.trim(),
     descriptionEn: `
-<h3>Limited offer — sleek bag + lock + USB charging</h3>
+<h3>Sleek bag + lock + USB charging</h3>
 <p>An anti-theft sling / chest bag with a combination lock, external USB charging port, water-resistant fabric, and organized interior for phone, power bank and headphones. Light and comfortable for city and travel.</p>
 <ul>
 <li>Combination anti-theft lock</li>
 <li>External USB port — charge from a power bank inside</li>
 <li>Water-resistant fabric + durable zipper</li>
 <li>Padded strap + strap pocket</li>
-<li><strong>Limited offer</strong> — only 199 MAD in Morocco</li>
+<li>Only 199 MAD in Morocco</li>
 </ul>
 ${COD_EN}`.trim(),
     detailsAr: [
@@ -63,7 +62,6 @@ ${COD_EN}`.trim(),
       "قماش مقاوم للماء",
       "تنظيم داخلي (جيوب للتابلت / الباوربانك)",
       "حزام مبطّن قابل للتعديل",
-      "عرض محدود — 199 درهم",
     ],
     detailsEn: [
       "Anti-theft sling / chest bag",
@@ -72,7 +70,6 @@ ${COD_EN}`.trim(),
       "Water-resistant fabric",
       "Organized interior (tablet / power-bank pockets)",
       "Padded adjustable strap",
-      "Limited offer — 199 MAD",
     ],
     images: [...IMAGES],
     colors: [
@@ -92,26 +89,26 @@ ${COD_EN}`.trim(),
     landing: {
       style: "pro",
       highlights: [
-        { icon: "sparkles", titleAr: "عرض محدود", titleEn: "Limited offer" },
         { icon: "shield", titleAr: "قفل ضد السرقة", titleEn: "Anti-theft lock" },
         { icon: "zap", titleAr: "منفذ USB", titleEn: "USB port" },
+        { icon: "wind", titleAr: "مقاومة للماء", titleEn: "Water-resistant" },
         { icon: "feather", titleAr: "مريحة وأنيقة", titleEn: "Comfortable & sleek" },
       ],
-      headlineAr: "عرض محدود — حقيبة كتف ذكية بـ 199 درهم فقط",
-      headlineEn: "Limited offer — smart sling bag for only 199 MAD",
+      headlineAr: "حقيبة كتف ذكية — قفل + USB بـ 199 درهم",
+      headlineEn: "Smart sling bag — lock + USB for 199 MAD",
       introAr:
-        "حقيبة مضادة للسرقة بقفل برقم سري ومنفذ شحن USB، قماش يقاوم الماء، وحزام مريح. عرض محدود فالمغرب — 199 درهم بدل 299، توصيل مجاني والدفع عند الاستلام.",
+        "حقيبة مضادة للسرقة بقفل برقم سري ومنفذ شحن USB، قماش يقاوم الماء، وحزام مريح. الثمن 199 درهم فالمغرب — توصيل مجاني والدفع عند الاستلام.",
       introEn:
-        "An anti-theft bag with a combination lock and USB charging port, water-resistant fabric, and a comfortable strap. Limited offer in Morocco — 199 MAD instead of 299, free delivery and cash on delivery.",
+        "An anti-theft bag with a combination lock and USB charging port, water-resistant fabric, and a comfortable strap. 199 MAD in Morocco — free delivery and cash on delivery.",
       sections: [
         {
-          titleAr: "عرض محدود… ميزات واضحة",
-          titleEn: "Limited offer — clear features",
+          titleAr: "ميزات واضحة قدام عينك",
+          titleEn: "Clear features up front",
           bodyAr:
             "مقاومة للماء، منفذ USB، تصميم مضاد للسرقة، ومريحة وأنيقة — كلشي فالواجهة قدامك.",
           bodyEn:
             "Water-resistant, USB port, anti-theft design, comfortable and stylish — everything up front.",
-          image: "/products/sling-bag-1-offer.webp",
+          image: "/products/sling-bag-1.webp",
         },
         {
           titleAr: "شحن والتيليفون مربوط فالحزام",
@@ -120,7 +117,7 @@ ${COD_EN}`.trim(),
             "منفذ USB خارجي + جيب على الحزام — وصل الباوربانك من الداخل وشحن التيليفون وأنت كتمشي.",
           bodyEn:
             "External USB port + strap pocket — plug a power bank inside and charge your phone on the go.",
-          image: "/products/sling-bag-2-offer.webp",
+          image: "/products/sling-bag-2.webp",
         },
         {
           titleAr: "قفل برقم سري… ومتعددة الوظائف",
@@ -129,7 +126,7 @@ ${COD_EN}`.trim(),
             "قفل سري يحمي السحاب، مع مخرج شحن وتنظيم داخلي واضح للسماعات والأجهزة.",
           bodyEn:
             "A combo lock secures the zipper, with a charging outlet and clear interior space for headphones and devices.",
-          image: "/products/sling-bag-3-offer.webp",
+          image: "/products/sling-bag-3.webp",
         },
         {
           titleAr: "تنظيم داخلي مرتّب",
@@ -138,7 +135,7 @@ ${COD_EN}`.trim(),
             "جيوب للتابلت والباوربانك والمحفظة، ومساحة للسماعات — بلا ما يختلط كلشي.",
           bodyEn:
             "Pockets for tablet, power bank and wallet, plus room for headphones — without everything mixing.",
-          image: "/products/sling-bag-5-offer.webp",
+          image: "/products/sling-bag-5.webp",
         },
         {
           titleAr: "تفاصيل الجودة: سحاب، قفل، USB، مشبك",
@@ -147,7 +144,7 @@ ${COD_EN}`.trim(),
             "سحاب مرن، قفل أمان، منفذ USB، ومشبك معدني قوي — مصمّمة للاستعمال اليومي.",
           bodyEn:
             "Flexible zipper, security lock, USB port, and a strong metal buckle — built for daily use.",
-          image: "/products/sling-bag-6-offer.webp",
+          image: "/products/sling-bag-6.webp",
         },
         {
           titleAr: "كيف تفتح القفل؟",
@@ -156,7 +153,7 @@ ${COD_EN}`.trim(),
             "الرقم الابتدائي 000 — دورو، اضغط على الزر الأزرق، وافتح السحاب بسهولة.",
           bodyEn:
             "Default code is 000 — dial it, press the blue button, and open the zipper smoothly.",
-          image: "/products/sling-bag-8-offer.webp",
+          image: "/products/sling-bag-8.webp",
         },
         {
           titleAr: "للمدينة والسفر — بألوان متعددة",
@@ -165,22 +162,22 @@ ${COD_EN}`.trim(),
             "رمادي، أسود، أو كحلي — اختاري اللون اللي كيناسبك، ونفس الميزات: قفل + USB.",
           bodyEn:
             "Grey, black, or navy — pick the color that suits you, same features: lock + USB.",
-          image: "/products/sling-bag-9-offer.webp",
+          image: "/products/sling-bag-9.webp",
         },
       ],
       benefitsAr: [
-        "عرض محدود — 199 درهم بدل 299",
         "قفل برقم سري ضد السرقة",
         "منفذ شحن USB خارجي",
         "قماش مقاوم للماء",
-        "توصيل مجاني والدفع عند الاستلام",
+        "199 درهم — توصيل مجاني",
+        "الدفع عند الاستلام",
       ],
       benefitsEn: [
-        "Limited offer — 199 MAD instead of 299",
         "Combination anti-theft lock",
         "External USB charging port",
         "Water-resistant fabric",
-        "Free delivery and cash on delivery",
+        "199 MAD — free delivery",
+        "Cash on delivery",
       ],
       faq: [
         {
