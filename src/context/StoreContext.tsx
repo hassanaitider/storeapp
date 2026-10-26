@@ -280,6 +280,7 @@ const SEED_CONTENT_ID_LIST = new Set([
   "prod-spice-rack-ma",
   "prod-insulin-cooler-ma",
   "prod-maternity-belt-ma",
+  "prod-watch-gift-set-ma",
 ]);
 
 const SEED_CONTENT_IDS = {
