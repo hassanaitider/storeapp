@@ -23,9 +23,10 @@ export function isGifUrl(url: string) {
   );
 }
 
-/** Prefer a still for LCP — multi-MB GIFs stay out of the first paint. */
+/** Prefer a still for LCP — unless the gallery intentionally leads with a motion demo. */
 export function preferredMediaIndex(images: string[] | undefined): number {
   const list = images ?? [];
+  if (list[0] && isGifUrl(list[0])) return 0;
   const still = list.findIndex((u) => Boolean(u) && !isGifUrl(u));
   if (still >= 0) return still;
   const any = list.findIndex(Boolean);

@@ -7,10 +7,12 @@ const COD_AR =
 const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
-/** Shop/home card = b; hero = main; only one leg photo and it is LAST */
-const COVER = "/products/hand-neck-massager-b.webp";
+/** Shop/home card = still; product gallery leads with motion demos; leg last */
+const COVER = "/products/hand-neck-massager-main.webp";
 const IMAGES = [
-  "/products/hand-neck-massager-main.webp",
+  "/products/hand-neck-massager-demo-1.webp",
+  "/products/hand-neck-massager-demo-2.webp",
+  "/products/hand-neck-massager-demo-3.webp",
   "/products/hand-neck-massager-b.webp",
   "/products/hand-neck-massager-c.webp",
   "/products/hand-neck-massager-d.webp",
@@ -104,7 +106,7 @@ ${COD_EN}`.trim(),
             "الحزام يثبّت الجهاز على العنق والكتف. تشغّليه وترتاحي — تقراي، تتفرجي، ولا ترتاحي.",
           bodyEn:
             "The strap holds the device on the neck and shoulder. Turn it on and rest — read, watch, or unwind.",
-          image: "/products/hand-neck-massager-main.webp",
+          image: "/products/hand-neck-massager-demo-1.webp",
         },
         {
           titleAr: "مساج احترافي كل يوم",
@@ -113,7 +115,7 @@ ${COD_EN}`.trim(),
             "يد تحاكي المساج اليدوي بأصابع سيليكون، دفء أحمر، وتشغيل بزر واحد — راحة بعد يوم طويل.",
           bodyEn:
             "Bionic silicone fingers, red-light warmth, and one-touch control — relief after a long day.",
-          image: "/products/hand-neck-massager-b.webp",
+          image: "/products/hand-neck-massager-demo-2.webp",
         },
         {
           titleAr: "8 أصابع فوق العنق… وإبهام على الكتف",
@@ -122,7 +124,7 @@ ${COD_EN}`.trim(),
             "الأصابع كتعجن العنق من فوق، والإبهام كيرفع ويضغط عضلة الترابيز — دعم واضح للعنق والكتف.",
           bodyEn:
             "Fingers knead the upper neck while the thumbs lift and press the trapezius — clear neck and shoulder support.",
-          image: "/products/hand-neck-massager-c.webp",
+          image: "/products/hand-neck-massager-demo-3.webp",
         },
         {
           titleAr: "ضغط عميق على نقاط العنق والكتف",
