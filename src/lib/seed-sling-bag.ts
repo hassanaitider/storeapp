@@ -8,7 +8,7 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
-  "/products/sling-bag-hero-v2.webp",
+  "/products/sling-bag-hero-v3.webp",
   "/products/sling-bag-demo.gif",
   "/products/sling-bag-2.webp",
   "/products/sling-bag-3.webp",
@@ -108,7 +108,7 @@ ${COD_EN}`.trim(),
             "مقاومة للماء، منفذ USB، تصميم مضاد للسرقة، ومريحة وأنيقة — كلشي فالواجهة قدامك.",
           bodyEn:
             "Water-resistant, USB port, anti-theft design, comfortable and stylish — everything up front.",
-          image: "/products/sling-bag-hero-v2.webp",
+          image: "/products/sling-bag-hero-v3.webp",
         },
         {
           titleAr: "شحن والتيليفون مربوط فالحزام",
