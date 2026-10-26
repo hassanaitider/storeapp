@@ -10,14 +10,14 @@ const COD_EN =
 const IMAGES = [
   "/products/sling-bag-hero-v4.webp",
   "/products/sling-bag-demo.gif",
-  "/products/sling-bag-2.webp",
-  "/products/sling-bag-3.webp",
-  "/products/sling-bag-4.webp",
-  "/products/sling-bag-5.webp",
-  "/products/sling-bag-6.webp",
-  "/products/sling-bag-7.webp",
-  "/products/sling-bag-8.webp",
-  "/products/sling-bag-9.webp",
+  "/products/sling-bag-8.webp", // USB + phone on strap
+  "/products/sling-bag-3.webp", // lock + multi-function
+  "/products/sling-bag-4.webp", // interior organization
+  "/products/sling-bag-2.webp", // zipper / lock / USB / buckle callouts
+  "/products/sling-bag-6.webp", // how to open lock
+  "/products/sling-bag-5.webp", // lifestyle charging
+  "/products/sling-bag-7.webp", // USB studio
+  "/products/sling-bag-9.webp", // colors / travel
 ];
 
 /** Morocco only — anti-theft USB sling / crossbody bag */
@@ -117,7 +117,7 @@ ${COD_EN}`.trim(),
             "منفذ USB خارجي + جيب على الحزام — وصل الباوربانك من الداخل وشحن التيليفون وأنت كتمشي.",
           bodyEn:
             "External USB port + strap pocket — plug a power bank inside and charge your phone on the go.",
-          image: "/products/sling-bag-2.webp",
+          image: "/products/sling-bag-8.webp",
         },
         {
           titleAr: "قفل برقم سري… ومتعددة الوظائف",
@@ -135,7 +135,7 @@ ${COD_EN}`.trim(),
             "جيوب للتابلت والباوربانك والمحفظة، ومساحة للسماعات — بلا ما يختلط كلشي.",
           bodyEn:
             "Pockets for tablet, power bank and wallet, plus room for headphones — without everything mixing.",
-          image: "/products/sling-bag-5.webp",
+          image: "/products/sling-bag-4.webp",
         },
         {
           titleAr: "تفاصيل الجودة: سحاب، قفل، USB، مشبك",
@@ -144,7 +144,7 @@ ${COD_EN}`.trim(),
             "سحاب مرن، قفل أمان، منفذ USB، ومشبك معدني قوي — مصمّمة للاستعمال اليومي.",
           bodyEn:
             "Flexible zipper, security lock, USB port, and a strong metal buckle — built for daily use.",
-          image: "/products/sling-bag-6.webp",
+          image: "/products/sling-bag-2.webp",
         },
         {
           titleAr: "كيف تفتح القفل؟",
@@ -153,7 +153,7 @@ ${COD_EN}`.trim(),
             "الرقم الابتدائي 000 — دورو، اضغط على الزر الأزرق، وافتح السحاب بسهولة.",
           bodyEn:
             "Default code is 000 — dial it, press the blue button, and open the zipper smoothly.",
-          image: "/products/sling-bag-8.webp",
+          image: "/products/sling-bag-6.webp",
         },
         {
           titleAr: "للمدينة والسفر — بألوان متعددة",
