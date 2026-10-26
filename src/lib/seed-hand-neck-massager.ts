@@ -8,8 +8,8 @@ const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
 const IMAGES = [
-  "/products/hand-neck-massager-e.webp", // leg — first on product page
-  "/products/hand-neck-massager-b.webp",
+  "/products/hand-neck-massager-b.webp", // cover / home card
+  "/products/hand-neck-massager-e.webp", // photo 1 (leg) — swapped
   "/products/hand-neck-massager-main.webp",
   "/products/hand-neck-massager-c.webp",
   "/products/hand-neck-massager-d.webp",
@@ -101,7 +101,7 @@ ${COD_EN}`.trim(),
             "الحزام يثبّت الجهاز على العنق والكتف. تشغّليه وترتاحي — تقراي، تتفرجي، ولا ترتاحي.",
           bodyEn:
             "The strap holds the device on the neck and shoulder. Turn it on and rest — read, watch, or unwind.",
-          image: "/products/hand-neck-massager-e.webp",
+          image: "/products/hand-neck-massager-b.webp",
         },
         {
           titleAr: "مساج احترافي كل يوم",
@@ -110,7 +110,7 @@ ${COD_EN}`.trim(),
             "يد تحاكي المساج اليدوي بأصابع سيليكون، دفء أحمر، وتشغيل بزر واحد — راحة بعد يوم طويل.",
           bodyEn:
             "Bionic silicone fingers, red-light warmth, and one-touch control — relief after a long day.",
-          image: "/products/hand-neck-massager-b.webp",
+          image: "/products/hand-neck-massager-e.webp",
         },
         {
           titleAr: "8 أصابع فوق العنق… وإبهام على الكتف",
