@@ -7,15 +7,14 @@ const COD_AR =
 const COD_EN =
   "<p><strong>Order now</strong> — free delivery · cash on delivery · 30-day returns.</p>";
 
-/** Shop/home card stays on b; product hero = lifestyle main; leg photo LAST */
+/** Shop/home card = b; hero = main; only one leg photo and it is LAST */
 const COVER = "/products/hand-neck-massager-b.webp";
 const IMAGES = [
   "/products/hand-neck-massager-main.webp",
   "/products/hand-neck-massager-b.webp",
   "/products/hand-neck-massager-c.webp",
   "/products/hand-neck-massager-d.webp",
-  "/products/hand-neck-massager-e.webp",
-  "/products/hand-neck-massager-leg.webp",
+  "/products/hand-neck-massager-e.webp", // leg — last
 ];
 
 /** Morocco only — cordless hand-shaped neck massager */
