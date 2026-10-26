@@ -15,7 +15,11 @@ export function isGifUrl(url: string) {
 }
 
 /** Prefer a still for cards/cart — GIFs stay in the product gallery */
-export function productCoverSrc(images: string[] | undefined | null): string {
+export function productCoverSrc(
+  images: string[] | undefined | null,
+  coverImage?: string | null
+): string {
+  if (coverImage && !isGifUrl(coverImage)) return coverImage;
   const list = (images ?? []).filter(Boolean);
   const still = list.find((u) => !isGifUrl(u));
   return still || list[0] || "/products/car-vacuum.webp";

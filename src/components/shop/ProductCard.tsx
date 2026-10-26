@@ -29,7 +29,7 @@ export function ProductCard({
   const name = pickText(product, "name", locale);
   const discount = productDiscountPercent(product, priceCountry);
   const compareLabel = formatProductComparePrice(product, priceCountry, locale);
-  const cover = productCoverSrc(product.images);
+  const cover = productCoverSrc(product.images, product.coverImage);
 
   return (
     <article

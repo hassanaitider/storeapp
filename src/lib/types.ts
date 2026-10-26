@@ -187,6 +187,8 @@ export interface Product {
   /** If set, product only appears in these markets */
   availableIn?: CountryCode[];
   images: string[];
+  /** Optional shop/home card image — when set, gallery[0] can differ from the card */
+  coverImage?: string;
   /** @deprecated Preset swatches removed — kept optional for old data */
   colors?: ProductColor[];
   /** When true, customer can type their preferred color on the product page */

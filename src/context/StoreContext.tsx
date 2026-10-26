@@ -407,6 +407,7 @@ function mergeProductsWithSeed(stored: Product[] | undefined): Product[] {
           qtyOffers: seed.qtyOffers,
           landing: seed.landing,
           images: [...(seed.images ?? [])],
+          coverImage: seed.coverImage,
           colors: seed.colors?.length ? [...seed.colors] : [],
           customColorEnabled: Boolean(seed.customColorEnabled),
           sizes: seed.sizes ? [...seed.sizes] : undefined,

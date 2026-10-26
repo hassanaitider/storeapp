@@ -63,7 +63,7 @@ export function ProductDetailSections({
   const landing = product.landing;
   const details = pickList(product, "details", locale);
   const benefits = pickList(landing, "benefits", locale);
-  const cover = productCoverSrc(product.images);
+  const cover = productCoverSrc(product.images, product.coverImage);
   const { gif, stills } = mediaPack(product.images);
 
   if (!landing?.sections?.length) {
