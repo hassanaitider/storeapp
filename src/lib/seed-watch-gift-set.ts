@@ -114,21 +114,21 @@ ${COD_EN}`.trim(),
           image: "/products/watch-gift-set-2-offer.webp",
         },
         {
-          titleAr: "ألوان متعددة… نفس الطقم",
-          titleEn: "Several colors — same set",
+          titleAr: "لون واحد: الوردي",
+          titleEn: "One color: pink",
           bodyAr:
-            "اختاري الحزام اللي كيناسبك (وردي، أسود، رمادي…) مع ساعة كوارتز مرصّعة ومجوهرات مطابقة.",
+            "الطقم كيجي بلون وردي فقط — حزام وردي، ساعة كوارتز مرصّعة، ومجوهرات مطابقة. ما كاينش أسود ولا رمادي.",
           bodyEn:
-            "Pick the strap that suits you (pink, black, grey…) with a crystal quartz watch and matching jewelry.",
+            "The set comes in pink only — a pink strap, a crystal quartz watch, and matching jewelry. No black or grey.",
           image: "/products/watch-gift-set-3-offer.webp",
         },
         {
           titleAr: "الساعة الذكية قدام عينك",
           titleEn: "See the smartwatch clearly",
           bodyAr:
-            "تصميم أنثوي بلون وردي/ذهبي وردي، شاشة واضحة، وحزام ناعم للاستعمال اليومي.",
+            "تصميم أنثوي بالوردي، شاشة واضحة، وحزام ناعم للاستعمال اليومي.",
           bodyEn:
-            "A feminine rose-gold / pink look, a clear screen, and a soft strap for everyday wear.",
+            "A feminine pink look, a clear screen, and a soft strap for everyday wear.",
           image: "/products/watch-gift-set-4-offer.webp",
         },
         {
