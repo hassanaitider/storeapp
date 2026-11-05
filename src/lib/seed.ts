@@ -3314,7 +3314,7 @@ ${COD_EN}
     customColorEnabled: false,
     qtyOffers: [
       { quantity: 1, discountPercent: 0 },
-      { quantity: 2, marketPrices: { TN: 130 }, popular: true },
+      { quantity: 2, marketPrices: { TN: 145 }, popular: true },
       { quantity: 3, marketPrices: { TN: 190 } },
     ],
     inStock: true,
@@ -3334,9 +3334,9 @@ ${COD_EN}
       headlineAr: "دعم قوي لصحة البروستاتا وحياة أكثر راحة وتوازن",
       headlineEn: "Strong support for prostate health and a more comfortable, balanced life",
       introAr:
-        "تركيبة طبيعية متكاملة لدعم صحة البروستاتا وتحسين جودة الحياة اليومية للرجال: مزيج فطر طبيعي، ساو بالميتو، و10 نباتات وفيتامينات أساسية في كبسولتين يومياً. علبة بـ 80 دينار، علبتين بـ 130 دينار، و3 علب بـ 190 دينار — توصيل مجاني والدفع عند الاستلام في تونس.",
+        "تركيبة طبيعية متكاملة لدعم صحة البروستاتا وتحسين جودة الحياة اليومية للرجال: مزيج فطر طبيعي، ساو بالميتو، و10 نباتات وفيتامينات أساسية في كبسولتين يومياً. علبة بـ 80 دينار، علبتين بـ 145 دينار، و3 علب بـ 190 دينار — توصيل مجاني والدفع عند الاستلام في تونس.",
       introEn:
-        "A complete natural formula to support prostate health and improve men's daily quality of life: a natural mushroom blend, saw palmetto, and 10 essential plants and vitamins in two capsules a day. One bottle for 80 TND, two for 130 TND, three for 190 TND — free delivery and cash on delivery in Tunisia.",
+        "A complete natural formula to support prostate health and improve men's daily quality of life: a natural mushroom blend, saw palmetto, and 10 essential plants and vitamins in two capsules a day. One bottle for 80 TND, two for 145 TND, three for 190 TND — free delivery and cash on delivery in Tunisia.",
       sections: [
         {
           titleAr: "مزيج فطر طبيعي",
