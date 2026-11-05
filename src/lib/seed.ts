@@ -21,6 +21,7 @@ import {
   isRetiredStoreProduct,
   UNIVERSAL_MARKET_PRODUCTS,
 } from "./seed-universal-products";
+import { SNAP_PROSTATE_SLUG } from "./product-slugs";
 
 /** Consistent per-market category art: country flag only (no product lifestyle) */
 const CATEGORY_IMAGES: Record<string, string> = {
@@ -3251,6 +3252,175 @@ ${COD_EN}
             "عادة باور بانك بهذه السعة يُحمل في الأمتعة اليدوية حسب أنظمة الطيران. تأكد من سياسة خط الطيران قبل السفر.",
           answerEn:
             "Power banks of this capacity are usually carry-on only per airline rules. Confirm your airline policy before travel.",
+        },
+      ],
+    },
+  },
+  {
+    id: "prod-snap-prostate-tn",
+    slug: SNAP_PROSTATE_SLUG,
+    nameAr: "سناب لصحة البروستاتا — مزيج الفطر وساو بالميتو",
+    nameEn: "SNAP Prostate Health — Mushroom Blend + Saw Palmetto",
+    descriptionAr: `
+<h3>دعم طبيعي متكامل لصحة البروستاتا</h3>
+<p>سناب بروستات هيلث: مكمل غذائي بتركيبة طبيعية متقدمة تجمع <strong>مزيج الفطر الطبيعي</strong> و<strong>ساو بالميتو</strong> مع 10 نباتات وفيتامينات أساسية مدروسة بعناية لدعم صحة البروستاتا والجهاز البولي للرجال.</p>
+<ul>
+<li>مزيج فطر طبيعي لدعم المناعة والصحة العامة للرجال</li>
+<li>ساو بالميتو لدعم تدفق البول وصحة الجهاز البولي</li>
+<li>10 نباتات وفيتامينات أساسية</li>
+<li>60 كبسولة نباتية سهلة البلع — كبسولتان يومياً</li>
+</ul>
+<p><small>مكمل غذائي — ليس دواءً ولا يغني عن نظام غذائي متوازن. إذا كنت تعاني من حالة صحية أو تتناول أدوية، استشر طبيبك قبل الاستعمال.</small></p>
+${COD_AR}
+`.trim(),
+    descriptionEn: `
+<h3>Complete natural support for prostate health</h3>
+<p>SNAP Prostate Health: a dietary supplement with an advanced natural formula combining a <strong>natural mushroom blend</strong> and <strong>saw palmetto</strong> with 10 carefully selected essential plants and vitamins to support prostate and urinary tract health for men.</p>
+<ul>
+<li>Natural mushroom blend to support immunity and men's overall health</li>
+<li>Saw palmetto to support urine flow and urinary tract health</li>
+<li>10 essential plants and vitamins</li>
+<li>60 easy-to-swallow vegetable capsules — two capsules a day</li>
+</ul>
+<p><small>Dietary supplement — not a medicine and not a substitute for a balanced diet. If you have a medical condition or take medication, consult your doctor before use.</small></p>
+${COD_EN}
+`.trim(),
+    detailsAr: [
+      "مزيج فطر طبيعي + ساو بالميتو",
+      "10 نباتات وفيتامينات أساسية",
+      "60 كبسولة نباتية (كبسولتان يومياً)",
+      "مصنع وفق معايير الجودة العالمية GMP",
+      "مكمل غذائي — ليس دواءً",
+    ],
+    detailsEn: [
+      "Natural mushroom blend + saw palmetto",
+      "10 essential plants and vitamins",
+      "60 vegetable capsules (two a day)",
+      "Manufactured to GMP quality standards",
+      "Dietary supplement — not a medicine",
+    ],
+    priceUSD: 25.4,
+    compareAtUSD: 31.7,
+    marketPrices: { TN: 80 },
+    marketComparePrices: { TN: 100 },
+    availableIn: ["TN"],
+    images: [
+      "/products/prostate-snap-main.webp",
+      "/products/prostate-snap-glow.webp",
+      "/products/prostate-snap-hero.webp",
+      "/products/prostate-snap-bottle.webp",
+    ],
+    colors: [],
+    customColorEnabled: false,
+    qtyOffers: [
+      { quantity: 1, discountPercent: 0 },
+      { quantity: 2, marketPrices: { TN: 130 }, popular: true },
+      { quantity: 3, marketPrices: { TN: 190 } },
+    ],
+    inStock: true,
+    featured: true,
+    rating: 4.9,
+    reviewCount: 1280,
+    categoryId: "cat-TN",
+    createdAt: "2026-11-20T00:00:00.000Z",
+    landing: {
+      style: "pro",
+      highlights: [
+        { icon: "heart", titleAr: "يدعم صحة البروستاتا", titleEn: "Supports prostate health" },
+        { icon: "shield", titleAr: "يدعم وظائف المثانة", titleEn: "Supports bladder function" },
+        { icon: "leaf", titleAr: "مكونات طبيعية 100%", titleEn: "100% natural ingredients" },
+        { icon: "badge", titleAr: "مصنع وفق معايير GMP", titleEn: "Made to GMP standards" },
+      ],
+      headlineAr: "دعم قوي لصحة البروستاتا وحياة أكثر راحة وتوازن",
+      headlineEn: "Strong support for prostate health and a more comfortable, balanced life",
+      introAr:
+        "تركيبة طبيعية متكاملة لدعم صحة البروستاتا وتحسين جودة الحياة اليومية للرجال: مزيج فطر طبيعي، ساو بالميتو، و10 نباتات وفيتامينات أساسية في كبسولتين يومياً. علبة بـ 80 دينار، علبتين بـ 130 دينار، و3 علب بـ 190 دينار — توصيل مجاني والدفع عند الاستلام في تونس.",
+      introEn:
+        "A complete natural formula to support prostate health and improve men's daily quality of life: a natural mushroom blend, saw palmetto, and 10 essential plants and vitamins in two capsules a day. One bottle for 80 TND, two for 130 TND, three for 190 TND — free delivery and cash on delivery in Tunisia.",
+      sections: [
+        {
+          titleAr: "مزيج فطر طبيعي",
+          titleEn: "Natural mushroom blend",
+          bodyAr:
+            "مكونات فطرية مختارة بعناية لدعم المناعة والصحة العامة للرجال.",
+          bodyEn:
+            "Carefully selected mushroom ingredients to support immunity and men's overall health.",
+          image: "/products/prostate-snap-glow.webp",
+        },
+        {
+          titleAr: "ساو بالميتو",
+          titleEn: "Saw palmetto",
+          bodyAr:
+            "يُساعد في دعم تدفق البول وصحة الجهاز البولي للرجال.",
+          bodyEn:
+            "Helps support urine flow and men's urinary tract health.",
+          image: "/products/prostate-snap-main.webp",
+        },
+        {
+          titleAr: "تركيبة طبيعية متقدمة",
+          titleEn: "Advanced natural formula",
+          bodyAr:
+            "مزيج من 10 نباتات وفيتامينات أساسية مدروسة بعناية لدعم متكامل.",
+          bodyEn:
+            "A blend of 10 carefully studied essential plants and vitamins for complete support.",
+          image: "/products/prostate-snap-hero.webp",
+        },
+        {
+          titleAr: "دعم صحي للبروستاتا",
+          titleEn: "Healthy prostate support",
+          bodyAr:
+            "يساعد في الحفاظ على صحة البروستاتا والوظائف الطبيعية اليومية.",
+          bodyEn:
+            "Helps maintain prostate health and normal daily functions.",
+          image: "/products/prostate-snap-bottle.webp",
+        },
+      ],
+      benefitsAr: [
+        "يدعم صحة البروستاتا والوظائف الطبيعية",
+        "يدعم وظائف المثانة وتدفق البول",
+        "مكونات طبيعية 100% — مزيج فطر وساو بالميتو",
+        "كبسولات نباتية سهلة البلع",
+        "توصيل مجاني والدفع عند الاستلام",
+      ],
+      benefitsEn: [
+        "Supports prostate health and normal function",
+        "Supports bladder function and urine flow",
+        "100% natural ingredients — mushroom blend and saw palmetto",
+        "Easy-to-swallow vegetable capsules",
+        "Free delivery and cash on delivery",
+      ],
+      faq: [
+        {
+          questionAr: "كيف أستعمل سناب بروستات هيلث؟",
+          questionEn: "How do I use SNAP Prostate Health?",
+          answerAr:
+            "تناول كبسولتين يومياً مع كوب من الماء، ويفضل مع الوجبة لتحقيق أفضل امتصاص وفعالية. الالتزام بالجرعة اليومية لمدة لا تقل عن 30 يوماً يعطي أفضل النتائج.",
+          answerEn:
+            "Take two capsules daily with a glass of water, preferably with a meal for best absorption and effectiveness. Sticking to the daily dose for at least 30 days gives the best results.",
+        },
+        {
+          questionAr: "هل المنتج آمن للاستخدام اليومي؟",
+          questionEn: "Is it safe for daily use?",
+          answerAr:
+            "نعم — تركيبة طبيعية متوازنة وآمنة للاستخدام اليومي وطويل الأمد، ومصنعة وفق معايير الجودة العالمية GMP.",
+          answerEn:
+            "Yes — a balanced natural formula that is safe for daily, long-term use, manufactured to GMP quality standards.",
+        },
+        {
+          questionAr: "متى ألاحظ النتائج؟",
+          questionEn: "When will I notice results?",
+          answerAr:
+            "معظم العملاء لاحظوا تحسناً في الراحة والنوم خلال الأسابيع الأولى، والنتائج تتحسن مع الاستمرار والانتظام.",
+          answerEn:
+            "Most customers noticed improved comfort and sleep within the first few weeks, and results keep improving with consistent use.",
+        },
+        {
+          questionAr: "هل يعوّض الطبيب؟",
+          questionEn: "Does it replace a doctor?",
+          answerAr:
+            "لا — هو مكمل غذائي لدعم الصحة وليس دواءً. إذا كانت لديك حالة صحية أو تتناول أدوية، استشر طبيبك قبل الاستعمال.",
+          answerEn:
+            "No — it is a dietary supplement for health support, not a medicine. If you have a medical condition or take medication, consult your doctor before use.",
         },
       ],
     },

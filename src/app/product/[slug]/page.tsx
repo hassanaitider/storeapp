@@ -51,6 +51,7 @@ import {
   MAG_POWERBANK_SLUG,
   MINI_CAMERA_SLUG,
   SMART_TAG_SLUG,
+  SNAP_PROSTATE_SLUG,
 } from "@/lib/product-slugs";
 import { ProductMediaGallery, preferredMediaIndex } from "@/components/shop/ProductMediaGallery";
 import { ColorSwatches } from "@/components/shop/ColorSwatches";
@@ -82,6 +83,11 @@ const MiniCameraStory = dynamic(
 );
 const SmartTagStory = dynamic(
   () => import("@/components/shop/SmartTagStory").then((m) => m.SmartTagStory),
+  { ssr: false }
+);
+const ProstateStory = dynamic(
+  () =>
+    import("@/components/shop/ProstateStory").then((m) => m.ProstateStory),
   { ssr: false }
 );
 
@@ -396,6 +402,7 @@ function ProductPageInner() {
     MINI_CAMERA_SLUG,
     CLIP_EARBUDS_SLUG,
     SMART_TAG_SLUG,
+    SNAP_PROSTATE_SLUG,
   ].includes(product.slug);
   const briefDescription =
     product.landing?.style === "pro" ? (
@@ -773,6 +780,8 @@ function ProductPageInner() {
         <ClipEarbudsStory product={product} locale={locale} />
       ) : product.slug === SMART_TAG_SLUG ? (
         <SmartTagStory product={product} locale={locale} />
+      ) : product.slug === SNAP_PROSTATE_SLUG ? (
+        <ProstateStory product={product} locale={locale} />
       ) : null}
 
       {/* 5) How to order, social proof, guarantees, FAQ */}
@@ -780,7 +789,10 @@ function ProductPageInner() {
       <SocialProof
         product={product}
         locale={locale}
-        showReviewList={product.slug !== MINI_CAMERA_SLUG}
+        showReviewList={
+          product.slug !== MINI_CAMERA_SLUG &&
+          product.slug !== SNAP_PROSTATE_SLUG
+        }
         showFaq={!storySlug}
       />
 

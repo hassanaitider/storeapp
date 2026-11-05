@@ -5,3 +5,4 @@ export const MAG_POWERBANK_SLUG = "bateria-portatil-magnetica-7en1";
 export const MINI_CAMERA_SLUG = "mini-camara-corporal-1080p";
 export const RETROLAB_SLUG = "consola-retrolab";
 export const SMART_TAG_SLUG = "rastreador-inteligente-ios-android";
+export const SNAP_PROSTATE_SLUG = "snap-prostate-health";
