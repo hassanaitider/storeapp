@@ -1,5 +1,5 @@
 /* Smart Shop — cache-first for product images & static assets (weak networks). */
-const CACHE = "smartshop-assets-v1";
+const CACHE = "smartshop-assets-v2";
 
 const CACHEABLE_PATH =
   /^\/(products|categories|brand|videos|uploads|_next\/static|_next\/image)\//;
