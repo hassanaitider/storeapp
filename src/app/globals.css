@@ -184,10 +184,10 @@ button {
 
 .media-slot--hero {
   aspect-ratio: 1 / 1;
-  /* First paint: full product above sticky order bar */
+  /* Shopify-like hero: image fills the full gallery width */
   width: 100%;
-  max-width: min(100%, min(34vh, 16rem));
-  max-height: min(34vh, 16rem);
+  max-width: 100%;
+  max-height: none;
   margin-inline: auto;
 }
 
