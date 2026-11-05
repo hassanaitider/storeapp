@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   Award,
   BadgeCheck,
   CalendarCheck,
   Check,
   ChevronDown,
-  Clock,
   Droplets,
   Flame,
   FlaskConical,
@@ -320,28 +318,6 @@ function StarRow({ className }: { className?: string }) {
   );
 }
 
-/** Countdown to midnight local time — resets daily like the source landing. */
-function useDailyCountdown() {
-  const [left, setLeft] = useState<{ h: number; m: number; s: number } | null>(null);
-  useEffect(() => {
-    const tick = () => {
-      const now = new Date();
-      const end = new Date(now);
-      end.setHours(23, 59, 59, 999);
-      const diff = Math.max(0, end.getTime() - now.getTime());
-      setLeft({
-        h: Math.floor(diff / 3_600_000),
-        m: Math.floor((diff % 3_600_000) / 60_000),
-        s: Math.floor((diff % 60_000) / 1000),
-      });
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return left;
-}
-
 export function ProstateStory({
   product,
   locale,
@@ -350,16 +326,9 @@ export function ProstateStory({
   locale: Locale;
 }) {
   const landing = product.landing;
-  const countdown = useDailyCountdown();
   if (!landing) return null;
 
   const faq = landing.faq ?? [];
-  const pad = (n: number) => String(n).padStart(2, "0");
-  const timeCells = [
-    { value: countdown ? pad(countdown.h) : "--", label: loc(locale, "ساعة", "Hours", "Horas") },
-    { value: countdown ? pad(countdown.m) : "--", label: loc(locale, "دقيقة", "Minutes", "Minutos") },
-    { value: countdown ? pad(countdown.s) : "--", label: loc(locale, "ثانية", "Seconds", "Segundos") },
-  ];
 
   return (
     <div className="mt-14 space-y-14 sm:space-y-16" dir={locale === "ar" ? "rtl" : "ltr"}>
@@ -599,7 +568,7 @@ export function ProstateStory({
         </div>
       </section>
 
-      {/* Urgency + countdown + CTA */}
+      {/* Urgency + CTA */}
       <section className={cn(DARK_CARD, "mx-auto max-w-4xl px-5 py-8 text-center sm:px-10")}>
         <p className="mx-auto inline-flex items-center gap-1.5 rounded-full bg-red-500/15 px-4 py-1.5 text-sm font-extrabold text-red-400 ring-1 ring-red-500/30">
           <Flame className="h-4 w-4" />
@@ -618,18 +587,6 @@ export function ProstateStory({
           height={480}
           className="mx-auto mt-6 w-full max-w-xl rounded-2xl"
         />
-        <p className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-red-400">
-          <Clock className="h-4 w-4" />
-          {loc(locale, "ينتهي العرض خلال:", "Offer ends in:", "La oferta termina en:")}
-        </p>
-        <div className="mt-3 flex items-center justify-center gap-2.5" dir="ltr">
-          {timeCells.map((cell) => (
-            <div key={cell.label} className="min-w-[4.5rem] rounded-2xl bg-white/5 px-3 py-2.5 ring-1 ring-white/10">
-              <p className={cn("text-2xl font-black tabular-nums", GREEN)}>{cell.value}</p>
-              <p className="mt-0.5 text-[0.65rem] font-bold text-white/70">{cell.label}</p>
-            </div>
-          ))}
-        </div>
         <button
           type="button"
           onClick={scrollToOrder}
