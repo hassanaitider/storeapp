@@ -212,7 +212,7 @@ const REVIEW_BADGES = [
 
 const REVIEWS = [
   {
-    img: "/products/prostate-snap-review-1.webp",
+    img: "/products/prostate-snap-review-1.webp?v=2",
     nameAr: "أحمد الشامي",
     nameEn: "Ahmed Al-Shami",
     metaAr: "54 سنة - الرياض",
@@ -226,7 +226,7 @@ const REVIEWS = [
       "Uno de los mejores productos que he usado para la salud de la próstata. Noté una gran mejora en el descanso nocturno y la energía diaria en pocas semanas. Lo recomiendo a todo hombre que cuide su salud.",
   },
   {
-    img: "/products/prostate-snap-review-2.webp",
+    img: "/products/prostate-snap-review-2.webp?v=2",
     nameAr: "سامي العتيبي",
     nameEn: "Sami Al-Otaibi",
     metaAr: "48 سنة - جدة",
@@ -240,7 +240,7 @@ const REVIEWS = [
       "Sufría de micción frecuente e incomodidad, pero después de usar este producto mi vida mejoró mucho. Duermo más profundo y tengo más energía. Un gran producto que vale cada centavo.",
   },
   {
-    img: "/products/prostate-snap-review-3.webp",
+    img: "/products/prostate-snap-review-3.webp?v=2",
     nameAr: "فهد الحربي",
     nameEn: "Fahd Al-Harbi",
     metaAr: "60 سنة - الدمام",
@@ -254,7 +254,7 @@ const REVIEWS = [
       "Excelente calidad e ingredientes naturales que dan bienestar desde la primera semana. Se volvió parte esencial de mi rutina diaria y siento una clara diferencia en mi salud general.",
   },
   {
-    img: "/products/prostate-snap-review-4.webp",
+    img: "/products/prostate-snap-review-4.webp?v=2",
     nameAr: "ماجد السبيعي",
     nameEn: "Majed Al-Subaie",
     metaAr: "41 سنة - الكويت",
