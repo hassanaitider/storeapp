@@ -30,7 +30,7 @@ export function getFbPixelId(): string {
 }
 
 /** Arab-markets pixel (Morocco, Gulf…); its CAPI token lives in FB_CAPI_TOKEN_ARAB. */
-export const ARAB_CAPI_PIXEL_ID = "2098415630739868";
+export const ARAB_CAPI_PIXEL_ID = "964436486676478";
 
 export type CapiTarget = { pixelId: string; accessToken: string };
 
