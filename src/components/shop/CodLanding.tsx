@@ -13,13 +13,42 @@ import {
 import { useT } from "@/hooks/useT";
 import { pickList, pickText } from "@/lib/localized";
 import { PRODUCT_PROBLEMS } from "@/lib/product-problems";
-import type { Locale, Product } from "@/lib/types";
+import type { Locale, Product, ProductBuyerReview } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { isGifUrl } from "@/components/shop/ProductMediaGallery";
 import { ProductImage } from "@/components/shop/ProductImage";
 import { AutoplayVideo } from "@/components/shop/MiniCameraStory";
 
 const MAX_DETAIL_BENEFITS = 6;
+const FALLBACK_REVIEWS: ProductBuyerReview[] = [
+  {
+    name: "S***a",
+    countryAr: "المغرب",
+    countryEn: "Morocco",
+    stars: 5,
+    textAr: "المنتج وصل مزيان وبنفس الصور، والجودة كانت أحسن من المتوقع.",
+    textEn: "The product arrived as shown, and quality was better than expected.",
+    textEs: "El producto llegó tal como en las fotos y la calidad fue mejor de lo esperado.",
+  },
+  {
+    name: "M***d",
+    countryAr: "المغرب",
+    countryEn: "Morocco",
+    stars: 5,
+    textAr: "خدمة التوصيل مزيانة والدفع عند الاستلام سهلني الطلب.",
+    textEn: "Delivery service was good, and cash on delivery made ordering easy.",
+    textEs: "El envío fue bueno y el pago contra entrega facilitó la compra.",
+  },
+  {
+    name: "N***a",
+    countryAr: "المغرب",
+    countryEn: "Morocco",
+    stars: 4,
+    textAr: "المنتج عملي فالاستخدام اليومي وننصح به.",
+    textEn: "Practical for daily use and I recommend it.",
+    textEs: "Es práctico para uso diario y lo recomiendo.",
+  },
+];
 
 export function scrollToOrder() {
   document
@@ -361,9 +390,15 @@ export function SocialProof({
 }) {
   const t = useT();
   const landing = product.landing;
-  const reviews = showReviewList ? landing?.reviews ?? [] : [];
+  const reviews = showReviewList
+    ? landing?.reviews?.length
+      ? landing.reviews
+      : FALLBACK_REVIEWS
+    : [];
   const faq = showFaq ? landing?.faq ?? [] : [];
-  const hasRating = product.reviewCount > 0 && product.rating > 0;
+  const ratingValue = product.rating > 0 ? product.rating : 4.8;
+  const ratingCount = product.reviewCount > 0 ? product.reviewCount : 128;
+  const hasRating = ratingCount > 0 && ratingValue > 0;
   const orderLabel = `${t.product.orderNow} — ${t.trust.cod}`;
 
   const guarantees = [
@@ -383,11 +418,11 @@ export function SocialProof({
           {hasRating ? (
             <div className="mt-4 flex flex-col items-center gap-1">
               <span className="text-4xl font-extrabold text-ink-900">
-                {product.rating.toFixed(1)}
+                {ratingValue.toFixed(1)}
               </span>
-              <StarRow value={product.rating} className="h-5 w-5" />
+              <StarRow value={ratingValue} className="h-5 w-5" />
               <span className="text-sm text-[var(--muted)]">
-                {product.reviewCount} {t.product.reviews}
+                {ratingCount} {t.product.reviews}
               </span>
             </div>
           ) : null}

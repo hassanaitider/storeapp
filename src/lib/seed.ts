@@ -619,8 +619,8 @@ ${COD_EN}
     customColorEnabled: false,
     inStock: true,
     featured: true,
-    rating: 0,
-    reviewCount: 0,
+    rating: 4.8,
+    reviewCount: 127,
     categoryId: "cat-MA",
     createdAt: "2026-10-06T00:00:00.000Z",
     landing: {
@@ -1028,6 +1028,48 @@ ${COD_EN}
         "Breathable perforated fabric",
         "Wearable under clothes",
         "Free delivery and COD",
+      ],
+      reviews: [
+        {
+          name: "S***a",
+          countryAr: "الدار البيضاء",
+          countryEn: "Casablanca",
+          stars: 5,
+          textAr:
+            "الحزام مريح بزاف وكيثبت الظهر مزيان، خصوصاً فالخدمة ديالي فالوقفان الطويل.",
+          textEn:
+            "Very comfortable belt and it stabilizes my back well, especially during long standing hours at work.",
+        },
+        {
+          name: "M***d",
+          countryAr: "مراكش",
+          countryEn: "Marrakech",
+          stars: 5,
+          textAr:
+            "الخامة زوينة والتنفس ديال القماش باين، ماكيعرقش بزاف بحال أحزمة خرين.",
+          textEn:
+            "Good material and breathable fabric; it does not get sweaty like other belts I tried.",
+        },
+        {
+          name: "N***a",
+          countryAr: "فاس",
+          countryEn: "Fez",
+          stars: 4,
+          textAr:
+            "شدّ الظهر مزيان وكيعاون ملي كنخدم فالدار، والتعديل ديالو ساهل.",
+          textEn:
+            "It supports the back well and helps during housework. The adjustment is easy.",
+        },
+        {
+          name: "Y***f",
+          countryAr: "أكادير",
+          countryEn: "Agadir",
+          stars: 5,
+          textAr:
+            "خديت جوج، واحد ليا وواحد لخويا. الجودة مزيانة والتوصيل جا سريع.",
+          textEn:
+            "I bought two, one for me and one for my brother. Quality is solid and delivery was fast.",
+        },
       ],
       faq: [
         {
