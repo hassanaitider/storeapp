@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 import { isValidCountry } from "@/lib/countries";
 import { sendMetaCapiEvents } from "@/lib/meta-capi";
-import { getCapiTarget } from "@/lib/meta-config";
-import { pixelIdForCountry } from "@/lib/meta-pixels";
+import { getCapiTargets } from "@/lib/meta-config";
+import { pixelIdsForCountry } from "@/lib/meta-pixels";
 import {
   deleteOrderBlob,
   listOrderBlobs,
@@ -47,10 +47,10 @@ async function sendOrderPurchaseCapi(
   order: Order,
   meta?: { fbp?: string; fbc?: string; eventSourceUrl?: string }
 ) {
-  const pixelId = pixelIdForCountry(order.country as CountryCode);
-  const target = getCapiTarget(pixelId);
-  if (!target) {
-    console.error("order CAPI skipped: no_token_for_pixel", pixelId, order.id);
+  const pixelIds = pixelIdsForCountry(order.country as CountryCode);
+  const targets = getCapiTargets(pixelIds);
+  if (!targets.length) {
+    console.error("order CAPI skipped: no_token_for_pixel", pixelIds, order.id);
     return;
   }
   const nameParts = order.customer.name.trim().split(/\s+/);
@@ -69,32 +69,44 @@ async function sendOrderPurchaseCapi(
     },
     request
   );
-  const result = await sendMetaCapiEvents(
-    [
-      {
-        eventName: "Purchase",
-        eventId: order.id,
-        eventSourceUrl: meta?.eventSourceUrl,
-        userData,
-        customData: {
-          value: Math.round(order.totalUSD * 100) / 100,
-          currency: "USD",
-          order_id: order.id,
-          content_ids: order.items.map((i) => i.productId),
-          content_type: "product",
-          contents: order.items.map((i) => ({
-            id: i.productId,
-            quantity: i.quantity,
-          })),
-          num_items: order.items.reduce((n, i) => n + i.quantity, 0),
-        },
-      },
-    ],
-    target
+  const results = await Promise.all(
+    targets.map((target) =>
+      sendMetaCapiEvents(
+        [
+          {
+            eventName: "Purchase",
+            eventId: order.id,
+            eventSourceUrl: meta?.eventSourceUrl,
+            userData,
+            customData: {
+              value: Math.round(order.totalUSD * 100) / 100,
+              currency: "USD",
+              order_id: order.id,
+              content_ids: order.items.map((i) => i.productId),
+              content_type: "product",
+              contents: order.items.map((i) => ({
+                id: i.productId,
+                quantity: i.quantity,
+              })),
+              num_items: order.items.reduce((n, i) => n + i.quantity, 0),
+            },
+          },
+        ],
+        target
+      )
+    )
   );
-  if (!result.ok) {
-    console.error("order CAPI Purchase failed", order.id, result.status, result.body);
-  }
+  results.forEach((result, i) => {
+    if (!result.ok) {
+      console.error(
+        "order CAPI Purchase failed",
+        order.id,
+        targets[i].pixelId,
+        result.status,
+        result.body
+      );
+    }
+  });
 }
 
 function text(value: unknown, max = 500): string | undefined {

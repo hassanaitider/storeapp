@@ -3,7 +3,7 @@
  * Always Standard events (trackSingle), never trackCustom.
  */
 
-import { getActivePixelId } from "@/lib/meta-pixels";
+import { getActivePixelIds } from "@/lib/meta-pixels";
 
 function readCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
@@ -98,7 +98,7 @@ function ensurePixel(fbq: Fbq, pixelId: string) {
 }
 
 /**
- * Standard Pixel event + matching CAPI, sent only to the visitor's market pixel.
+ * Standard Pixel event + matching CAPI, sent to every configured pixel.
  * Uses fbq('trackSingle', pixelId, eventName, …) — Standard, not Custom.
  */
 export function trackBoth(
@@ -112,14 +112,16 @@ export function trackBoth(
   if (typeof window === "undefined") return "";
 
   const eventId = options?.eventId || genEventId();
-  const pixelId = getActivePixelId();
-  if (!pixelId) return eventId;
+  const pixelIds = getActivePixelIds();
+  if (!pixelIds.length) return eventId;
   const { fbp, fbc } = getFbpFbc();
   const params = customData && Object.keys(customData).length > 0 ? customData : undefined;
 
   const fbq = ensureFbq();
-  ensurePixel(fbq, pixelId);
-  fbq("trackSingle", pixelId, eventName, params ?? {}, { eventID: eventId });
+  for (const pixelId of pixelIds) {
+    ensurePixel(fbq, pixelId);
+    fbq("trackSingle", pixelId, eventName, params ?? {}, { eventID: eventId });
+  }
 
   void fetch("/api/fb-capi", {
     method: "POST",
@@ -128,7 +130,7 @@ export function trackBoth(
       event_name: eventName,
       event_id: eventId,
       event_source_url: window.location.href,
-      pixel_id: pixelId,
+      pixel_ids: pixelIds,
       user_data: {
         ...(options?.userData ?? {}),
         fbp,

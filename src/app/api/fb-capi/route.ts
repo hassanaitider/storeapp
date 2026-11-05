@@ -4,7 +4,7 @@ import {
   type CapiCustomData,
   type CapiUserData,
 } from "@/lib/meta-capi";
-import { getCapiTarget } from "@/lib/meta-config";
+import { getCapiTargets } from "@/lib/meta-config";
 import { normalizeCapiUserData } from "./user-data";
 
 export const runtime = "nodejs";
@@ -15,6 +15,7 @@ type FbCapiBody = {
   event_id?: string;
   event_source_url?: string;
   pixel_id?: string;
+  pixel_ids?: string[];
   user_data?: {
     fbp?: string;
     fbc?: string;
@@ -65,9 +66,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "bad_json" }, { status: 400 });
   }
 
-  // Each token belongs to one pixel; events only ever go to their own pixel.
-  const target = getCapiTarget(body.pixel_id);
-  if (!target) {
+  // Each token belongs to one pixel; events go to every pixel that has a token.
+  const targets = getCapiTargets(
+    body.pixel_ids?.length ? body.pixel_ids : body.pixel_id ? [body.pixel_id] : null
+  );
+  if (!targets.length) {
     return NextResponse.json({ ok: true, skipped: "no_token_for_pixel" });
   }
 
@@ -92,26 +95,36 @@ export async function POST(request: Request) {
     request
   );
 
-  const result = await sendMetaCapiEvents([
-    {
-      eventName,
-      eventId,
-      eventSourceUrl: body.event_source_url || body.eventSourceUrl,
-      userData,
-      customData: body.custom_data || body.customData,
-    },
-  ], target);
+  const results = await Promise.all(
+    targets.map((target) =>
+      sendMetaCapiEvents(
+        [
+          {
+            eventName,
+            eventId,
+            eventSourceUrl: body.event_source_url || body.eventSourceUrl,
+            userData,
+            customData: body.custom_data || body.customData,
+          },
+        ],
+        target
+      )
+    )
+  );
 
-  if (!result.ok) {
-    console.error("FB CAPI error", result.status, result.body);
+  const failed = results.filter((r) => !r.ok);
+  if (failed.length === results.length) {
+    const first = failed[0];
+    console.error("FB CAPI error", first.status, first.body);
     return NextResponse.json(
-      { ok: false, error: "capi_failed", detail: result.body },
-      { status: result.status || 502 }
+      { ok: false, error: "capi_failed", detail: first.body },
+      { status: first.status || 502 }
     );
   }
 
   return NextResponse.json({
     ok: true,
-    facebook: result.body,
+    pixels: targets.map((t) => t.pixelId),
+    partial: failed.length > 0,
   });
 }

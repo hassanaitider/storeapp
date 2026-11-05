@@ -1,22 +1,21 @@
-import { SPANISH_MARKET_CODES } from "@/lib/countries";
 import type { CountryCode } from "@/lib/types";
 
-/** Each pixel only ever receives its own markets' events — never both. */
+/** Both pixels receive every event — Arab markets and LATAM alike. */
 export const LATAM_PIXEL_ID = "964436486676478";
-export const ARAB_PIXEL_ID = "964436486676478";
+export const ARAB_PIXEL_ID = "2098415630739868";
+export const ALL_PIXEL_IDS = [LATAM_PIXEL_ID, ARAB_PIXEL_ID];
 
-export function pixelIdForCountry(country: CountryCode): string {
-  return SPANISH_MARKET_CODES.includes(country) ? LATAM_PIXEL_ID : ARAB_PIXEL_ID;
+export function pixelIdsForCountry(_country: CountryCode): string[] {
+  return [...ALL_PIXEL_IDS];
 }
 
-let activePixelId: string | null = null;
+let activePixelIds: string[] | null = null;
 
-export function setActivePixelCountry(country: CountryCode): void {
-  activePixelId = pixelIdForCountry(country);
+export function setActivePixelCountry(_country: CountryCode): void {
+  activePixelIds = [...ALL_PIXEL_IDS];
 }
 
-export function getActivePixelId(): string | null {
-  // Never skip Purchase: if country wasn't set yet, default to Arab pixel
-  // (Morocco / Gulf). LATAM pages always call setActivePixelCountry first.
-  return activePixelId ?? ARAB_PIXEL_ID;
+export function getActivePixelIds(): string[] {
+  // Never skip Purchase: if country wasn't set yet, fire both pixels.
+  return activePixelIds ?? [...ALL_PIXEL_IDS];
 }

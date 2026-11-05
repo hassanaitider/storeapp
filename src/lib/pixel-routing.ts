@@ -1,21 +1,17 @@
-import { SPANISH_MARKET_CODES } from "@/lib/countries";
 import type { CountryCode } from "@/lib/types";
 
-/** Each pixel only ever receives events from its own markets — never both. */
-export const PIXEL_ARAB = "964436486676478";
+/** Both pixels receive every event — Arab markets and LATAM alike. */
+export const PIXEL_ARAB = "2098415630739868";
 export const PIXEL_LATAM = "964436486676478";
 export const ALL_PIXEL_IDS = [PIXEL_LATAM, PIXEL_ARAB];
 
-export function pixelForCountry(country: string | null | undefined): string {
-  return country && (SPANISH_MARKET_CODES as string[]).includes(country)
-    ? PIXEL_LATAM
-    : PIXEL_ARAB;
+export function pixelsForCountry(_country: string | null | undefined): string[] {
+  return [...ALL_PIXEL_IDS];
 }
 
 /** Market of the page being viewed; set on <html data-market> by the layout and StoreProvider. */
-export function currentPixelId(): string {
-  if (typeof document === "undefined") return PIXEL_ARAB;
-  return pixelForCountry(document.documentElement.dataset.market);
+export function currentPixelIds(): string[] {
+  return [...ALL_PIXEL_IDS];
 }
 
 export function setPixelMarket(country: CountryCode) {

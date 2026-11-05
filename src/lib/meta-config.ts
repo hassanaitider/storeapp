@@ -30,7 +30,7 @@ export function getFbPixelId(): string {
 }
 
 /** Arab-markets pixel (Morocco, Gulf…); its CAPI token lives in FB_CAPI_TOKEN_ARAB. */
-export const ARAB_CAPI_PIXEL_ID = "964436486676478";
+export const ARAB_CAPI_PIXEL_ID = "2098415630739868";
 
 export type CapiTarget = { pixelId: string; accessToken: string };
 
@@ -44,6 +44,17 @@ export function getCapiTarget(pixelId?: string | null): CapiTarget | null {
   if (id !== getFbPixelId()) return null;
   const token = getMetaCapiAccessToken();
   return token ? { pixelId: id, accessToken: token } : null;
+}
+
+/** All configured CAPI targets (one per pixel that has a token). */
+export function getCapiTargets(pixelIds?: string[] | null): CapiTarget[] {
+  const ids = pixelIds?.length ? pixelIds : [getFbPixelId(), ARAB_CAPI_PIXEL_ID];
+  const out: CapiTarget[] = [];
+  for (const id of ids) {
+    const t = getCapiTarget(id);
+    if (t && !out.some((o) => o.pixelId === t.pixelId)) out.push(t);
+  }
+  return out;
 }
 
 /** Graph API version for CAPI */
