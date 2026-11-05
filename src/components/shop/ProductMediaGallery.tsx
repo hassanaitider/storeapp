@@ -190,7 +190,7 @@ export function ProductMediaGallery({
         <div
           className={cn(
             "relative w-full overflow-hidden rounded-[1.35rem] border border-sand-200 bg-white shadow-sm",
-            "media-slot media-slot--hero"
+            "mx-auto aspect-[4/5] min-h-[20rem] sm:min-h-[24rem] lg:min-h-[28rem]"
           )}
         >
           {activeUrl ? (
