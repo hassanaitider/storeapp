@@ -25,6 +25,26 @@ export const COUNTRIES: CountryInfo[] = [
     cityOnlyAddress: true,
   },
   {
+    code: "TN",
+    nameAr: "تونس",
+    nameEn: "Tunisia",
+    nameEs: "Túnez",
+    currency: "TND",
+    flag: "🇹🇳",
+    dial: "+216",
+    cityOnlyAddress: true,
+  },
+  {
+    code: "MR",
+    nameAr: "موريتانيا",
+    nameEn: "Mauritania",
+    nameEs: "Mauritania",
+    currency: "MRU",
+    flag: "🇲🇷",
+    dial: "+222",
+    cityOnlyAddress: true,
+  },
+  {
     code: "SA",
     nameAr: "السعودية",
     nameEn: "Saudi Arabia",
@@ -208,6 +228,8 @@ export const DEFAULT_COUNTRY: CountryCode = "SA";
 /** Active store markets — these categories appear in the shop */
 export const STORE_MARKET_CODES: CountryCode[] = [
   "MA",
+  "TN",
+  "MR",
   "SA",
   "AE",
   "OM",
@@ -318,6 +340,8 @@ export function countryFromLocationSettings(
   ) {
     return "MA";
   }
+  if (tz.includes("tunis") || tz === "africa/tunis") return "TN";
+  if (tz.includes("nouakchott") || tz === "africa/nouakchott") return "MR";
   if (tz.includes("tripoli") || tz === "africa/tripoli") return "LY";
   if (tz.includes("riyadh") || tz === "asia/riyadh") return "SA";
   if (tz.includes("dubai") || tz === "asia/dubai") return "AE";
@@ -341,6 +365,8 @@ export function countryFromLocationSettings(
   for (const lang of langs) {
     const l = lang.toLowerCase();
     if (l === "ar-ma" || l.endsWith("-ma") || l.includes("ma-")) return "MA";
+    if (l === "ar-tn" || l === "fr-tn" || l.endsWith("-tn")) return "TN";
+    if (l === "ar-mr" || l === "fr-mr" || l.endsWith("-mr")) return "MR";
     if (l === "ar-sa" || l.endsWith("-sa")) return "SA";
     if (l === "ar-ae" || l.endsWith("-ae")) return "AE";
     if (l === "ar-om" || l.endsWith("-om")) return "OM";

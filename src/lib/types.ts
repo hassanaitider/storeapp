@@ -2,6 +2,8 @@ export type Locale = "ar" | "en" | "es";
 
 export type CountryCode =
   | "MA"
+  | "TN"
+  | "MR"
   | "SA"
   | "AE"
   | "OM"
@@ -42,6 +44,8 @@ export type CurrencyCode =
   | "LBP"
   | "EGP"
   | "MAD"
+  | "TND"
+  | "MRU"
   | "USD"
   | "MXN"
   | "ARS"

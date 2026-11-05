@@ -25,6 +25,8 @@ import {
 /** Consistent per-market category art: country flag only (no product lifestyle) */
 const CATEGORY_IMAGES: Record<string, string> = {
   MA: "/categories/flag-ma.webp",
+  TN: "/categories/flag-tn.webp",
+  MR: "/categories/flag-mr.webp",
   SA: "/categories/flag-sa.webp",
   AE: "/categories/flag-ae.webp",
   OM: "/categories/flag-om.webp",

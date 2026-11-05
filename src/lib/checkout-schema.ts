@@ -117,6 +117,8 @@ function latamBase(overrides: Partial<CheckoutSchema>): CheckoutSchema {
 /** Fufills-style COD checkout fields per covered market */
 const SCHEMAS: Record<CountryCode, CheckoutSchema> = {
   MA: { ...MENA, phoneMin: 9, phoneMax: 10 },
+  TN: { ...MENA, phoneMin: 8, phoneMax: 8 },
+  MR: { ...MENA, phoneMin: 8, phoneMax: 8 },
   SA: { ...MENA, phoneMin: 9, phoneMax: 9 },
   AE: { ...MENA, phoneMin: 9, phoneMax: 9 },
   OM: { ...MENA, phoneMin: 8, phoneMax: 8 },
