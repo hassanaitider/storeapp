@@ -924,7 +924,7 @@ ${COD_EN}
     marketPrices: { MA: 249 },
     availableIn: ["MA"],
     images: [
-      "/products/back-belt-main.webp?v=20261105",
+      "/products/back-belt-main.webp?v=20261105b",
       "/products/back-belt-1.webp",
       "/products/back-belt-2.webp",
       "/products/back-belt-3.webp",
@@ -976,7 +976,7 @@ ${COD_EN}
             "دعامات فالجهة الخلفية كتساعد على الحفاظ على وضعية مستقيمة، وقماش مثقّب كيدخل الهواء باش تبقى مرتاح.",
           bodyEn:
             "Stays in the back panel help maintain an upright posture, and perforated fabric lets air through so you stay comfortable.",
-          image: "/products/back-belt-main.webp?v=20261105",
+          image: "/products/back-belt-main.webp?v=20261105b",
         },
         {
           titleAr: "فالخدمة وهز الثقيل",
