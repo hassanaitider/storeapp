@@ -67,17 +67,33 @@ function OrderButton({ label, light }: { label: string; light?: boolean }) {
 }
 
 /** Headline, intro and icon highlights under the gallery */
-export function ProIntro({ product, locale }: { product: Product; locale: Locale }) {
+export function ProIntro({
+  product,
+  locale,
+  hideHeadline,
+}: {
+  product: Product;
+  locale: Locale;
+  /** The page already shows the headline as its H1 */
+  hideHeadline?: boolean;
+}) {
   const landing = product.landing;
   if (!landing) return null;
   const highlights = landing.highlights ?? [];
   return (
     <section className="mx-auto max-w-3xl">
       <div className="rounded-[1.5rem] bg-gradient-to-br from-brand-800 to-brand-700 px-5 py-7 text-white shadow-[0_18px_50px_rgba(14,34,29,0.18)] sm:px-8 sm:py-9">
-        <h2 className="text-balance text-2xl font-bold leading-snug sm:text-3xl">
-          {pickText(landing, "headline", locale)}
-        </h2>
-        <p className="mt-3 text-[15px] leading-relaxed text-white/85 sm:text-base">
+        {hideHeadline ? null : (
+          <h2 className="text-balance text-2xl font-bold leading-snug sm:text-3xl">
+            {pickText(landing, "headline", locale)}
+          </h2>
+        )}
+        <p
+          className={cn(
+            "text-[15px] leading-relaxed text-white/85 sm:text-base",
+            !hideHeadline && "mt-3"
+          )}
+        >
           {pickText(landing, "intro", locale)}
         </p>
       </div>

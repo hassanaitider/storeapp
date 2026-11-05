@@ -13,19 +13,12 @@ import {
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
-import { currencyForCountry, isStoreMarket } from "@/lib/countries";
 import {
-  convertFromUSD,
-  formatArgentinaCodPrice,
-  formatLocalAmount,
-  formatMexicoCodPrice,
-  formatDominicanCodPrice,
-  formatEcuadorCodPrice,
-  formatSalvadorCodPrice,
-  formatHondurasCodPrice,
-  formatNicaraguaCodPrice,
-  formatPrice,
-} from "@/lib/currency";
+  currencyForCountry,
+  isStoreMarket,
+  usesCityOnlyAddress,
+} from "@/lib/countries";
+import { formatLocalAmount, formatPrice } from "@/lib/currency";
 import {
   formatProductComparePrice,
   formatProductPrice,
@@ -37,11 +30,22 @@ import { pickText } from "@/lib/localized";
 import { getProductQtyOffers, isCodQtyUpsellEnabled, lineTotalUSDForQty } from "@/lib/qty-upsell";
 import { WARRANTY_USD_PER_UNIT, warrantyOrderNote } from "@/lib/latam-warranty";
 import { trackAddToCart, trackViewContent, trackPurchase } from "@/lib/meta-pixel";
+import { ProductBriefDescription } from "@/components/shop/ProductLanding";
+import { ProIntro } from "@/components/shop/ProLanding";
 import {
-  ProductBriefDescription,
-  ProductDetailSections,
-} from "@/components/shop/ProductLanding";
-import { ProIntro, ProLanding } from "@/components/shop/ProLanding";
+  AnnouncementBar,
+  BenefitsGrid,
+  CTA_BUTTON_CLASS,
+  HowToOrder,
+  ProblemSolution,
+  ProductShowcase,
+  SocialProof,
+  scrollToOrder,
+} from "@/components/shop/CodLanding";
+import {
+  CodCheckout,
+  formatCodMarketPrice,
+} from "@/components/shop/CodCheckoutSwitch";
 import {
   CLIP_EARBUDS_SLUG,
   MAG_POWERBANK_SLUG,
@@ -54,73 +58,11 @@ import {
   ProductQtyUpsell,
   selectedQtyTotalLocal,
 } from "@/components/shop/ProductQtyUpsell";
-import {
-  usesDominicanCodCheckout,
-  usesEcuadorCodCheckout,
-  usesHondurasCodCheckout,
-  usesLatamCodCheckout,
-  usesMexicoCodCheckout,
-  usesNicaraguaCodCheckout,
-  usesSalvadorCodCheckout,
-} from "@/lib/cod-markets";
+import { codCheckoutKind } from "@/lib/cod-markets";
 import { cn } from "@/lib/utils";
 import type { CountryCode, Locale, Order } from "@/lib/types";
 
-/** COD + story modules pull large geo trees — load only the active market/slug. */
-const LatamCodCheckout = dynamic(
-  () =>
-    import("@/components/shop/LatamCodCheckout").then((m) => m.LatamCodCheckout),
-  { ssr: false }
-);
-const ArgentinaCodCheckout = dynamic(
-  () =>
-    import("@/components/shop/ArgentinaCodCheckout").then(
-      (m) => m.ArgentinaCodCheckout
-    ),
-  { ssr: false }
-);
-const MexicoCodCheckout = dynamic(
-  () =>
-    import("@/components/shop/MexicoCodCheckout").then(
-      (m) => m.MexicoCodCheckout
-    ),
-  { ssr: false }
-);
-const DominicanCodCheckout = dynamic(
-  () =>
-    import("@/components/shop/DominicanCodCheckout").then(
-      (m) => m.DominicanCodCheckout
-    ),
-  { ssr: false }
-);
-const EcuadorCodCheckout = dynamic(
-  () =>
-    import("@/components/shop/EcuadorCodCheckout").then(
-      (m) => m.EcuadorCodCheckout
-    ),
-  { ssr: false }
-);
-const SalvadorCodCheckout = dynamic(
-  () =>
-    import("@/components/shop/SalvadorCodCheckout").then(
-      (m) => m.SalvadorCodCheckout
-    ),
-  { ssr: false }
-);
-const HondurasCodCheckout = dynamic(
-  () =>
-    import("@/components/shop/HondurasCodCheckout").then(
-      (m) => m.HondurasCodCheckout
-    ),
-  { ssr: false }
-);
-const NicaraguaCodCheckout = dynamic(
-  () =>
-    import("@/components/shop/NicaraguaCodCheckout").then(
-      (m) => m.NicaraguaCodCheckout
-    ),
-  { ssr: false }
-);
+/** Story modules are heavy — load only the matching slug. */
 const ClipEarbudsStory = dynamic(
   () =>
     import("@/components/shop/ClipEarbudsStory").then((m) => m.ClipEarbudsStory),
@@ -355,6 +297,18 @@ function ProductPageInner() {
   const discount = productDiscountPercent(product, country);
   const compareLabel = formatProductComparePrice(product, country, locale);
 
+  const swatchColors = product.colors ?? [];
+  const pickedSwatch =
+    swatchColors.find((c) => c.id === selectedColorId) ?? swatchColors[0];
+  const swatchLabel = pickedSwatch
+    ? locale === "ar" && pickedSwatch.nameEn
+      ? `${pickedSwatch.nameAr} · ${pickedSwatch.nameEn}`
+      : locale === "ar"
+        ? pickedSwatch.nameAr
+        : pickedSwatch.nameEn
+    : "";
+  const cityOnlyAddress = usesCityOnlyAddress(country);
+
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!product.inStock) return;
@@ -362,9 +316,6 @@ function ProductPageInner() {
       window.alert(t.product.writeYourColorRequired);
       return;
     }
-    const swatchColors = product.colors ?? [];
-    const pickedSwatch =
-      swatchColors.find((c) => c.id === selectedColorId) ?? swatchColors[0];
     if (swatchColors.length && !pickedSwatch) {
       window.alert(t.product.chooseColorRequired);
       return;
@@ -373,16 +324,7 @@ function ProductPageInner() {
       window.alert(t.product.chooseSizeRequired);
       return;
     }
-    const colorLabel =
-      customColor.trim() ||
-      (pickedSwatch
-        ? locale === "ar" && pickedSwatch.nameEn
-          ? `${pickedSwatch.nameAr} · ${pickedSwatch.nameEn}`
-          : locale === "ar"
-            ? pickedSwatch.nameAr
-            : pickedSwatch.nameEn
-        : "");
-    const moroccoSimple = country === "MA";
+    const colorLabel = customColor.trim() || swatchLabel;
     const noteParts = [
       selectedSize
         ? locale === "ar"
@@ -400,7 +342,7 @@ function ProductPageInner() {
         name: form.name.trim(),
         phone: form.phone.trim(),
         city: form.city.trim(),
-        address: moroccoSimple ? form.city.trim() : form.address.trim(),
+        address: cityOnlyAddress ? form.city.trim() : form.address.trim(),
         notes: noteParts.length ? noteParts.join(" · ") : undefined,
       },
       [{ productId: product.id, quantity: qty, lineTotalUSD: orderLineUSD }]
@@ -417,13 +359,20 @@ function ProductPageInner() {
     notes?: string;
   }) => {
     if (!product.inStock) return;
-    const withWarranty = warranty
-      ? {
-          ...payload,
-          notes: [payload.notes, warrantyOrderNote(country, qty)].filter(Boolean).join(" · "),
-        }
-      : payload;
-    const created = placeOrder(withWarranty, [
+    const colorNote =
+      swatchLabel && !customColor.trim()
+        ? locale === "ar"
+          ? `اللون: ${swatchLabel}`
+          : `Color: ${swatchLabel}`
+        : "";
+    const withExtras = {
+      ...payload,
+      notes:
+        [payload.notes, colorNote, warranty ? warrantyOrderNote(country, qty) : ""]
+          .filter(Boolean)
+          .join(" · ") || undefined,
+    };
+    const created = placeOrder(withExtras, [
       {
         productId: product.id,
         quantity: qty,
@@ -434,57 +383,38 @@ function ProductPageInner() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const argentinaCod = country === "AR";
-  const mexicoCod = !argentinaCod && usesMexicoCodCheckout(country);
-  const dominicanCod =
-    !argentinaCod && !mexicoCod && usesDominicanCodCheckout(country);
-  const ecuadorCod =
-    !argentinaCod &&
-    !mexicoCod &&
-    !dominicanCod &&
-    usesEcuadorCodCheckout(country);
-  const salvadorCod =
-    !argentinaCod &&
-    !mexicoCod &&
-    !dominicanCod &&
-    !ecuadorCod &&
-    usesSalvadorCodCheckout(country);
-  const hondurasCod =
-    !argentinaCod &&
-    !mexicoCod &&
-    !dominicanCod &&
-    !ecuadorCod &&
-    !salvadorCod &&
-    usesHondurasCodCheckout(country);
-  const nicaraguaCod =
-    !argentinaCod &&
-    !mexicoCod &&
-    !dominicanCod &&
-    !ecuadorCod &&
-    !salvadorCod &&
-    !hondurasCod &&
-    usesNicaraguaCodCheckout(country);
-  const latamCod =
-    !argentinaCod &&
-    !mexicoCod &&
-    !dominicanCod &&
-    !ecuadorCod &&
-    !salvadorCod &&
-    !hondurasCod &&
-    !nicaraguaCod &&
-    usesLatamCodCheckout(country);
-  const fufillsSticky =
-    argentinaCod ||
-    mexicoCod ||
-    dominicanCod ||
-    ecuadorCod ||
-    salvadorCod ||
-    hondurasCod ||
-    nicaraguaCod ||
-    latamCod;
-  const moroccoSimpleCheckout = country === "MA";
-  /** Checkout beside first photo — Arab markets only; LATAM keeps stacked layout */
+  const checkoutKind = codCheckoutKind(country);
+  /** Markets with a dedicated geo-aware COD form (stacked layout, orange CTA) */
+  const fufillsSticky = checkoutKind !== null;
+  /** Quick COD form beside the first photo on desktop; dedicated forms keep the stacked layout */
   const arabCheckoutBesidePhoto = !fufillsSticky;
+  const heroHeadline = product.landing
+    ? pickText(product.landing, "headline", locale)
+    : "";
+  const storySlug = [
+    MAG_POWERBANK_SLUG,
+    MINI_CAMERA_SLUG,
+    CLIP_EARBUDS_SLUG,
+    SMART_TAG_SLUG,
+  ].includes(product.slug);
+  const briefDescription =
+    product.landing?.style === "pro" ? (
+      <ProIntro product={product} locale={locale} hideHeadline={Boolean(heroHeadline)} />
+    ) : (
+      <ProductBriefDescription
+        product={product}
+        locale={locale}
+        hideHeadline={Boolean(heroHeadline)}
+      />
+    );
+  const colorPicker = product.colors?.length ? (
+    <ColorSwatches
+      colors={product.colors}
+      locale={locale}
+      selectedId={selectedColorId}
+      onSelect={setSelectedColorId}
+    />
+  ) : null;
 
   return (
     <div
@@ -493,6 +423,7 @@ function ProductPageInner() {
         arabCheckoutBesidePhoto ? "max-w-6xl" : "max-w-4xl"
       )}
     >
+      <AnnouncementBar />
       <nav className="mb-6 text-sm text-[var(--muted)]">
         <Link href="/" className="hover:text-brand-700">
           {t.nav.home}
@@ -514,15 +445,17 @@ function ProductPageInner() {
         )}
       </nav>
 
-      {/* 1) Product title */}
+      {/* 1) Hero headline — the benefit first, product name as the label */}
       <header className="animate-fade-up text-center sm:text-start">
-        {category ? (
+        {heroHeadline ? (
+          <p className="product-label">{name}</p>
+        ) : category ? (
           <p className="product-label">
             {pickText(category, "name", locale)}
           </p>
         ) : null}
         <h1 className="product-hero-title mt-2 text-balance text-ink-900">
-          {name}
+          {heroHeadline || name}
         </h1>
         <div className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
           {product.reviewCount > 0 || product.landing?.reviews?.length ? (
@@ -553,10 +486,10 @@ function ProductPageInner() {
                     : "See reviews"}
               </a>
             ) : (
-              <span>
-                {product.rating.toFixed(1)} · {product.reviewCount}{" "}
-                {t.product.reviews}
-              </span>
+            <span>
+              {product.rating.toFixed(1)} · {product.reviewCount}{" "}
+              {t.product.reviews}
+            </span>
             )}
           </div>
           ) : null}
@@ -569,14 +502,46 @@ function ProductPageInner() {
                 {compareLabel}
               </span>
             ) : null}
+            {discount > 0 ? (
+              <span className="rounded-full bg-[#ff6a00] px-2.5 py-0.5 text-xs font-extrabold text-white">
+                {t.product.save} {discount}%
+              </span>
+            ) : null}
           </div>
+        </div>
+        <div className="mt-4 flex flex-col items-center gap-3 sm:items-start">
+          <button
+            type="button"
+            disabled={!product.inStock}
+            onClick={scrollToOrder}
+            className={cn(
+              "inline-flex w-full items-center justify-center rounded-2xl px-6 py-3.5 text-base font-bold transition sm:w-auto sm:min-w-[16rem]",
+              CTA_BUTTON_CLASS
+            )}
+          >
+            {product.inStock ? `${t.product.orderNow} — ${t.trust.cod}` : t.shop.outOfStock}
+          </button>
+          <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs font-semibold text-brand-800 sm:justify-start sm:text-sm">
+            <li className="inline-flex items-center gap-1.5">
+              <Truck className="h-4 w-4 text-brand-600" />
+              {t.trust.freeShipping}
+            </li>
+            <li className="inline-flex items-center gap-1.5">
+              <HandCoins className="h-4 w-4 text-brand-600" />
+              {t.trust.cod}
+            </li>
+            <li className="inline-flex items-center gap-1.5">
+              <RotateCcw className="h-4 w-4 text-brand-600" />
+              {t.trust.returns}
+            </li>
+          </ul>
         </div>
       </header>
 
       {arabCheckoutBesidePhoto ? (
-        /* Arab: photo + checkout side by side first */
+        /* Quick COD form: gallery + short description, then the form (beside the gallery from lg) */
         <div className="mt-6 grid items-start gap-6 animate-fade-up lg:mt-8 lg:grid-cols-2 lg:gap-8">
-          <div className="min-w-0">
+          <div className="min-w-0 space-y-6">
             <ProductMediaGallery
               product={product}
               locale={locale}
@@ -584,47 +549,41 @@ function ProductPageInner() {
               onSelect={setActiveImg}
               discount={discount}
             />
+            {briefDescription}
           </div>
           <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-            <div
-              id="order"
+      <div
+        id="order"
               className="scroll-mt-28 rounded-[1.35rem] border border-sand-200 bg-white p-5 shadow-sm sm:p-7"
-            >
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-800">
-                <span className="inline-flex items-center gap-1.5">
-                  <Truck className="h-4 w-4 text-brand-600" />
-                  {t.trust.freeShipping}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <HandCoins className="h-4 w-4 text-brand-600" />
-                  {t.trust.cod}
-                </span>
-              </div>
+      >
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-800">
+          <span className="inline-flex items-center gap-1.5">
+            <Truck className="h-4 w-4 text-brand-600" />
+            {t.trust.freeShipping}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <HandCoins className="h-4 w-4 text-brand-600" />
+            {t.trust.cod}
+          </span>
+        </div>
 
-              {product.colors?.length ? (
-                <ColorSwatches
-                  colors={product.colors}
-                  locale={locale}
-                  selectedId={selectedColorId}
-                  onSelect={setSelectedColorId}
-                />
-              ) : null}
+              {colorPicker}
 
-              {product.customColorEnabled ? (
-                <label className="mt-5 block">
-                  <span className="product-section-title text-lg sm:text-xl">
-                    {t.product.writeYourColor}
-                  </span>
-                  <input
-                    type="text"
-                    value={customColor}
-                    onChange={(e) => setCustomColor(e.target.value)}
-                    placeholder={t.product.writeYourColorHint}
-                    required
-                    className="mt-3 w-full rounded-xl border border-sand-300 bg-white px-4 py-3 text-sm font-medium text-ink-900 outline-none ring-brand-600/30 placeholder:text-[var(--muted)] focus:border-brand-500 focus:ring-2"
-                  />
-                </label>
-              ) : null}
+        {product.customColorEnabled ? (
+          <label className="mt-5 block">
+            <span className="product-section-title text-lg sm:text-xl">
+              {t.product.writeYourColor}
+            </span>
+            <input
+              type="text"
+              value={customColor}
+              onChange={(e) => setCustomColor(e.target.value)}
+              placeholder={t.product.writeYourColorHint}
+              required
+              className="mt-3 w-full rounded-xl border border-sand-300 bg-white px-4 py-3 text-sm font-medium text-ink-900 outline-none ring-brand-600/30 placeholder:text-[var(--muted)] focus:border-brand-500 focus:ring-2"
+            />
+          </label>
+        ) : null}
 
               {product.sizes?.length ? (
                 <div className="mt-5">
@@ -670,71 +629,74 @@ function ProductPageInner() {
                 </div>
               ) : null}
 
-              {showQtyUpsell ? (
-                <ProductQtyUpsell
-                  product={product}
-                  country={country}
-                  locale={locale}
-                  selectedQty={qty}
-                  onSelect={setQty}
-                  className="mt-5"
-                />
-              ) : null}
+        {showQtyUpsell ? (
+          <ProductQtyUpsell
+            product={product}
+            country={country}
+            locale={locale}
+            selectedQty={qty}
+            onSelect={setQty}
+            className="mt-5"
+          />
+        ) : null}
 
-              <form ref={formRef} onSubmit={onSubmit} className="mt-5 space-y-4">
+        <form ref={formRef} onSubmit={onSubmit} className="mt-5 space-y-4">
                 <h2 className="product-section-title text-lg">
                   {t.checkout.title}
                 </h2>
 
-                <Field
-                  label={t.checkout.name}
-                  required
-                  value={form.name}
-                  onChange={(v) => setForm((f) => ({ ...f, name: v }))}
-                />
-                <Field
-                  label={t.checkout.phone}
-                  required
-                  type="tel"
-                  value={form.phone}
-                  onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
-                />
-                <Field
-                  label={t.checkout.city}
-                  required
-                  value={form.city}
-                  onChange={(v) => setForm((f) => ({ ...f, city: v }))}
-                />
-                {!moroccoSimpleCheckout ? (
-                  <Field
-                    label={t.checkout.address}
-                    required
-                    value={form.address}
-                    onChange={(v) => setForm((f) => ({ ...f, address: v }))}
-                  />
-                ) : null}
+          <Field
+            label={t.checkout.name}
+            required
+            value={form.name}
+            onChange={(v) => setForm((f) => ({ ...f, name: v }))}
+          />
+          <Field
+            label={t.checkout.phone}
+            required
+            type="tel"
+            value={form.phone}
+            onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
+          />
+          <Field
+            label={t.checkout.city}
+            required
+            value={form.city}
+            onChange={(v) => setForm((f) => ({ ...f, city: v }))}
+          />
+          {!cityOnlyAddress ? (
+            <Field
+              label={t.checkout.address}
+              required
+              value={form.address}
+              onChange={(v) => setForm((f) => ({ ...f, address: v }))}
+            />
+          ) : null}
 
-                <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
-                  <span className="font-semibold text-ink-800">
-                    {t.cart.total}
-                    {showQtyUpsell ? (
-                      <span className="ms-1 font-normal text-[var(--muted)]">
-                        · {qtyLabel}
-                      </span>
-                    ) : null}
-                  </span>
-                  <span className="product-price text-base">
-                    {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
-                  </span>
-                </div>
+          <div className="flex items-center justify-between border-t border-sand-200 pt-3 text-sm">
+            <span className="font-semibold text-ink-800">
+              {t.cart.total}
+              {showQtyUpsell ? (
+                <span className="ms-1 font-normal text-[var(--muted)]">
+                  · {qtyLabel}
+                </span>
+              ) : null}
+            </span>
+            <span className="product-price text-base">
+              {formatLocalAmount(orderTotalLocal, marketCurrency, locale)}
+            </span>
+          </div>
 
-                <button
-                  type="submit"
-                  disabled={!product.inStock}
-                  className="inline-flex w-full items-center justify-center rounded-2xl bg-brand-700 px-6 py-4 text-sm font-bold text-white transition hover:bg-brand-600 disabled:opacity-50"
-                >
-                  {product.inStock ? t.checkout.placeOrder : t.shop.outOfStock}
-                </button>
+          <button
+            type="submit"
+            disabled={!product.inStock}
+            className={cn(
+              "inline-flex w-full items-center justify-center rounded-2xl px-6 py-4 text-sm font-bold transition",
+              CTA_BUTTON_CLASS
+            )}
+          >
+            {product.inStock ? t.checkout.placeOrder : t.shop.outOfStock}
+          </button>
                 <ul className="grid grid-cols-3 gap-2 pt-1 text-center text-[11px] font-semibold text-brand-800 sm:text-xs">
                   {[
                     { icon: HandCoins, label: t.trust.cod },
@@ -750,8 +712,8 @@ function ProductPageInner() {
                     </li>
                   ))}
                 </ul>
-              </form>
-            </div>
+        </form>
+      </div>
           </div>
         </div>
       ) : (
@@ -772,14 +734,12 @@ function ProductPageInner() {
             className="mt-10 animate-fade-up"
             style={{ animationDelay: "120ms" }}
           >
-            {product.landing?.style === "pro" ? (
-              <ProIntro product={product} locale={locale} />
-            ) : (
-              <ProductBriefDescription product={product} locale={locale} />
-            )}
+            {briefDescription}
           </div>
-          {argentinaCod ? (
-            <ArgentinaCodCheckout
+          {colorPicker ? <div className="mt-2">{colorPicker}</div> : null}
+          {checkoutKind ? (
+            <CodCheckout
+              kind={checkoutKind}
               product={product}
               country={country}
               qty={qty}
@@ -791,115 +751,20 @@ function ProductPageInner() {
               warranty={warranty}
               onWarrantyChange={setWarranty}
             />
-          ) : mexicoCod ? (
-            <MexicoCodCheckout
-              product={product}
-              country={country}
-              qty={qty}
-              onQtyChange={setQty}
-              customColor={customColor}
-              onCustomColorChange={setCustomColor}
-              formRef={formRef}
-              onPlaceOrder={submitLatamCod}
-              warranty={warranty}
-              onWarrantyChange={setWarranty}
-            />
-          ) : dominicanCod ? (
-            <DominicanCodCheckout
-              product={product}
-              country={country}
-              qty={qty}
-              onQtyChange={setQty}
-              customColor={customColor}
-              onCustomColorChange={setCustomColor}
-              formRef={formRef}
-              onPlaceOrder={submitLatamCod}
-              warranty={warranty}
-              onWarrantyChange={setWarranty}
-            />
-          ) : ecuadorCod ? (
-            <EcuadorCodCheckout
-              product={product}
-              country={country}
-              qty={qty}
-              onQtyChange={setQty}
-              customColor={customColor}
-              onCustomColorChange={setCustomColor}
-              formRef={formRef}
-              onPlaceOrder={submitLatamCod}
-              warranty={warranty}
-              onWarrantyChange={setWarranty}
-            />
-          ) : salvadorCod ? (
-            <SalvadorCodCheckout
-              product={product}
-              country={country}
-              qty={qty}
-              onQtyChange={setQty}
-              customColor={customColor}
-              onCustomColorChange={setCustomColor}
-              formRef={formRef}
-              onPlaceOrder={submitLatamCod}
-              warranty={warranty}
-              onWarrantyChange={setWarranty}
-            />
-          ) : hondurasCod ? (
-            <HondurasCodCheckout
-              product={product}
-              country={country}
-              qty={qty}
-              onQtyChange={setQty}
-              customColor={customColor}
-              onCustomColorChange={setCustomColor}
-              formRef={formRef}
-              onPlaceOrder={submitLatamCod}
-              warranty={warranty}
-              onWarrantyChange={setWarranty}
-            />
-          ) : nicaraguaCod ? (
-            <NicaraguaCodCheckout
-              product={product}
-              country={country}
-              qty={qty}
-              onQtyChange={setQty}
-              customColor={customColor}
-              onCustomColorChange={setCustomColor}
-              formRef={formRef}
-              onPlaceOrder={submitLatamCod}
-              warranty={warranty}
-              onWarrantyChange={setWarranty}
-            />
-          ) : (
-            <LatamCodCheckout
-              product={product}
-              country={country}
-              qty={qty}
-              onQtyChange={setQty}
-              customColor={customColor}
-              onCustomColorChange={setCustomColor}
-              formRef={formRef}
-              onPlaceOrder={submitLatamCod}
-              warranty={warranty}
-              onWarrantyChange={setWarranty}
-            />
-          )}
+          ) : null}
         </>
       )}
 
-      {arabCheckoutBesidePhoto ? (
-        <div
-          className="mt-10 animate-fade-up"
-          style={{ animationDelay: "120ms" }}
-        >
-          {product.landing?.style === "pro" ? (
-            <ProIntro product={product} locale={locale} />
-          ) : (
-            <ProductBriefDescription product={product} locale={locale} />
-          )}
-        </div>
-      ) : null}
+      {/* 3) Problem → solution, benefits (image + text), video / before-after / GIFs */}
+      {storySlug ? null : (
+        <>
+          <ProblemSolution product={product} locale={locale} />
+          <BenefitsGrid product={product} locale={locale} />
+          <ProductShowcase product={product} locale={locale} />
+        </>
+      )}
 
-      {/* Detailed description: image → text → image → text */}
+      {/* 4) Bespoke stories keep their own copy; everything else gets the generic blocks */}
       {product.slug === MAG_POWERBANK_SLUG ? (
         <MagPowerBankStory product={product} locale={locale} />
       ) : product.slug === MINI_CAMERA_SLUG ? (
@@ -908,11 +773,16 @@ function ProductPageInner() {
         <ClipEarbudsStory product={product} locale={locale} />
       ) : product.slug === SMART_TAG_SLUG ? (
         <SmartTagStory product={product} locale={locale} />
-      ) : product.landing?.style === "pro" ? (
-        <ProLanding product={product} locale={locale} />
-      ) : (
-        <ProductDetailSections product={product} locale={locale} />
-      )}
+      ) : null}
+
+      {/* 5) How to order, social proof, guarantees, FAQ */}
+      <HowToOrder />
+      <SocialProof
+        product={product}
+        locale={locale}
+        showReviewList={product.slug !== MINI_CAMERA_SLUG}
+        showFaq={!storySlug}
+      />
 
       <div className="fixed bottom-0 left-0 z-50 w-screen max-w-[100vw] border-t border-sand-200/80 bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_30px_rgba(14,34,29,0.08)] backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-4xl items-center gap-2 px-3 py-2 sm:gap-3 sm:px-6 sm:py-3 lg:px-8">
@@ -924,25 +794,12 @@ function ProductPageInner() {
                 fufillsSticky ? "text-[#ff7a00]" : "product-price"
               )}
             >
-              {argentinaCod
-                ? formatArgentinaCodPrice(orderTotalLocal)
-                : mexicoCod
-                  ? formatMexicoCodPrice(orderTotalLocal)
-                  : dominicanCod
-                    ? formatDominicanCodPrice(orderTotalLocal)
-                    : ecuadorCod
-                      ? formatEcuadorCodPrice(orderTotalLocal)
-                      : salvadorCod
-                        ? formatSalvadorCodPrice(orderTotalLocal)
-                        : hondurasCod
-                          ? formatHondurasCodPrice(orderTotalLocal)
-                          : nicaraguaCod
-                            ? formatNicaraguaCodPrice(orderTotalLocal)
-                            : formatLocalAmount(
-                                orderTotalLocal,
-                                marketCurrency,
-                                locale
-                              )}
+              {formatCodMarketPrice(
+                checkoutKind,
+                orderTotalLocal,
+                marketCurrency,
+                locale
+              )}
             </p>
           </div>
           <button
@@ -962,17 +819,11 @@ function ProductPageInner() {
               formRef.current?.requestSubmit();
             }}
             className={cn(
-              "shrink-0 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-lg transition disabled:opacity-50 sm:rounded-2xl sm:px-8 sm:py-3.5",
-              fufillsSticky
-                ? "bg-gradient-to-b from-[#ff9a3d] to-[#ff6a00] hover:brightness-105"
-                : "bg-brand-700 hover:bg-brand-600"
+              "shrink-0 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-bold transition sm:rounded-2xl sm:px-8 sm:py-3.5",
+              CTA_BUTTON_CLASS
             )}
           >
-            {product.inStock
-              ? fufillsSticky
-                ? "Comprar ahora"
-                : t.checkout.placeOrder
-              : t.shop.outOfStock}
+            {product.inStock ? t.product.orderNow : t.shop.outOfStock}
           </button>
         </div>
       </div>

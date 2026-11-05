@@ -9,6 +9,8 @@ export interface CountryInfo {
   flag: string;
   /** Phone dial hint for checkout */
   dial: string;
+  /** Quick COD form asks for the city only — the city doubles as the delivery address */
+  cityOnlyAddress?: boolean;
 }
 
 export const COUNTRIES: CountryInfo[] = [
@@ -20,6 +22,7 @@ export const COUNTRIES: CountryInfo[] = [
     currency: "MAD",
     flag: "🇲🇦",
     dial: "+212",
+    cityOnlyAddress: true,
   },
   {
     code: "SA",
@@ -290,6 +293,12 @@ export function isValidCountry(code: string): code is CountryCode {
 
 export function isStoreMarket(code: string): boolean {
   return STORE_MARKET_CODES.includes(code.toUpperCase() as CountryCode);
+}
+
+export function usesCityOnlyAddress(code: string): boolean {
+  return Boolean(
+    COUNTRIES.find((c) => c.code === code.toUpperCase())?.cityOnlyAddress
+  );
 }
 
 /**

@@ -281,9 +281,12 @@ export function ProductDetailSections({
 export function ProductBriefDescription({
   product,
   locale,
+  hideHeadline,
 }: {
   product: Product;
   locale: Locale;
+  /** The page already shows the headline as its H1 */
+  hideHeadline?: boolean;
 }) {
   const landing = product.landing;
   if (landing) {
@@ -291,7 +294,9 @@ export function ProductBriefDescription({
     const intro = pickText(landing, "intro", locale);
     return (
       <section className="mx-auto max-w-3xl space-y-3">
-        <h2 className="product-section-title text-ink-900">{headline}</h2>
+        {hideHeadline ? null : (
+          <h2 className="product-section-title text-ink-900">{headline}</h2>
+        )}
         <p className="product-lead text-[var(--muted)]">{intro}</p>
       </section>
     );

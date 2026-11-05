@@ -110,6 +110,16 @@ export interface ProductLanding {
   style?: "pro";
   /** Icon cards under the intro — icon is a key of PRO_ICONS in ProLanding */
   highlights?: ProductLandingHighlight[];
+  /** Pain point the buyer recognizes — rendered with `solution` as a problem/solution block */
+  problemAr?: string;
+  problemEn?: string;
+  problemEs?: string;
+  solutionAr?: string;
+  solutionEn?: string;
+  solutionEs?: string;
+  /** Before / after photo pair shown side by side */
+  beforeImage?: string;
+  afterImage?: string;
 }
 
 export interface ProductLandingHighlight {

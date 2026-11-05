@@ -64,12 +64,18 @@ const config: Config = {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
+        "cta-pulse": {
+          "0%": { boxShadow: "0 0 0 0 rgba(255,106,0,0.45)" },
+          "70%": { boxShadow: "0 0 0 14px rgba(255,106,0,0)" },
+          "100%": { boxShadow: "0 0 0 0 rgba(255,106,0,0)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.7s ease-out forwards",
         "fade-in": "fade-in 0.5s ease-out forwards",
         "slide-in": "slide-in 0.5s ease-out forwards",
         shimmer: "shimmer 2s linear infinite",
+        "cta-pulse": "cta-pulse 2s ease-out infinite",
       },
     },
   },

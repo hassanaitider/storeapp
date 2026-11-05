@@ -7,6 +7,33 @@ import type { CountryCode } from "./types";
 
 export const LATAM_COD_CHECKOUT_MARKETS: CountryCode[] = ["GT", "CR"];
 
+export type CodCheckoutKind =
+  | "argentina"
+  | "mexico"
+  | "dominican"
+  | "ecuador"
+  | "salvador"
+  | "honduras"
+  | "nicaragua"
+  | "latam";
+
+/** Markets with a dedicated geo-aware COD form; every other market uses the quick form. */
+const COD_CHECKOUT_KIND_BY_MARKET: Partial<Record<CountryCode, CodCheckoutKind>> = {
+  AR: "argentina",
+  MX: "mexico",
+  DO: "dominican",
+  EC: "ecuador",
+  SV: "salvador",
+  HN: "honduras",
+  NI: "nicaragua",
+  GT: "latam",
+  CR: "latam",
+};
+
+export function codCheckoutKind(country: string): CodCheckoutKind | null {
+  return COD_CHECKOUT_KIND_BY_MARKET[country.toUpperCase() as CountryCode] ?? null;
+}
+
 export function usesLatamCodCheckout(country: string): boolean {
   return LATAM_COD_CHECKOUT_MARKETS.includes(
     country.toUpperCase() as CountryCode
