@@ -32,6 +32,7 @@ import {
   usesLatamThreeQtyPacks,
 } from "@/lib/countries";
 import { isDurableMediaUrl } from "@/lib/media-url";
+import { digitsOnly } from "@/lib/checkout-schema";
 import {
   DEFAULT_CURRENCY_RATES,
   convertFromUSD,
@@ -130,7 +131,7 @@ interface StoreContextValue extends StoreState {
   placeOrder: (
     customer: Order["customer"],
     itemsOverride?: CartItem[]
-  ) => Order;
+  ) => Order | null;
   deleteOrder: (id: string) => void;
   /** Wipe local data and restore seed catalog */
   resetStore: () => void;
@@ -1687,6 +1688,9 @@ export function StoreProvider({
   const placeOrder = useCallback(
     (customer: Order["customer"], itemsOverride?: CartItem[]) => {
       const current = stateRef.current;
+      if (current.country === "MA" && digitsOnly(customer.phone).length !== 10) {
+        return null;
+      }
       const items = itemsOverride ?? [...current.cart];
       const totalUSD = items.reduce((sum, item) => {
         const product = current.products.find((p) => p.id === item.productId);

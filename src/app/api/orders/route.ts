@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 import { isValidCountry } from "@/lib/countries";
+import { digitsOnly } from "@/lib/checkout-schema";
 import { sendMetaCapiEvents } from "@/lib/meta-capi";
 import { getCapiTargets } from "@/lib/meta-config";
 import { pixelIdsForCountry } from "@/lib/meta-pixels";
@@ -118,6 +119,7 @@ function sanitizeOrder(raw: Partial<Order>): Order | null {
   if (!raw.id || typeof raw.id !== "string" || !c || typeof c !== "object") return null;
   if (!text(c.name)?.trim() || !text(c.phone)?.trim()) return null;
   if (typeof raw.country !== "string" || !isValidCountry(raw.country)) return null;
+  if (raw.country === "MA" && digitsOnly(c.phone).length !== 10) return null;
   const items = Array.isArray(raw.items)
     ? raw.items.slice(0, 20).filter((i) => i && typeof i.productId === "string")
     : [];

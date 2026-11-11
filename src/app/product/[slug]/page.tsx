@@ -61,6 +61,7 @@ import {
 } from "@/components/shop/ProductQtyUpsell";
 import { codCheckoutKind } from "@/lib/cod-markets";
 import { cn } from "@/lib/utils";
+import { digitsOnly, getCheckoutSchema } from "@/lib/checkout-schema";
 import type { CountryCode, Locale, Order } from "@/lib/types";
 
 /** Story modules are heavy — load only the matching slug. */
@@ -197,6 +198,7 @@ function ProductPageInner() {
     city: "",
     address: "",
   });
+  const [phoneError, setPhoneError] = useState(false);
 
   const viewContentKey = useRef<string | null>(null);
   useEffect(() => {
@@ -318,6 +320,13 @@ function ProductPageInner() {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!product.inStock) return;
+    const schema = getCheckoutSchema(country);
+    const phoneLength = digitsOnly(form.phone).length;
+    if (phoneLength < schema.phoneMin || phoneLength > schema.phoneMax) {
+      setPhoneError(true);
+      return;
+    }
+    setPhoneError(false);
     if (product.customColorEnabled && !customColor.trim()) {
       window.alert(t.product.writeYourColorRequired);
       return;
@@ -353,6 +362,10 @@ function ProductPageInner() {
       },
       [{ productId: product.id, quantity: qty, lineTotalUSD: orderLineUSD }]
     );
+    if (!created) {
+      setPhoneError(true);
+      return;
+    }
     setOrder(created);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -365,6 +378,13 @@ function ProductPageInner() {
     notes?: string;
   }) => {
     if (!product.inStock) return;
+    const schema = getCheckoutSchema(country);
+    const phoneLength = digitsOnly(payload.phone).length;
+    if (phoneLength < schema.phoneMin || phoneLength > schema.phoneMax) {
+      setPhoneError(true);
+      return;
+    }
+    setPhoneError(false);
     const colorNote =
       swatchLabel && !customColor.trim()
         ? locale === "ar"
@@ -385,6 +405,10 @@ function ProductPageInner() {
         lineTotalUSD: orderLineUSD + (warranty ? WARRANTY_USD_PER_UNIT * qty : 0),
       },
     ]);
+    if (!created) {
+      setPhoneError(true);
+      return;
+    }
     setOrder(created);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -663,7 +687,11 @@ function ProductPageInner() {
             required
             type="tel"
             value={form.phone}
-            onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
+            error={phoneError ? t.checkout.invalidPhone : undefined}
+            onChange={(v) => {
+              setPhoneError(false);
+              setForm((f) => ({ ...f, phone: v }));
+            }}
           />
           <Field
             label={t.checkout.city}
@@ -897,12 +925,14 @@ function Field({
   onChange,
   required,
   type = "text",
+  error,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   required?: boolean;
   type?: string;
+  error?: string;
 }) {
   return (
     <label className="block text-sm">
@@ -912,8 +942,10 @@ function Field({
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1.5 w-full rounded-xl border border-sand-300 bg-white px-3 py-2.5 text-[length:var(--text-base)] outline-none ring-brand-500/30 focus:ring-2"
+        aria-invalid={Boolean(error)}
+        className={`mt-1.5 w-full rounded-xl border bg-white px-3 py-2.5 text-[length:var(--text-base)] outline-none ring-brand-500/30 focus:ring-2 ${error ? "border-red-500" : "border-sand-300"}`}
       />
+      {error ? <span className="mt-1 block text-xs text-red-600">{error}</span> : null}
     </label>
   );
 }

@@ -5,6 +5,7 @@ import { LATAM_CHAIR_COVER_PRODUCTS } from "./seed-latam-chair-cover";
 import { SCREWDRIVER_PRODUCTS } from "./seed-screwdriver";
 import { BABY_CHAIR_PRODUCTS } from "./seed-baby-chair";
 import { BRUSH_CLEANER_PRODUCTS } from "./seed-brush-cleaner";
+import { MAKEUP_ORGANIZER_PRODUCTS } from "./seed-makeup-organizer";
 import { HAND_NECK_MASSAGER_PRODUCTS } from "./seed-hand-neck-massager";
 import { SPICE_RACK_PRODUCTS } from "./seed-spice-rack";
 import { INSULIN_COOLER_PRODUCTS } from "./seed-insulin-cooler";
@@ -3435,6 +3436,7 @@ ${COD_EN}
   ...SCREWDRIVER_PRODUCTS,
   ...BABY_CHAIR_PRODUCTS,
   ...BRUSH_CLEANER_PRODUCTS,
+  ...MAKEUP_ORGANIZER_PRODUCTS,
   ...HAND_NECK_MASSAGER_PRODUCTS,
   ...SPICE_RACK_PRODUCTS,
   ...INSULIN_COOLER_PRODUCTS,

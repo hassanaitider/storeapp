@@ -6,6 +6,7 @@ import { HandCoins, CheckCircle2 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { useT } from "@/hooks/useT";
 import { formatPrice } from "@/lib/currency";
+import { digitsOnly, getCheckoutSchema } from "@/lib/checkout-schema";
 import { trackInitiateCheckout, trackPurchase } from "@/lib/meta-pixel";
 import type { Locale, Order } from "@/lib/types";
 
@@ -26,6 +27,7 @@ export default function CheckoutPage() {
     city: "",
     address: "",
   });
+  const [phoneError, setPhoneError] = useState(false);
   const checkoutTracked = useRef(false);
 
   useEffect(() => {
@@ -60,6 +62,13 @@ export default function CheckoutPage() {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const schema = getCheckoutSchema(country);
+    const phoneLength = digitsOnly(form.phone).length;
+    if (phoneLength < schema.phoneMin || phoneLength > schema.phoneMax) {
+      setPhoneError(true);
+      return;
+    }
+    setPhoneError(false);
     const moroccoSimple = country === "MA";
     const created = placeOrder({
       name: form.name.trim(),
@@ -67,6 +76,10 @@ export default function CheckoutPage() {
       city: form.city.trim(),
       address: moroccoSimple ? form.city.trim() : form.address.trim(),
     });
+    if (!created) {
+      setPhoneError(true);
+      return;
+    }
     setOrder(created);
   };
 
@@ -121,7 +134,11 @@ export default function CheckoutPage() {
                 required
                 type="tel"
                 value={form.phone}
-                onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
+                error={phoneError ? t.checkout.invalidPhone : undefined}
+                onChange={(v) => {
+                  setPhoneError(false);
+                  setForm((f) => ({ ...f, phone: v }));
+                }}
               />
               <Field
                 label={t.checkout.city}
@@ -230,12 +247,14 @@ function Field({
   onChange,
   required,
   type = "text",
+  error,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   required?: boolean;
   type?: string;
+  error?: string;
 }) {
   return (
     <label className="block text-sm font-medium text-ink-800">
@@ -245,8 +264,10 @@ function Field({
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1.5 w-full rounded-xl border border-sand-300 bg-sand-50/50 px-3 py-2.5 outline-none focus:border-brand-500 focus:ring-2 focus:ring-[var(--ring)]"
+        aria-invalid={Boolean(error)}
+        className={`mt-1.5 w-full rounded-xl border bg-sand-50/50 px-3 py-2.5 outline-none focus:ring-2 focus:ring-[var(--ring)] ${error ? "border-red-500 focus:border-red-500" : "border-sand-300 focus:border-brand-500"}`}
       />
+      {error ? <span className="mt-1 block text-xs text-red-600">{error}</span> : null}
     </label>
   );
 }
