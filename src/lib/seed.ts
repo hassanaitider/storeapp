@@ -44,6 +44,11 @@ const CATEGORY_IMAGES: Record<string, string> = {
   SV: "/categories/flag-sv.webp",
   NI: "/categories/flag-ni.webp",
   DO: "/categories/flag-do.webp",
+  KE: "/categories/flag-ke.svg",
+  UG: "/categories/flag-ug.svg",
+  TZ: "/categories/flag-tz.svg",
+  ZM: "/categories/flag-zm.svg",
+  CM: "/categories/flag-cm.svg",
 };
 
 /** One category per open market, generated from STORE_MARKETS */

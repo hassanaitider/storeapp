@@ -1148,8 +1148,7 @@ export function StoreProvider({
         if (!code || code === "XX" || code === "T1" || !/^[A-Z]{2}$/.test(code)) {
           return null;
         }
-        // Store markets keep their market; Sudan/Egypt/… map to default (SA)
-        // so client geo never leaves them on a Libya/LATAM landing.
+        // Non-store countries map to the default market instead of an unrelated landing.
         if (isStoreMarket(code)) return code as CountryCode;
         return DEFAULT_COUNTRY;
       };

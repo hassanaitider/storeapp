@@ -52,7 +52,7 @@ const CRAWLER_UA =
 /**
  * Store market of the visitor's IP, or null when the edge did not provide one.
  * Any real country is locked: store markets → themselves; everyone else
- * (Sudan, Egypt, …) → DEFAULT_COUNTRY so they cannot open Libya/LATAM ads.
+ * other countries → DEFAULT_COUNTRY so they cannot open an unrelated market's ads.
  */
 function visitorMarket(request: NextRequest): string | null {
   const code = (

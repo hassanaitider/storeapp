@@ -250,6 +250,11 @@ const SCHEMAS: Record<CountryCode, CheckoutSchema> = {
     phoneMin: 10,
     phoneMax: 10,
   }),
+  KE: { ...MENA, phoneMin: 9, phoneMax: 9 },
+  UG: { ...MENA, phoneMin: 9, phoneMax: 9 },
+  TZ: { ...MENA, phoneMin: 9, phoneMax: 9 },
+  ZM: { ...MENA, phoneMin: 9, phoneMax: 9 },
+  CM: { ...MENA, phoneMin: 9, phoneMax: 9 },
 };
 
 export function getCheckoutSchema(country: CountryCode): CheckoutSchema {

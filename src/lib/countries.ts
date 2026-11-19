@@ -221,20 +221,53 @@ export const COUNTRIES: CountryInfo[] = [
     flag: "🇺🇸",
     dial: "+1",
   },
+  {
+    code: "KE",
+    nameAr: "كينيا",
+    nameEn: "Kenya",
+    currency: "KES",
+    flag: "🇰🇪",
+    dial: "+254",
+  },
+  {
+    code: "UG",
+    nameAr: "أوغندا",
+    nameEn: "Uganda",
+    currency: "UGX",
+    flag: "🇺🇬",
+    dial: "+256",
+  },
+  {
+    code: "TZ",
+    nameAr: "تنزانيا",
+    nameEn: "Tanzania",
+    currency: "TZS",
+    flag: "🇹🇿",
+    dial: "+255",
+  },
+  {
+    code: "ZM",
+    nameAr: "زامبيا",
+    nameEn: "Zambia",
+    currency: "ZMW",
+    flag: "🇿🇲",
+    dial: "+260",
+  },
+  {
+    code: "CM",
+    nameAr: "الكاميرون",
+    nameEn: "Cameroon",
+    currency: "XAF",
+    flag: "🇨🇲",
+    dial: "+237",
+  },
 ];
 
-export const DEFAULT_COUNTRY: CountryCode = "SA";
+export const DEFAULT_COUNTRY: CountryCode = "MA";
 
 /** Active store markets — these categories appear in the shop */
 export const STORE_MARKET_CODES: CountryCode[] = [
   "MA",
-  "TN",
-  "MR",
-  "SA",
-  "AE",
-  "OM",
-  "IQ",
-  "LY",
   "LB",
   "MX",
   "AR",
@@ -245,6 +278,20 @@ export const STORE_MARKET_CODES: CountryCode[] = [
   "SV",
   "NI",
   "DO",
+  "KE",
+  "UG",
+  "TZ",
+  "ZM",
+  "CM",
+];
+
+/** Markets that open in English unless the shopper has chosen a language. */
+export const ENGLISH_MARKET_CODES: CountryCode[] = [
+  "KE",
+  "UG",
+  "TZ",
+  "ZM",
+  "CM",
 ];
 
 /** Markets where the storefront defaults to Spanish */
@@ -291,6 +338,7 @@ export function usesLatamThreeQtyPacks(code: string): boolean {
 
 /** Language a market opens in before the visitor picks one themselves */
 export function localeForCountry(code: CountryCode): Locale {
+  if (ENGLISH_MARKET_CODES.includes(code)) return "en";
   return isSpanishMarket(code) ? "es" : "ar";
 }
 
@@ -348,6 +396,11 @@ export function countryFromLocationSettings(
   if (tz.includes("muscat") || tz === "asia/muscat") return "OM";
   if (tz.includes("baghdad") || tz === "asia/baghdad") return "IQ";
   if (tz.includes("beirut") || tz === "asia/beirut") return "LB";
+  if (tz === "africa/nairobi") return "KE";
+  if (tz === "africa/kampala") return "UG";
+  if (tz === "africa/dar_es_salaam") return "TZ";
+  if (tz === "africa/lusaka") return "ZM";
+  if (tz === "africa/douala") return "CM";
 
   if (tz.includes("mexico_city") || tz.includes("monterrey") || tz.includes("cancun")) {
     return "MX";
@@ -373,6 +426,11 @@ export function countryFromLocationSettings(
     if (l === "ar-iq" || l.endsWith("-iq")) return "IQ";
     if (l === "ar-ly" || l.endsWith("-ly")) return "LY";
     if (l === "ar-lb" || l.endsWith("-lb")) return "LB";
+    if (l.endsWith("-ke")) return "KE";
+    if (l.endsWith("-ug")) return "UG";
+    if (l.endsWith("-tz")) return "TZ";
+    if (l.endsWith("-zm")) return "ZM";
+    if (l.endsWith("-cm")) return "CM";
     if (l === "es-mx") return "MX";
     if (l === "es-ar") return "AR";
     if (l === "es-cr") return "CR";
@@ -386,4 +444,3 @@ export function countryFromLocationSettings(
 
   return null;
 }
-

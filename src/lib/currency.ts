@@ -28,6 +28,11 @@ export const DEFAULT_CURRENCY_RATES: Record<CurrencyCode, number> = {
   PEN: 3.75,
   CLP: 960,
   BOB: 6.9,
+  KES: 129.5,
+  UGX: 3700,
+  TZS: 2650,
+  ZMW: 27.5,
+  XAF: 600,
 };
 
 /** Approximate retail FX rates relative to USD (display) */
@@ -254,6 +259,46 @@ export const CURRENCIES: CurrencyInfo[] = [
     rate: DEFAULT_CURRENCY_RATES.BOB,
     region: "latam",
   },
+  {
+    code: "KES",
+    nameAr: "شلن كيني",
+    nameEn: "Kenyan Shilling",
+    symbol: "KSh",
+    rate: DEFAULT_CURRENCY_RATES.KES,
+    region: "africa",
+  },
+  {
+    code: "UGX",
+    nameAr: "شلن أوغندي",
+    nameEn: "Ugandan Shilling",
+    symbol: "USh",
+    rate: DEFAULT_CURRENCY_RATES.UGX,
+    region: "africa",
+  },
+  {
+    code: "TZS",
+    nameAr: "شلن تنزاني",
+    nameEn: "Tanzanian Shilling",
+    symbol: "TSh",
+    rate: DEFAULT_CURRENCY_RATES.TZS,
+    region: "africa",
+  },
+  {
+    code: "ZMW",
+    nameAr: "كواشا زامبي",
+    nameEn: "Zambian Kwacha",
+    symbol: "ZK",
+    rate: DEFAULT_CURRENCY_RATES.ZMW,
+    region: "africa",
+  },
+  {
+    code: "XAF",
+    nameAr: "فرنك وسط أفريقيا",
+    nameEn: "Central African CFA Franc",
+    symbol: "FCFA",
+    rate: DEFAULT_CURRENCY_RATES.XAF,
+    region: "africa",
+  },
 ];
 
 /** Runtime overrides from admin / localStorage */
@@ -312,7 +357,19 @@ export function formatLocalAmount(
   // Gulf dinars quote 3 decimals; these currencies are never quoted in cents
   const decimals = ["KWD", "BHD", "OMR"].includes(code)
     ? 3
-    : ["IQD", "ARS", "CRC", "LBP", "COP", "CLP"].includes(code)
+    : [
+        "IQD",
+        "ARS",
+        "CRC",
+        "LBP",
+        "COP",
+        "CLP",
+        "KES",
+        "UGX",
+        "TZS",
+        "ZMW",
+        "XAF",
+      ].includes(code)
       ? 0
       : 2;
 

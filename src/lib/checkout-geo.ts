@@ -533,6 +533,11 @@ export const CHECKOUT_GEO: Record<CountryCode, GeoDivision[]> = {
     { name: "Toa Alta", cities: cities("Toa Alta") },
     { name: "Trujillo Alto", cities: cities("Trujillo Alto") },
   ],
+  KE: [],
+  UG: [],
+  TZ: [],
+  ZM: [],
+  CM: [],
 };
 
 export function getCheckoutDivisions(country: CountryCode): GeoDivision[] {

@@ -30,7 +30,12 @@ export type CountryCode =
   | "PE"
   | "CL"
   | "BO"
-  | "PR";
+  | "PR"
+  | "KE"
+  | "UG"
+  | "TZ"
+  | "ZM"
+  | "CM";
 
 export type CurrencyCode =
   | "SAR"
@@ -58,7 +63,12 @@ export type CurrencyCode =
   | "BRL"
   | "PEN"
   | "CLP"
-  | "BOB";
+  | "BOB"
+  | "KES"
+  | "UGX"
+  | "TZS"
+  | "ZMW"
+  | "XAF";
 
 export interface Category {
   id: string;
@@ -161,6 +171,8 @@ export interface ProductColor {
 /** Quantity-based upsell tiers on the same product page */
 export interface ProductQtyOffer {
   quantity: number;
+  /** Cart quantity when this offer represents a bundle rather than multiple products */
+  cartQuantity?: number;
   /** Total price for this quantity in local currency */
   marketPrices?: Partial<Record<CountryCode, number>>;
   /** Discount off qty × unit price when marketPrices not set */
@@ -211,6 +223,10 @@ export interface Product {
   sizes?: string[];
   /** When true, 1/2/3 quantity offers show on the product page */
   qtyUpsellEnabled?: boolean;
+  qtyOfferTitleAr?: string;
+  qtyOfferTitleEn?: string;
+  qtyOfferHintAr?: string;
+  qtyOfferHintEn?: string;
   /**
    * When true, qtyUpsellEnabled is an explicit merchant choice.
    * Legacy catalogs wrote false on every product and hid LATAM packs —
@@ -221,6 +237,8 @@ export interface Product {
   featured: boolean;
   rating: number;
   reviewCount: number;
+  /** Suppress template fallback reviews when this product has no verified reviews */
+  hideReviews?: boolean;
   createdAt: string;
   landing?: ProductLanding;
   /** Same-product quantity upsell tiers (1 / 2 / 3 pcs…) */
@@ -268,5 +286,5 @@ export interface CurrencyInfo {
   symbol: string;
   /** Multiply USD price by this to get local amount */
   rate: number;
-  region: "gulf" | "morocco" | "mena" | "usa" | "latam";
+  region: "gulf" | "morocco" | "mena" | "usa" | "latam" | "africa";
 }
