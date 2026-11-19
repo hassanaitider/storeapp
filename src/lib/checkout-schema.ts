@@ -29,7 +29,7 @@ export function emptyCheckoutForm(): CheckoutForm {
   };
 }
 
-type Localized = { ar: string; en: string; es: string };
+type Localized = { ar: string; en: string; es: string; fr: string };
 
 export type CheckoutSchema = {
   hasState: boolean;
@@ -52,25 +52,25 @@ export type CheckoutSchema = {
 };
 
 const L = {
-  state: { ar: "الولاية", en: "State", es: "Estado" },
-  province: { ar: "المحافظة", en: "Province", es: "Provincia" },
-  department: { ar: "القسم", en: "Department", es: "Departamento" },
-  region: { ar: "المنطقة", en: "Region", es: "Región" },
-  municipality: { ar: "البلدية", en: "Municipality", es: "Municipio" },
-  colonia: { ar: "الحي / المستعمرة", en: "Neighborhood / colonia", es: "Colonia" },
-  barrio: { ar: "الحي", en: "Neighborhood", es: "Barrio" },
-  zona: { ar: "المنطقة", en: "Zone", es: "Zona" },
-  district: { ar: "المقاطعة", en: "District", es: "Distrito" },
-  canton: { ar: "الكانتون", en: "Canton", es: "Cantón" },
-  sector: { ar: "القطاع", en: "Sector", es: "Sector" },
-  urbanization: { ar: "التجمّع السكني", en: "Urbanization", es: "Urbanización" },
-  postal: { ar: "الرمز البريدي", en: "Postal code", es: "Código postal" },
-  cep: { ar: "الرمز البريدي (CEP)", en: "ZIP code (CEP)", es: "CEP" },
-  zip: { ar: "الرمز البريدي", en: "ZIP code", es: "Código ZIP" },
-  cpf: { ar: "رقم CPF", en: "CPF", es: "CPF" },
-  rut: { ar: "رقم RUT", en: "RUT", es: "RUT" },
-  cedula: { ar: "رقم الهوية", en: "National ID", es: "Cédula" },
-  dni: { ar: "رقم الهوية", en: "National ID", es: "DNI" },
+  state: { ar: "الولاية", en: "State", es: "Estado", fr: "État" },
+  province: { ar: "المحافظة", en: "Province", es: "Provincia", fr: "Province" },
+  department: { ar: "القسم", en: "Department", es: "Departamento", fr: "Département" },
+  region: { ar: "المنطقة", en: "Region", es: "Región", fr: "Région" },
+  municipality: { ar: "البلدية", en: "Municipality", es: "Municipio", fr: "Municipalité" },
+  colonia: { ar: "الحي / المستعمرة", en: "Neighborhood / colonia", es: "Colonia", fr: "Quartier" },
+  barrio: { ar: "الحي", en: "Neighborhood", es: "Barrio", fr: "Quartier" },
+  zona: { ar: "المنطقة", en: "Zone", es: "Zona", fr: "Zone" },
+  district: { ar: "المقاطعة", en: "District", es: "Distrito", fr: "District" },
+  canton: { ar: "الكانتون", en: "Canton", es: "Cantón", fr: "Canton" },
+  sector: { ar: "القطاع", en: "Sector", es: "Sector", fr: "Secteur" },
+  urbanization: { ar: "التجمّع السكني", en: "Urbanization", es: "Urbanización", fr: "Lotissement" },
+  postal: { ar: "الرمز البريدي", en: "Postal code", es: "Código postal", fr: "Code postal" },
+  cep: { ar: "الرمز البريدي (CEP)", en: "ZIP code (CEP)", es: "CEP", fr: "Code postal (CEP)" },
+  zip: { ar: "الرمز البريدي", en: "ZIP code", es: "Código ZIP", fr: "Code postal" },
+  cpf: { ar: "رقم CPF", en: "CPF", es: "CPF", fr: "CPF" },
+  rut: { ar: "رقم RUT", en: "RUT", es: "RUT", fr: "RUT" },
+  cedula: { ar: "رقم الهوية", en: "National ID", es: "Cédula", fr: "Pièce d’identité" },
+  dni: { ar: "رقم الهوية", en: "National ID", es: "DNI", fr: "Pièce d’identité" },
 } satisfies Record<string, Localized>;
 
 const MENA: CheckoutSchema = {
@@ -255,6 +255,12 @@ const SCHEMAS: Record<CountryCode, CheckoutSchema> = {
   TZ: { ...MENA, phoneMin: 9, phoneMax: 9 },
   ZM: { ...MENA, phoneMin: 9, phoneMax: 9 },
   CM: { ...MENA, phoneMin: 9, phoneMax: 9 },
+  SN: { ...MENA, phoneMin: 9, phoneMax: 9 },
+  ML: { ...MENA, phoneMin: 8, phoneMax: 8 },
+  GN: { ...MENA, phoneMin: 9, phoneMax: 9 },
+  CI: { ...MENA, phoneMin: 10, phoneMax: 10 },
+  CD: { ...MENA, phoneMin: 9, phoneMax: 9 },
+  CG: { ...MENA, phoneMin: 9, phoneMax: 9 },
 };
 
 export function getCheckoutSchema(country: CountryCode): CheckoutSchema {

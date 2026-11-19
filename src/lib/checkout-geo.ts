@@ -538,6 +538,12 @@ export const CHECKOUT_GEO: Record<CountryCode, GeoDivision[]> = {
   TZ: [],
   ZM: [],
   CM: [],
+  SN: [],
+  ML: [],
+  GN: [],
+  CI: [],
+  CD: [],
+  CG: [],
 };
 
 export function getCheckoutDivisions(country: CountryCode): GeoDivision[] {

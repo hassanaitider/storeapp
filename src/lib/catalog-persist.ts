@@ -168,7 +168,7 @@ export function parseCatalogJson(raw: string): PersistedCatalog | null {
       orders: Array.isArray(parsed.orders) ? parsed.orders : [],
       cart: Array.isArray(parsed.cart) ? parsed.cart : [],
       locale:
-        parsed.locale === "en" || parsed.locale === "es"
+        parsed.locale === "en" || parsed.locale === "es" || parsed.locale === "fr"
           ? parsed.locale
           : "ar",
       currency: (parsed.currency as CurrencyCode) || "USD",

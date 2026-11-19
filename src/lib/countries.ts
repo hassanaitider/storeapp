@@ -5,6 +5,7 @@ export interface CountryInfo {
   nameAr: string;
   nameEn: string;
   nameEs?: string;
+  nameFr?: string;
   currency: CurrencyCode;
   flag: string;
   /** Phone dial hint for checkout */
@@ -261,6 +262,60 @@ export const COUNTRIES: CountryInfo[] = [
     flag: "🇨🇲",
     dial: "+237",
   },
+  {
+    code: "SN",
+    nameAr: "السنغال",
+    nameEn: "Senegal",
+    nameFr: "Sénégal",
+    currency: "XOF",
+    flag: "🇸🇳",
+    dial: "+221",
+  },
+  {
+    code: "ML",
+    nameAr: "مالي",
+    nameEn: "Mali",
+    nameFr: "Mali",
+    currency: "XOF",
+    flag: "🇲🇱",
+    dial: "+223",
+  },
+  {
+    code: "GN",
+    nameAr: "غينيا",
+    nameEn: "Guinea",
+    nameFr: "Guinée",
+    currency: "GNF",
+    flag: "🇬🇳",
+    dial: "+224",
+  },
+  {
+    code: "CI",
+    nameAr: "ساحل العاج",
+    nameEn: "Côte d’Ivoire",
+    nameFr: "Côte d’Ivoire",
+    currency: "XOF",
+    flag: "🇨🇮",
+    dial: "+225",
+  },
+  {
+    code: "CD",
+    nameAr: "الكونغو الديمقراطية",
+    nameEn: "Democratic Republic of the Congo",
+    nameFr: "République démocratique du Congo",
+    currency: "CDF",
+    flag: "🇨🇩",
+    dial: "+243",
+  },
+  {
+    code: "CG",
+    nameAr: "جمهورية الكونغو",
+    nameEn: "Republic of the Congo",
+    nameFr: "République du Congo",
+    currency: "XAF",
+    flag: "🇨🇬",
+    dial: "+242",
+  },
 ];
 
 export const DEFAULT_COUNTRY: CountryCode = "MA";
@@ -283,6 +338,12 @@ export const STORE_MARKET_CODES: CountryCode[] = [
   "TZ",
   "ZM",
   "CM",
+  "SN",
+  "ML",
+  "GN",
+  "CI",
+  "CD",
+  "CG",
 ];
 
 /** Markets that open in English unless the shopper has chosen a language. */
@@ -305,6 +366,16 @@ export const SPANISH_MARKET_CODES: CountryCode[] = [
   "SV",
   "NI",
   "DO",
+];
+
+/** Markets where the storefront defaults to French */
+export const FRENCH_MARKET_CODES: CountryCode[] = [
+  "SN",
+  "ML",
+  "GN",
+  "CI",
+  "CD",
+  "CG",
 ];
 
 /**
@@ -339,6 +410,7 @@ export function usesLatamThreeQtyPacks(code: string): boolean {
 /** Language a market opens in before the visitor picks one themselves */
 export function localeForCountry(code: CountryCode): Locale {
   if (ENGLISH_MARKET_CODES.includes(code)) return "en";
+  if (FRENCH_MARKET_CODES.includes(code)) return "fr";
   return isSpanishMarket(code) ? "es" : "ar";
 }
 
@@ -401,6 +473,12 @@ export function countryFromLocationSettings(
   if (tz === "africa/dar_es_salaam") return "TZ";
   if (tz === "africa/lusaka") return "ZM";
   if (tz === "africa/douala") return "CM";
+  if (tz === "africa/dakar") return "SN";
+  if (tz === "africa/bamako") return "ML";
+  if (tz === "africa/conakry") return "GN";
+  if (tz === "africa/abidjan") return "CI";
+  if (tz === "africa/kinshasa") return "CD";
+  if (tz === "africa/brazzaville") return "CG";
 
   if (tz.includes("mexico_city") || tz.includes("monterrey") || tz.includes("cancun")) {
     return "MX";
@@ -431,6 +509,12 @@ export function countryFromLocationSettings(
     if (l.endsWith("-tz")) return "TZ";
     if (l.endsWith("-zm")) return "ZM";
     if (l.endsWith("-cm")) return "CM";
+    if (l.endsWith("-sn")) return "SN";
+    if (l.endsWith("-ml")) return "ML";
+    if (l.endsWith("-gn")) return "GN";
+    if (l.endsWith("-ci")) return "CI";
+    if (l.endsWith("-cd")) return "CD";
+    if (l.endsWith("-cg")) return "CG";
     if (l === "es-mx") return "MX";
     if (l === "es-ar") return "AR";
     if (l === "es-cr") return "CR";

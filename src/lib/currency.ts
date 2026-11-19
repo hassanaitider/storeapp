@@ -33,6 +33,9 @@ export const DEFAULT_CURRENCY_RATES: Record<CurrencyCode, number> = {
   TZS: 2650,
   ZMW: 27.5,
   XAF: 600,
+  XOF: 600,
+  GNF: 8600,
+  CDF: 2800,
 };
 
 /** Approximate retail FX rates relative to USD (display) */
@@ -295,8 +298,36 @@ export const CURRENCIES: CurrencyInfo[] = [
     code: "XAF",
     nameAr: "فرنك وسط أفريقيا",
     nameEn: "Central African CFA Franc",
+    nameFr: "Franc CFA d’Afrique centrale",
     symbol: "FCFA",
     rate: DEFAULT_CURRENCY_RATES.XAF,
+    region: "africa",
+  },
+  {
+    code: "XOF",
+    nameAr: "فرنك غرب أفريقيا",
+    nameEn: "West African CFA Franc",
+    nameFr: "Franc CFA d’Afrique de l’Ouest",
+    symbol: "CFA",
+    rate: DEFAULT_CURRENCY_RATES.XOF,
+    region: "africa",
+  },
+  {
+    code: "GNF",
+    nameAr: "فرنك غيني",
+    nameEn: "Guinean Franc",
+    nameFr: "Franc guinéen",
+    symbol: "FG",
+    rate: DEFAULT_CURRENCY_RATES.GNF,
+    region: "africa",
+  },
+  {
+    code: "CDF",
+    nameAr: "فرنك كونغولي",
+    nameEn: "Congolese Franc",
+    nameFr: "Franc congolais",
+    symbol: "FC",
+    rate: DEFAULT_CURRENCY_RATES.CDF,
     region: "africa",
   },
 ];
@@ -369,23 +400,31 @@ export function formatLocalAmount(
         "TZS",
         "ZMW",
         "XAF",
+        "XOF",
+        "GNF",
+        "CDF",
       ].includes(code)
       ? 0
       : 2;
 
   // Always Latin/French digits (0–9), never Eastern Arabic numerals
   const numberLocale =
-    locale === "ar" ? "fr-FR" : locale === "es" ? "es-MX" : "en-US";
+    locale === "ar" || locale === "fr"
+      ? "fr-FR"
+      : locale === "es"
+        ? "es-MX"
+        : "en-US";
   const formatted = new Intl.NumberFormat(numberLocale, {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   }).format(amount);
 
   if (code === "USD") {
-    return locale === "ar" ? `${formatted} $` : `$${formatted}`;
+    if (locale === "ar") return `${formatted} $`;
+    return locale === "fr" ? `${formatted} $US` : `$${formatted}`;
   }
 
-  return locale === "ar"
+  return locale === "ar" || locale === "fr"
     ? `${formatted} ${currency.symbol}`
     : `${currency.symbol} ${formatted}`;
 }

@@ -67,6 +67,7 @@ export function Header() {
               <option value="ar">العربية</option>
               <option value="en">English</option>
               <option value="es">Español</option>
+              <option value="fr">Français</option>
             </select>
           )}
 
@@ -82,7 +83,9 @@ export function Header() {
             title={
               locale === "ar"
                 ? "اختر سوقك (الدولة)"
-                : "Choose your market (country)"
+                : locale === "fr"
+                  ? "Choisissez votre marché (pays)"
+                  : "Choose your market (country)"
             }
           >
             {selectableMarkets.map((c) => (
@@ -92,6 +95,8 @@ export function Header() {
                   ? c.nameAr
                   : locale === "es"
                     ? c.nameEs ?? c.nameEn
+                    : locale === "fr"
+                      ? c.nameFr ?? c.nameEn
                     : c.nameEn}
               </option>
             ))}
@@ -112,7 +117,9 @@ export function Header() {
               title={
                 locale === "ar"
                   ? "اختر العملة يدوياً"
-                  : "Choose currency manually"
+                  : locale === "fr"
+                    ? "Choisissez la devise"
+                    : "Choose currency manually"
               }
             >
               {CURRENCIES.map((c) => (
@@ -165,13 +172,21 @@ export function Header() {
             </Link>
           ))}
           <p className="px-3 pt-2 text-xs text-[var(--muted)]">
-            {locale === "ar" ? "سوقك" : locale === "es" ? "Mercado" : "Market"}:{" "}
+            {locale === "ar"
+              ? "سوقك"
+              : locale === "es"
+                ? "Mercado"
+                : locale === "fr"
+                  ? "Marché"
+                  : "Market"}:{" "}
             {market.flag}{" "}
             {locale === "ar"
               ? market.nameAr
               : locale === "es"
                 ? market.nameEs ?? market.nameEn
-                : market.nameEn}{" "}
+                : locale === "fr"
+                  ? market.nameFr ?? market.nameEn
+                  : market.nameEn}{" "}
             · {currency} (
             {currencyInfo.symbol})
           </p>

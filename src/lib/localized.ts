@@ -1,7 +1,8 @@
 import type { Locale } from "./types";
 
 /**
- * Catalog entities carry one field per locale (nameAr / nameEn / nameEs).
+ * Catalog entities carry one field per locale (nameAr / nameEn / nameEs /
+ * nameFr). Missing translations fall back to another available language.
  * Spanish arrived after the catalog was already in production, so its fields
  * are optional and fall back to English rather than showing Arabic to a
  * Spanish-speaking shopper.
@@ -10,12 +11,14 @@ const FALLBACK_ORDER: Record<Locale, readonly Locale[]> = {
   ar: ["ar", "en", "es"],
   en: ["en", "ar", "es"],
   es: ["es", "en", "ar"],
+  fr: ["fr", "en", "ar", "es"],
 };
 
 const SUFFIX: Record<Locale, string> = {
   ar: "Ar",
   en: "En",
   es: "Es",
+  fr: "Fr",
 };
 
 function readField(source: unknown, key: string): unknown {

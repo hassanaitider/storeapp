@@ -49,6 +49,12 @@ const CATEGORY_IMAGES: Record<string, string> = {
   TZ: "/categories/flag-tz.svg",
   ZM: "/categories/flag-zm.svg",
   CM: "/categories/flag-cm.svg",
+  SN: "/categories/flag-sn.svg",
+  ML: "/categories/flag-ml.svg",
+  GN: "/categories/flag-gn.svg",
+  CI: "/categories/flag-ci.svg",
+  CD: "/categories/flag-cd.svg",
+  CG: "/categories/flag-cg.svg",
 };
 
 /** One category per open market, generated from STORE_MARKETS */
@@ -58,9 +64,11 @@ export const SEED_CATEGORIES: Category[] = STORE_MARKETS.map((c) => ({
   nameAr: `منتجات ${c.nameAr}`,
   nameEn: `${c.nameEn} Products`,
   nameEs: `Productos de ${c.nameEs ?? c.nameEn}`,
+  nameFr: `Produits ${c.nameFr ?? c.nameEn}`,
   descriptionAr: `تشكيلة مختارة لسوق ${c.nameAr}`,
   descriptionEn: `Curated picks for ${c.nameEn}`,
   descriptionEs: `Selección para ${c.nameEs ?? c.nameEn}`,
+  descriptionFr: `Une sélection pour le marché ${c.nameFr ?? c.nameEn}`,
   image: CATEGORY_IMAGES[c.code] ?? "/categories/flag-ma.webp",
   createdAt: "2026-03-01T00:00:00.000Z",
   country: c.code,

@@ -1,4 +1,4 @@
-export type Locale = "ar" | "en" | "es";
+export type Locale = "ar" | "en" | "es" | "fr";
 
 export type CountryCode =
   | "MA"
@@ -35,7 +35,13 @@ export type CountryCode =
   | "UG"
   | "TZ"
   | "ZM"
-  | "CM";
+  | "CM"
+  | "SN"
+  | "ML"
+  | "GN"
+  | "CI"
+  | "CD"
+  | "CG";
 
 export type CurrencyCode =
   | "SAR"
@@ -68,7 +74,10 @@ export type CurrencyCode =
   | "UGX"
   | "TZS"
   | "ZMW"
-  | "XAF";
+  | "XAF"
+  | "XOF"
+  | "GNF"
+  | "CDF";
 
 export interface Category {
   id: string;
@@ -76,9 +85,11 @@ export interface Category {
   nameAr: string;
   nameEn: string;
   nameEs?: string;
+  nameFr?: string;
   descriptionAr: string;
   descriptionEn: string;
   descriptionEs?: string;
+  descriptionFr?: string;
   image: string;
   createdAt: string;
   /** If set, this is a country-market category */
@@ -283,6 +294,7 @@ export interface CurrencyInfo {
   nameAr: string;
   nameEn: string;
   nameEs?: string;
+  nameFr?: string;
   symbol: string;
   /** Multiply USD price by this to get local amount */
   rate: number;

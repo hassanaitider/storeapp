@@ -177,5 +177,5 @@ export function filterCategoriesForCountry(
 
 export function countryLabel(country: CountryCode, locale: Locale): string {
   const c = getCountry(country);
-  return locale === "ar" ? c.nameAr : c.nameEn;
+  return locale === "ar" ? c.nameAr : locale === "fr" ? c.nameFr ?? c.nameEn : c.nameEn;
 }
